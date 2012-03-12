@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+        
+	<import resource="infrastructure.xml" />
+	
+    <jpa:repositories base-package="net.slipp.social.connect" />
+    
+	<bean
+		class='org.springframework.beans.factory.config.PropertyPlaceholderConfigurer'>
+		<property name='location'>
+			<value>classpath:environment.properties</value>
+		</property>
+	</bean>
+
+	<!-- Start Spring Social Security -->
+	<import resource="classpath:/spring-social-security-config.xml" />
+
+	<context:component-scan
+		base-package="org.socialsignin.springframework.social.security" />
+		
+	<context:component-scan
+		base-package="net.slipp.provider" />
+
+	<context:component-scan
+		base-package="net.slipp.social.security" />
+		
+
+	<!-- End Spring Social Security -->
+
+	<!-- Start Spring Security -->
+
+	<!-- proxy-target-class is needed for secured annotations to be honoured -->
+	<security:global-method-security
+		proxy-target-class="true" secured-annotations="enabled"
+		pre-post-annotations="enabled">
+	</security:global-method-security>
+
+
+	<security:authentication-manager alias="authenticationManager">
+	</security:authentication-manager>
+
+
+	<bean id="accessDecisionManager" class="org.springframework.security.access.vote.UnanimousBased"
+		xmlns="http://www.springframework.org/schema/beans">
+		<constructor-arg>
+			<list>
+				<bean class="org.springframework.security.access.vote.RoleVoter" />
+				<bean class="org.springframework.security.access.vote.AuthenticatedVoter" />
+			</list>
+		</constructor-arg>
+	</bean>
+
+	<security:http use-expressions="true"
+		entry-point-ref="springSocialSecurityEntryPoint" xmlns="http://www.springframework.org/schema/security">
+
+		<intercept-url pattern="/protected/**" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/oauthconnect.jsp" access="hasRole('ROLE_USER')" />
+
+
+		<access-denied-handler ref="springSocialSecurityAccessDeniedHandler" />
+		<security:logout logout-url="/logout" />
+
+		<anonymous />
+		<security:custom-filter position="FORM_LOGIN_FILTER"
+			ref="springSocialSecurityAuthenticationFilter" />
+
+		<remember-me services-ref="springSocialSecurityRememberMeServices"
+			key="springSocialSecurity" />
+
+
+	</security:http>
+
+
+	<bean id="springSocialSecurityRememberMeServices"
+		class="org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices">
+		<property name="userDetailsService" ref="springSocialSecurityUserDetailsService" />
+		<property name="key" value="springSocialSecurity" />
+		<property name="alwaysRemember" value="true" />
+		<property name="tokenValiditySeconds" value="3600" />
+	</bean>
+
+
+	<!-- End Spring Security -->
+
+
+	<!-- Start Spring Social -->
+
+
+	<bean class="org.springframework.social.connect.web.ProviderSignInController">
+		<constructor-arg value="${application.secureUrl}" />
+		<property name="signUpUrl" value="/signup" />
+		<property name="applicationUrl" value="${application.secureUrl}" />
+		<property name="postSignInUrl" value="/authenticate" />
+	</bean>
+
+	<bean class="org.springframework.social.connect.web.ConnectController">
+		<!-- relies on by-type autowiring for the constructor-args -->
+		<property name="applicationUrl" value="${application.secureUrl}" />
+		<property name="interceptors" ref="connectInterceptorList" />
+	</bean>
+
+	<bean id="usersConnectionRepository"
+		class="net.slipp.social.connect.SocialUsersConnectionRepository">
+		<constructor-arg ref="socialUserRepository" />
+		<constructor-arg ref="connectionFactoryRegistry" />
+		<constructor-arg ref="textEncryptor" />
+	</bean>
+
+	<bean
+		class="org.springframework.social.connect.jdbc.JdbcConnectionRepository"
+		id="connectionRepository" factory-method="createConnectionRepository"
+		factory-bean="usersConnectionRepository" scope="request">
+		<constructor-arg value="#{request.userPrincipal.name}" />
+		<aop:scoped-proxy proxy-target-class="true" />
+	</bean>
+
+	<bean id="textEncryptor" class="org.springframework.security.crypto.encrypt.Encryptors"
+		factory-method="noOpText" />
+
+	<!-- End Spring Social -->
+</beans>
