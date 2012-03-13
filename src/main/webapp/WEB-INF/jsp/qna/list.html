@@ -1,0 +1,58 @@
+#{extends 'main.html' /}
+#{set title:'SLiPP :: sustainable life, programming, programmer' /}
+
+#{set 'moreStyles'}
+<link rel="stylesheet" media="screen" href="@{'/public/stylesheets/boards.css'}">
+#{/set}
+
+
+<div id="page">
+	<div id="content">
+		<div class="forumTop">
+			<div class="create-button">
+				<a href="@{Threads.createForm(tagName)}">글쓰기</a>
+			</div>	
+			<div class="rss">
+				<a href="http://feeds.feedburner.com/slipp"><img src="http://feeds.feedburner.com/~fc/slipp?bg=99CCFF&amp;fg=444444&amp;anim=0" height="26" width="88" style="border:0" alt="" /></a>
+			</div>
+		</div>
+		<div class="forumList">
+		#{list threads, as:'thread'}
+		<div class="forum"  >
+			<div class="list">
+				<a href="@{Threads.show(thread.id)}">
+					<strong class="subject">${thread.title}</strong>
+				</a>
+				<div class="count">
+					<span class="tags">
+						#{list thread.tags, as:'tag'}
+						<a href="@{Threads.tagged(tag.name)}"><strong>${tag.name}</strong></a>
+						#{/list}
+					</span>
+					<span class="countAnswer">답변수 <strong>${thread.answerCount}</strong></span>
+				</div>
+			</div>
+			<div class="nickArea">${thread.user.nickName}</div>
+			<div class="regDate">${thread.displayDate}</div>
+		</div>		
+		#{/list}
+		</div>
+		<div class="button-thread">
+			<a href="@{Threads.createForm(tagName)}">글쓰기</a>
+		</div>
+		<div class="paging-thread">
+			#{if tagName}
+			<div class="next"><a href="@{Threads.tagged(tagName, nextPageNo)}">다음목록</a></div>
+			<div class="prev"><a href="@{Threads.tagged(tagName, previousPageNo)}">이전목록</a></div>
+			#{/if}
+			#{else}
+			<div class="next"><a href="@{Threads.list(nextPageNo)}">다음목록</a></div>
+			<div class="prev"><a href="@{Threads.list(previousPageNo)}">이전목록</a></div>
+			#{/else}
+		</div>
+	</div>
+	
+	<!-- start sidebar -->
+	#{sidebar-tags tags:sortedTags /}
+	<!-- end sidebar -->
+</div>

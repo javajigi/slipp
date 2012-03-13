@@ -1,0 +1,10 @@
+	<div id="sidebar">
+		<h2>태그 목록</h2>
+		<ul>
+			#{list _tags, as:'tag'}
+			<li>
+				<a href="@{Threads.tagged(tag.name)}"><strong>${tag.name}</strong></a> X ${tag.taggedCount}
+			</li>
+			#{/list}
+		</ul>
+	</div>

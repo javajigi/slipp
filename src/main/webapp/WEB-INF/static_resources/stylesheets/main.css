@@ -1,0 +1,453 @@
+/*
+Design by Free CSS Templates
+http://www.freecsstemplates.org
+Released for free under a Creative Commons Attribution 2.5 License
+*/
+
+body {
+	margin-top: 10px;
+	padding: 0;
+	background: url(/public/images/img01.gif) repeat-x left top;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #6D6D6D;
+}
+
+h1, h2, h3 {
+	margin: 0;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-weight: normal;
+	color: #006EA6;
+}
+
+h1 {
+	letter-spacing: -1px;
+	font-size: 35px;
+}
+
+h2 {
+	font-size: 18px;
+}
+
+.post p {
+	margin: 0 0 2em 0;
+	text-align: justify;
+	line-height: 26px;	
+}
+
+img {
+	border: none;
+}
+
+img.left {
+	float: left;
+	margin: 7px 15px 0 0;
+}
+
+img.right {
+	float: right;
+	margin: 7px 0 0 15px;
+}
+
+/* Form */
+
+form {
+	margin: 0;
+	padding: 0;
+}
+
+fieldset {
+	margin: 0;
+	padding: 0;
+	border: none;
+}
+
+legend {
+	display: none;
+}
+
+input, textarea, select {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #333333;
+}
+
+#wrapper {
+}
+
+/* Header */
+
+#header {
+	width: 1100px;
+	height: 50px;
+	margin: 0 auto 20px auto;
+}
+
+#header .top {
+	float: right;
+	padding: 0 30px 0 0;
+}
+
+#logo h1 {
+	margin: 0;
+	padding: 0 0 0 30px;
+	font-size: 40px;
+	color: #0099E8;
+}
+
+#logo h1 sup {
+	vertical-align: text-top;
+	font-size: 24px;
+}
+
+#logo h1 a {
+	color: #5F9D10;
+}
+
+#logo h2 {
+	margin: 0;
+	padding: 0 0 0 30px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 15px;
+	color: #6D6D6D;
+}
+
+#logo a {
+	text-decoration: none;
+	color: #FFFFFF;
+}
+
+/* Menu */
+
+#menu {
+	float: right;
+}
+
+#menu ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+#menu li {
+	display: inline;
+}
+
+#menu a {
+	display: block;
+	float: left;
+	margin-left: 5px;
+	background: url(/public/images/img02.gif) repeat-x left top;
+	padding: 1px 10px;
+	text-decoration: none;
+	font-size: 12px;
+	color: #FFFFFF;
+}
+
+#menu a:hover {
+	text-decoration: underline;
+}
+
+#menu .active a {
+}
+
+/* Page */
+
+#page {
+	width: 1100px;
+	margin: 0 auto;
+	/* background: url(/public/images/img07.jpg) no-repeat left top; */
+}
+
+/* Content */
+
+#content {
+	float: left;
+	width: 800px;
+	padding: 30px 0 0 30px;
+}
+
+#content li.section {
+	padding:8px 0px 8px 0px;
+	border-bottom:3px solid #6f6f6f; 
+	list-style: none;
+}
+
+#content li.section h2{
+	padding:15px 0px 15px 0px;
+}
+
+/* Post */
+
+.rss {
+	float: right;
+	padding-bottom: 5px;
+}
+
+.button {
+	float: right;
+	padding-bottom: 5px;
+}
+
+.form {
+	float: left;
+}
+
+.post {
+	margin-bottom: 20px;
+	border-bottom: 1px dashed #D1D1D1;
+}
+
+.post .title {
+	height: 52px;
+	margin-bottom: 20px;
+	padding-bottom: 5px;
+	padding-left: 60px;
+	border-bottom: 1px dashed #D1D1D1;
+	background: url(/public/images/img04.gif) no-repeat left top;
+	color: #8BCB2F;
+}
+
+.post .title b {
+	font-weight: normal;
+	color: #0094E0;
+}
+
+.post .date p {
+	margin: 0;
+	padding: 0;
+}
+
+.post .date {
+	width: 50px;
+	margin-top: -80px;
+	padding-left: 4px;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 14px;
+	color: #283900;
+}
+
+.post .date b {
+	margin: 0;
+	padding: 0;
+	display: block;
+	margin-top: -13px;
+	font-size: 14px;
+	color: #283900;
+}
+
+.post .entry {
+}
+
+.post .meta {
+	margin: 0;
+	padding: 15px 0 60px 0;
+}
+
+.post .meta p {
+	margin: 0;
+	line-height: normal;
+}
+
+.post .meta .byline {
+	float: left;
+	color: #0000FF;
+}
+
+.post .meta .links {
+	float: left;
+}
+
+.post .meta .more {
+	width: 185px;
+	height: 35px;
+	padding: 5px 10px;
+	background: #8BCB2F;
+	border: 1px dashed #FFFFFF;
+	text-transform: uppercase;
+	text-decoration: none;
+	font-size: 9px;
+}
+
+.post .meta .comments {
+	padding: 5px 10px;
+	text-transform: uppercase;
+	text-decoration: none;
+	background: #0094E0;
+	border: 1px dashed #FFFFFF;
+	font-size: 9px;
+}
+
+.post .meta b {
+	display: none;
+}
+
+.post .meta a {
+	color: #FFFFFF;
+}
+/* Sidebar */
+
+#sidebar {
+	float: right;
+	width: 200px;
+	padding-right: 30px;
+	padding-top: 20px;
+}
+
+#sidebar h2 {
+	padding-top: 20px;
+}
+
+#sidebar ul {
+	margin: 0;
+	padding: 10px 0 0 0;
+	list-style: none;
+}
+
+#sidebar li {
+	margin: 5px 0 5px 0;
+	padding: 5px 0 5px 0;
+	border-bottom: 1px dashed #D1D1D1;
+}
+
+#sidebar h2 {
+	padding-bottom: 5px;
+	font-size: 18px;
+	font-weight: normal;
+	color: #0094E0;
+}
+
+#sidebar strong, #sidebar b {
+	color: #8BCB2F;
+}
+
+#sidebar a {
+	text-decoration: none;
+	color: #6D6D6D;
+}
+
+#sidebar .button a {
+	text-decoration: none;
+	color: #0094E0;
+}
+
+/* Search */
+
+#search {
+}
+
+#search h2 {
+}
+
+#s {
+	width: 150px;
+	margin-right: 5px;
+	padding: 3px;
+	border: 1px solid #F0F0F0;
+}
+
+#x {
+	padding: 3px;
+	border: none;
+	text-transform: lowercase;
+	font-size: 11px;
+	color: #4F4F4F;
+}
+
+/* Boxes */
+
+.box1 {
+	padding: 20px;
+}
+
+.box2 {
+	color: #BABABA;
+}
+
+.box2 h2 {
+	margin-bottom: 15px;
+	font-size: 16px;
+	color: #FFFFFF;
+}
+
+.box2 ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.box2 a:link, .box2 a:hover, .box2 a:active, .box2 a:visited  {
+	color: #EDEDED;
+}
+
+.list {
+	float: left;
+	margin-top: 30px;
+}
+
+/* Footer */
+
+#footer {
+	width: 1100px;
+	/* background: url(/public/images/img07.jpg) no-repeat left top; */
+	margin: 0 auto;
+	padding: 10px 0 0 60px;
+	color: #353535;
+}
+
+html>body #footer {
+	height: auto;
+}
+
+#footer-menu {
+}
+
+#legal {
+	clear: both;
+	font-size: 11px;
+	color: #6D6D6D;
+}
+
+#legal a {
+	color: #0094E0;
+}
+
+#footer-menu {
+	float: left;
+	color: #353535;
+	text-transform: capitalize;
+}
+
+#footer-menu ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+#footer-menu li {
+	display: inline;
+}
+
+#footer-menu a {
+	display: block;
+	float: left;
+	padding: 1px 15px 1px 15px;
+	text-decoration: none;
+	font-size: 11px;
+	color: #6D6D6D;
+}
+
+#footer-menu a:hover {
+	text-decoration: underline;
+}
+
+#footer-menu .active a {
+	padding-left: 0;
+}
+
+label.error {
+  background:url("/public/images/unchecked.gif") no-repeat 0px 0px;
+  padding-left: 16px;
+  padding-bottom: 2px;
+  font-weight: bold;
+  color: #EA5200;
+}

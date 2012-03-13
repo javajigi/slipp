@@ -1,0 +1,70 @@
+#{extends 'main.html' /}
+#{set title:'SLiPP :: ' + thread.title /}
+#{set 'moreStyles'}
+<link rel="stylesheet" media="screen" href="@{'/public/stylesheets/wiki-style.css'}" />
+<link rel="stylesheet" media="screen" href="@{'/public/stylesheets/wiki-textile-style.css'}" />
+<link rel="stylesheet" media="screen" href="@{'/public/stylesheets/wiki-imageupload-plugins.css'}" />
+<link rel="stylesheet" media="screen" href="@{'/public/stylesheets/sh/shCoreDefault.css'}" />
+<link rel="stylesheet" media="screen" href="@{'/public/stylesheets/sh/shThemeEclipse.css'}" />
+<link rel="stylesheet" media="screen" href="@{'/public/stylesheets/boards.css'}">
+<style type="text/css">
+.markItUpEditor {
+	height:200px;
+}
+</style>
+#{/set}
+
+#{set 'moreScripts'}
+<script type="text/javascript">
+var uploaderUrl = "${play.configuration['domain.uploader']}";
+</script>
+<script src="http://ajax.microsoft.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>
+<script type="text/javascript" src="@{'/public/javascripts/jquery.markitup.js'}"></script>
+<script type="text/javascript" src="@{'/public/javascripts/threads/thread-set.js'}"></script>
+<script type="text/javascript"	src="@{'/public/javascripts/threads/image.upload.js'}"></script>
+<script type="text/javascript" src="@{'/public/javascripts/threads/show.js'}"></script>
+<script type="text/javascript" src="@{'/public/javascripts/sh/shCore.js'}"></script>
+<script type="text/javascript" src="@{'/public/javascripts/sh/shAutoloader.js'}"></script>
+#{/set}
+<div id="page">
+	<!-- start content -->
+	<div id="content">
+		#{if errorMessage}
+		<label class="error">${errorMessage}</label>
+		#{/if}	
+		<div class="forumView">
+			<div class="nickArea"> 
+				<p class='nick'>${thread.user.nickName}</p>
+				<p class="regDate">${thread.displayDate}</p> 
+			</div>
+			<div class="cont">
+				<strong class="subject">${thread.title}</strong>
+				<div>${thread.displayContents.raw()}</div>
+			</div>
+		</div>	
+		<div class="follow">
+			<p class="tags">
+			#{list thread.tags, as:'tag'}
+			<a href="@{Threads.tagged(tag.name)}"><strong>${tag.name}</strong></a>
+			#{/list}			
+			</p>
+			<p class="count"><span  class="answerNum">답변수 <strong>${thread.answerCount}</strong></span></p>
+		</div>		
+	
+		<div class="form">
+		#{form @Threads.updateAnswer(thread.id, answer.id), id:'answersForm'}
+		<textarea id="contents" name="contents" cols="75" rows="20">${answer.contents}</textarea>
+		<br/>	
+		<div class="button">
+			<input type="submit" value="답글달기"/>
+		</div>
+		#{/form}
+		</div>
+	</div>
+	<!-- end content -->
+	
+	<!-- start sidebar -->
+	#{sidebar-tags tags:sortedTags /}
+	<!-- end sidebar -->
+	<div style="clear: both;">&nbsp;</div>
+</div>
