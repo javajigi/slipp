@@ -9,7 +9,7 @@
 	<properties>
 		<org.slf4j.version>1.6.1</org.slf4j.version>
 		<jpa.version>2.0.0</jpa.version>
-		<hibernate.version>3.5.6-Final</hibernate.version>	
+		<hibernate.version>3.5.6-Final</hibernate.version>
 		<org.springframework.version>3.1.0.RELEASE</org.springframework.version>
 		<org.springframework.social.version>1.0.1.RELEASE</org.springframework.social.version>
 		<org.springframework.security.version>3.1.0.RELEASE</org.springframework.security.version>
@@ -50,7 +50,7 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
 			<version>${org.springframework.version}</version>
-		</dependency>		
+		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
@@ -95,7 +95,7 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-taglibs</artifactId>
 			<version>${org.springframework.security.version}</version>
-		</dependency>		
+		</dependency>
 		<dependency>
 			<groupId>commons-dbcp</groupId>
 			<artifactId>commons-dbcp</artifactId>
@@ -134,7 +134,7 @@
 			<artifactId>jcl-over-slf4j</artifactId>
 			<version>${org.slf4j.version}</version>
 		</dependency>
-				
+
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
@@ -156,6 +156,25 @@
 			<groupId>org.glassfish.web</groupId>
 			<artifactId>jstl-impl</artifactId>
 			<version>1.2</version>
+		</dependency>
+		
+		<!-- Apache Commons -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>1.4</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.5</version>
+		</dependency>
+		
+		<!-- Sitemesh -->
+		<dependency>
+			<groupId>opensymphony</groupId>
+			<artifactId>sitemesh</artifactId>
+			<version>2.4.2</version>
 		</dependency>
 	</dependencies>
 	<build>

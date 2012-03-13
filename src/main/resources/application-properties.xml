@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>application-properties</comment>
+
+	<entry key="environment">DEVELOPMENT</entry>
+
+	<!-- Site -->
+	<entry key="resources.cache.seconds">0</entry>
+</properties>

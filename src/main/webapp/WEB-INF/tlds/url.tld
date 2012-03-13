@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib version="2.0" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee web-jsptaglibrary_2_0.xsd">
+	<tlib-version>1.0</tlib-version>
+	<short-name>url</short-name>
+	<uri>http://www.slipp.net/url</uri>
+	<function>
+		<name>js</name>
+		<function-class>net.slipp.support.web.tags.UrlTag</function-class>
+		<function-signature>
+			java.lang.String js(java.lang.String)
+		</function-signature>
+	</function>
+
+	<function>
+		<name>img</name>
+		<function-class>net.slipp.support.web.tags.UrlTag</function-class>
+		<function-signature>
+			java.lang.String img(java.lang.String)
+		</function-signature>
+	</function>
+
+	<function>
+		<name>imgF</name>
+		<function-class>net.slipp.support.web.tags.UrlTag</function-class>
+		<function-signature>
+			java.lang.String imgFormat(java.lang.String, java.lang.String)
+		</function-signature>
+	</function>
+	<function>
+		<name>imgF2</name>
+		<function-class>net.slipp.support.web.tags.UrlTag</function-class>
+		<function-signature>
+			java.lang.String imgFormat(java.lang.String, java.lang.String, java.lang.String)
+		</function-signature>
+	</function>
+
+	<function>
+		<name>resource</name>
+		<function-class>net.slipp.support.web.tags.UrlTag</function-class>
+		<function-signature>
+			java.lang.String resource(java.lang.String)
+		</function-signature>
+	</function>
+
+	<function>
+		<name>resourceF</name>
+		<function-class>net.slipp.support.web.tags.UrlTag</function-class>
+		<function-signature>
+			java.lang.String resourceFormat(java.lang.String, java.lang.String)
+		</function-signature>
+	</function>
+
+	<function>
+		<name>resourceF2</name>
+		<function-class>net.slipp.support.web.tags.UrlTag</function-class>
+		<function-signature>
+			java.lang.String resourceFormat(java.lang.String, java.lang.String, java.lang.String)
+		</function-signature>
+	</function>
+
+	<function>
+		<name>swf</name>
+		<function-class>net.slipp.support.web.tags.UrlTag</function-class>
+		<function-signature>
+			java.lang.String swf(java.lang.String)
+		</function-signature>
+	</function>
+
+	<function>
+		<name>lib</name>
+		<function-class>net.slipp.support.web.tags.UrlTag</function-class>
+		<function-signature>
+			java.lang.String lib(java.lang.String)
+		</function-signature>
+	</function>
+
+	<function>
+		<name>style</name>
+		<function-class>net.slipp.support.web.tags.UrlTag</function-class>
+		<function-signature>
+			java.lang.String style(java.lang.String)
+		</function-signature>
+	</function>
+</taglib>

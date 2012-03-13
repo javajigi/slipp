@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib version="2.0" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee web-jsptaglibrary_2_0.xsd">
+	<tlib-version>1.0</tlib-version>
+	<short-name>sf</short-name>
+	<uri>http://slipp.net/functions</uri>
+	<function>
+		<description>문자열의 HTML을 Escape한다.</description>
+		<name>h</name>
+		<function-class>net.slipp.support.web.tags.SlippFunctions</function-class>
+		<function-signature>
+			java.lang.String h(java.lang.String)
+		</function-signature>
+		<example>${xf:h("hello world")}</example>
+	</function>
+	<function>
+		<description>문자열의 새줄기호를 &lt;br&gt; 로 변경한다.</description>
+		<name>br</name>
+		<function-class>net.slipp.support.web.tags.SlippFunctions</function-class>
+		<function-signature>
+			java.lang.String br(java.lang.String)
+		</function-signature>
+	</function>
+	<function>
+		<description>문자열의 HTML을 Escape해 주고, 새줄기호를 &lt;br&gt;로 변경한다.</description>
+		<name>hbr</name>
+		<function-class>net.slipp.support.web.tags.SlippFunctions</function-class>
+		<function-signature>
+			java.lang.String hbr(java.lang.String)
+		</function-signature>
+	</function>
+	<function>
+		<description>
+			일반 문자열을 범용적인 형태로 화면상에 출력한다. HTML Escape를 수행하고,
+			새줄 기호를 &lt;br&gt; 태그로 바꾸고,
+			링크 문자열(http://... 등)에 &lt;a&gt; 태그를 지정해준다.
+		</description>
+		<name>plainText</name>
+		<function-class>net.slipp.support.web.tags.SlippFunctions</function-class>
+		<function-signature>
+			java.lang.String plainText(java.lang.String)
+		</function-signature>
+	</function>
+	<function>
+		<description>
+			일반 문자열을 범용적인 형태로 화면상에 출력한다. TRIM을 하고 HTML Escape를 수행하고,
+			새줄 기호를 &lt;br&gt; 태그로 바꾸고,
+			링크 문자열(http://... 등)에 &lt;a&gt; 태그를 지정해준다.
+		</description>
+		<name>trimPlainText</name>
+		<function-class>net.slipp.support.web.tags.SlippFunctions</function-class>
+		<function-signature>
+			java.lang.String trimPlainText(java.lang.String)
+		</function-signature>
+	</function>
+	<function>
+		<description>UTF-8 URL Encoding을 수행한다.</description>
+		<name>urlEncode</name>
+		<function-class>net.slipp.support.web.tags.SlippFunctions</function-class>
+		<function-signature>
+			java.lang.String urlEncode(java.lang.String)
+		</function-signature>
+	</function>
+	<function>
+		<description>첫번째 표현식이 true이면 두번째 인자를 리턴한다.</description>
+		<name>whenTrue</name>
+		<function-class>net.slipp.support.web.tags.SlippFunctions</function-class>
+		<function-signature>
+			java.lang.String whenTrue(boolean, java.lang.Object)
+		</function-signature>
+	</function>
+	<function>
+		<description>첫번째 표현식이 true이면 두번째 인자를, false이면 세번째 인자를 리턴한다.</description>
+		<name>whenTrueOr</name>
+		<function-class>net.slipp.support.web.tags.SlippFunctions</function-class>
+		<function-signature>
+			java.lang.String whenTrueOr(boolean, java.lang.Object, java.lang.Object)
+		</function-signature>
+	</function>
+	<function>
+		<description>첫번째 표현식이 false이면 두번째 인자를 리턴한다.</description>
+		<name>whenFalse</name>
+		<function-class>net.slipp.support.web.tags.SlippFunctions</function-class>
+		<function-signature>
+			java.lang.String whenFalse(boolean, java.lang.Object)
+		</function-signature>
+	</function>
+	<function>
+		<description>특정 길이 이하의 글자만 남기고 리턴한다.</description>
+		<name>cut</name>
+		<function-class>net.slipp.support.web.tags.SlippFunctions</function-class>
+		<function-signature>
+			java.lang.String cut(java.lang.String, int, java.lang.String)
+		</function-signature>
+	</function>
+	<function>
+		<description>특정 길이 이하의 글자만 남기고 리턴한다.</description>
+		<name>links</name>
+		<function-class>net.slipp.support.web.tags.SlippFunctions</function-class>
+		<function-signature>
+			java.lang.String links(java.lang.String)
+		</function-signature>
+	</function>
+	<function>
+		<name>instanceOf</name>
+		<function-class>net.slipp.support.web.tags.SlippFunctions</function-class>
+		<funcnet.slippure>boolean instanceOf(java.lang.Object, java.lang.String)</function-signature>
+	</function>
+	<function>
+		<description>컬렉션이 객체를 포함하고 있는지 여부를 리턴한다.</description>
+		<name>hasItem</name>
+		<function-class>net.slipp.support.web.tags.SlippFunctions</function-class>
+		<function-signature>
+			java.lang.Boolean hasItem(java.util.Collection, java.lang.Object)
+		</function-signature>
+	</function>
+	<function>
+		<description>글의 태그를 모두 제거하고, 특정 길이 이하의 글자만 남기고 리턴한다.</description>
+		<name>stripTagsAndCut</name>
+		<function-class>net.slipp.support.web.tags.SlippFunctions</function-class>
+		<function-signature>
+			java.lang.String stripTagsAndCut(java.lang.String, int, java.lang.String)
+		</function-signature>
+	</function>
+</taglib>
