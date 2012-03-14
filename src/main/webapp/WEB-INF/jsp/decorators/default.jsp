@@ -1,32 +1,34 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%><%@ taglib prefix="decorator" uri="http://www.opensymphony.com/sitemesh/decorator"
+%><%@include file="/WEB-INF/jsp/include/tags.jspf"%><!DOCTYPE html>
 <html lang="ko">
-    <head>
-        <title>#{get 'title' /}</title>
-        <meta charset="utf-8">
-        <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}">
-        #{get 'moreStyles' /}
-        <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
-    </head>
+<head>
+<meta charset="utf-8"/>
+<title><decorator:title default="SLiPP"/></title>
+<decorator:head />
+</head>
 <body>
 <!-- start header -->
 <div id="header">
 	<div class="top">
+	<%--
 	#{if isUserLoggedIn}
-		${user.email}&nbsp;&nbsp;<a href="@{Application.logout()}">로그아웃</a>
+		${user.email}&nbsp;&nbsp;<a href="@{Application.logout()}">ë¡ê·¸ìì</a>
 	#{/if}
 	#{else}
-		<a href="@{Application.login()}">로그인</a>
+		<a href="@{Application.login()}">ë¡ê·¸ì¸</a>
 	#{/else}
+	 --%>
 	</div>
 	<div id="logo">
 		<h1><a href="/">SLiPP<sup></sup></a></h1>
-		<h2>지속가능한 삶, 프로그래밍, 프로그래머(sustainable life, programming, programmer)</h2>
+		<h2>지속 가능한 삶, 프로그래밍, 프로그래머(sustainable life, programming, programmer)</h2>
 	</div>
-	#{gnb-menu /}
+	<%-- #{gnb-menu /}  --%>
 </div>
 <!-- end header -->
 
-#{doLayout /}
+<decorator:body/>
 
 <!-- start footer -->
 <div id="footer">
@@ -36,11 +38,6 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js"></script>
-<script type="text/javascript">
-document.domain = "slipp.net";
-</script>
-
-#{get 'moreScripts' /}
 
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
@@ -53,4 +50,3 @@ pageTracker._trackPageview();
 } catch(err) {}</script>
 </body>
 </html>
-

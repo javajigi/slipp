@@ -102,9 +102,10 @@
 		</function-signature>
 	</function>
 	<function>
+		<description>인스턴인지를 검증한다.</description>
 		<name>instanceOf</name>
 		<function-class>net.slipp.support.web.tags.SlippFunctions</function-class>
-		<funcnet.slippure>boolean instanceOf(java.lang.Object, java.lang.String)</function-signature>
+		<function-signature>boolean instanceOf(java.lang.Object, java.lang.String)</function-signature>
 	</function>
 	<function>
 		<description>컬렉션이 객체를 포함하고 있는지 여부를 리턴한다.</description>

@@ -19,7 +19,7 @@
 			java.lang.String img(java.lang.String)
 		</function-signature>
 	</function>
-
+	
 	<function>
 		<name>imgF</name>
 		<function-class>net.slipp.support.web.tags.UrlTag</function-class>
@@ -81,5 +81,5 @@
 		<function-signature>
 			java.lang.String style(java.lang.String)
 		</function-signature>
-	</function>
+	</function>	
 </taglib>
