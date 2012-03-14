@@ -3,8 +3,9 @@
 %><%@include file="/WEB-INF/jsp/include/tags.jspf"%><!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="utf-8"/>
 <title><decorator:title default="SLiPP"/></title>
+<meta charset="utf-8"/>
+<link rel="stylesheet" href="${url:resource('/stylesheets/main.css')}" type="text/css" />
 <decorator:head />
 </head>
 <body>

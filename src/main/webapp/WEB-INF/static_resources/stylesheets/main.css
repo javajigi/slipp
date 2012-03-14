@@ -7,7 +7,7 @@ Released for free under a Creative Commons Attribution 2.5 License
 body {
 	margin-top: 10px;
 	padding: 0;
-	background: url(/public/images/img01.gif) repeat-x left top;
+	background: url(/images/img01.gif) repeat-x left top;
 	font-family: Arial, Helvetica, sans-serif;
 	color: #6D6D6D;
 }
@@ -136,7 +136,7 @@ input, textarea, select {
 	display: block;
 	float: left;
 	margin-left: 5px;
-	background: url(/public/images/img02.gif) repeat-x left top;
+	background: url(/images/img02.gif) repeat-x left top;
 	padding: 1px 10px;
 	text-decoration: none;
 	font-size: 12px;
@@ -155,7 +155,7 @@ input, textarea, select {
 #page {
 	width: 1100px;
 	margin: 0 auto;
-	/* background: url(/public/images/img07.jpg) no-repeat left top; */
+	/* background: url(/images/img07.jpg) no-repeat left top; */
 }
 
 /* Content */
@@ -203,7 +203,7 @@ input, textarea, select {
 	padding-bottom: 5px;
 	padding-left: 60px;
 	border-bottom: 1px dashed #D1D1D1;
-	background: url(/public/images/img04.gif) no-repeat left top;
+	background: url(/images/img04.gif) no-repeat left top;
 	color: #8BCB2F;
 }
 
@@ -388,7 +388,7 @@ input, textarea, select {
 
 #footer {
 	width: 1100px;
-	/* background: url(/public/images/img07.jpg) no-repeat left top; */
+	/* background: url(/images/img07.jpg) no-repeat left top; */
 	margin: 0 auto;
 	padding: 10px 0 0 60px;
 	color: #353535;
@@ -445,7 +445,7 @@ html>body #footer {
 }
 
 label.error {
-  background:url("/public/images/unchecked.gif") no-repeat 0px 0px;
+  background:url("/images/unchecked.gif") no-repeat 0px 0px;
   padding-left: 16px;
   padding-bottom: 2px;
   font-weight: bold;
