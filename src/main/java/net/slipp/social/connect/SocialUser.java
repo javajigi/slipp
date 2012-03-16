@@ -44,6 +44,7 @@ public class SocialUser {
 	private String secret;
 
 	private String refreshToken;
+	
 	private Long expireTime;
 
 	private Date createDate = new Date();

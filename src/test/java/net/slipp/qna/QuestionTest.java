@@ -2,38 +2,26 @@ package net.slipp.qna;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
-import net.slipp.social.connect.SocialUser;
+import net.slipp.qna.repository.MockTagRepository;
+import net.slipp.qna.repository.TagRepository;
 
 import org.junit.Before;
 import org.junit.Test;
 
 public class QuestionTest {
 	private Question dut;
+	private TagRepository tagRepository;
 	
 	@Before
 	public void setup() {
 		dut = new Question();
+		tagRepository = new MockTagRepository();
 	}
 	
 	@Test
-	public void newQuestion() throws Exception {
-		dut = createQuestion();
-		Tag tag = new Tag("java");
-		dut.taggedBy(tag);
-	}
-
-	private Question createQuestion() {
-		SocialUser writer = new SocialUser();
-		String title = "title";
-		String contents = "contents";
-		return Question.create(writer, title, contents);
-	}
-	
-	@Test
-	public void tagged() throws Exception {
-		String plainTags = "java javascript";
-		dut = createQuestion();
-		dut.tags(plainTags);
+	public void newQuestion_to() throws Exception {
+		Question dut = new QuestionBuilder().tags("java javascript").build();
+		dut.parseAndLoadTags(tagRepository);
 		assertThat(dut.getTags().size(), is(2));
 	}
 	

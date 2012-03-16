@@ -23,7 +23,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
+import net.slipp.qna.repository.TagRepository;
 import net.slipp.social.connect.SocialUser;
 
 import com.google.common.collect.Iterables;
@@ -67,6 +69,9 @@ public class Question {
 	@JoinTable(name = "question_tag", joinColumns = @JoinColumn(name = "question_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
 	@org.hibernate.annotations.ForeignKey(name = "fk_question_tag_question_id", inverseName = "fk_question_tag_tag_id")
 	private Set<Tag> tags;
+	
+	@Transient
+	private String plainTags;
 
 	@OneToMany(mappedBy = "question", fetch = FetchType.LAZY)
 	@OrderBy("answerId DESC")
@@ -75,10 +80,11 @@ public class Question {
 	public Question() {
 	}
 	
-	public Question(SocialUser writer, String title, String contents) {
+	public Question(SocialUser writer, String title, String contents, String plainTags) {
 		this.writer = writer;
 		this.title = title;
 		setContents(contents);
+		this.plainTags = plainTags;
 	}
 
 	public void addAnswer(Answer answer) {
@@ -131,15 +137,15 @@ public class Question {
 		return Iterables.getFirst(contentsHolder, "");
 	}
 
-	public static Question create(SocialUser writer, String title, String contents) {
-		return new Question(writer, title, contents);
+	public static Question create(SocialUser writer, String title, String contents, String plainTags) {
+		return new Question(writer, title, contents, plainTags);
 	}
-
-	public void tags(String plainTags) {
+	
+	public void parseAndLoadTags(TagRepository tagRepository) {
 		StringTokenizer tokenizer = new StringTokenizer(plainTags, " ");
 		while (tokenizer.hasMoreTokens()) {
 			String token = tokenizer.nextToken();
-			taggedBy(new Tag(token));
+			taggedBy(tagRepository.findByName(token));
 		}
 	}
 }
