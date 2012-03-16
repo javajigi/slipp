@@ -20,6 +20,10 @@ public class Tag {
 	@org.hibernate.annotations.ForeignKey(name = "fk_tag_parent_id")
 	public Tag parent;
 
+	public Tag(String name) {
+		this.name = name;
+	}
+
 	public void tagged() {
 		taggedCount += 1;
 	}

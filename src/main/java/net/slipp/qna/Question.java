@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.StringTokenizer;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -97,7 +98,7 @@ public class Question {
 		return answerCount;
 	}
 	
-	public void addTag(Tag tag) {
+	public void taggedBy(Tag tag) {
 		if (tags == null) {
 			tags = Sets.newHashSet();
 		}
@@ -132,5 +133,13 @@ public class Question {
 
 	public static Question create(SocialUser writer, String title, String contents) {
 		return new Question(writer, title, contents);
+	}
+
+	public void tags(String plainTags) {
+		StringTokenizer tokenizer = new StringTokenizer(plainTags, " ");
+		while (tokenizer.hasMoreTokens()) {
+			String token = tokenizer.nextToken();
+			taggedBy(new Tag(token));
+		}
 	}
 }

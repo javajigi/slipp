@@ -17,12 +17,24 @@ public class QuestionTest {
 	
 	@Test
 	public void newQuestion() throws Exception {
+		dut = createQuestion();
+		Tag tag = new Tag("java");
+		dut.taggedBy(tag);
+	}
+
+	private Question createQuestion() {
 		SocialUser writer = new SocialUser();
 		String title = "title";
 		String contents = "contents";
-		dut = Question.create(writer, title, contents);
-		Tag tag = new Tag();
-		dut.addTag(tag);
+		return Question.create(writer, title, contents);
+	}
+	
+	@Test
+	public void tagged() throws Exception {
+		String plainTags = "java javascript";
+		dut = createQuestion();
+		dut.tags(plainTags);
+		assertThat(dut.getTags().size(), is(2));
 	}
 	
 	@Test
@@ -37,8 +49,8 @@ public class QuestionTest {
 	
 	@Test
 	public void addTag() throws Exception {
-		Tag tag = new Tag();
-		dut.addTag(tag);
+		Tag tag = new Tag("java");
+		dut.taggedBy(tag);
 		assertThat(dut.getTags().size(), is(1));
 		assertThat(tag.getTaggedCount(), is(1));
 	}

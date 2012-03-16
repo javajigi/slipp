@@ -11,7 +11,7 @@ public class TagTest {
 	
 	@Before
 	public void setup() {
-		dut = new Tag();
+		dut = new Tag("java");
 	}
 
 	@Test
