@@ -11,6 +11,9 @@ public class MockTagRepository implements TagRepository {
 		put("java", new Tag("java"));
 		put("javascript", new Tag("javascript"));
 		put("html", new Tag("html"));
+		put("tdd", new Tag("tdd"));
+		put("eclipse", new Tag("eclipse"));
+		put("maven", new Tag("maven"));
 	}};
 	
 	@Override

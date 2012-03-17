@@ -1,5 +1,6 @@
 package net.slipp.qna;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,6 +13,7 @@ public class Tag {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long tagId;
 	
+	@Column(name = "name", length = 50, nullable = false)
 	private String name;
 	
 	private int taggedCount = 0;
