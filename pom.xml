@@ -231,5 +231,7 @@
 	</build>
 	<reports>
 		<report>maven-emma-plugin</report>
+		<report>maven-pmd-plugin</report>
+		<report>jdepend-maven-plugin</report>
 	</reports>
 </project>
