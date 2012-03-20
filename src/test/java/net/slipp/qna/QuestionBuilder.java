@@ -32,6 +32,6 @@ public class QuestionBuilder {
 	}
 	
 	public Question build() {
-		return Question.create(writer, title, contents, tags);
+		return new Question(writer, title, contents, tags);
 	}
 }

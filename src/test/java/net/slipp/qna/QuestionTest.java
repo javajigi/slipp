@@ -1,16 +1,15 @@
 package net.slipp.qna;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 import net.slipp.qna.repository.MockTagRepository;
-import net.slipp.qna.repository.TagRepository;
 
 import org.junit.Before;
 import org.junit.Test;
 
 public class QuestionTest {
 	private Question dut;
-	private TagRepository tagRepository;
+	private MockTagRepository tagRepository;
 	
 	@Before
 	public void setup() {
@@ -19,10 +18,26 @@ public class QuestionTest {
 	}
 	
 	@Test
-	public void newQuestion_to() throws Exception {
+	public void newQuestion() throws Exception {
 		Question dut = new QuestionBuilder().tags("java javascript").build();
-		dut.parseAndLoadTags(tagRepository);
+		dut.initializeTags(tagRepository);
 		assertThat(dut.getTags().size(), is(2));
+		assertThat(tagRepository.findByName("java").getTaggedCount(), is(1));
+		assertThat(tagRepository.findByName("javascript").getTaggedCount(), is(1));
+	}
+	
+	@Test
+	public void updateQuestion() throws Exception {
+		Question dut = new QuestionBuilder().tags("java javascript").build();
+		dut.initializeTags(tagRepository);
+		dut.setPalinTags("maven java eclipse");
+		dut.initializeTags(tagRepository);
+		assertThat(dut.getTags().size(), is(3));
+		
+		assertThat(tagRepository.findByName("maven").getTaggedCount(), is(1));
+		assertThat(tagRepository.findByName("java").getTaggedCount(), is(1));
+		assertThat(tagRepository.findByName("eclipse").getTaggedCount(), is(1));
+		assertThat(tagRepository.findByName("javascript").getTaggedCount(), is(0));
 	}
 	
 	@Test
@@ -33,14 +48,6 @@ public class QuestionTest {
 		assertThat(dut.getAnswerCount(), is(1));
 		
 		assertThat(answer.getQuestion(), is(dut));
-	}
-	
-	@Test
-	public void addTag() throws Exception {
-		Tag tag = new Tag("java");
-		dut.taggedBy(tag);
-		assertThat(dut.getTags().size(), is(1));
-		assertThat(tag.getTaggedCount(), is(1));
 	}
 	
 	@Test
