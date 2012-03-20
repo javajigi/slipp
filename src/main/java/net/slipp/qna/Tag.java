@@ -37,4 +37,9 @@ public class Tag {
 	public void deTagged() {
 		taggedCount -= 1;
 	}
+
+	@Override
+	public String toString() {
+		return "Tag [tagId=" + tagId + ", name=" + name + ", taggedCount=" + taggedCount + "]";
+	}
 }

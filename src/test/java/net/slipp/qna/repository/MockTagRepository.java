@@ -7,7 +7,7 @@ import net.slipp.qna.Tag;
 
 public class MockTagRepository implements TagRepository {
 	@SuppressWarnings("serial")
-	static Map<String, Tag> tags = new HashMap<String, Tag>() {{
+	Map<String, Tag> tags = new HashMap<String, Tag>() {{
 		put("java", new Tag("java"));
 		put("javascript", new Tag("javascript"));
 		put("html", new Tag("html"));

@@ -151,7 +151,7 @@ public class Question {
 
 	private void removeTags(Set<Tag> newTags, Set<Tag> orginalTags) {
 		SetView<Tag> removedTags = Sets.difference(orginalTags, newTags);
-		logger.debug("removedTags size : {}", removedTags.size());
+		logger.debug("removedTags : {}", removedTags);
 		for (Tag tag : removedTags) {
 			tag.deTagged();
 		}
@@ -159,7 +159,7 @@ public class Question {
 
 	private void addNewTags(Set<Tag> newTags, Set<Tag> orginalTags) {
 		SetView<Tag> addedTags = Sets.difference(newTags, orginalTags);
-		logger.debug("addedTags size : {}", addedTags.size());
+		logger.debug("addedTags : {}", addedTags);
 		for (Tag tag : addedTags) {
 			tag.tagged();
 		}

@@ -1,7 +1,7 @@
 package net.slipp.qna;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
 import net.slipp.qna.repository.MockTagRepository;
 
 import org.junit.Before;
@@ -30,6 +30,7 @@ public class QuestionTest {
 	public void updateQuestion() throws Exception {
 		Question dut = new QuestionBuilder().tags("java javascript").build();
 		dut.initializeTags(tagRepository);
+		
 		dut.setPalinTags("maven java eclipse");
 		dut.initializeTags(tagRepository);
 		assertThat(dut.getTags().size(), is(3));
