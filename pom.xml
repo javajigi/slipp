@@ -228,6 +228,8 @@
 				</configuration>
 			</plugin>
 		</plugins>
-
 	</build>
+	<reports>
+		<report>maven-emma-plugin</report>
+	</reports>
 </project>
