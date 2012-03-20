@@ -115,7 +115,6 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>${hibernate.version}</version>
-			<scope>runtime</scope>
 		</dependency>
 
 		<!-- Log - slf4j -->
