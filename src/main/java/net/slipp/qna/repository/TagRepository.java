@@ -1,6 +1,6 @@
 package net.slipp.qna.repository;
 
-import net.slipp.qna.Tag;
+import net.slipp.qna.domain.Tag;
 
 import org.springframework.data.repository.CrudRepository;
 

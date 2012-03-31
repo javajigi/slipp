@@ -3,7 +3,7 @@ package net.slipp.qna.repository;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.slipp.qna.Tag;
+import net.slipp.qna.domain.Tag;
 
 public class MockTagRepository implements TagRepository {
 	@SuppressWarnings("serial")

@@ -1,4 +1,4 @@
-package net.slipp.qna;
+package net.slipp.qna.domain;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
@@ -30,8 +30,7 @@ public class QuestionTest {
 	public void updateQuestion() throws Exception {
 		Question dut = new QuestionBuilder().tags("java javascript").build();
 		dut.initializeTags(tagRepository);
-		
-		dut.setPalinTags("maven java eclipse");
+		dut.setPlainTags("maven java eclipse");
 		dut.initializeTags(tagRepository);
 		assertThat(dut.getTags().size(), is(3));
 		

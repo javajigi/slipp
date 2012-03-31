@@ -1,4 +1,4 @@
-package net.slipp.qna;
+package net.slipp.qna.domain;
 
 import java.util.Collection;
 import java.util.Date;
@@ -10,6 +10,7 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,7 +20,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -27,6 +27,8 @@ import javax.persistence.Transient;
 
 import net.slipp.qna.repository.TagRepository;
 import net.slipp.social.connect.SocialUser;
+import net.slipp.support.jpa.CreatedAndUpdatedDateEntityListener;
+import net.slipp.support.jpa.HasCreatedAndUpdatedDate;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,16 +39,19 @@ import com.google.common.collect.Sets;
 import com.google.common.collect.Sets.SetView;
 
 @Entity
-public class Question {
-	private Logger logger = LoggerFactory.getLogger(Question.class);
+@EntityListeners({ CreatedAndUpdatedDateEntityListener.class })
+public class Question implements HasCreatedAndUpdatedDate {
+	private static final Logger logger = LoggerFactory.getLogger(Question.class);
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long questionId;
 
-	@OneToOne
-	@org.hibernate.annotations.ForeignKey(name = "fk_question_social_user_id")
-	private SocialUser writer;
+	@Column(name = "writer_id", nullable = false)
+	private String writerId;
+	
+	@Column(name = "writer_name", nullable = false)
+	private String writerName;
 
 	@Column(name = "title", length=100, nullable = false)
 	private String title;
@@ -87,8 +92,9 @@ public class Question {
 	public Question() {
 	}
 	
-	Question(SocialUser writer, String title, String contents, String plainTags) {
-		this.writer = writer;
+	Question(String writerId, String writerName, String title, String contents, String plainTags) {
+		this.writerId = writerId;
+		this.writerName = writerName;
 		this.title = title;
 		setContents(contents);
 		this.plainTags = plainTags;
@@ -136,10 +142,6 @@ public class Question {
 		return Iterables.getFirst(contentsHolder, "");
 	}
 
-	public void setPalinTags(String plainTags) {
-		this.plainTags = plainTags;
-	}
-	
 	public void initializeTags(TagRepository tagRepository) {
 		Set<String> parsedTags = parseTags();
 		Set<Tag> newTags = loadTags(parsedTags, tagRepository);
@@ -151,7 +153,7 @@ public class Question {
 
 	private void removeTags(Set<Tag> newTags, Set<Tag> orginalTags) {
 		SetView<Tag> removedTags = Sets.difference(orginalTags, newTags);
-		logger.debug("removedTags : {}", removedTags);
+		logger.debug("removedTags size : {}", removedTags.size());
 		for (Tag tag : removedTags) {
 			tag.deTagged();
 		}
@@ -159,7 +161,7 @@ public class Question {
 
 	private void addNewTags(Set<Tag> newTags, Set<Tag> orginalTags) {
 		SetView<Tag> addedTags = Sets.difference(newTags, orginalTags);
-		logger.debug("addedTags : {}", addedTags);
+		logger.debug("addedTags size : {}", addedTags.size());
 		for (Tag tag : addedTags) {
 			tag.tagged();
 		}
@@ -180,5 +182,88 @@ public class Question {
 			tags.add(tagRepository.findByName(parsedTag));
 		}
 		return tags;
+	}
+
+	public Long getQuestionId() {
+		return questionId;
+	}
+
+	public void setQuestionId(Long questionId) {
+		this.questionId = questionId;
+	}
+	
+	public void writedBy(SocialUser user) {
+		this.writerId = user.getUserId();
+		this.writerName = user.getDisplayName();
+	}
+
+	public String getWriterId() {
+		return writerId;
+	}
+
+	public String getWriterName() {
+		return writerName;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public int getShowCount() {
+		return showCount;
+	}
+
+	public void setShowCount(int showCount) {
+		this.showCount = showCount;
+	}
+
+	public String getPlainTags() {
+		String displayTags = "";
+		for (Tag tag : this.tags) {
+			displayTags += tag.getName() + " ";
+		}
+		return displayTags;
+	}
+
+	public void setPlainTags(String plainTags) {
+		this.plainTags = plainTags;
+	}
+
+	public void setAnswerCount(int answerCount) {
+		this.answerCount = answerCount;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public Date getUpdatedDate() {
+		return updatedDate;
+	}
+
+	public void setUpdatedDate(Date updatedDate) {
+		this.updatedDate = updatedDate;
+	}
+	
+	public void update(Question newQuestion) {
+		this.title = newQuestion.title;
+		this.contentsHolder = newQuestion.contentsHolder;
+		this.plainTags = newQuestion.plainTags;
+	}
+
+	@Override
+	public String toString() {
+		return "Question [questionId=" + questionId + ", writerId=" + writerId + ", writerName=" + writerName
+				+ ", title=" + title + ", contentsHolder=" + contentsHolder + ", createdDate=" + createdDate
+				+ ", updatedDate=" + updatedDate + ", answerCount=" + answerCount + ", showCount=" + showCount
+				+ ", tags=" + tags + ", plainTags=" + plainTags + ", answers=" + answers + "]";
 	}
 }

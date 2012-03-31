@@ -1,4 +1,4 @@
-package net.slipp.qna;
+package net.slipp.qna.domain;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
