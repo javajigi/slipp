@@ -1,6 +1,6 @@
-package net.slipp.qna.repository;
+package net.slipp.repository.qna;
 
-import net.slipp.qna.domain.Question;
+import net.slipp.domain.qna.Question;
 
 import org.springframework.data.repository.CrudRepository;
 

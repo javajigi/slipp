@@ -1,4 +1,4 @@
-package net.slipp.qna.domain;
+package net.slipp.domain.qna;
 
 import java.util.Date;
 

@@ -16,7 +16,6 @@ public class SlippQnaWebappConfig {
 
 	@Bean
 	public DefaultAnnotationHandlerMapping handlerMapping() throws Exception {
-
 		DefaultAnnotationHandlerMapping mapping = new DefaultAnnotationHandlerMapping();
 		return mapping;
 	}
@@ -24,11 +23,8 @@ public class SlippQnaWebappConfig {
 
 	@Bean
 	public AnnotationMethodHandlerAdapter handlerAdapter() throws Exception {
-
 		AnnotationMethodHandlerAdapter mapping = new AnnotationMethodHandlerAdapter();
-
 		return mapping;
-
 	}
 
 }

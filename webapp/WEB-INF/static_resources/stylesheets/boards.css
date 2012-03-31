@@ -1,18 +1,8 @@
-/* Threads */
-.button-thread { width:800px; float:left;}
-.button-thread a { float:right; margin:10px 0 10px 5px; background: url(/public/images/img02.gif) repeat-x left top; padding: 1px 10px; text-decoration: none; font-size: 14px;	color: #FFFFFF; }
-
-.paging-thread { width:800px; float:left; }
-.paging-thread .prev { float:right; height:auto; padding:0 3px 0 3px; }
-.paging-thread .next { float:right; height:auto; padding:0 3px 0 3px; }
-
-.forumTop { float:left; width:800px; height:auto; margin-bottom:10px }
-.create-button a { float:right; margin:0 0 10px 5px; background: url(/public/images/img02.gif) repeat-x left top; padding: 1px 10px; text-decoration: none; font-size: 14px;	color: #FFFFFF; }
 .rss { float:right; padding: 0 10px}
 
 /* forum list */
-.forumList { float:left; width:800px; height:auto; border-top:3px solid #6f6f6f; margin-bottom:10px }
-.forumList .forum { width:770px; height:auto; overflow:hidden; border-bottom:1px solid #dbdbdb; padding:17px 15px 8px 15px; }
+.forumList { float:left; width:100%; height:auto; border-top:3px solid #6f6f6f; margin-bottom:10px }
+.forumList .forum { width:95%; height:auto; overflow:hidden; border-bottom:1px solid #dbdbdb; padding:17px 15px 8px 15px; }
 .forumList .forum .list  { float:left;width:500px; margin:0 0 0 0 }
 .forumList .forum .list .subject { display:block; width:500px; overflow:hidden;height:18px;margin-bottom:10px;text-overflow:ellipsis;-o-text-overflow:ellipsis; color:#717171 }
 .forumList .forum .list .subject a { color:#717171 }
@@ -26,34 +16,46 @@
 .forumList .count .countAnswer strong { color:#fe6e5f; font-size:14px }
 
 /* forum view */
-.forumView { float:left; width:770px; height:auto; border-top:3px solid #6f6f6f; margin-top:24px; padding:10px 24px 0px 15px }
-.forumView .nickArea { float:left; width:770px; border-bottom:1px solid #6f6f6f;}
+.forumView { float:left; width:95%; height:auto; border-top:3px solid #6f6f6f; margin-top:24px; padding:10px 24px 0px 15px }
+.forumView .nickArea { float:left; width:95%; border-bottom:1px solid #6f6f6f;}
 .forumView .nick { float:left; color:#4f4b4b }
 .forumView .regDate { float:right; font-size:14px; font-family:verdana; }
-.forumView .cont { float:left; width:770px; margin-top:20px; word-break:break-all; word-wrap:break-word; color:#5c5c5c; border-bottom:1px solid #6f6f6f; }
-.forumView .cont img { max-width:770px; }
+.forumView .cont { float:left; width:95%; margin-top:20px; word-break:break-all; word-wrap:break-word; color:#5c5c5c; border-bottom:1px solid #6f6f6f; }
+.forumView .cont img { max-width:95%; }
 .forumView .cont .subject { display:block; margin-bottom:20px; font-size:20px; color:#5c5c5c }
 .forumView .cont ul { list-style-type:disc; padding-left:30px;  }
 .forumView .cont ol { list-style-type:decimal;  }
 
-.follow { width:770px; margin:0 0 25px 5px; overflow:hidden; }
+.follow { width:95%; margin:0 0 25px 5px; overflow:hidden; }
 .follow .tags strong { float:left; color:#5ebeda; margin:0 3px 0 10px; font-size:20px }
 .follow .count { float:right; margin:2px 0 0 10px; color:#4b4b4b; }
 .follow .count strong { color:#fe6b12; }
 
-.snsIcon { width:770px; float:left; margin:10px 0 10px 5px; }
+.snsIcon { width:95%; float:left; margin:10px 0 10px 5px; }
 .snsIcon .twitter { float:left; }
 .snsIcon .googleplus { float:left; }
 .snsIcon .facebook { float:left; }
 
 
-.comment { width:770px; height:auto; overflow:hidden; border:1px solid #e2e2e2; padding:0 24px 0 19px; margin-bottom:20px;}
+.comment { width:95%; height:auto; overflow:hidden; border:1px solid #e2e2e2; padding:0 24px 0 19px; margin-bottom:20px;}
 .comment .commentList { float:left; height:auto; overflow:hidden; padding:20px 0 20px 0; border-bottom:1px solid #e2e2e2; margin-bottom:-1px; }
-.comment .commentList .cont { float:left; width:770px; margin:0 35px 0 0; word-break:break-all; word-wrap:break-word; color:#000000  }
+.comment .commentList .cont { float:left; width:95%; margin:0 35px 0 0; word-break:break-all; word-wrap:break-word; color:#000000  }
 .comment .commentList .cont a { color:#6d8da5 }
-.comment .commentList .cont-support { float:left; width:770px; margin:0 35px 0 0; word-break:break-all; word-wrap:break-word; color:#000000  }
+.comment .commentList .cont-support { float:left; width:95%; margin:0 35px 0 0; word-break:break-all; word-wrap:break-word; color:#000000  }
 .comment .commentList .button-answer { width:585px; float:left;}
 .comment .commentList .button-answer a { margin:10px 0 10px 5px; background: url(/public/images/img02.gif) repeat-x left top; padding: 1px 10px; text-decoration: none; font-size: 14px;	color: #FFFFFF; }
 .comment .commentList .user-info { float:left; width:150px; overflow:hidden; }
 .comment .commentList .user-nickname { display:block; margin:0 10px 10px 10px; color:#545454; font-size:14px }
 .comment .commentList .user-action-time { display:block; margin:0 10px 0 10px; color:#545454; font-size:14px }
+
+.tags ul {
+	margin: 0;
+	padding: 10px 0 0 0;
+	list-style: none;
+}
+
+.tags li {
+	margin: 5px 0 5px 0;
+	padding: 5px 0 5px 0;
+	border-bottom: 1px dashed #D1D1D1;
+}

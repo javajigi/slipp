@@ -1,11 +1,11 @@
-package net.slipp.qna.domain;
+package net.slipp.domain.qna;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
 import java.util.Set;
 
-import net.slipp.qna.domain.TagProcessor;
+import net.slipp.domain.qna.TagProcessor;
 
 import org.junit.Before;
 import org.junit.Test;

@@ -1,9 +1,10 @@
-package net.slipp.qna.repository;
+package net.slipp.repository.qna;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import net.slipp.qna.domain.Tag;
+import net.slipp.domain.qna.Tag;
+import net.slipp.repository.qna.TagRepository;
 
 public class MockTagRepository implements TagRepository {
 	@SuppressWarnings("serial")

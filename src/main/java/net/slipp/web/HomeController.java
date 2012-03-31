@@ -1,4 +1,4 @@
-package net.slipp.social.security;
+package net.slipp.web;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,7 +19,7 @@ public class HomeController {
 	public String helloPublicWorld(Model model) {
 	    model.addAttribute("userName", getAuthenticatedUserName());
 	    model.addAttribute("securityLevel", "Public");
-		return "helloWorld";
+		return "index";
 	}
 
 	@RequestMapping("/protected")

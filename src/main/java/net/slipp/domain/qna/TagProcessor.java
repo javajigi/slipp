@@ -1,9 +1,9 @@
-package net.slipp.qna.domain;
+package net.slipp.domain.qna;
 
 import java.util.Set;
 import java.util.StringTokenizer;
 
-import net.slipp.qna.repository.TagRepository;
+import net.slipp.repository.qna.TagRepository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

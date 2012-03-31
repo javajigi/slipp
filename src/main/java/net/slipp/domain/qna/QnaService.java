@@ -1,9 +1,9 @@
-package net.slipp.qna.domain;
+package net.slipp.domain.qna;
 
 import javax.annotation.Resource;
 
-import net.slipp.qna.repository.QuestionRepository;
-import net.slipp.qna.repository.TagRepository;
+import net.slipp.repository.qna.QuestionRepository;
+import net.slipp.repository.qna.TagRepository;
 import net.slipp.social.connect.SocialUser;
 
 import org.springframework.stereotype.Service;

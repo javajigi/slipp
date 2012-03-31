@@ -1,8 +1,10 @@
-package net.slipp.qna.domain;
+package net.slipp.domain.qna;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
-import net.slipp.qna.repository.MockTagRepository;
+import net.slipp.domain.qna.Answer;
+import net.slipp.domain.qna.Question;
+import net.slipp.repository.qna.MockTagRepository;
 
 import org.junit.Before;
 import org.junit.Test;

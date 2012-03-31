@@ -1,6 +1,6 @@
-package net.slipp.qna.domain;
+package net.slipp.domain.qna;
 
-import net.slipp.qna.domain.Question;
+import net.slipp.domain.qna.Question;
 
 
 

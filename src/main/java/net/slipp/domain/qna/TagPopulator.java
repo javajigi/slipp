@@ -1,9 +1,9 @@
-package net.slipp.qna.domain;
+package net.slipp.domain.qna;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
-import net.slipp.qna.repository.TagRepository;
+import net.slipp.repository.qna.TagRepository;
 
 import org.springframework.stereotype.Component;
 
