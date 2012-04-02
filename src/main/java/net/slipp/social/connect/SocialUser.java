@@ -15,6 +15,8 @@ import javax.persistence.UniqueConstraint;
 		@UniqueConstraint(columnNames = { "userId", "providerId", "providerUserId" }),
         @UniqueConstraint(columnNames = { "userId", "providerId", "rank" })})
 public class SocialUser {
+    public static final SocialUser GUEST_USER = new GuestSocialUser();
+    
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
@@ -153,4 +155,25 @@ public class SocialUser {
 		this.createDate = createDate;
 	}
 
+    public boolean isGuest() {
+        return false;
+    }
+    
+    static class GuestSocialUser extends SocialUser {
+        @Override
+        public boolean isGuest() {
+            return true;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "SocialUser [id=" + id + ", userId=" + userId + ", providerId="
+                + providerId + ", providerUserId=" + providerUserId + ", rank="
+                + rank + ", displayName=" + displayName + ", profileUrl="
+                + profileUrl + ", imageUrl=" + imageUrl + ", accessToken="
+                + accessToken + ", secret=" + secret + ", refreshToken="
+                + refreshToken + ", expireTime=" + expireTime + ", createDate="
+                + createDate + "]";
+    }
 }

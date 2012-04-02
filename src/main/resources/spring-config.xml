@@ -96,8 +96,6 @@
 
 
 	<!-- Start Spring Social -->
-
-
 	<bean class="org.springframework.social.connect.web.ProviderSignInController">
 		<constructor-arg value="${application.secureUrl}" />
 		<property name="signUpUrl" value="/signup" />

@@ -26,12 +26,4 @@ public class HomeController {
     public String login(Model model) {
         return "login";
     }
-
-    @RequestMapping("/protected")
-    public String helloProtectedWorld(Model model) {
-        model.addAttribute("userName", getAuthenticatedUserName());
-        model.addAttribute("securityLevel", "Protected");
-        return "helloWorld";
-    }
-
 }
