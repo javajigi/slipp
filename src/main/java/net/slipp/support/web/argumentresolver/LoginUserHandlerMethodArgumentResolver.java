@@ -1,5 +1,7 @@
 package net.slipp.support.web.argumentresolver;
 
+import javax.annotation.Resource;
+
 import net.slipp.social.connect.SocialUser;
 import net.slipp.support.security.LoginRequiredException;
 import net.slipp.support.security.SessionService;
@@ -18,6 +20,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 public class LoginUserHandlerMethodArgumentResolver implements HandlerMethodArgumentResolver {
 	private Logger log = LoggerFactory.getLogger(LoginUserHandlerMethodArgumentResolver.class);
 
+	@Resource (name = "sessionService")
 	private SessionService sessionService;
 
 	public void setSessionService(SessionService sessionService) {

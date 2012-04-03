@@ -17,6 +17,8 @@
 	
     <jpa:repositories base-package="net.slipp.social.connect" />
     
+    <jpa:repositories base-package="net.slipp.repository" />
+    
 	<bean
 		class='org.springframework.beans.factory.config.PropertyPlaceholderConfigurer'>
 		<property name='location'>
@@ -30,12 +32,9 @@
 	<context:component-scan
 		base-package="org.socialsignin.springframework.social.security" />
 		
-	<context:component-scan
-		base-package="net.slipp.provider" />
-
-	<context:component-scan
-		base-package="net.slipp.social.security" />
-		
+	<context:component-scan	base-package="net.slipp">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
 
 	<!-- End Spring Social Security -->
 
@@ -90,8 +89,7 @@
 		<property name="alwaysRemember" value="true" />
 		<property name="tokenValiditySeconds" value="3600" />
 	</bean>
-
-
+	
 	<!-- End Spring Security -->
 
 
