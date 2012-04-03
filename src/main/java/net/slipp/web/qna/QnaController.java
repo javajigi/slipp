@@ -10,13 +10,13 @@ import net.slipp.support.web.argumentresolver.LoginUser;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+@Controller
 @RequestMapping("/qna")
 public class QnaController {
     private static final Logger logger = LoggerFactory
@@ -65,11 +65,5 @@ public class QnaController {
     public String show(@PathVariable Long id, Model model) {
         model.addAttribute("question", qnaService.findByQuestionId(id));
         return "qna/show";
-    }
-
-    private String getAuthenticatedUserName() {
-        Authentication authentication = SecurityContextHolder.getContext()
-                .getAuthentication();
-        return authentication == null ? null : authentication.getName();
     }
 }
