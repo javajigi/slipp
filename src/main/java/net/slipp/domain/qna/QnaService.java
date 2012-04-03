@@ -2,9 +2,9 @@ package net.slipp.domain.qna;
 
 import javax.annotation.Resource;
 
+import net.slipp.domain.user.SocialUser;
 import net.slipp.repository.qna.QuestionRepository;
 import net.slipp.repository.qna.TagRepository;
-import net.slipp.social.connect.SocialUser;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

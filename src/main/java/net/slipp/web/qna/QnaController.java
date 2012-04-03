@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.slipp.domain.qna.QnaService;
 import net.slipp.domain.qna.Question;
-import net.slipp.social.connect.SocialUser;
+import net.slipp.domain.user.SocialUser;
 import net.slipp.support.web.argumentresolver.LoginUser;
 
 import org.slf4j.Logger;

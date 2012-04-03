@@ -1,6 +1,8 @@
-package net.slipp.social.connect;
+package net.slipp.repository.user;
 
 import java.util.List;
+
+import net.slipp.domain.user.SocialUser;
 
 import org.springframework.util.MultiValueMap;
 

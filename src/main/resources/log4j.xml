@@ -9,8 +9,13 @@
 			<param name="ConversionPattern" value="%p %C %L - %m %n" />
 		</layout>
 	</appender>
+	
+	<logger name="net.slipp">
+		<level value="DEBUG" />
+	</logger>
+	
 	<root>
-		<priority value="DEBUG" />
+		<priority value="INFO" />
 		<appender-ref ref="CONSOLE" />
 	</root>
 </log4j:configuration>

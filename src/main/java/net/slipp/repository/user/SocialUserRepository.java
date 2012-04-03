@@ -1,7 +1,9 @@
-package net.slipp.social.connect;
+package net.slipp.repository.user;
 
 import java.util.List;
 import java.util.Set;
+
+import net.slipp.domain.user.SocialUser;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

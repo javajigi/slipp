@@ -2,7 +2,7 @@ package net.slipp.support.web.argumentresolver;
 
 import javax.annotation.Resource;
 
-import net.slipp.social.connect.SocialUser;
+import net.slipp.domain.user.SocialUser;
 import net.slipp.support.security.LoginRequiredException;
 import net.slipp.support.security.SessionService;
 

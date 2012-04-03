@@ -7,9 +7,9 @@ import static org.mockito.Mockito.*;
 import java.util.Arrays;
 import java.util.List;
 
-import net.slipp.social.connect.SocialUser;
-import net.slipp.social.connect.SocialUserBuilder;
-import net.slipp.social.connect.SocialUserRepository;
+import net.slipp.domain.user.SocialUser;
+import net.slipp.repository.user.SocialUserBuilder;
+import net.slipp.repository.user.SocialUserRepository;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

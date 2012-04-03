@@ -15,8 +15,6 @@
         
 	<import resource="infrastructure.xml" />
 	
-    <jpa:repositories base-package="net.slipp.social.connect" />
-    
     <jpa:repositories base-package="net.slipp.repository" />
     
 	<bean
@@ -108,7 +106,7 @@
 	</bean>
 
 	<bean id="usersConnectionRepository"
-		class="net.slipp.social.connect.SocialUsersConnectionRepository">
+		class="net.slipp.repository.user.SocialUsersConnectionRepository">
 		<constructor-arg ref="socialUserRepository" />
 		<constructor-arg ref="connectionFactoryRegistry" />
 		<constructor-arg ref="textEncryptor" />

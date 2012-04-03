@@ -4,8 +4,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import net.slipp.social.connect.SocialUser;
-import net.slipp.social.connect.SocialUserRepository;
+import net.slipp.domain.user.SocialUser;
+import net.slipp.repository.user.SocialUserRepository;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

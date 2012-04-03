@@ -1,4 +1,6 @@
-package net.slipp.social.connect;
+package net.slipp.repository.user;
+
+import net.slipp.domain.user.SocialUser;
 
 
 

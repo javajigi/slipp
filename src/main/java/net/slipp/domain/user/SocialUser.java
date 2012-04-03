@@ -1,4 +1,4 @@
-package net.slipp.social.connect;
+package net.slipp.domain.user;
 
 import java.util.Date;
 
