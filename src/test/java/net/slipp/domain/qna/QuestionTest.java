@@ -1,9 +1,7 @@
 package net.slipp.domain.qna;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-import net.slipp.domain.qna.Answer;
-import net.slipp.domain.qna.Question;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 import net.slipp.repository.qna.MockTagRepository;
 
 import org.junit.Before;
@@ -40,16 +38,6 @@ public class QuestionTest {
 		assertThat(tagRepository.findByName("java").getTaggedCount(), is(1));
 		assertThat(tagRepository.findByName("eclipse").getTaggedCount(), is(1));
 		assertThat(tagRepository.findByName("javascript").getTaggedCount(), is(0));
-	}
-	
-	@Test
-	public void addAnswer() {
-		Answer answer = new Answer();
-		dut.addAnswer(answer);
-		assertThat(dut.getAnswers().size(), is(1));
-		assertThat(dut.getAnswerCount(), is(1));
-		
-		assertThat(answer.getQuestion(), is(dut));
 	}
 	
 	@Test

@@ -12,7 +12,7 @@
 	<div class="container-fluid">
 		<div class="row-fluid">
 			<div class="span10">
-				<form:form modelAttribute="question" cssClass="form-horizontal" action="/qna" method="POST">
+				<form:form modelAttribute="question" cssClass="form-horizontal" action="/questions" method="POST">
 					<fieldset>
 						<legend>SLiPP Q&A 질문하기</legend>
 						<div class="control-group">
@@ -36,7 +36,7 @@
 						
 						<div class="form-actions">
 							<button type="submit" class="btn btn-primary">질문하기</button>
-							<button class="btn"><a href="/qna">목록보기</a></button>
+							<a href="/questions"><button class="btn">목록보기</button></a>
 						</div>
 					</fieldset>				
 				</form:form>
@@ -57,7 +57,6 @@
 	</div>
 <script src="http://ajax.microsoft.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>
 <script type="text/javascript" src="${url:resource('/javascripts/jquery.markitup.js')}"></script>
-<script type="text/javascript" src="${url:resource('/javascripts/jquery.autocomplete.js')}"></script>
 <script type="text/javascript">
 var uploaderUrl = "http://localhost:8080";
 </script>

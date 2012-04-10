@@ -3,6 +3,7 @@ package net.slipp.domain.qna;
 import javax.annotation.Resource;
 
 import net.slipp.domain.user.SocialUser;
+import net.slipp.repository.qna.AnswerRepository;
 import net.slipp.repository.qna.QuestionRepository;
 import net.slipp.repository.qna.TagRepository;
 
@@ -17,6 +18,9 @@ public class QnaService {
 	
 	@Resource (name = "questionRepository")
 	private QuestionRepository questionRepository;
+	
+	@Resource (name = "answerRepository")
+	private AnswerRepository answerRepository;
 	
 	public void createQuestion(SocialUser user, Question question) {
 		question.writedBy(user);
@@ -44,4 +48,10 @@ public class QnaService {
 		return tagRepository.findAll();
 	}
 
+	public void createAnswer(SocialUser user, Long questionId, Answer answer) {
+		Question question = questionRepository.findOne(questionId);
+		answer.writedBy(user);
+		answer.answerTo(question);
+		answerRepository.save(answer);
+	}
 }

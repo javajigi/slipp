@@ -21,7 +21,7 @@
 					<c:forEach items="${questions}" var="each">
 					<div class="forum">
 						<div class="list">
-							<a href="/qna/${each.questionId}"> <strong class="subject">${each.title}</strong>
+							<a href="/questions/${each.questionId}"> <strong class="subject">${each.title}</strong>
 							</a>
 							<div class="count">
 								<span class="tags">
@@ -49,7 +49,7 @@
 				</div>
 
 				<div class="pull-right">
-					<a href="/qna/form" class="btn btn-primary btn-large pull-right">질문하기</a>
+					<a href="/questions/form" class="btn btn-primary btn-large pull-right">질문하기</a>
 				</div>
 			</div>
 

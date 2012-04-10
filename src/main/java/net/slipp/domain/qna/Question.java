@@ -100,15 +100,6 @@ public class Question implements HasCreatedAndUpdatedDate {
 		this.plainTags = plainTags;
 	}
 
-	public void addAnswer(Answer answer) {
-		if (answers == null) {
-			answers = Lists.newArrayList();
-		}
-		answers.add(answer);
-		answerCount += 1;
-		answer.setQuestion(this);
-	}
-
 	public List<Answer> getAnswers() {
 		return answers;
 	}
@@ -257,6 +248,10 @@ public class Question implements HasCreatedAndUpdatedDate {
 		this.title = newQuestion.title;
 		this.contentsHolder = newQuestion.contentsHolder;
 		this.plainTags = newQuestion.plainTags;
+	}
+	
+	public void increaseAnswerCount() {
+		this.answerCount += 1;
 	}
 
 	@Override

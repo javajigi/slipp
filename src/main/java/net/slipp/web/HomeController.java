@@ -1,25 +1,23 @@
 package net.slipp.web;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import javax.annotation.Resource;
+
+import net.slipp.domain.qna.QnaService;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class HomeController {
-
-    private String getAuthenticatedUserName() {
-        Authentication authentication = SecurityContextHolder.getContext()
-                .getAuthentication();
-        return authentication == null ? null : authentication.getName();
-    }
-
-    @RequestMapping("/")
+    @Resource(name = "qnaService")
+    private QnaService qnaService;
+    
+    @RequestMapping("")
     public String index(Model model) {
-        model.addAttribute("userName", getAuthenticatedUserName());
-        model.addAttribute("securityLevel", "Public");
-        return "index";
+        model.addAttribute("questions", qnaService.findsQuestion());
+        model.addAttribute("tags", qnaService.findsTag());
+        return "qna/list";
     }
 
     @RequestMapping("/login")

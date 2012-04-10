@@ -1,17 +1,25 @@
 package net.slipp.domain.qna;
 
+import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 
 import net.slipp.domain.user.SocialUser;
 import net.slipp.support.jpa.CreatedAndUpdatedDateEntityListener;
@@ -24,11 +32,18 @@ public class Answer implements HasCreatedAndUpdatedDate {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long answerId;
 	
-	@OneToOne
-	@org.hibernate.annotations.ForeignKey(name = "fk_answer_user_id")
-	private SocialUser user;
+	@Column(name = "writer_id", nullable = false)
+	private String writerId;
 	
-	private String contents;
+	@Column(name = "writer_name", nullable = false)
+	private String writerName;
+	
+	@ElementCollection(fetch = FetchType.LAZY)
+	@CollectionTable(name = "answer_content_holder", joinColumns = @JoinColumn(name = "answer_id", unique = true))
+	@org.hibernate.annotations.ForeignKey(name = "fk_answer_content_holder_answer_id")
+	@Lob
+	@Column(name = "contents", nullable = false)
+	private Collection<String> contentsHolder;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "created_date", nullable = false, updatable = false)
@@ -42,7 +57,7 @@ public class Answer implements HasCreatedAndUpdatedDate {
 	@org.hibernate.annotations.ForeignKey(name = "fk_answer_parent_id")
 	private Question question;
 
-	void setQuestion(Question question) {
+	public void setQuestion(Question question) {
 		this.question = question;
 	}
 	
@@ -58,20 +73,41 @@ public class Answer implements HasCreatedAndUpdatedDate {
 		this.answerId = answerId;
 	}
 
-	public SocialUser getUser() {
-        return user;
-    }
-
-    public void setUser(SocialUser user) {
-        this.user = user;
-    }
-
-    public String getContents() {
-		return contents;
+	public String getWriterId() {
+		return writerId;
 	}
 
-	public void setContents(String contents) {
-		this.contents = contents;
+	public void setWriterId(String writerId) {
+		this.writerId = writerId;
+	}
+
+	public String getWriterName() {
+		return writerName;
+	}
+
+	public void setWriterName(String writerName) {
+		this.writerName = writerName;
+	}
+
+	public void setContents(String newContents) {
+		if (isEmptyContentsHolder()) {
+			contentsHolder = Lists.newArrayList(newContents);
+		} else {
+			contentsHolder.clear();
+			contentsHolder.add(newContents);
+		}
+	}
+	
+	private boolean isEmptyContentsHolder() {
+		return contentsHolder == null || contentsHolder.isEmpty();
+	}
+
+	public String getContents() {
+		if (isEmptyContentsHolder()) {
+			return "";
+		}
+
+		return Iterables.getFirst(contentsHolder, "");
 	}
 
 	public Date getCreatedDate() {
@@ -88,5 +124,77 @@ public class Answer implements HasCreatedAndUpdatedDate {
 
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
+	}
+
+	public void answerTo(Question question) {
+		this.question = question;
+		question.increaseAnswerCount();
+	}
+
+	public void writedBy(SocialUser user) {
+		this.writerId = user.getUserId();
+		this.writerName = user.getDisplayName();		
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((answerId == null) ? 0 : answerId.hashCode());
+		result = prime * result + ((createdDate == null) ? 0 : createdDate.hashCode());
+		result = prime * result + ((question == null) ? 0 : question.hashCode());
+		result = prime * result + ((updatedDate == null) ? 0 : updatedDate.hashCode());
+		result = prime * result + ((writerId == null) ? 0 : writerId.hashCode());
+		result = prime * result + ((writerName == null) ? 0 : writerName.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Answer other = (Answer) obj;
+		if (answerId == null) {
+			if (other.answerId != null)
+				return false;
+		} else if (!answerId.equals(other.answerId))
+			return false;
+		if (createdDate == null) {
+			if (other.createdDate != null)
+				return false;
+		} else if (!createdDate.equals(other.createdDate))
+			return false;
+		if (question == null) {
+			if (other.question != null)
+				return false;
+		} else if (!question.equals(other.question))
+			return false;
+		if (updatedDate == null) {
+			if (other.updatedDate != null)
+				return false;
+		} else if (!updatedDate.equals(other.updatedDate))
+			return false;
+		if (writerId == null) {
+			if (other.writerId != null)
+				return false;
+		} else if (!writerId.equals(other.writerId))
+			return false;
+		if (writerName == null) {
+			if (other.writerName != null)
+				return false;
+		} else if (!writerName.equals(other.writerName))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Answer [answerId=" + answerId + ", writerId=" + writerId + ", writerName=" + writerName
+				+ ", contentsHolder=" + contentsHolder + ", createdDate=" + createdDate + ", updatedDate="
+				+ updatedDate + ", question=" + question + "]";
 	}
 }
