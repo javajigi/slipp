@@ -3,32 +3,34 @@
 <html>
 <head>
 <link href="${url:resource('/stylesheets/boards.css')}" rel="stylesheet">
+<link href="${url:resource('/stylesheets/wiki-style.css')}" rel="stylesheet">
+<link href="${url:resource('/stylesheets/wiki-textile-style.css')}" rel="stylesheet">
+<link href="${url:resource('/stylesheets/wiki-imageupload-plugins.css')}" rel="stylesheet">
+<link href="${url:resource('/stylesheets/jquery.autocomplete.css')}" rel="stylesheet">
 </head>
 <body>
 	<div class="container-fluid">
 		<div class="row-fluid">
 			<div class="span10">
-				<form class="form-horizontal">
+				<form:form modelAttribute="question" cssClass="form-horizontal" action="/qna" method="POST">
 					<fieldset>
 						<legend>SLiPP Q&A 질문하기</legend>
 						<div class="control-group">
 							<label class="control-label" for="title">제목</label>
 							<div class="controls">
-								<input class="input-xlarge focused span7" id="focusedInput"
-									type="text">
+								<form:input path="title" cssClass="input-xlarge focused span7"/>
 							</div>
 						</div>
 						<div class="control-group">
 							<label class="control-label">내용</label>
 							<div class="controls">
-								<textarea class="input-xlarge span7" id="textarea" name="contents"  cols="75" rows="15"></textarea>
+								<form:textarea path="contents" cssClass="input-xlarge span7" cols="75" rows="15"/>
 							</div>
 						</div>
 						<div class="control-group">
 							<label class="control-label">태그</label>
 							<div class="controls">
-								<input class="input-xlarge focused span7" id="focusedInput"
-									type="text">
+								<form:input path="plainTags" cssClass="input-xlarge focused span7"/>
 							</div>
 						</div>
 						
@@ -36,8 +38,8 @@
 							<button type="submit" class="btn btn-primary">질문하기</button>
 							<button class="btn"><a href="/qna">목록보기</a></button>
 						</div>
-					</fieldset>
-				</form>
+					</fieldset>				
+				</form:form>
 			</div>
 			<div class="span2">
 				<div class="tags">
@@ -53,5 +55,15 @@
 			</div>
 		</div>
 	</div>
+<script src="http://ajax.microsoft.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>
+<script type="text/javascript" src="${url:resource('/javascripts/jquery.markitup.js')}"></script>
+<script type="text/javascript" src="${url:resource('/javascripts/jquery.autocomplete.js')}"></script>
+<script type="text/javascript">
+var uploaderUrl = "http://localhost:8080";
+</script>
+<script type="text/javascript"	src="${url:resource('/javascripts/qna/image.upload.js')}"></script>
+<script type="text/javascript" src="${url:resource('/javascripts/qna/qna-set.js')}"></script>
+<script type="text/javascript" src="${url:resource('/javascripts/qna/tagparser.js')}"></script>
+<script type="text/javascript" src="${url:resource('/javascripts/qna/form.js')}"></script>	
 </body>
 </html>

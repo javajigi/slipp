@@ -1,7 +1,7 @@
 $(document).ready(function()	{
 	$('#contents').markItUp(mySettings);
 	
-	$("#threadsForm").validate({
+	$("#question").validate({
 		rules: {
 			title: "required",
 			contents: "required",
@@ -16,7 +16,7 @@ $(document).ready(function()	{
 	
 	var tagnames = '';
 	$tagPreview = $('#tag-preview');
-	$('#tagnames').autocomplete('/tags/by', {
+	$('#plainTags').autocomplete('/tags/by', {
 		dataType: 'json',
 		cache: false,
 		autoFill: false,
@@ -49,6 +49,6 @@ $(document).ready(function()	{
 			return row.name;
 		}
 	}).result(function(event, row, formatted) {
-		$('#tagnames').val(Slipp.TagParser.replaceTag(tagnames, row.name));
+		$('#plainTags').val(Slipp.TagParser.replaceTag(tagnames, row.name));
 	});
 });

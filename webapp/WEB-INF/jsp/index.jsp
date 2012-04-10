@@ -82,7 +82,7 @@
 				</div>
 
 				<div class="pull-right">
-					<a class="btn btn-primary btn-large pull-right">질문하기</a>
+					<a class="btn btn-primary btn-large pull-right" href="/qna/form">질문하기</a>
 				</div>
 			</div>
 
