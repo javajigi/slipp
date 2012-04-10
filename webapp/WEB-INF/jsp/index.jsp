@@ -5,6 +5,15 @@
 <link href="${url:resource('/stylesheets/boards.css')}" rel="stylesheet">
 </head>
 <body>
+      <header class="jumbotron subhead" id="subnav">
+        <div class="subnav">
+          <ul class="nav nav-pills">
+            <li class="active"><a href="#global">최신순</a></li>
+            <li><a href="#gridSystem">Hot</a></li>
+            <li><a href="#fluidGridSystem">Fluid grid system</a></li>
+          </ul>
+        </div>
+      </header>
 	<div class="container-fluid">
 		<div class="row-fluid">
 			<div class="span10">

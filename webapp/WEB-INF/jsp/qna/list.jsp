@@ -5,13 +5,22 @@
 <link href="${url:resource('/stylesheets/boards.css')}" rel="stylesheet">
 </head>
 <body>
+      <header class="jumbotron subhead" id="subnav">
+        <div class="subnav">
+          <ul class="nav nav-pills">
+            <li class="active"><a href="#global">최신순</a></li>
+            <li><a href="#gridSystem">Hot</a></li>
+            <li><a href="#fluidGridSystem">Fluid grid system</a></li>
+          </ul>
+        </div>
+      </header>
 	<div class="container-fluid">
 		<div class="row-fluid">
 			<div class="span10">
 				<div class="forumList">
 					<div class="forum">
 						<div class="list">
-							<a href="@{Threads.show(thread.id)}"> <strong class="subject">Title</strong>
+							<a href="/qna/1"> <strong class="subject">Title</strong>
 							</a>
 							<div class="count">
 								<span class="tags"> <a href="@{Threads.tagged(tag.name)}"><strong>java</strong></a>
@@ -73,7 +82,7 @@
 				</div>
 
 				<div class="pull-right">
-					<a class="btn btn-primary btn-large pull-right">질문하기</a>
+					<a href="/qna/form" class="btn btn-primary btn-large pull-right">질문하기</a>
 				</div>
 			</div>
 

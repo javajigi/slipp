@@ -54,16 +54,6 @@
     </div>
     
     <div class="container">
-      <header class="jumbotron subhead" id="subnav">
-        <div class="subnav">
-          <ul class="nav nav-pills">
-            <li class="active"><a href="#global">최신순</a></li>
-            <li><a href="#gridSystem">Hot</a></li>
-            <li><a href="#fluidGridSystem">Fluid grid system</a></li>
-          </ul>
-        </div>
-      </header>
-      
 	  <decorator:body/>
     </div> <!-- /container -->
 
