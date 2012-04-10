@@ -16,13 +16,13 @@ $(document).ready(function()	{
 	
 	var tagnames = '';
 	$tagPreview = $('#tag-preview');
-	$('#plainTags').autocomplete('/tags/by', {
+	$('#plainTags').autocomplete('/tag/by', {
 		dataType: 'json',
 		cache: false,
 		autoFill: false,
 		extraParams: {
 			name: function() {
-			    tagnames = $('#tagnames').val();
+			    tagnames = $('#plainTags').val();
 				return Slipp.TagParser.findEndTag(tagnames); 
 			}
 		},

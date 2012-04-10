@@ -1,6 +1,7 @@
 package net.slipp.repository.qna;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import net.slipp.domain.qna.Tag;
@@ -21,7 +22,13 @@ public class MockTagRepository implements TagRepository {
 	public Tag findByName(String name) {
 		return tags.get(name);
 	}
-
+	
+	@Override
+	public List<Tag> findByNameLike(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	@Override
 	public Tag save(Tag entity) {
 		// TODO Auto-generated method stub
@@ -81,5 +88,4 @@ public class MockTagRepository implements TagRepository {
 		// TODO Auto-generated method stub
 		
 	}
-
 }
