@@ -19,12 +19,12 @@
 			<div class="span10">
 				<div class="forumView">
 					<div class="nickArea">
-						<p class='nick'>nickName</p>
-						<p class="regDate">displayDate</p>
+						<p class='nick'>${question.writerName}</p>
+						<p class="regDate"><fmt:formatDate value="${question.createdDate}" pattern="yyyy-MM-dd HH:mm" /></p>
 					</div>
 					<div class="cont">
-						<strong class="subject">title</strong>
-						<div>{thread.displayContents.raw()}</div>
+						<strong class="subject">${question.title}</strong>
+						<div>${sf:br(question.contents)}</div>
 						<div class="snsIcon">
 							<div class="facebook">
 								<div id="fb-root"></div>
@@ -46,24 +46,26 @@
 								<a
 									href="http://me2day.net/posts/new?new_post[body]=&quot;{thread.title}&quot;:http://www.slipp.net/threads/{thread.id}"
 									onclick="window.open(this.href,'me2day_post', 'width=1024,height=364,scrollbars=1,resizable=1');return false;"><img
-									src="/public/images/me2day.gif" alt="미투데이로 보내기" /></a>
+									src="/resources/images/me2day.gif" alt="미투데이로 보내기" /></a>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="button-thread">
-					<a href="@{Threads.delete(thread.id)}">삭제</a> <a
-						href="@{Threads.updateForm(thread.id)}">수정</a> <a
-						href="@{Threads.list()}">목록</a>
-				</div>
 				<div class="follow">
 					<p class="tags">
-						<a
-							href="@{Threads.tagged(tag.name)}"><strong>{tag.name}</strong></a>
+						<c:forEach items="${question.tags}" var="tag">
+						<a href="@{Threads.tagged(tag.name)}"><strong>${tag.name}</strong></a>	
+						</c:forEach> 
 					</p>
 					<p class="count">
-						<span class="answerNum">답변수 <strong>{thread.answerCount}</strong></span>
+						<span class="answerNum">답변수 <strong>${question.answerCount}</strong></span>
 					</p>
+				</div>
+								
+				<div class="button-thread">
+					<button class="btn"><a href="/qna">수정하기</a></button>
+					<button class="btn"><a href="/qna">삭제하기</a></button>
+					<button class="btn"><a href="/qna">목록으로</a></button>				
 				</div>
 
 				<div class="comment">
@@ -92,12 +94,9 @@
 			<div class="span2">
 				<div class="tags">
 					<ul>
-						<li>java</li>
-						<li>java1</li>
-						<li>java2</li>
-						<li>java3</li>
-						<li>java4</li>
-						<li>java5</li>
+						<c:forEach items="${tags}" var="each">
+						<li>${each.name} X ${each.taggedCount}</li>	
+						</c:forEach>
 					</ul>
 				</div>
 			</div>

@@ -22,7 +22,7 @@
 	</context:component-scan>
 	
 	<mvc:resources
-		mapping="/resources-#{T(net.slipp.support.web.tags.UrlTag).VERSION}/**"
+		mapping="/resources/**"
 		location="/WEB-INF/static_resources/" cache-period="#{applicationProperties['resources.cache.seconds']}" />	
 
 	<bean id="applicationProperties" class="net.slipp.support.utils.ConvenientProperties">

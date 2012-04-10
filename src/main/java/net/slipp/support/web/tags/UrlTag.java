@@ -44,7 +44,7 @@ public class UrlTag {
 	/**
 	 * static이 아닌 WAS에서 관리하는 public resource 경로에 대한 prefix
 	 */
-	public static final String RESOURCE_PREFIX = "/resources-";
+	public static final String RESOURCE_PREFIX = "/resources";
 
 	public static boolean disableJsPack = false;
 
@@ -159,7 +159,7 @@ public class UrlTag {
 	 */
 	private static String resourceUrl(String url) {
 		Assert.hasText(url, "url을 지정해야 합니다.");
-		return String.format("%s%s%s", RESOURCE_PREFIX, VERSION, url);
+		return String.format("%s%s%s", RESOURCE_PREFIX, "", url);
 	}
 
 	/**

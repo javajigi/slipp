@@ -18,7 +18,7 @@
 }
 .markItUpContainer  {
 	border:1px solid #3C769D;	
-	background:#FFF url(/resources-201204101030/images/markitup/bg-container.png) repeat-x top left;
+	background:#FFF url(/resources/images/markitup/bg-container.png) repeat-x top left;
 	padding:5px 5px 2px 5px;
 	font:11px Verdana, Arial, Helvetica, sans-serif;
 }
@@ -49,7 +49,7 @@
 	width:22px; height:5px;
 	margin-left:auto;
 	margin-right:auto;
-	background-image:url(/resources-201204101030/images/markitup/handle.png);
+	background-image:url(/resources/images/markitup/handle.png);
 	cursor:n-resize;
 }
 /***************************************************************************************/
@@ -66,7 +66,7 @@
 	display:block;
 }
 .markItUpHeader ul .markItUpDropMenu {
-	background:transparent url(/resources-201204101030/images/markitup/menu.png) no-repeat 115% 50%;
+	background:transparent url(/resources/images/markitup/menu.png) no-repeat 115% 50%;
 	margin-right:5px;
 }
 .markItUpHeader ul .markItUpDropMenu li {
@@ -97,7 +97,7 @@
 	border-bottom:1px solid #3C769D;
 }
 .markItUpHeader ul ul .markItUpDropMenu {
-	background:#F5F5F5 url(/resources-201204101030/images/markitup/submenu.png) no-repeat 100% 50%;
+	background:#F5F5F5 url(/resources/images/markitup/submenu.png) no-repeat 100% 50%;
 }
 /* next rows of buttons */
 .markItUpHeader ul ul ul {

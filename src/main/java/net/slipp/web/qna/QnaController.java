@@ -64,6 +64,7 @@ public class QnaController {
     @RequestMapping("{id}")
     public String show(@PathVariable Long id, Model model) {
         model.addAttribute("question", qnaService.findByQuestionId(id));
+        model.addAttribute("tags", qnaService.findsTag());
         return "qna/show";
     }
 }
