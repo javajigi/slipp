@@ -17,6 +17,10 @@
 		</mvc:argument-resolvers>
 	</mvc:annotation-driven>
 	
+	<mvc:interceptors>
+		<bean class="net.slipp.support.web.GlobalRequestAttributesInterceptor" />
+	</mvc:interceptors>
+	
 	<context:component-scan base-package="net.slipp.web">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>

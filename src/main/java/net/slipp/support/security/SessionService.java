@@ -25,6 +25,10 @@ public class SessionService {
         }
         
         List<SocialUser> socialUsers = socialUserRepository.findsByUserId(getAuthenticatedUserName());
+        if (socialUsers.isEmpty()){
+        	return SocialUser.GUEST_USER;
+        }
+        
         return socialUsers.get(0);
     }
     

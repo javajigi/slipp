@@ -77,7 +77,7 @@
 					<c:forEach items="${question.answers}" var="each">
 					<div class="commentList">
 						<div class="nickArea">
-							<p class='prphoto'><img src='http://www.archeage.com/util/image/view?image=200000_profile_photo/7/10911110911155485657&amp;type=profile'/></p>
+							<p class='prphoto'><img src='${socialUser.imageUrl}'/></p>
 							<div class="nickname">
 								<div class="tester"><span class='lv'>${each.writerName}</span></div>
 							</div>
