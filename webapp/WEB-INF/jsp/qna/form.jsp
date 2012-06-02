@@ -44,12 +44,9 @@
 			<div class="span2">
 				<div class="tags">
 					<ul>
-						<li>java</li>
-						<li>java1</li>
-						<li>java2</li>
-						<li>java3</li>
-						<li>java4</li>
-						<li>java5</li>
+						<c:forEach items="${tags}" var="each">
+						<li>${each.name} X ${each.taggedCount}</li>	
+						</c:forEach>
 					</ul>
 				</div>
 			</div>
