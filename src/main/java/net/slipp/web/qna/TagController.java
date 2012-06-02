@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping("/tag")
+@RequestMapping("/tags")
 public class TagController {
 	private static final Logger logger = LoggerFactory.getLogger(TagController.class);
 	
 	@Resource(name = "tagRepository")
 	private TagRepository tagRepository;
 	
-	@RequestMapping("/by")
+	@RequestMapping("/search")
 	public @ResponseBody List<Tag> searchByTagName(String name) {
 		logger.debug("search tag by name : {}", name);
 		return tagRepository.findByNameLike(name + "%");

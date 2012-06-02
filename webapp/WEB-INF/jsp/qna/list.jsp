@@ -26,7 +26,7 @@
 							<div class="count">
 								<span class="tags">
 									<c:forEach items="${each.tags}" var="tag">
-									<a href="@{Threads.tagged(tag.name)}"><strong>${tag.name}</strong></a>	
+									<a href="/tagged/${tag.name}"><strong>${tag.name}</strong></a>	
 									</c:forEach> 
 								</span> 
 								<span class="countAnswer">답변수 <strong>${each.answerCount}</strong></span>
@@ -57,7 +57,7 @@
 				<div class="tags">
 					<ul>
 						<c:forEach items="${tags}" var="each">
-						<li>${each.name} X ${each.taggedCount}</li>	
+						<li><a href="/tagged/${each.name}">${each.name}</a> X ${each.taggedCount}</li>	
 						</c:forEach>
 					</ul>
 				</div>

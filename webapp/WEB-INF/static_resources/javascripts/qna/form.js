@@ -16,7 +16,7 @@ $(document).ready(function()	{
 	
 	var tagnames = '';
 	$tagPreview = $('#tag-preview');
-	$('#plainTags').autocomplete('/tag/by', {
+	$('#plainTags').autocomplete('/tags/search', {
 		dataType: 'json',
 		cache: false,
 		autoFill: false,
