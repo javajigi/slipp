@@ -7,6 +7,8 @@ import net.slipp.repository.qna.AnswerRepository;
 import net.slipp.repository.qna.QuestionRepository;
 import net.slipp.repository.qna.TagRepository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,6 +36,10 @@ public class QnaService {
 		question.update(newQuestion);
 		question.initializeTags(tagRepository);
 		questionRepository.save(question);
+	}
+	
+	public Page<Question> findsByTag(String name, Pageable pageable) {
+		return questionRepository.findsByTag(name, pageable);
 	}
 	
 	public Iterable<Question> findsQuestion() {
