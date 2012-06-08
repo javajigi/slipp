@@ -28,16 +28,24 @@ public class QuestionController {
 	private static final Logger logger = LoggerFactory.getLogger(QuestionController.class);
 
 	private static final int DEFAULT_PAGE_NO = 1;
-	private static final int DEFAULT_PAGE_SIZE = 10;
+	private static final int DEFAULT_PAGE_SIZE = 1;
 
 	@Resource(name = "qnaService")
 	private QnaService qnaService;
 
 	@RequestMapping("")
-	public String index(Model model) {
-		model.addAttribute("questions", qnaService.findsQuestion());
+	public String index(Integer page, Model model) {
+		page = revisedPage(page);
+		logger.debug("currentPage : {}", page);
+		model.addAttribute("questions", qnaService.findsQuestion(createPageable(page)));
 		model.addAttribute("tags", qnaService.findsTag());
 		return "qna/list";
+	}
+
+	private Pageable createPageable(Integer page) {
+		Sort sort = new Sort(Direction.DESC, Question_.createdDate.getName());
+		Pageable pageable = new PageRequest(page - 1, DEFAULT_PAGE_SIZE, sort);
+		return pageable;
 	}
 
 	@RequestMapping("/form")
@@ -78,11 +86,17 @@ public class QuestionController {
 	}
 
 	@RequestMapping("/tagged/{name}")
-	public String listByTagged(@PathVariable String name, Model model) {
-		Sort sort = new Sort(Direction.DESC, Question_.createdDate.getName());
-		Pageable pageable = new PageRequest(DEFAULT_PAGE_NO - 1, DEFAULT_PAGE_SIZE, sort);
-		model.addAttribute("questions", qnaService.findsByTag(name, pageable).getContent());
+	public String listByTagged(@PathVariable String name, Integer page, Model model) {
+		page = revisedPage(page);
+		model.addAttribute("questions", qnaService.findsByTag(name, createPageable(page)));
 		model.addAttribute("tags", qnaService.findsTag());
 		return "qna/list";
+	}
+
+	private Integer revisedPage(Integer page) {
+		if (page == null) {
+			page = DEFAULT_PAGE_NO;
+		}
+		return page;
 	}
 }

@@ -42,8 +42,8 @@ public class QnaService {
 		return questionRepository.findsByTag(name, pageable);
 	}
 	
-	public Iterable<Question> findsQuestion() {
-		return questionRepository.findAll();
+	public Page<Question> findsQuestion(Pageable pageable) {
+		return questionRepository.findAll(pageable);
 	}
 	
 	public Question findByQuestionId(Long id) {

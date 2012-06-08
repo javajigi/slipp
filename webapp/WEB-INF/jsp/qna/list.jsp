@@ -18,7 +18,7 @@
 		<div class="row-fluid">
 			<div class="span10">
 				<div class="forumList">
-					<c:forEach items="${questions}" var="each">
+					<c:forEach items="${questions.content}" var="each">
 					<div class="forum">
 						<div class="list">
 							<a href="/questions/${each.questionId}"> <strong class="subject">${each.title}</strong>
@@ -40,11 +40,7 @@
 
 				<div class="pagination pagination-centered">
 					<ul>
-						<li><a href="#">&laquo;</a></li>
-						<li><a href="#">10</a></li>
-						<li class="active"><a href="#">11</a></li>
-						<li><a href="#">12</a></li>
-						<li><a href="#">&raquo;</a></li>
+						<sl:pager page="${questions}" prefixUri="/questions"/>
 					</ul>
 				</div>
 
