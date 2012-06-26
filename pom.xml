@@ -208,6 +208,18 @@
 			<version>1.8.5</version>
 			<scope>test</scope>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.eclipse.mylyn.wikitext</groupId>
+			<artifactId>core</artifactId>
+			<version>1.7.0.I20120625-0903</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.eclipse.mylyn.wikitext</groupId>
+			<artifactId>confluence</artifactId>
+			<version>1.7.0.I20120625-0903</version>
+		</dependency>	
 	</dependencies>
 	<build>
 		<finalName>slipp-qna</finalName>
