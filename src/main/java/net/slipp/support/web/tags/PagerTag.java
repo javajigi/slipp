@@ -35,6 +35,7 @@ public class PagerTag extends SimpleTagSupport {
 	public void doTag() throws JspException, IOException {
 		Assert.notNull(page, "page를 지정해야 합니다.");
 		Assert.isTrue(page.getTotalElements() >= 0, "totalCount는 0 이상이어야 합니다. 현재 값 : " + page.getTotalElements());
+		
 		writeHtml(generateHtml());
 	}
 	
@@ -48,6 +49,10 @@ public class PagerTag extends SimpleTagSupport {
 	}
 
 	String generateHtml() {
+		if (page.getTotalElements() == 0) {
+			return "";
+		}
+		
 		StringBuilder sb = new StringBuilder();
 		
 		logger.debug("start : {}, end : {}", getStart(), getEnd());

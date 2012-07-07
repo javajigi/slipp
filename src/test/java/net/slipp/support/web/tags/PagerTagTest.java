@@ -47,7 +47,17 @@ public class PagerTagTest {
 	}
 	
 	@Test
+	public void doTag_totalCount_0() throws Exception {
+		when(page.getTotalElements()).thenReturn(0L);
+		pagerTag.setPage(page);
+		pagerTag.doTag();
+		String result = pagerTag.generateHtml();
+		assertThat(result, is(""));
+	}
+	
+	@Test
 	public void generateHtml_totalPage5_currentPage3() throws Exception {
+		when(page.getTotalElements()).thenReturn(30L);
 		when(page.getTotalPages()).thenReturn(5);
 		when(page.getNumber()).thenReturn(2);
 		pagerTag.setPrefixUri("/questions");
@@ -64,6 +74,7 @@ public class PagerTagTest {
 	
 	@Test
 	public void generateHtml_totalPage6_currentPage2() throws Exception {
+		when(page.getTotalElements()).thenReturn(30L);
 		when(page.getTotalPages()).thenReturn(6);
 		when(page.getNumber()).thenReturn(1);
 		pagerTag.setPrefixUri("/questions");
@@ -82,6 +93,7 @@ public class PagerTagTest {
 	
 	@Test
 	public void generateHtml_totalPage6_currentPage4() throws Exception {
+		when(page.getTotalElements()).thenReturn(30L);
 		when(page.getTotalPages()).thenReturn(6);
 		when(page.getNumber()).thenReturn(3);
 		pagerTag.setPrefixUri("/questions");
@@ -100,6 +112,7 @@ public class PagerTagTest {
 	
 	@Test
 	public void generateHtml_totalPage8_currentPage2() throws Exception {
+		when(page.getTotalElements()).thenReturn(30L);
 		when(page.getTotalPages()).thenReturn(8);
 		when(page.getNumber()).thenReturn(1);
 		pagerTag.setPrefixUri("/questions");
@@ -117,6 +130,7 @@ public class PagerTagTest {
 	
 	@Test
 	public void generateHtml_totalPage8_currentPage8() throws Exception {
+		when(page.getTotalElements()).thenReturn(30L);
 		when(page.getTotalPages()).thenReturn(8);
 		when(page.getNumber()).thenReturn(7);
 		pagerTag.setPrefixUri("/questions");
@@ -134,6 +148,7 @@ public class PagerTagTest {
 	
 	@Test
 	public void generateHtml_totalPage8_currentPage5() throws Exception {
+		when(page.getTotalElements()).thenReturn(30L);
 		when(page.getTotalPages()).thenReturn(8);
 		when(page.getNumber()).thenReturn(4);
 		pagerTag.setPrefixUri("/questions");
@@ -151,6 +166,7 @@ public class PagerTagTest {
 	
 	@Test
 	public void generateHtml_totalPag11_currentPage7() throws Exception {
+		when(page.getTotalElements()).thenReturn(30L);
 		when(page.getTotalPages()).thenReturn(11);
 		when(page.getNumber()).thenReturn(6);
 		pagerTag.setPrefixUri("/questions");
@@ -182,6 +198,7 @@ public class PagerTagTest {
 	
 	@Test
 	public void start_end_totalPage5_currentPage4() throws Exception {
+		when(page.getTotalElements()).thenReturn(30L);
 		when(page.getTotalPages()).thenReturn(5);
 		when(page.getNumber()).thenReturn(3);
 		assertThat(pagerTag.getStart(), is(1));

@@ -2,6 +2,7 @@ package net.slipp.domain.qna;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import net.slipp.domain.user.SocialUser;
 import net.slipp.repository.qna.MockTagRepository;
 
 import org.junit.Before;
@@ -15,6 +16,20 @@ public class QuestionTest {
 	public void setup() {
 		dut = new Question();
 		tagRepository = new MockTagRepository();
+	}
+	
+	@Test
+	public void isWritedBy_SameUser() throws Exception {
+		// given
+		SocialUser user = new SocialUser();
+		user.setId(10);
+		dut.writedBy(user);
+		
+		// when
+		boolean actual = dut.isWritedBy(user);
+		
+		// then
+		assertThat(actual, is(true));
 	}
 	
 	@Test

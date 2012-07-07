@@ -25,7 +25,7 @@
 			<div class="span10">
 				<div class="forumView">
 					<div class="nickArea">
-						<p class='nick'>${question.writerName}</p>
+						<p class='nick'>${question.writer.displayName}</p>
 						<p class="regDate"><fmt:formatDate value="${question.createdDate}" pattern="yyyy-MM-dd HH:mm" /></p>
 					</div>
 					<div class="contents">
@@ -79,7 +79,7 @@
 						<div class="nickArea">
 							<p class='prphoto'><img src='http://www.archeage.com/util/image/view?image=200000_profile_photo/7/10911110911155485657&amp;type=profile'/></p>
 							<div class="nickname">
-								<div class="tester"><span class='lv'>${each.writerName}</span></div>
+								<div class="tester"><span class='lv'>${each.writer.displayName}</span></div>
 							</div>
 						</div>
 						<div class="list">

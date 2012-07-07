@@ -19,6 +19,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Temporal;
@@ -46,13 +47,11 @@ public class Question implements HasCreatedAndUpdatedDate {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long questionId;
-
-	@Column(name = "writer_id", nullable = false)
-	private String writerId;
 	
-	@Column(name = "writer_name", nullable = false)
-	private String writerName;
-
+	@ManyToOne
+	@org.hibernate.annotations.ForeignKey(name = "fk_question_writer")
+	private SocialUser writer;
+	
 	@Column(name = "title", length=100, nullable = false)
 	private String title;
 
@@ -92,9 +91,12 @@ public class Question implements HasCreatedAndUpdatedDate {
 	public Question() {
 	}
 	
-	Question(String writerId, String writerName, String title, String contents, String plainTags) {
-		this.writerId = writerId;
-		this.writerName = writerName;
+	public Question(Long id) {
+		this.questionId = id;
+	}
+	
+	Question(SocialUser writer, String title, String contents, String plainTags) {
+		this.writer = writer;
 		this.title = title;
 		setContents(contents);
 		this.plainTags = plainTags;
@@ -184,16 +186,15 @@ public class Question implements HasCreatedAndUpdatedDate {
 	}
 	
 	public void writedBy(SocialUser user) {
-		this.writerId = user.getUserId();
-		this.writerName = user.getDisplayName();
+		this.writer = user;
+	}
+	
+	public boolean isWritedBy(SocialUser socialUser) {
+		return socialUser.isSameUser(socialUser);
 	}
 
-	public String getWriterId() {
-		return writerId;
-	}
-
-	public String getWriterName() {
-		return writerName;
+	public SocialUser getWriter() {
+		return writer;
 	}
 
 	public String getTitle() {
@@ -256,9 +257,88 @@ public class Question implements HasCreatedAndUpdatedDate {
 
 	@Override
 	public String toString() {
-		return "Question [questionId=" + questionId + ", writerId=" + writerId + ", writerName=" + writerName
-				+ ", title=" + title + ", contentsHolder=" + contentsHolder + ", createdDate=" + createdDate
-				+ ", updatedDate=" + updatedDate + ", answerCount=" + answerCount + ", showCount=" + showCount
-				+ ", tags=" + tags + ", plainTags=" + plainTags + ", answers=" + answers + "]";
+		return "Question [questionId=" + questionId + ", writer=" + writer + ", title=" + title + ", contentsHolder="
+				+ contentsHolder + ", createdDate=" + createdDate + ", updatedDate=" + updatedDate + ", answerCount="
+				+ answerCount + ", showCount=" + showCount + ", tags=" + tags + ", plainTags=" + plainTags
+				+ ", answers=" + answers + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + answerCount;
+		result = prime * result + ((answers == null) ? 0 : answers.hashCode());
+		result = prime * result + ((contentsHolder == null) ? 0 : contentsHolder.hashCode());
+		result = prime * result + ((createdDate == null) ? 0 : createdDate.hashCode());
+		result = prime * result + ((plainTags == null) ? 0 : plainTags.hashCode());
+		result = prime * result + ((questionId == null) ? 0 : questionId.hashCode());
+		result = prime * result + showCount;
+		result = prime * result + ((tags == null) ? 0 : tags.hashCode());
+		result = prime * result + ((title == null) ? 0 : title.hashCode());
+		result = prime * result + ((updatedDate == null) ? 0 : updatedDate.hashCode());
+		result = prime * result + ((writer == null) ? 0 : writer.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Question other = (Question) obj;
+		if (answerCount != other.answerCount)
+			return false;
+		if (answers == null) {
+			if (other.answers != null)
+				return false;
+		} else if (!answers.equals(other.answers))
+			return false;
+		if (contentsHolder == null) {
+			if (other.contentsHolder != null)
+				return false;
+		} else if (!contentsHolder.equals(other.contentsHolder))
+			return false;
+		if (createdDate == null) {
+			if (other.createdDate != null)
+				return false;
+		} else if (!createdDate.equals(other.createdDate))
+			return false;
+		if (plainTags == null) {
+			if (other.plainTags != null)
+				return false;
+		} else if (!plainTags.equals(other.plainTags))
+			return false;
+		if (questionId == null) {
+			if (other.questionId != null)
+				return false;
+		} else if (!questionId.equals(other.questionId))
+			return false;
+		if (showCount != other.showCount)
+			return false;
+		if (tags == null) {
+			if (other.tags != null)
+				return false;
+		} else if (!tags.equals(other.tags))
+			return false;
+		if (title == null) {
+			if (other.title != null)
+				return false;
+		} else if (!title.equals(other.title))
+			return false;
+		if (updatedDate == null) {
+			if (other.updatedDate != null)
+				return false;
+		} else if (!updatedDate.equals(other.updatedDate))
+			return false;
+		if (writer == null) {
+			if (other.writer != null)
+				return false;
+		} else if (!writer.equals(other.writer))
+			return false;
+		return true;
 	}
 }

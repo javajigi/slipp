@@ -12,7 +12,12 @@
 	<div class="container-fluid">
 		<div class="row-fluid">
 			<div class="span10">
-				<form:form modelAttribute="question" cssClass="form-horizontal" action="/questions" method="POST">
+				<c:set var="method" value="POST" />
+				<c:if test="${not empty question.questionId}">
+				<c:set var="method" value="PUT" />
+				</c:if>
+				<form:form modelAttribute="question" cssClass="form-horizontal" action="/questions" method="${method}">
+					<form:hidden path="questionId"/>
 					<fieldset>
 						<legend>SLiPP Q&A 질문하기</legend>
 						<div class="control-group">

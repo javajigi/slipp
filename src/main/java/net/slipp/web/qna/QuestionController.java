@@ -49,7 +49,7 @@ public class QuestionController {
 	}
 
 	@RequestMapping("/form")
-	public String createForm(HttpServletRequest request, Model model) {
+	public String createForm(@LoginUser SocialUser user, HttpServletRequest request, Model model) {
 		model.addAttribute(new Question());
 		model.addAttribute("tags", qnaService.findsTag());
 		return "qna/form";

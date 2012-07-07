@@ -1,13 +1,9 @@
 package net.slipp.domain.qna;
 
-import net.slipp.domain.qna.Question;
-
-
+import net.slipp.domain.user.SocialUser;
 
 public class QuestionBuilder {
-	private String writerId;
-	
-	private String writerName;
+	private SocialUser writer; 
 	
 	private String title;
 	
@@ -15,13 +11,8 @@ public class QuestionBuilder {
 	
 	private String tags;
 	
-	public QuestionBuilder writerId(String writerId) {
-		this.writerId = writerId;
-		return this;
-	}
-	
-	public QuestionBuilder writerName(String writerName) {
-		this.writerName = writerName;
+	public QuestionBuilder writer(SocialUser writer) {
+		this.writer = writer;
 		return this;
 	}
 	
@@ -41,6 +32,6 @@ public class QuestionBuilder {
 	}
 	
 	public Question build() {
-		return new Question(writerId, writerName, title, contents, tags);
+		return new Question(writer, title, contents, tags);
 	}
 }
