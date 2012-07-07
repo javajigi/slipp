@@ -56,6 +56,19 @@ public class PagerTagTest {
 	}
 	
 	@Test
+	public void generateHtml_totalPage1_currentPage1() throws Exception {
+		when(page.getTotalElements()).thenReturn(5L);
+		when(page.getTotalPages()).thenReturn(1);
+		when(page.getNumber()).thenReturn(0);
+		pagerTag.setPrefixUri("/questions");
+		String result = pagerTag.generateHtml();
+		
+		String expectedHtml = createActivePage(1);
+		
+		assertThat(result, is(expectedHtml));
+	}	
+	
+	@Test
 	public void generateHtml_totalPage5_currentPage3() throws Exception {
 		when(page.getTotalElements()).thenReturn(30L);
 		when(page.getTotalPages()).thenReturn(5);

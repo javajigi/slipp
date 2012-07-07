@@ -49,17 +49,17 @@ public class QuestionController {
 	}
 
 	@RequestMapping("/form")
-	public String createForm(@LoginUser SocialUser user, HttpServletRequest request, Model model) {
+	public String createForm(@LoginUser SocialUser loginUser, HttpServletRequest request, Model model) {
 		model.addAttribute(new Question());
 		model.addAttribute("tags", qnaService.findsTag());
 		return "qna/form";
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public String create(@LoginUser SocialUser user, Question question) {
+	public String create(@LoginUser SocialUser loginUser, Question question) {
 		logger.debug("Question : {}", question);
 
-		qnaService.createQuestion(user, question);
+		qnaService.createQuestion(loginUser, question);
 		return "redirect:/questions";
 	}
 
@@ -70,10 +70,10 @@ public class QuestionController {
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.PUT)
-	public String update(@LoginUser SocialUser user, Question question) {
+	public String update(@LoginUser SocialUser loginUser, Question question) {
 		logger.debug("Question : {}", question);
 
-		qnaService.updateQuestion(user, question);
+		qnaService.updateQuestion(loginUser, question);
 		return "redirect:/questions";
 	}
 
@@ -83,6 +83,12 @@ public class QuestionController {
 		model.addAttribute("answer", new Answer());
 		model.addAttribute("tags", qnaService.findsTag());
 		return "qna/show";
+	}
+	
+	@RequestMapping(value="{id}", method=RequestMethod.DELETE)
+	public String delete(@LoginUser SocialUser loginUser, @PathVariable Long id) {
+		qnaService.deleteQuestion(loginUser, id);
+		return "redirect:/questions";
 	}
 
 	@RequestMapping("/tagged/{name}")

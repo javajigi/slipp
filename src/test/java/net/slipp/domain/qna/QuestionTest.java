@@ -19,10 +19,9 @@ public class QuestionTest {
 	}
 	
 	@Test
-	public void isWritedBy_SameUser() throws Exception {
+	public void isWritedBy_sameUser() throws Exception {
 		// given
-		SocialUser user = new SocialUser();
-		user.setId(10);
+		SocialUser user = new SocialUser(10);
 		dut.writedBy(user);
 		
 		// when
@@ -30,6 +29,19 @@ public class QuestionTest {
 		
 		// then
 		assertThat(actual, is(true));
+	}
+	
+	@Test
+	public void isWritedBy_differentUser() throws Exception {
+		// given
+		SocialUser user = new SocialUser(10);
+		dut.writedBy(new SocialUser(11));
+		
+		// when
+		boolean actual = dut.isWritedBy(user);
+		
+		// then
+		assertThat(actual, is(false));
 	}
 	
 	@Test

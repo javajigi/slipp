@@ -25,7 +25,7 @@
 			<div class="span10">
 				<div class="forumView">
 					<div class="nickArea">
-						<p class='nick'>${question.writer.displayName}</p>
+						<p class='nick'><img src='${question.writer.imageUrl}'/>&nbsp;&nbsp;${question.writer.displayName}</p>
 						<p class="regDate"><fmt:formatDate value="${question.createdDate}" pattern="yyyy-MM-dd HH:mm" /></p>
 					</div>
 					<div class="contents">
@@ -68,16 +68,19 @@
 					</div>
 					<div class="button-qna">
 						<a href="/questions/${question.questionId}/form"><button class="btn">수정하기</button></a>
-						<a href="/questions/${question.questionId}/delete"><button class="btn">삭제하기</button></a>
+						<a id="deleteQuestionBtn" href="#"><button class="btn">삭제하기</button></a>
 						<a href="/questions"><button class="btn">목록으로</button></a>				
 					</div>
+					<form id="deleteQuestionForm" action="/questions/${question.questionId}" method="POST">
+						<input type="hidden" name="_method" value="DELETE" />
+					</form>					
 				</div>
 			
 				<div class="comment">
 					<c:forEach items="${question.answers}" var="each">
 					<div class="commentList">
 						<div class="nickArea">
-							<p class='prphoto'><img src='http://www.archeage.com/util/image/view?image=200000_profile_photo/7/10911110911155485657&amp;type=profile'/></p>
+							<p class='prphoto'><img src='${each.writer.imageUrl}'/></p>
 							<div class="nickname">
 								<div class="tester"><span class='lv'>${each.writer.displayName}</span></div>
 							</div>

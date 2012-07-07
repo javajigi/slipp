@@ -190,7 +190,7 @@ public class Question implements HasCreatedAndUpdatedDate {
 	}
 	
 	public boolean isWritedBy(SocialUser socialUser) {
-		return socialUser.isSameUser(socialUser);
+		return writer.isSameUser(socialUser);
 	}
 
 	public SocialUser getWriter() {

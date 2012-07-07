@@ -115,11 +115,15 @@ public class PagerTag extends SimpleTagSupport {
 	}
 
 	int getEnd() {
+		if (isFirstGroupByTotalPage()) {
+			return page.getTotalPages();
+		}
+		
 		if (isFirstGroupByCurrentPage() ){
 			return DEFAULT_FIRST_GROUP_SIZE;
 		}
 		
-		if (isFirstGroupByTotalPage() || isLowerThanNextSize() || isLastGroup()) {
+		if (isLowerThanNextSize() || isLastGroup()) {
 			return page.getTotalPages();
 		}
 		

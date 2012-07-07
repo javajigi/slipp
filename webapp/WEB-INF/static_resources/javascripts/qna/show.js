@@ -9,4 +9,9 @@ $(document).ready(function()	{
 			contents: "내용을 입력하세요."
 		}
 	});
+	
+	$("#deleteQuestionBtn").click(function() {
+		$("#deleteQuestionForm").submit();
+		return false;
+	});
 });
