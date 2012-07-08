@@ -1,7 +1,6 @@
 package net.slipp.web.qna;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 import net.slipp.domain.qna.Answer;
 import net.slipp.domain.qna.QnaService;
@@ -49,7 +48,7 @@ public class QuestionController {
 	}
 
 	@RequestMapping("/form")
-	public String createForm(@LoginUser SocialUser loginUser, HttpServletRequest request, Model model) {
+	public String createForm(@LoginUser SocialUser loginUser, Model model) {
 		model.addAttribute(new Question());
 		model.addAttribute("tags", qnaService.findsTag());
 		return "qna/form";
@@ -64,7 +63,7 @@ public class QuestionController {
 	}
 
 	@RequestMapping("/{id}/form")
-	public String updateForm(@PathVariable Long id, HttpServletRequest request, Model model) {
+	public String updateForm(@PathVariable Long id, Model model) {
 		model.addAttribute("question", qnaService.findByQuestionId(id));
 		return "qna/form";
 	}
