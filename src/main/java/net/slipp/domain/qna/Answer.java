@@ -54,6 +54,13 @@ public class Answer implements HasCreatedAndUpdatedDate {
 	@ManyToOne
 	@org.hibernate.annotations.ForeignKey(name = "fk_answer_parent_id")
 	private Question question;
+	
+	public Answer() {
+	}
+
+	public Answer(Long answerId) {
+		this.answerId = answerId;
+	}
 
 	public void setQuestion(Question question) {
 		this.question = question;
@@ -119,6 +126,10 @@ public class Answer implements HasCreatedAndUpdatedDate {
 
 	public void writedBy(SocialUser user) {
 		this.writer = user;		
+	}
+	
+	public boolean isWritedBy(SocialUser loginUser) {
+		return writer.isSameUser(loginUser);
 	}
 
 	@Override

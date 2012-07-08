@@ -59,7 +59,7 @@ public class QnaService {
 			throw new AccessDeniedException(loginUser + " is not owner!");
 		}
 
-		questionRepository.delete(questionId);
+		questionRepository.delete(question);
 	}
 	
 	public Page<Question> findsByTag(String name, Pageable pageable) {
@@ -83,5 +83,19 @@ public class QnaService {
 		answer.writedBy(user);
 		answer.answerTo(question);
 		answerRepository.save(answer);
+	}
+
+	public void deleteAnswer(SocialUser loginUser, Long questionId, Long answerId) {
+		Assert.notNull(loginUser, "loginUser should be not null!");
+		Assert.notNull(questionId, "questionId should be not null!");
+		Assert.notNull(answerId, "answerId should be not null!");
+		
+		Answer answer = answerRepository.findOne(answerId);
+		if (!answer.isWritedBy(loginUser)) {
+			throw new AccessDeniedException(loginUser + " is not owner!");
+		}
+		answerRepository.delete(answer);
+		Question question = questionRepository.findOne(questionId);
+		question.decreaseAnswerCount();
 	}
 }

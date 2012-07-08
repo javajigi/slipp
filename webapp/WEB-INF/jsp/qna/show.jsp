@@ -93,11 +93,14 @@
 						</div>
 						<div class="commBtn">
 							<c:if test="${sf:isWriter(each.writer, loginUser)}">
-							<a href="">수정</a>&nbsp;&nbsp;<a href="">삭제</a>
+							<a href="">수정</a>&nbsp;&nbsp;<a class="deleteAnswerBtn" data-answer-id="${each.answerId}" href="#">삭제</a>
 							</c:if>
 						</div>
 					</div>
 					</c:forEach>
+					<form id="deleteAnswerForm" action="/questions/${question.questionId}/answers/" method="POST">
+						<input type="hidden" name="_method" value="DELETE" />
+					</form>					
 				</div>
 				<sec:authorize access="!hasRole('ROLE_USER')">
 				<div class="pull-right">

@@ -254,6 +254,10 @@ public class Question implements HasCreatedAndUpdatedDate {
 	public void increaseAnswerCount() {
 		this.answerCount += 1;
 	}
+	
+	public void decreaseAnswerCount() {
+		this.answerCount -= 1;
+	}
 
 	@Override
 	public String toString() {
