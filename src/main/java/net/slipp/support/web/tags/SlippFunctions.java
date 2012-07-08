@@ -2,6 +2,7 @@ package net.slipp.support.web.tags;
 
 import java.util.Collection;
 
+import net.slipp.domain.user.SocialUser;
 import net.slipp.support.utils.SlippStringUtils;
 
 /**
@@ -158,5 +159,9 @@ public class SlippFunctions {
 		}
 
 		return collection.contains(element);
+	}
+
+	public static boolean isWriter(SocialUser writer, SocialUser loginUser) {
+		return writer.isSameUser(loginUser);
 	}
 }

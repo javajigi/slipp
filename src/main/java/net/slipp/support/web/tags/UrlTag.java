@@ -183,23 +183,6 @@ public class UrlTag {
 		return img(url);
 	}
 
-	/**
-	 * 플래시는 마지막 서버를 사용한다.
-	 */
-	public static String swf(String url) {
-		return staticUrl(url, true, STATIC_SERVER_URLS.length - 1);
-	}
-
-	/**
-	 * 캐릭터, 원정대 기본 이미지를 사용한다.
-	 *
-	 * @param libName
-	 * @return
-	 */
-	public static String defaultImagePath(String url) {
-		return staticUrl(url, false, STATIC_SERVER_URLS.length - 1);
-	}
-
 	public static String lib(String libName) {
 		String url = STATIC_LIB_PROPERTIES.getProperty(libName);
 		if (StringUtils.isBlank(url)) {

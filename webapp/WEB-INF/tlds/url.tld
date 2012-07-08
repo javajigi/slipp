@@ -21,21 +21,6 @@
 	</function>
 	
 	<function>
-		<name>imgF</name>
-		<function-class>net.slipp.support.web.tags.UrlTag</function-class>
-		<function-signature>
-			java.lang.String imgFormat(java.lang.String, java.lang.String)
-		</function-signature>
-	</function>
-	<function>
-		<name>imgF2</name>
-		<function-class>net.slipp.support.web.tags.UrlTag</function-class>
-		<function-signature>
-			java.lang.String imgFormat(java.lang.String, java.lang.String, java.lang.String)
-		</function-signature>
-	</function>
-
-	<function>
 		<name>resource</name>
 		<function-class>net.slipp.support.web.tags.UrlTag</function-class>
 		<function-signature>
@@ -56,14 +41,6 @@
 		<function-class>net.slipp.support.web.tags.UrlTag</function-class>
 		<function-signature>
 			java.lang.String resourceFormat(java.lang.String, java.lang.String, java.lang.String)
-		</function-signature>
-	</function>
-
-	<function>
-		<name>swf</name>
-		<function-class>net.slipp.support.web.tags.UrlTag</function-class>
-		<function-signature>
-			java.lang.String swf(java.lang.String)
 		</function-signature>
 	</function>
 

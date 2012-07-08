@@ -35,7 +35,7 @@
 					<div class="follow">
 						<p class="tags">
 							<c:forEach items="${question.tags}" var="tag">
-							<a href="@{Threads.tagged(tag.name)}"><strong>${tag.name}</strong></a>	
+							<a href="/questions/tagged/${tag.name}"><strong>${tag.name}</strong></a>	
 							</c:forEach> 
 						</p>
 						<p class="count">
@@ -67,9 +67,11 @@
 						</div>
 					</div>
 					<div class="button-qna">
+						<c:if test="${sf:isWriter(question.writer, loginUser)}">
 						<a href="/questions/${question.questionId}/form"><button class="btn">수정하기</button></a>
 						<a id="deleteQuestionBtn" href="#"><button class="btn">삭제하기</button></a>
-						<a href="/questions"><button class="btn">목록으로</button></a>				
+						</c:if>
+						<a href="/questions"><button class="btn pull-right">목록으로</button></a>				
 					</div>
 					<form id="deleteQuestionForm" action="/questions/${question.questionId}" method="POST">
 						<input type="hidden" name="_method" value="DELETE" />
@@ -90,13 +92,17 @@
 							<div class="regDate"><fmt:formatDate value="${each.createdDate}" pattern="yyyy-MM-dd HH:mm" /></div>
 						</div>
 						<div class="commBtn">
+							<c:if test="${sf:isWriter(each.writer, loginUser)}">
 							<a href="">수정</a>&nbsp;&nbsp;<a href="">삭제</a>
+							</c:if>
 						</div>
 					</div>
 					</c:forEach>
 				</div>
 				<sec:authorize access="!hasRole('ROLE_USER')">
-				<a href="/login">로그인</a>을 하면 이 글에 대한 답글을 쓸 수 있습니다.	
+				<div class="pull-right">
+					<a href="/login"><input class="btn btn-primary" type="button" value="로그인" /></a>을 하면 이 글에 대한 답글을 쓸 수 있습니다.
+				</div>	
 				</sec:authorize>
 				<sec:authorize access="hasRole('ROLE_USER')">
 				<div class="form">
