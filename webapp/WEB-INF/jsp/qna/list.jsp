@@ -49,15 +49,7 @@
 				</div>
 			</div>
 
-			<div class="span2">
-				<div class="tags">
-					<ul>
-						<c:forEach items="${tags}" var="each">
-						<li><a href="/questions/tagged/${each.name}">${each.name}</a> X ${each.taggedCount}</li>	
-						</c:forEach>
-					</ul>
-				</div>
-			</div>
+			<slipp:tags tags="${tags}"/>
 		</div>
 	</div>
 </body>

@@ -46,15 +46,7 @@
 					</fieldset>				
 				</form:form>
 			</div>
-			<div class="span2">
-				<div class="tags">
-					<ul>
-						<c:forEach items="${tags}" var="each">
-						<li>${each.name} X ${each.taggedCount}</li>	
-						</c:forEach>
-					</ul>
-				</div>
-			</div>
+			<slipp:tags tags="${tags}"/>
 		</div>
 	</div>
 <script src="http://ajax.microsoft.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>
