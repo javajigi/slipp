@@ -88,6 +88,9 @@ public class Question implements HasCreatedAndUpdatedDate {
 	@OrderBy("answerId DESC")
 	private List<Answer> answers;
 	
+	@Column(name = "deleted", nullable = false)
+	private boolean deleted = false;
+	
 	public Question() {
 	}
 	
@@ -245,10 +248,18 @@ public class Question implements HasCreatedAndUpdatedDate {
 		this.updatedDate = updatedDate;
 	}
 	
+	public boolean isDeleted() {
+		return deleted;
+	}
+	
 	public void update(Question newQuestion) {
 		this.title = newQuestion.title;
 		this.contentsHolder = newQuestion.contentsHolder;
 		this.plainTags = newQuestion.plainTags;
+	}
+	
+	public void delete() {
+		this.deleted = true;
 	}
 	
 	public void increaseAnswerCount() {
@@ -258,7 +269,7 @@ public class Question implements HasCreatedAndUpdatedDate {
 	public void decreaseAnswerCount() {
 		this.answerCount -= 1;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "Question [questionId=" + questionId + ", writer=" + writer + ", title=" + title + ", contentsHolder="

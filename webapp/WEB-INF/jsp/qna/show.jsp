@@ -93,7 +93,7 @@
 						</div>
 						<div class="commBtn">
 							<c:if test="${sf:isWriter(each.writer, loginUser)}">
-							<a href="">수정</a>&nbsp;&nbsp;<a class="deleteAnswerBtn" data-answer-id="${each.answerId}" href="#">삭제</a>
+							<a class="deleteAnswerBtn" data-answer-id="${each.answerId}" href="#">삭제</a>
 							</c:if>
 						</div>
 					</div>

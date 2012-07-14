@@ -58,8 +58,8 @@ public class QnaService {
 		if (!question.isWritedBy(loginUser)) {
 			throw new AccessDeniedException(loginUser + " is not owner!");
 		}
-
-		questionRepository.delete(question);
+		question.delete();
+		questionRepository.save(question);
 	}
 	
 	public Page<Question> findsByTag(String name, Pageable pageable) {
@@ -67,7 +67,7 @@ public class QnaService {
 	}
 	
 	public Page<Question> findsQuestion(Pageable pageable) {
-		return questionRepository.findAll(pageable);
+		return questionRepository.findAll(QnaSpecifications.equalsIsDelete(false), pageable);
 	}
 	
 	public Question findByQuestionId(Long id) {
