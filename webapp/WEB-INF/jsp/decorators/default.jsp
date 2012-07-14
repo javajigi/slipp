@@ -42,7 +42,7 @@
           <div class="nav-collapse">
             <ul class="nav nav-pills pull-right">
               <sec:authorize access="!hasRole('ROLE_USER')">
-              <li class="active"><a href="/login">로그인</a></li>
+              <li class="active loginBtn"><a href="/login">로그인</a></li>
               </sec:authorize>
               <sec:authorize access="hasRole('ROLE_USER')">
               <li class="active"><a href="/logout">로그아웃</a></li>

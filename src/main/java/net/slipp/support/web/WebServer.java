@@ -35,7 +35,7 @@ public class WebServer {
 		prepareServerConfiguration();
 		prepareHttpConnector();
 		prepareWebAppContext();
-		prepareReloadable();
+		// prepareReloadable();
 
 		server.start();
 	}
