@@ -20,12 +20,20 @@ public class SlippWikiUtils {
 		Matcher matcher = IMAGE_WIKI_PATTERN.matcher(contents);
 
 		List<String> images = Lists.newArrayList();
-		for(int i=0; matcher.find(); i++) {
+		for (int i = 0; matcher.find(); i++) {
 			logger.debug("index : {}, result : {}", i, matcher.group(1));
-			if(!images.contains(matcher.group(1))) {
+			if (!images.contains(matcher.group(1))) {
 				images.add(matcher.group(1));
 			}
 		}
 		return ImmutableList.copyOf(images);
+	}
+
+	public static String convertTabToSpace(String contents) {
+		if (contents == null) {
+			return null;
+		}
+		
+		return contents.replace("\t", "  ");
 	}
 }

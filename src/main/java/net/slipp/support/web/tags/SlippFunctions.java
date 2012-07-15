@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import net.slipp.domain.user.SocialUser;
 import net.slipp.support.utils.SlippStringUtils;
+import net.slipp.support.wiki.WikiContents;
 
 /**
  * JSP EL Functions
@@ -163,5 +164,10 @@ public class SlippFunctions {
 
 	public static boolean isWriter(SocialUser writer, SocialUser loginUser) {
 		return writer.isSameUser(loginUser);
+	}
+
+	public static String wiki(String contents) {
+		String result = WikiContents.convert(contents);
+		return result;
 	}
 }

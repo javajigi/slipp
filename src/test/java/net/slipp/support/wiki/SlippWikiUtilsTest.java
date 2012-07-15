@@ -19,4 +19,11 @@ public class SlippWikiUtilsTest {
 		assertThat(images.size(), is(2));
 		logger.debug(images.toString());
 	}
+	
+	@Test
+	public void convertTabToSpace() throws Exception {
+		String contents = TestFileReader.read(this, "tab.txt");
+		String actual = SlippWikiUtils.convertTabToSpace(contents);
+		logger.debug("converted contents : {}", actual);
+	}
 }

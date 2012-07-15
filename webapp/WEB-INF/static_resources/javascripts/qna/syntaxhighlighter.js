@@ -4,7 +4,7 @@ $(document).ready(function()	{
 	  var result = [];
 	       
 	  for(var i = 0; i < args.length; i++){
-	      result.push(args[i].replace('@', '/public/javascripts/sh/'));
+	      result.push(args[i].replace('@', '/resources/javascripts/sh/'));
 	  }
 	  return result;
 	}

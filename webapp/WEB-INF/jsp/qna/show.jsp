@@ -6,6 +6,9 @@
 <link href="${url:resource('/stylesheets/wiki-style.css')}" rel="stylesheet">
 <link href="${url:resource('/stylesheets/wiki-textile-style.css')}" rel="stylesheet">
 <link href="${url:resource('/stylesheets/wiki-imageupload-plugins.css')}" rel="stylesheet">
+<link href="${url:resource('/stylesheets/sh/shCoreDefault.css')}" rel="stylesheet">
+<link href="${url:resource('/stylesheets/sh/shThemeEclipse.css')}" rel="stylesheet">
+
 <style type="text/css">
 .markItUpEditor { height:150px; }
 </style>
@@ -30,7 +33,7 @@
 					</div>
 					<div class="contents">
 						<strong class="subject">${question.title}</strong>
-						<div>${sf:br(question.contents)}</div>
+						<div>${sf:wiki(question.contents)}</div>
 					</div>
 					<div class="follow">
 						<p class="tags">
@@ -128,9 +131,12 @@
 <script type="text/javascript">
 var uploaderUrl = "http://localhost:8080";
 </script>
-<script type="text/javascript"	src="${url:resource('/javascripts/qna/image.upload.js')}"></script>
+<script type="text/javascript" src="${url:resource('/javascripts/qna/image.upload.js')}"></script>
 <script type="text/javascript" src="${url:resource('/javascripts/qna/qna-set.js')}"></script>
 <script type="text/javascript" src="${url:resource('/javascripts/qna/tagparser.js')}"></script>
+<script type="text/javascript" src="${url:resource('/javascripts/sh/shCore.js')}"></script>
+<script type="text/javascript" src="${url:resource('/javascripts/sh/shAutoloader.js')}"></script>
+<script type="text/javascript" src="${url:resource('/javascripts/qna/syntaxhighlighter.js')}"></script>
 <script type="text/javascript" src="${url:resource('/javascripts/qna/show.js')}"></script>	
 </body>
 </html>
