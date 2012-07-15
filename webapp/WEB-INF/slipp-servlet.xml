@@ -35,6 +35,17 @@
 			<util:properties location="classpath:application-properties.xml" />
 		</constructor-arg>
 	</bean>
+	
+	<bean id="aplicationContextAttributeSetter"
+		class="net.slipp.support.web.servletcontext.interceptor.GlobalServletApplicationContextAttributeSetter"
+		lazy-init="false">
+		<property name="applicationProperties" ref="applicationProperties" />
+	</bean>	
+	
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="2000000" />
+	</bean>	
 
 	<bean id="jspViewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -44,4 +55,6 @@
 		<property name="suffix" value=".jsp" />
 		<property name="order" value="2" />
 	</bean>
+	
+	<bean id="servletDownloadManager" class="net.slipp.support.web.ServletDownloadManager" />
 </beans>

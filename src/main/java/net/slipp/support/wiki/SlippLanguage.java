@@ -101,7 +101,7 @@ public class SlippLanguage extends AbstractMarkupLanguage {
 		phraseModifierSyntax.add(new SimplePhraseModifier("~", SpanType.SUBSCRIPT, false)); //$NON-NLS-1$
 		phraseModifierSyntax.add(new SimpleWrappedPhraseModifier("{{", "}}", SpanType.MONOSPACE, false)); //$NON-NLS-1$ //$NON-NLS-2$
 		phraseModifierSyntax.add(new ConfluenceWrappedPhraseModifier("{quote}", SpanType.QUOTE, true)); //$NON-NLS-1$ 
-		phraseModifierSyntax.add(new SlippImagePhraseModifier());
+		// phraseModifierSyntax.add(new SlippImagePhraseModifier());
 		phraseModifierSyntax.endGroup(")(?=\\W|$)", 0); //$NON-NLS-1$
 	}
 

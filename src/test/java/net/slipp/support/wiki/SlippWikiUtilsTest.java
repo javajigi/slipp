@@ -21,6 +21,14 @@ public class SlippWikiUtilsTest {
 	}
 	
 	@Test
+	public void replaceImages() throws Exception {
+		String contents = TestFileReader.read(this, "images.txt");
+		String targetUrl = "http://localhost:8080";
+		String actual = SlippWikiUtils.replaceImages(contents, targetUrl);
+		logger.debug("result : {}", actual);
+	}
+	
+	@Test
 	public void convertTabToSpace() throws Exception {
 		String contents = TestFileReader.read(this, "tab.txt");
 		String actual = SlippWikiUtils.convertTabToSpace(contents);

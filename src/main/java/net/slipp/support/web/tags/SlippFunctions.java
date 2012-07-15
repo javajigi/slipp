@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import net.slipp.domain.user.SocialUser;
 import net.slipp.support.utils.SlippStringUtils;
+import net.slipp.support.wiki.SlippWikiUtils;
 import net.slipp.support.wiki.WikiContents;
 
 /**
@@ -166,8 +167,8 @@ public class SlippFunctions {
 		return writer.isSameUser(loginUser);
 	}
 
-	public static String wiki(String contents) {
+	public static String wiki(String contents, String targetUrl) {
 		String result = WikiContents.convert(contents);
-		return result;
+		return SlippWikiUtils.replaceImages(result, targetUrl);
 	}
 }

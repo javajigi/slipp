@@ -18,7 +18,6 @@ public class SlippWikiUtils {
 	public static List<String> createImageListFrom(String contents) {
 		logger.debug("content : {}", contents);
 		Matcher matcher = IMAGE_WIKI_PATTERN.matcher(contents);
-
 		List<String> images = Lists.newArrayList();
 		for (int i = 0; matcher.find(); i++) {
 			logger.debug("index : {}, result : {}", i, matcher.group(1));
@@ -35,5 +34,18 @@ public class SlippWikiUtils {
 		}
 		
 		return contents.replace("\t", "  ");
+	}
+
+	public static String replaceImages(String contents, String slippUrl) {
+		Matcher matcher = IMAGE_WIKI_PATTERN.matcher(contents);
+		if (matcher.find()) {
+			contents = matcher.replaceAll(createImageHtml(slippUrl, matcher.group(1)));
+		}
+		return contents;
+	}
+	
+	private static String createImageHtml(String slippUrl, String attachmentId) {
+		String imageUrl = slippUrl + "/attachments/" + attachmentId;
+		return "<img src=\"" + imageUrl + "\"/>";
 	}
 }

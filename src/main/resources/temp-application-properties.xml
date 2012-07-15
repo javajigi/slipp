@@ -14,8 +14,10 @@
 	<entry key="database.username">username</entry>
 	<entry key="database.password">password</entry>
 	
+	<!-- URL -->
+	<entry key="application.url">http://localhost:8080</entry>
+	
 	<!-- security -->
-	<entry key="application.secureUrl">http://localhost:8080</entry>
 	<entry key="socialsignin.signUpView">/signUpForm</entry>
 	
 	<entry key="twitter.consumerKey">consumerKey</entry>	
@@ -27,4 +29,7 @@
 	<entry key="facebook.clientSecret">clientSecret</entry>
 
 	<entry key="slipp.remember.token.key">rememberkey</entry>
+	
+	<!-- Attachment -->
+	<entry key="attachment.root.dir">/home/user</entry>
 </properties>

@@ -33,7 +33,7 @@
 					</div>
 					<div class="contents">
 						<strong class="subject">${question.title}</strong>
-						<div>${sf:wiki(question.contents)}</div>
+						<div>${sf:wiki(question.contents, slippUrl)}</div>
 					</div>
 					<div class="follow">
 						<p class="tags">
@@ -129,14 +129,14 @@
 <script type="text/javascript" src="${url:resource('/javascripts/jquery.markitup.js')}"></script>
 <script type="text/javascript" src="${url:resource('/javascripts/jquery.autocomplete.js')}"></script>
 <script type="text/javascript">
-var uploaderUrl = "http://localhost:8080";
+var uploaderUrl = "${slippUrl}";
 </script>
-<script type="text/javascript" src="${url:resource('/javascripts/qna/image.upload.js')}"></script>
-<script type="text/javascript" src="${url:resource('/javascripts/qna/qna-set.js')}"></script>
-<script type="text/javascript" src="${url:resource('/javascripts/qna/tagparser.js')}"></script>
 <script type="text/javascript" src="${url:resource('/javascripts/sh/shCore.js')}"></script>
 <script type="text/javascript" src="${url:resource('/javascripts/sh/shAutoloader.js')}"></script>
 <script type="text/javascript" src="${url:resource('/javascripts/qna/syntaxhighlighter.js')}"></script>
-<script type="text/javascript" src="${url:resource('/javascripts/qna/show.js')}"></script>	
+<script type="text/javascript" src="${url:resource('/javascripts/qna/qna-set.js')}"></script>
+<script type="text/javascript" src="${url:resource('/javascripts/qna/image.upload.js')}"></script>
+<script type="text/javascript" src="${url:resource('/javascripts/qna/tagparser.js')}"></script>
+<script type="text/javascript" src="${url:resource('/javascripts/qna/show.js')}"></script>
 </body>
 </html>

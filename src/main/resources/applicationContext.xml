@@ -102,15 +102,15 @@
 
 	<!-- Start Spring Social -->
 	<bean class="org.springframework.social.connect.web.ProviderSignInController">
-		<constructor-arg value="${application.secureUrl}" />
+		<constructor-arg value="${application.url}" />
 		<property name="signUpUrl" value="/signup" />
-		<property name="applicationUrl" value="${application.secureUrl}" />
+		<property name="applicationUrl" value="${application.url}" />
 		<property name="postSignInUrl" value="/authenticate" />
 	</bean>
 
 	<bean class="org.springframework.social.connect.web.ConnectController">
 		<!-- relies on by-type autowiring for the constructor-args -->
-		<property name="applicationUrl" value="${application.secureUrl}" />
+		<property name="applicationUrl" value="${application.url}" />
 		<property name="interceptors" ref="connectInterceptorList" />
 	</bean>
 

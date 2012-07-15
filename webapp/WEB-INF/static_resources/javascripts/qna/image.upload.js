@@ -6,7 +6,7 @@ var InlineUpload = {
 	options: {
 		container_class: 'markItUpInlineUpload',
 		form_id: 'inline_upload_form',
-		action: 'http://' + uploaderUrl + '/attaches',
+		action: uploaderUrl + '/attachments',
 		inputs: {
 			file: { label: '이미지', id: 'inline_upload_file1', name: 'inline_upload_file1' }
 		},
@@ -39,7 +39,7 @@ var InlineUpload = {
 				'</label><input name="file" id="', this.options.inputs.file.id,
 				'" type="file" /><input id="', this.options.submit.id,
 				'" type="button" value="', this.options.submit.value,
-				'" />&nbsp;&nbsp;용량 제한 : 1MB</form><div id="', this.options.close,
+				'" />&nbsp;&nbsp;용량 제한 : 2MB</form><div id="', this.options.close,
 				'"></div><iframe id="', this.options.iframe,
 				'" name="',	this.options.iframe,
 				'" src=""></iframe></div></div>',
@@ -51,7 +51,6 @@ var InlineUpload = {
 
 
 			//init submit button
-
 			$('#'+this.options.submit.id).click(function(){
 				if($('#inline_upload_file1').val() == ''){
 					alert('Please select a file to upload');
@@ -68,7 +67,7 @@ var InlineUpload = {
 			$('#'+this.options.iframe).bind('load', function() {
 				var result = document.getElementById('' + self.options.iframe).contentWindow.document.body.innerHTML;
 				if(upload){
-					var attachedFile = $.parseJSON(result);
+					var attachedFile = $.parseJSON(result.substring(result.indexOf("{"), result.lastIndexOf("}") + 1));
 					if (attachedFile.hasError){
 						alert(attachedFile.errorMessage);
 					} else {

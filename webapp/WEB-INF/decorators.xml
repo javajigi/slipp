@@ -3,6 +3,7 @@
 <decorators defaultdir="/WEB-INF/jsp/decorators">
 	<excludes>
 		<pattern>/popup/*</pattern>
+		<pattern>/attachments*</pattern>
 	</excludes>
 
 	<decorator name="default" page="default.jsp">
