@@ -11,20 +11,20 @@
 	<!-- Database -->
 	<entry key="database.driverClassName">com.mysql.jdbc.Driver</entry>
 	<entry key="database.url">jdbc:mysql://127.0.0.1/slipp?useUnicode=yes&amp;characterEncoding=UTF-8</entry>
-	<entry key="database.username">slipp</entry>
-	<entry key="database.password">password</entry>	
+	<entry key="database.username">username</entry>
+	<entry key="database.password">password</entry>
 	
 	<!-- security -->
 	<entry key="application.secureUrl">http://localhost:8080</entry>
 	<entry key="socialsignin.signUpView">/signUpForm</entry>
 	
-	<entry key="twitter.consumerKey">eOJtrv0Jq247kfS9T8nKUA</entry>	
-	<entry key="twitter.consumerSecret">VIIHqXPbYErwTnUZXeQD5mQ1EJCN8mYl4yUdYGhWzQ</entry>
+	<entry key="twitter.consumerKey">consumerKey</entry>	
+	<entry key="twitter.consumerSecret">consumerSecret</entry>
 
-	<entry key="facebook.email">javajigi@gmail.com</entry>
-	<entry key="facebook.password">dPdmstkfkd</entry>
-	<entry key="facebook.clientId">183539021738775</entry>
-	<entry key="facebook.clientSecret">79ac1b0c489c552ee371555470fee53c</entry>
+	<entry key="facebook.email">email</entry>
+	<entry key="facebook.password">password</entry>
+	<entry key="facebook.clientId">client</entry>
+	<entry key="facebook.clientSecret">clientSecret</entry>
 
-	<entry key="slipp.remember.token.key">766062e0-ac8d-11e1-afa6-0800200c9a66</entry>
+	<entry key="slipp.remember.token.key">rememberkey</entry>
 </properties>
