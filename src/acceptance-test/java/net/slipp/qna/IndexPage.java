@@ -32,7 +32,7 @@ public class IndexPage {
 	}
 
 	public AdminTagPage goAdminTagPage() {
-		driver.findElement(By.cssSelector(".tagManagement > a")).click();
+		driver.findElement(By.cssSelector("#tagManagement > a")).click();
 		return new AdminTagPage(driver);
 	}
 }

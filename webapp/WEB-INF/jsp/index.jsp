@@ -5,14 +5,7 @@
 <link href="${url:resource('/stylesheets/boards.css')}" rel="stylesheet">
 </head>
 <body>
-      <header class="jumbotron subhead" id="subnav">
-        <div class="subnav">
-          <ul class="nav nav-pills">
-            <li class="active"><a href="#global">최신순</a></li>
-            <li class="tagManagement"><a href="/admin/tags">태그관리</a></li>
-          </ul>
-        </div>
-      </header>
+    <slipp:header type="1"/>
 	<div class="container-fluid">
 		<div class="row-fluid">
 			<div class="span10">
