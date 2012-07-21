@@ -4,6 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+
 import net.slipp.domain.qna.Tag;
 import net.slipp.repository.qna.TagRepository;
 
@@ -87,5 +91,17 @@ public class MockTagRepository implements TagRepository {
 	public void deleteAll() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Iterable<Tag> findAll(Sort sort) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Page<Tag> findAll(Pageable pageable) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
