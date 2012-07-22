@@ -18,4 +18,16 @@ public class AdminTagPage {
 		assertThat(tagTab.getAttribute("class"), is("active"));
 	}
 
+	public AdminTagPage createTag(String newTag) {
+		driver.findElement(By.id("name")).clear();
+		driver.findElement(By.id("name")).sendKeys(newTag);
+		driver.findElement(By.cssSelector("#tagForm > button")).click();
+		return new AdminTagPage(driver);
+	}
+
+	public AdminTagPage validateNewTag(String newTag) {
+		WebElement tags = driver.findElement(By.xpath("//tbody/tr[1]/td[2]"));
+		assertThat(tags.getText(), is(newTag));
+		return this;
+	}
 }

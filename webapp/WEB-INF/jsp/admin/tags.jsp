@@ -9,24 +9,24 @@
 	<slipp:header type="2" />
 
 	<div class="span8">
-		<table class="table table-bordered">
+		<table id="tags" class="table table-bordered">
 			<thead>
 				<tr>
-					<th class="span1">아이디</th>
+					<th class="span2">아이디</th>
 					<th>이름</th>
 					<th class="span2">taggedCount</th>
-					<th class="span2"></th>
 				</tr>
 			</thead>
 			<tbody>
-
 				<c:forEach items="${tags.content}" var="each">
 				<tr>
 					<td>${each.tagId}</td>
 					<td>${each.name}</td>
 					<td>${each.taggedCount}</td>
+					<!-- 
 					<td><button class="btn btn-primary" href="#">수정</button>&nbsp;&nbsp;
 						<button class="btn btn-danger" href="#">삭제</button></td>
+					 -->
 				</tr>
 				</c:forEach>
 			</tbody>
@@ -39,8 +39,8 @@
 		</div>		
 	</div>
 	<div class="span8">
-		<form class="form-search" action="/admin/tags" method="post">
-      		<input type="text" class="input-medium">
+		<form id="tagForm" class="form-search" action="/admin/tags" method="post">
+      		<input type="text" id="name" name="name" class="input-medium">
       		<button type="submit" class="btn btn-primary">추가</button>
     	</form>
 	</div>

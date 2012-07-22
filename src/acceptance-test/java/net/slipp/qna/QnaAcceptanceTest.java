@@ -1,6 +1,5 @@
 package net.slipp.qna;
 
-import static org.junit.Assert.*;
 import net.slipp.user.FacebookPage;
 import net.slipp.user.LoginPage;
 
@@ -39,6 +38,10 @@ public class QnaAcceptanceTest {
 	public void 페이스북_로그인() throws Exception {
 		logger.debug("email : {}, password : {}", email, password);
 
+		login();
+	}
+
+	private void login() {
 		LoginPage loginPage = home.goLoginPage();
 		FacebookPage facebookPage = loginPage.loginFacebook();
 		home = facebookPage.login(email, password);
@@ -46,9 +49,22 @@ public class QnaAcceptanceTest {
 	
 	@Test
 	public void 태그_관리자_탭() throws Exception {
-		LoginPage loginPage = home.goLoginPage();
-		FacebookPage facebookPage = loginPage.loginFacebook();
-		home = facebookPage.login(email, password);
+		login();
+		home.goAdminTagPage();		
+	}
+	
+	@Test
+	public void 태그_추가() throws Exception {
+		login();
 		AdminTagPage adminTag = home.goAdminTagPage();		
+		adminTag = adminTag.createTag("newTag");
+		adminTag.validateNewTag("newTag");
+	}
+	
+	@Test
+	public void 태그_중복_추가() throws Exception {
+		login();
+		AdminTagPage adminTag = home.goAdminTagPage();		
+		adminTag = adminTag.createTag("newTag");
 	}
 }
