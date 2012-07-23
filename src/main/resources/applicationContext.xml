@@ -107,10 +107,13 @@
 		<property name="postSignInUrl" value="/authenticate" />
 	</bean>
 
+	<!-- 
+	facebook과 twitter등의 계정을 서로 연결할 때 사용하는 듯하다.
 	<bean class="org.springframework.social.connect.web.ConnectController">
 		<property name="applicationUrl" value="${application.url}" />
 		<property name="interceptors" ref="connectInterceptorList" />
 	</bean>
+	 -->
 
 	<bean id="usersConnectionRepository"
 		class="net.slipp.repository.user.SocialUsersConnectionRepository">
