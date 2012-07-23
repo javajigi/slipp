@@ -9,9 +9,9 @@
 	xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
-		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
 		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
 		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.0.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
@@ -86,8 +86,7 @@
 		<security:custom-filter position="FORM_LOGIN_FILTER"
 			ref="springSocialSecurityAuthenticationFilter" />
 
-		<remember-me services-ref="springSocialSecurityRememberMeServices"
-			key="springSocialSecurity" />
+		<remember-me services-ref="springSocialSecurityRememberMeServices" />
 	</security:http>
 
 
@@ -109,7 +108,6 @@
 	</bean>
 
 	<bean class="org.springframework.social.connect.web.ConnectController">
-		<!-- relies on by-type autowiring for the constructor-args -->
 		<property name="applicationUrl" value="${application.url}" />
 		<property name="interceptors" ref="connectInterceptorList" />
 	</bean>

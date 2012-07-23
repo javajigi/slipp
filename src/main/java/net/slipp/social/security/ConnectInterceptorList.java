@@ -7,11 +7,5 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ConnectInterceptorList extends ArrayList<ConnectInterceptor<?>>{
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	
-
 }
