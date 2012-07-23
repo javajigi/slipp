@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/tags.jspf"%>
 <html>
 <head>
+<title>로그인 :: SLiPP</title>
 <link href="${url:resource('/stylesheets/boards.css')}" rel="stylesheet">
 </head>
 <body>

@@ -42,6 +42,9 @@
 		<form id="tagForm" class="form-search" action="/admin/tags" method="post">
       		<input type="text" id="name" name="name" class="input-medium">
       		<button type="submit" class="btn btn-primary">추가</button>
+      		<c:if test="${not empty errorMessage}">
+      		<label for="tag" class="error" style="">${errorMessage}</label>
+      		</c:if>
     	</form>
 	</div>
 </body>

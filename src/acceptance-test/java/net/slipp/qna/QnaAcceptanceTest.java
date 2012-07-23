@@ -1,5 +1,7 @@
 package net.slipp.qna;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 import net.slipp.user.FacebookPage;
 import net.slipp.user.LoginPage;
 
@@ -64,7 +66,8 @@ public class QnaAcceptanceTest {
 	@Test
 	public void 태그_중복_추가() throws Exception {
 		login();
-		AdminTagPage adminTag = home.goAdminTagPage();		
-		adminTag = adminTag.createTag("newTag");
+		AdminTagPage adminTag = home.goAdminTagPage();	
+		adminTag = adminTag.createTag("newTag1").createTag("newTag1");
+		assertThat(adminTag.hasDuplidateErrorMessage(), is(true));
 	}
 }

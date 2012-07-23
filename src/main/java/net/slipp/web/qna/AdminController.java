@@ -40,6 +40,12 @@ public class AdminController {
 	
 	@RequestMapping(value = "/tags", method = RequestMethod.POST)
 	public String create(String name, ModelMap model) throws Exception {
+		Tag originalTag = tagRepository.findByName(name);
+		if (originalTag != null) {
+			model.addAttribute("errorMessage", name + " 태그는 이미 존재합니다.");
+			return tags(1, model);
+		}
+				
 		tagRepository.save(new Tag(name));
 		return "redirect:/admin/tags";
 	}

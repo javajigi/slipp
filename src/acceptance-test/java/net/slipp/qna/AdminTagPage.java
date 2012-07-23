@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -29,5 +30,14 @@ public class AdminTagPage {
 		WebElement tags = driver.findElement(By.xpath("//tbody/tr[1]/td[2]"));
 		assertThat(tags.getText(), is(newTag));
 		return this;
+	}
+
+	public boolean hasDuplidateErrorMessage() {
+		try {
+			driver.findElement(By.cssSelector("label.error"));
+			return true;
+		} catch (NoSuchElementException e) {
+			return false;
+		}
 	}
 }

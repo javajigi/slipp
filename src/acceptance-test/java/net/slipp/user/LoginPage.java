@@ -2,7 +2,7 @@ package net.slipp.user;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-
+import net.slipp.qna.IndexPage;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -23,5 +23,12 @@ public class LoginPage {
 		driver.findElement(By.cssSelector("input[value='페이스북 계정으로 로그인']")).click();
 		logger.debug("body : {}", driver.getPageSource());
 		return new FacebookPage(driver);
+	}
+
+	public IndexPage loginSlipp(final String userName) {
+		driver.findElement(By.id("userName")).clear();
+		driver.findElement(By.id("userName")).sendKeys(userName);
+		driver.findElement(By.cssSelector(".btn-success")).click();
+		return new IndexPage(driver);
 	}
 }
