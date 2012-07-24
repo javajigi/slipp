@@ -33,7 +33,7 @@
 		<constructor-arg value="/login" />
 	</bean>	
 
-	<context:component-scan	base-package="org.socialsignin.springframework.social.security" />
+	<context:component-scan	base-package="org.socialsignin.springsocial.security" />
 		
 	<context:component-scan	base-package="net.slipp">
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
@@ -77,9 +77,6 @@
 		<intercept-url pattern="/questions/form" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/questions" method="POST" access="hasRole('ROLE_USER')" />
 
-
-		<access-denied-handler ref="springSocialSecurityAccessDeniedHandler" />
-		
 		<security:logout logout-url="/logout" />
 
 		<anonymous />

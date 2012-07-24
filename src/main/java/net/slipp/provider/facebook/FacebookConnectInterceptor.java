@@ -1,6 +1,6 @@
 package net.slipp.provider.facebook;
 
-import org.socialsignin.springframework.social.security.signin.SpringSocialSecurityConnectInterceptor;
+import org.socialsignin.springsocial.security.signin.SpringSocialSecurityConnectInterceptor;
 import org.springframework.social.facebook.api.Facebook;
 import org.springframework.stereotype.Component;
 
