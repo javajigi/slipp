@@ -1,6 +1,5 @@
-package net.slipp.provider.twitter;
+package net.slipp.social.security.provider;
 
-import net.slipp.provider.AbstractProviderConfig;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

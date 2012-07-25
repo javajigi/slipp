@@ -1,4 +1,4 @@
-package net.slipp.provider.facebook;
+package net.slipp.social.security.provider;
 
 import org.socialsignin.springsocial.security.signin.SpringSocialSecurityConnectInterceptor;
 import org.springframework.social.facebook.api.Facebook;

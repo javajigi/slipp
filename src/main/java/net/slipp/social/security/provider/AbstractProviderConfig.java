@@ -1,4 +1,4 @@
-package net.slipp.provider;
+package net.slipp.social.security.provider;
 
 import javax.annotation.PostConstruct;
 

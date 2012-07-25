@@ -9,7 +9,8 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
-
+	<context:property-placeholder location="classpath*:application-properties.xml" />
+	
 	<mvc:annotation-driven>
 		<mvc:argument-resolvers>
 			<bean class="net.slipp.support.web.argumentresolver.LoginUserHandlerMethodArgumentResolver"
@@ -57,4 +58,21 @@
 	</bean>
 	
 	<bean id="servletDownloadManager" class="net.slipp.support.web.ServletDownloadManager" />
+	
+	<bean class="org.springframework.social.connect.web.ProviderSignInController">
+		<constructor-arg value="${application.url}" />
+		<property name="signUpUrl" value="/signup" />
+		<property name="applicationUrl" value="${application.url}" />
+		<property name="postSignInUrl" value="/authenticate" />
+	</bean>
+	
+	<bean class="org.socialsignin.springsocial.security.signup.SpringSocialSecuritySignUpController" />
+
+	<!-- 
+	facebook과 twitter등의 계정을 서로 연결할 때 사용하는 듯하다.
+	<bean class="org.springframework.social.connect.web.ConnectController">
+		<property name="applicationUrl" value="${application.url}" />
+		<property name="interceptors" ref="connectInterceptorList" />
+	</bean>
+	 -->	
 </beans>

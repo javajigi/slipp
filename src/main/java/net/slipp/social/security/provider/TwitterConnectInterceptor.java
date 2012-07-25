@@ -1,4 +1,4 @@
-package net.slipp.provider.twitter;
+package net.slipp.social.security.provider;
 
 import org.socialsignin.springsocial.security.signin.SpringSocialSecurityConnectInterceptor;
 import org.springframework.social.twitter.api.Twitter;

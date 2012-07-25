@@ -21,9 +21,9 @@
     
 	<jpa:repositories base-package="net.slipp.repository" />
 	
-	<context:component-scan	base-package="net.slipp.provider" />
-	
 	<context:component-scan	base-package="net.slipp.social.security" />
+	
+	<context:component-scan	base-package="net.slipp.support.security" />
     
 	<bean id="usersConnectionRepository"
 		class="net.slipp.repository.user.SocialUsersConnectionRepository">
