@@ -12,8 +12,6 @@ import org.springframework.social.facebook.connect.FacebookConnectionFactory;
 
 @Configuration
 public class FacebookProviderConfig extends AbstractProviderConfig<Facebook> {
-	
-	
 	@Autowired
 	private FacebookConnectInterceptor facebookConnectInterceptor;
 	

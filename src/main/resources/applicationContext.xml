@@ -57,7 +57,7 @@
 	<bean id="authenticationProvider"
 		class="org.springframework.security.authentication.RememberMeAuthenticationProvider">
 		<constructor-arg value="${slipp.remember.token.key}" />
-	</bean>	
+	</bean>
 
 	<bean id="accessDecisionManager" class="org.springframework.security.access.vote.UnanimousBased"
 		xmlns="http://www.springframework.org/schema/beans">

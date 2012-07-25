@@ -27,6 +27,5 @@ public abstract class AbstractProviderConfig<S> {
     public void register() {
         registry.addConnectionFactory(createConnectionFactory());
         connectInterceptorList.add(getConnectInterceptor());
-
     }
 }
