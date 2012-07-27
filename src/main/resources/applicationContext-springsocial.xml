@@ -21,23 +21,32 @@
     
 	<jpa:repositories base-package="net.slipp.repository" />
 	
-	<context:component-scan	base-package="net.slipp.social.security" />
-	
 	<context:component-scan	base-package="net.slipp.support.security" />
+	
+	<bean id="facebookConnectionFactory" class="org.springframework.social.facebook.connect.FacebookConnectionFactory">
+		<constructor-arg value="${facebook.clientId}" />
+		<constructor-arg value="${facebook.clientSecret}" />
+	</bean>
+	
+	<bean id="twitterConnectionFactory" class="org.springframework.social.twitter.connect.TwitterConnectionFactory">
+		<constructor-arg value="${twitter.consumerKey}" />
+		<constructor-arg value="${twitter.consumerSecret}" />
+	</bean>
+	
+	<util:list id="connectionFactories">
+		<ref local="facebookConnectionFactory"/>
+		<ref local="twitterConnectionFactory"/>
+	</util:list>
+	
+	<bean id="connectionFactoryRegistry" class="org.springframework.social.connect.support.ConnectionFactoryRegistry"
+		p:connectionFactories-ref="connectionFactories"
+	/>
     
 	<bean id="usersConnectionRepository"
 		class="net.slipp.repository.user.SocialUsersConnectionRepository">
 		<constructor-arg ref="socialUserRepository" />
 		<constructor-arg ref="connectionFactoryRegistry" />
 		<constructor-arg ref="textEncryptor" />
-	</bean>
-
-	<bean
-		class="org.springframework.social.connect.jdbc.JdbcConnectionRepository"
-		id="connectionRepository" factory-method="createConnectionRepository"
-		factory-bean="usersConnectionRepository" scope="request">
-		<constructor-arg value="#{request.userPrincipal.name}" />
-		<aop:scoped-proxy proxy-target-class="true" />
 	</bean>
 
 	<bean id="textEncryptor" class="org.springframework.security.crypto.encrypt.Encryptors"
