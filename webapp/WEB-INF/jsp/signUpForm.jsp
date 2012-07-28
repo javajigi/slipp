@@ -11,7 +11,7 @@
 			<div class="span4 offset4">
 				<h2>SLiPP에서 사용할 계정</h2>
 				<form:form action="" method="post" modelAttribute="signUpForm" cssClass="well form-search">
-					<form:input path="userName" cssClass="input-medium "/>
+					<form:input path="username" cssClass="input-medium "/>
 					<input class="btn btn-success" type="submit" value="로그인" />
 					<form:errors path="*" />
 				</form:form>

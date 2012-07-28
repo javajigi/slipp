@@ -52,13 +52,7 @@
 	<bean id="textEncryptor" class="org.springframework.security.crypto.encrypt.Encryptors"
 		factory-method="noOpText" />
 		
-	<bean id="springSocialSecurityUserDetailsService" 
-		class="org.socialsignin.springsocial.security.userdetails.SpringSocialSecurityUserDetailsService" />
-		
-	<bean id="springSocialSecurityAuthenticationFactory" 
-		class="org.socialsignin.springsocial.security.signin.SpringSocialSecurityAuthenticationFactory" />
-		
-	<bean id="userAuthoritiesService" class="org.socialsignin.springsocial.security.userauthorities.SimpleUserAuthoritiesService" />
+	<bean id="slippUserDetailsService" class="net.slipp.social.security.SlippUserDetailsService" />
 	
-	<bean id="signUpService" class="org.socialsignin.springsocial.security.signup.ConnectionRepositorySignUpService" />
+	<bean id="signInAdapter" class="net.slipp.social.security.SlippSecuritySignInAdapter" />
 </beans>

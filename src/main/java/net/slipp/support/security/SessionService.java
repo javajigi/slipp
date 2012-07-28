@@ -36,7 +36,7 @@ public class SessionService {
         return getAuthentication() == null ? false : getAuthentication().isAuthenticated();
     }
     
-    private Authentication getAuthentication() {
+    public Authentication getAuthentication() {
         return SecurityContextHolder.getContext().getAuthentication();
     }
 

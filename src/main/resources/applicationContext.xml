@@ -45,14 +45,10 @@
 		<security:authentication-provider ref="authenticationProvider" />	
 	</security:authentication-manager>
 	
-	<bean id="springSocialSecurityAuthenticationFilter" 
-		class="org.socialsignin.springsocial.security.signin.SpringSocialSecurityAuthenticationFilter" />
+	<bean id="slippSecurityAuthenticationFilter" 
+		class="net.slipp.social.security.SlippSecurityAuthenticationFilter" />
 		
 
-	<bean id="springSocialSecuritySignInService" class="org.socialsignin.springsocial.security.signin.SpringSocialSecuritySignInService" />
-	
-	<bean id="springSocialSecurityConnectionFactory" class="org.socialsignin.springsocial.security.connect.SpringSocialSecurityConnectionFactory" />
-	
 	<bean id="authenticationProvider"
 		class="org.springframework.security.authentication.RememberMeAuthenticationProvider">
 		<constructor-arg value="${slipp.remember.token.key}" />
@@ -80,7 +76,7 @@
 
 		<anonymous />
 		<security:custom-filter position="FORM_LOGIN_FILTER"
-			ref="springSocialSecurityAuthenticationFilter" />
+			ref="slippSecurityAuthenticationFilter" />
 
 		<remember-me services-ref="springSocialSecurityRememberMeServices" />
 	</security:http>
@@ -88,7 +84,7 @@
 
 	<bean id="springSocialSecurityRememberMeServices"
 		class="org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices">
-		<property name="userDetailsService" ref="springSocialSecurityUserDetailsService" />
+		<property name="userDetailsService" ref="slippUserDetailsService" />
 		<property name="key" value="${slipp.remember.token.key}" />
 		<property name="alwaysRemember" value="true" />
 		<property name="tokenValiditySeconds" value="1209600" />
