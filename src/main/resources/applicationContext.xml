@@ -66,11 +66,12 @@
 
 	<security:http use-expressions="true"
 		entry-point-ref="springSocialSecurityEntryPoint" xmlns="http://www.springframework.org/schema/security">
-
-		<intercept-url pattern="/protected/**" access="hasRole('ROLE_USER')" />
-		<intercept-url pattern="/oauthconnect.jsp" access="hasRole('ROLE_USER')" />
-		<intercept-url pattern="/questions/form" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/questions/form" method="GET" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/questions" method="POST" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/questions/*/form" method="GET" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/questions" method="PUT" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/questions/*" method="DELETE" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/admin/**" method="DELETE" access="hasRole('ROLE_ADMINISTRATOR')" />
 
 		<security:logout logout-url="/logout" />
 

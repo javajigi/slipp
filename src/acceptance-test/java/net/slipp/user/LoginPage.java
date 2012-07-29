@@ -26,8 +26,8 @@ public class LoginPage {
 	}
 
 	public IndexPage loginSlipp(final String userName) {
-		driver.findElement(By.id("userName")).clear();
-		driver.findElement(By.id("userName")).sendKeys(userName);
+		driver.findElement(By.id("username")).clear();
+		driver.findElement(By.id("username")).sendKeys(userName);
 		driver.findElement(By.cssSelector(".btn-success")).click();
 		return new IndexPage(driver);
 	}
