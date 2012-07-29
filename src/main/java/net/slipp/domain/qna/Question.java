@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-import java.util.StringTokenizer;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -27,7 +26,6 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import net.slipp.domain.user.SocialUser;
-import net.slipp.repository.qna.TagRepository;
 import net.slipp.support.jpa.CreatedAndUpdatedDateEntityListener;
 import net.slipp.support.jpa.HasCreatedAndUpdatedDate;
 
@@ -138,9 +136,8 @@ public class Question implements HasCreatedAndUpdatedDate {
 		return Iterables.getFirst(contentsHolder, "");
 	}
 
-	public void initializeTags(TagRepository tagRepository) {
-		Set<String> parsedTags = parseTags();
-		Set<Tag> newTags = loadTags(parsedTags, tagRepository);
+	public void initializeTags(TagProcessor tagProcessor) {
+		Set<Tag> newTags = tagProcessor.processTags(plainTags);
 		Set<Tag> originalTags = tags;
 		this.tags = newTags;
 		addNewTags(newTags, originalTags);
@@ -161,23 +158,6 @@ public class Question implements HasCreatedAndUpdatedDate {
 		for (Tag tag : addedTags) {
 			tag.tagged();
 		}
-	}
-	
-	private Set<String> parseTags() {
-		Set<String> parsedTags = Sets.newHashSet();
-		StringTokenizer tokenizer = new StringTokenizer(plainTags, " ");
-		while (tokenizer.hasMoreTokens()) {
-			parsedTags.add(tokenizer.nextToken());
-		}
-		return parsedTags;
-	}
-
-	private Set<Tag> loadTags(Set<String> parsedTags, TagRepository tagRepository) {
-		Set<Tag> tags = Sets.newHashSet();
-		for (String parsedTag : parsedTags) {
-			tags.add(tagRepository.findByName(parsedTag));
-		}
-		return tags;
 	}
 
 	public Long getQuestionId() {

@@ -37,7 +37,7 @@
 				</div>
 
 				<div class="pull-right">
-					<a href="/questions/form" class="btn btn-primary btn-large pull-right">질문하기</a>
+					<a id="questionBtn" href="/questions/form" class="btn btn-primary btn-large pull-right">질문하기</a>
 				</div>
 			</div>
 

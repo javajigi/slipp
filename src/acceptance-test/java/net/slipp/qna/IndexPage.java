@@ -35,4 +35,9 @@ public class IndexPage {
 		driver.findElement(By.cssSelector("#tagManagement > a")).click();
 		return new AdminTagPage(driver);
 	}
+
+	public QnaFormPage goQuestionForm() {
+		driver.findElement(By.id("questionBtn")).click();
+		return new QnaFormPage(driver);
+	}
 }

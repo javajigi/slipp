@@ -17,43 +17,46 @@ import org.springframework.util.Assert;
 @Service("qnaService")
 @Transactional
 public class QnaService {
-	@Resource (name = "tagRepository")
+	@Resource(name = "tagRepository")
 	private TagRepository tagRepository;
-	
-	@Resource (name = "questionRepository")
+
+	@Resource(name = "questionRepository")
 	private QuestionRepository questionRepository;
-	
-	@Resource (name = "answerRepository")
+
+	@Resource(name = "answerRepository")
 	private AnswerRepository answerRepository;
+
+	@Resource(name = "tagProcessor")
+	private TagProcessor tagProcessor;
 	
 	public void createQuestion(SocialUser loginUser, Question question) {
 		Assert.notNull(loginUser, "loginUser should be not null!");
 		Assert.notNull(question, "question should be not null!");
-		
+
 		question.writedBy(loginUser);
-		question.initializeTags(tagRepository);
+		question.initializeTags(tagProcessor);
 		questionRepository.save(question);
 	}
-	
+
 	public void updateQuestion(SocialUser loginUser, Question newQuestion) {
 		Assert.notNull(loginUser, "loginUser should be not null!");
 		Assert.notNull(newQuestion, "question should be not null!");
-		
+
 		Question question = questionRepository.findOne(newQuestion.getQuestionId());
 		if (!question.isWritedBy(loginUser)) {
 			throw new AccessDeniedException(loginUser + " is not owner!");
 		}
-		
+
 		question.writedBy(loginUser);
 		question.update(newQuestion);
-		question.initializeTags(tagRepository);
+		question.initializeTags(tagProcessor);
 		questionRepository.save(question);
 	}
-	
+
 	public void deleteQuestion(SocialUser loginUser, Long questionId) {
 		Assert.notNull(loginUser, "loginUser should be not null!");
 		Assert.notNull(questionId, "questionId should be not null!");
-		
+
 		Question question = questionRepository.findOne(questionId);
 		if (!question.isWritedBy(loginUser)) {
 			throw new AccessDeniedException(loginUser + " is not owner!");
@@ -61,19 +64,19 @@ public class QnaService {
 		question.delete();
 		questionRepository.save(question);
 	}
-	
+
 	public Page<Question> findsByTag(String name, Pageable pageable) {
 		return questionRepository.findsByTag(name, pageable);
 	}
-	
+
 	public Page<Question> findsQuestion(Pageable pageable) {
 		return questionRepository.findAll(QnaSpecifications.equalsIsDelete(false), pageable);
 	}
-	
+
 	public Question findByQuestionId(Long id) {
 		return questionRepository.findOne(id);
 	}
-	
+
 	public Iterable<Tag> findsTag() {
 		return tagRepository.findAll();
 	}
@@ -89,7 +92,7 @@ public class QnaService {
 		Assert.notNull(loginUser, "loginUser should be not null!");
 		Assert.notNull(questionId, "questionId should be not null!");
 		Assert.notNull(answerId, "answerId should be not null!");
-		
+
 		Answer answer = answerRepository.findOne(answerId);
 		if (!answer.isWritedBy(loginUser)) {
 			throw new AccessDeniedException(loginUser + " is not owner!");
