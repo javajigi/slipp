@@ -1,10 +1,7 @@
 package net.slipp.repository.user;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 import net.slipp.domain.user.SocialUser;
 
@@ -45,15 +42,8 @@ public class JpaConnectionRepository implements ConnectionRepository {
 		List<Connection<?>> resultList = connectionMapper.mapEntities(socialUserRepository.findsByUserId(userId));
 
 		MultiValueMap<String, Connection<?>> connections = new LinkedMultiValueMap<String, Connection<?>>();
-		Set<String> registeredProviderIds = connectionFactoryLocator.registeredProviderIds();
-		for (String registeredProviderId : registeredProviderIds) {
-			connections.put(registeredProviderId, Collections.<Connection<?>> emptyList());
-		}
 		for (Connection<?> connection : resultList) {
 			String providerId = connection.getKey().getProviderId();
-			if (connections.get(providerId).size() == 0) {
-				connections.put(providerId, new LinkedList<Connection<?>>());
-			}
 			connections.add(providerId, connection);
 		}
 		return connections;

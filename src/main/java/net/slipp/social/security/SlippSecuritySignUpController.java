@@ -2,12 +2,11 @@ package net.slipp.social.security;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import net.slipp.domain.user.ExistedUserException;
+import net.slipp.domain.user.SocialUserService;
+
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionData;
-import org.springframework.social.connect.ConnectionRepository;
-import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.social.connect.web.SignInAdapter;
 import org.springframework.stereotype.Controller;
@@ -23,10 +22,10 @@ import org.springframework.web.context.request.ServletWebRequest;
 public class SlippSecuritySignUpController {
 	private String authenticateUrl = SlippSecurityAuthenticationFilter.DEFAULT_AUTHENTICATION_URL;
 
-	@Resource(name = "usersConnectionRepository")
-	private UsersConnectionRepository usersConnectionRepository;
+	@Resource(name = "socialUserService")
+	private SocialUserService socialUserService;
 
-	@Autowired
+	@Resource(name = "signInAdapter")
 	private SignInAdapter signInAdapter;
 
 	public void setAuthenticateUrl(String authenticateUrl) {
@@ -37,31 +36,22 @@ public class SlippSecuritySignUpController {
 	public String signUpForm(ServletWebRequest request, Model model) {
 		Connection<?> connection = ProviderSignInUtils.getConnection(request);
 		ConnectionData connectionData = connection.createData();
-		SignUpForm signUpForm = new SignUpForm();
-		signUpForm.setUsername(connectionData.getDisplayName());
+		SignUpForm signUpForm = new SignUpForm(connectionData.getDisplayName());
 		model.addAttribute("signUpForm", signUpForm);
 		return "signUpForm";
-	}
-
-	private boolean isUserNameValid(String username, BindingResult errors) {
-		if (StringUtils.isEmpty(username)) {
-			errors.addError(new FieldError("signUpForm", "userName", "Please choose a username"));
-			return false;
-		} else {
-			return true;
-		}
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	public String signUpSubmit(ServletWebRequest request, SignUpForm signUpForm, BindingResult result) {
 		Connection<?> connection = ProviderSignInUtils.getConnection(request);
-		if (isUserNameValid(signUpForm.getUsername(), result)) {
-			ConnectionRepository connectionRepository = usersConnectionRepository.createConnectionRepository(signUpForm
-					.getUsername());
-			connectionRepository.addConnection(connection);
+
+		try {
+			socialUserService.createNewSocialUser(signUpForm.getUsername(), connection);
 			signInAdapter.signIn(signUpForm.getUsername(), connection, request);
 			return "redirect:" + authenticateUrl;
-		} else {
+		} catch (ExistedUserException e) {
+			result.addError(new FieldError("signUpForm", "username", signUpForm.getUsername()
+					+ "은 이미 존재하는 아이디입니다. 다른 아이디를 선택해주세요."));
 			return "signUpForm";
 		}
 	}

@@ -16,7 +16,7 @@
 		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.0.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
         
-	<import resource="applicationContext-springsocial.xml" />
+	<import resource="applicationContext-social.xml" />
 	
 	<bean id="applicationProperties" class="net.slipp.support.utils.ConvenientProperties">
 		<constructor-arg index="0">
