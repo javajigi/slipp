@@ -3,6 +3,7 @@ package net.slipp.web.qna;
 import javax.annotation.Resource;
 
 import net.slipp.domain.qna.Tag;
+import net.slipp.repository.qna.NewTagRepository;
 import net.slipp.repository.qna.TagRepository;
 
 import org.springframework.data.domain.PageRequest;
@@ -22,6 +23,9 @@ public class AdminController {
 
 	@Resource(name = "tagRepository")
 	private TagRepository tagRepository;
+	
+	@Resource(name = "newTagRepository")
+	private NewTagRepository newTagRepository;
 
 	@RequestMapping(value = "/tags", method = RequestMethod.GET)
 	public String tags(Integer page, ModelMap model) throws Exception {
@@ -48,5 +52,11 @@ public class AdminController {
 				
 		tagRepository.save(new Tag(name));
 		return "redirect:/admin/tags";
+	}
+	
+	@RequestMapping(value = "/newtags", method = RequestMethod.GET)
+	public String newTags(Integer page, ModelMap model) throws Exception {
+		model.addAttribute("newtags", newTagRepository.findAll(createPageable(page)));
+		return "admin/newtags";
 	}
 }

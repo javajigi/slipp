@@ -71,7 +71,7 @@
 		<intercept-url pattern="/questions/*/form" method="GET" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/questions" method="PUT" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/questions/*" method="DELETE" access="hasRole('ROLE_USER')" />
-		<intercept-url pattern="/admin/**" method="DELETE" access="hasRole('ROLE_ADMINISTRATOR')" />
+		<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMINISTRATOR')" />
 
 		<security:logout logout-url="/logout" />
 
