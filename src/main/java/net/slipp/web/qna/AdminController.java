@@ -3,8 +3,7 @@ package net.slipp.web.qna;
 import javax.annotation.Resource;
 
 import net.slipp.domain.tag.Tag;
-import net.slipp.repository.tag.NewTagRepository;
-import net.slipp.repository.tag.TagRepository;
+import net.slipp.domain.tag.TagService;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -21,15 +20,12 @@ public class AdminController {
 	private static final int DEFAULT_PAGE_NO = 1;
 	private static final int DEFAULT_PAGE_SIZE = 10;
 
-	@Resource(name = "tagRepository")
-	private TagRepository tagRepository;
-	
-	@Resource(name = "newTagRepository")
-	private NewTagRepository newTagRepository;
+	@Resource(name = "tagService")
+	private TagService tagService;
 
 	@RequestMapping(value = "/tags", method = RequestMethod.GET)
 	public String tags(Integer page, ModelMap model) throws Exception {
-		model.addAttribute("tags", tagRepository.findAll(createPageable(page)));
+		model.addAttribute("tags", tagService.findTags(createPageable(page)));
 		return "admin/tags";
 	}
 
@@ -44,19 +40,25 @@ public class AdminController {
 	
 	@RequestMapping(value = "/tags", method = RequestMethod.POST)
 	public String create(String name, ModelMap model) throws Exception {
-		Tag originalTag = tagRepository.findByName(name);
+		Tag originalTag = tagService.findTagByName(name);
 		if (originalTag != null) {
 			model.addAttribute("errorMessage", name + " 태그는 이미 존재합니다.");
 			return tags(1, model);
 		}
 				
-		tagRepository.save(new Tag(name));
+		tagService.saveTag(new Tag(name));
 		return "redirect:/admin/tags";
 	}
 	
 	@RequestMapping(value = "/newtags", method = RequestMethod.GET)
 	public String newTags(Integer page, ModelMap model) throws Exception {
-		model.addAttribute("newtags", newTagRepository.findAll(createPageable(page)));
+		model.addAttribute("newtags", tagService.findNewTags(createPageable(page)));
 		return "admin/newtags";
+	}
+	
+	@RequestMapping(value = "/moveNewTag", method = RequestMethod.POST)
+	public String moveNewTag(Long tagId) throws Exception {
+		tagService.moveToTagPool(tagId);
+		return "redirect:/admin/newtags";
 	}
 }

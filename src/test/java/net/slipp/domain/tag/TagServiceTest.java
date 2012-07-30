@@ -1,17 +1,13 @@
 package net.slipp.domain.tag;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import java.util.Set;
 
-import net.slipp.domain.tag.NewTag;
-import net.slipp.domain.tag.Tag;
-import net.slipp.domain.tag.TagService;
-import net.slipp.repository.tag.MockTagRepository;
 import net.slipp.repository.tag.NewTagRepository;
+import net.slipp.repository.tag.TagRepository;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,13 +18,13 @@ import org.mockito.runners.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class TagServiceTest {
 	private TagService dut;
-	private MockTagRepository tagRepository;
+	@Mock
+	private TagRepository tagRepository;
 	@Mock
 	private NewTagRepository newTagRepository;
 	
 	@Before
 	public void setup() {
-		tagRepository = new MockTagRepository();
 		dut = new TagService(tagRepository, newTagRepository);
 	}
 	
@@ -41,6 +37,9 @@ public class TagServiceTest {
 	
 	@Test
 	public void processTags_nonExistedNewTag() throws Exception {
+		Tag tag = new Tag("java");
+		when(tagRepository.findByName(tag.getName())).thenReturn(tag);
+		
 		String plainTags = "java newTags";
 		Set<Tag> pooledTags = dut.processTags(plainTags);
 		assertThat(pooledTags.size(), is(1));
@@ -50,7 +49,9 @@ public class TagServiceTest {
 	
 	@Test
 	public void processTags_existedNewTag() throws Exception {
+		Tag tag = new Tag("java");
 		NewTag newTag = new NewTag("newTags");
+		when(tagRepository.findByName(tag.getName())).thenReturn(tag);
 		when(newTagRepository.findByName("newTags")).thenReturn(newTag);
 		
 		String plainTags = "java " + newTag.getName();
@@ -59,5 +60,17 @@ public class TagServiceTest {
 		
 		assertThat(newTag.getTaggedCount(), is(2));
 		verify(newTagRepository).save(newTag);
+	}
+	
+	@Test
+	public void moveToTagPool() throws Exception {
+		Long tagId = 1L;
+		NewTag newTag = new NewTag(tagId, "newTag");
+		when(newTagRepository.findOne(tagId)).thenReturn(newTag);
+		
+		dut.moveToTagPool(tagId);
+		
+		verify(tagRepository).save(newTag.createTag());
+		verify(newTagRepository).delete(newTag);
 	}
 }

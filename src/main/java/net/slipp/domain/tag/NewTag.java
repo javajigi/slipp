@@ -24,6 +24,11 @@ public class NewTag {
 		this.name = name;
 	}
 	
+	public NewTag(Long tagId, String name) {
+		this.tagId = tagId;
+		this.name = name;
+	}
+	
 	public Long getTagId() {
 		return tagId;
 	}
@@ -38,6 +43,10 @@ public class NewTag {
 
 	public int getTaggedCount() {
 		return taggedCount;
+	}
+	
+	public Tag createTag() {
+		return new Tag(getName());
 	}
 
 	@Override

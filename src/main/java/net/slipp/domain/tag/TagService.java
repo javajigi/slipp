@@ -8,14 +8,21 @@ import javax.inject.Inject;
 import net.slipp.repository.tag.NewTagRepository;
 import net.slipp.repository.tag.TagRepository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Sets;
 
 @Service
+@Transactional
 public class TagService {
 	private TagRepository tagRepository;
 	private NewTagRepository newTagRepository;
+	
+	public TagService() {
+	}
 	
 	@Inject
 	public TagService(TagRepository tagRepository, NewTagRepository newTagRepository) {
@@ -54,5 +61,31 @@ public class TagService {
 			parsedTags.add(tokenizer.nextToken());
 		}
 		return parsedTags;
+	}
+
+	public void moveToTagPool(Long tagId) {
+		NewTag newTag = newTagRepository.findOne(tagId);
+		
+		Tag tag = tagRepository.findByName(newTag.getName());
+		if (tag == null) {
+			tagRepository.save(newTag.createTag());
+			newTagRepository.delete(newTag);
+		}
+	}
+	
+	public Page<Tag> findTags(Pageable page) {
+		return tagRepository.findAll(page);
+	}
+	
+	public Page<NewTag> findNewTags(Pageable page) {
+		return newTagRepository.findAll(page);
+	}
+	
+	public void saveTag(Tag tag) {
+		tagRepository.save(tag);
+	}
+	
+	public Tag findTagByName(String name) {
+		return tagRepository.findByName(name);
 	}
 }

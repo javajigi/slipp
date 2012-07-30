@@ -25,5 +25,5 @@
 		p:password="${database.password}"
 	/>
 
-	<tx:annotation-driven transaction-manager="transactionManager" />
+	<tx:annotation-driven transaction-manager="transactionManager"/>
 </beans>

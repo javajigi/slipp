@@ -24,7 +24,12 @@
 					<td>${each.tagId}</td>
 					<td>${each.name}</td>
 					<td>${each.taggedCount}</td>
-					<td><button class="btn btn-primary" href="#">태그로 추가</button></td>
+					<td>
+						<form class="form-search" action="/admin/moveNewTag" method="post">
+							<input type="hidden" name="tagId" value="${each.tagId}" />
+							<button type="submit" class="btn btn-primary">태그로 추가</button>
+						</form>
+					</td>
 				</tr>
 				</c:forEach>
 			</tbody>
