@@ -2,9 +2,9 @@ package net.slipp.web.qna;
 
 import javax.annotation.Resource;
 
-import net.slipp.domain.qna.Tag;
-import net.slipp.repository.qna.NewTagRepository;
-import net.slipp.repository.qna.TagRepository;
+import net.slipp.domain.tag.Tag;
+import net.slipp.repository.tag.NewTagRepository;
+import net.slipp.repository.tag.TagRepository;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

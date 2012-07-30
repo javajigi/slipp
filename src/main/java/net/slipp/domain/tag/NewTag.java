@@ -1,4 +1,4 @@
-package net.slipp.domain.qna;
+package net.slipp.domain.tag;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

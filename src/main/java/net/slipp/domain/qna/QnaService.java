@@ -2,10 +2,12 @@ package net.slipp.domain.qna;
 
 import javax.annotation.Resource;
 
+import net.slipp.domain.tag.Tag;
+import net.slipp.domain.tag.TagService;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.repository.qna.AnswerRepository;
 import net.slipp.repository.qna.QuestionRepository;
-import net.slipp.repository.qna.TagRepository;
+import net.slipp.repository.tag.TagRepository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,15 +28,15 @@ public class QnaService {
 	@Resource(name = "answerRepository")
 	private AnswerRepository answerRepository;
 
-	@Resource(name = "tagProcessor")
-	private TagProcessor tagProcessor;
+	@Resource(name = "tagService")
+	private TagService tagService;
 	
 	public void createQuestion(SocialUser loginUser, Question question) {
 		Assert.notNull(loginUser, "loginUser should be not null!");
 		Assert.notNull(question, "question should be not null!");
 
 		question.writedBy(loginUser);
-		question.initializeTags(tagProcessor);
+		question.initializeTags(tagService);
 		questionRepository.save(question);
 	}
 
@@ -49,7 +51,7 @@ public class QnaService {
 
 		question.writedBy(loginUser);
 		question.update(newQuestion);
-		question.initializeTags(tagProcessor);
+		question.initializeTags(tagService);
 		questionRepository.save(question);
 	}
 

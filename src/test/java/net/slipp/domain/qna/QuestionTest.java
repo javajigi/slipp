@@ -6,6 +6,8 @@ import static org.mockito.Mockito.when;
 
 import java.util.Set;
 
+import net.slipp.domain.tag.Tag;
+import net.slipp.domain.tag.TagService;
 import net.slipp.domain.user.SocialUser;
 
 import org.junit.Before;
@@ -21,7 +23,7 @@ public class QuestionTest {
 	private Question dut;
 	
 	@Mock
-	private TagProcessor tagProcessor;
+	private TagService tagProcessor;
 	
 	@Before
 	public void setup() {

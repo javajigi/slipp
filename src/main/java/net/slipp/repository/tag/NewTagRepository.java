@@ -1,6 +1,6 @@
-package net.slipp.repository.qna;
+package net.slipp.repository.tag;
 
-import net.slipp.domain.qna.NewTag;
+import net.slipp.domain.tag.NewTag;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 

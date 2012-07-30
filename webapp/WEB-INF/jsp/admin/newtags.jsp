@@ -15,6 +15,7 @@
 					<th class="span2">아이디</th>
 					<th>이름</th>
 					<th class="span2">taggedCount</th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -23,10 +24,7 @@
 					<td>${each.tagId}</td>
 					<td>${each.name}</td>
 					<td>${each.taggedCount}</td>
-					<!-- 
-					<td><button class="btn btn-primary" href="#">수정</button>&nbsp;&nbsp;
-						<button class="btn btn-danger" href="#">삭제</button></td>
-					 -->
+					<td><button class="btn btn-primary" href="#">태그로 추가</button></td>
 				</tr>
 				</c:forEach>
 			</tbody>

@@ -4,8 +4,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import net.slipp.domain.qna.Tag;
-import net.slipp.repository.qna.TagRepository;
+import net.slipp.domain.tag.Tag;
+import net.slipp.repository.tag.TagRepository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

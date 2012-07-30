@@ -25,6 +25,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import net.slipp.domain.tag.Tag;
+import net.slipp.domain.tag.TagService;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.support.jpa.CreatedAndUpdatedDateEntityListener;
 import net.slipp.support.jpa.HasCreatedAndUpdatedDate;
@@ -136,7 +138,7 @@ public class Question implements HasCreatedAndUpdatedDate {
 		return Iterables.getFirst(contentsHolder, "");
 	}
 
-	public void initializeTags(TagProcessor tagProcessor) {
+	public void initializeTags(TagService tagProcessor) {
 		Set<Tag> newTags = tagProcessor.processTags(plainTags);
 		Set<Tag> originalTags = tags;
 		this.tags = newTags;

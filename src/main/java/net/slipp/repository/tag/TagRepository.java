@@ -1,8 +1,8 @@
-package net.slipp.repository.qna;
+package net.slipp.repository.tag;
 
 import java.util.List;
 
-import net.slipp.domain.qna.Tag;
+import net.slipp.domain.tag.Tag;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 

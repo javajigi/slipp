@@ -1,9 +1,9 @@
-package net.slipp.domain.qna;
+package net.slipp.domain.tag;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
-import net.slipp.domain.qna.Tag;
+import net.slipp.domain.tag.Tag;
 
 import org.junit.Before;
 import org.junit.Test;

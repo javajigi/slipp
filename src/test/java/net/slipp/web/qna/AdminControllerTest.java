@@ -8,8 +8,8 @@ import static org.mockito.Mockito.when;
 import java.util.Arrays;
 import java.util.List;
 
-import net.slipp.domain.qna.Tag;
-import net.slipp.repository.qna.TagRepository;
+import net.slipp.domain.tag.Tag;
+import net.slipp.repository.tag.TagRepository;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

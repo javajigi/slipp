@@ -1,24 +1,24 @@
-package net.slipp.domain.qna;
+package net.slipp.domain.tag;
 
 import java.util.Set;
 import java.util.StringTokenizer;
 
 import javax.inject.Inject;
 
-import net.slipp.repository.qna.NewTagRepository;
-import net.slipp.repository.qna.TagRepository;
+import net.slipp.repository.tag.NewTagRepository;
+import net.slipp.repository.tag.TagRepository;
 
 import org.springframework.stereotype.Service;
 
 import com.google.common.collect.Sets;
 
 @Service
-public class TagProcessor {
+public class TagService {
 	private TagRepository tagRepository;
 	private NewTagRepository newTagRepository;
 	
 	@Inject
-	public TagProcessor(TagRepository tagRepository, NewTagRepository newTagRepository) {
+	public TagService(TagRepository tagRepository, NewTagRepository newTagRepository) {
 		this.tagRepository = tagRepository;
 		this.newTagRepository = newTagRepository;
 	}

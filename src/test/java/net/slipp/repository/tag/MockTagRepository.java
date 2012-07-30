@@ -1,4 +1,4 @@
-package net.slipp.repository.qna;
+package net.slipp.repository.tag;
 
 import java.util.HashMap;
 import java.util.List;
@@ -8,8 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
-import net.slipp.domain.qna.Tag;
-import net.slipp.repository.qna.TagRepository;
+import net.slipp.domain.tag.Tag;
+import net.slipp.repository.tag.TagRepository;
 
 public class MockTagRepository implements TagRepository {
 	@SuppressWarnings("serial")

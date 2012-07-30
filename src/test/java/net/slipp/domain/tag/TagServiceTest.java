@@ -1,4 +1,4 @@
-package net.slipp.domain.qna;
+package net.slipp.domain.tag;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -7,8 +7,11 @@ import static org.mockito.Mockito.when;
 
 import java.util.Set;
 
-import net.slipp.repository.qna.MockTagRepository;
-import net.slipp.repository.qna.NewTagRepository;
+import net.slipp.domain.tag.NewTag;
+import net.slipp.domain.tag.Tag;
+import net.slipp.domain.tag.TagService;
+import net.slipp.repository.tag.MockTagRepository;
+import net.slipp.repository.tag.NewTagRepository;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,8 +20,8 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class TagProcessorTest {
-	private TagProcessor dut;
+public class TagServiceTest {
+	private TagService dut;
 	private MockTagRepository tagRepository;
 	@Mock
 	private NewTagRepository newTagRepository;
@@ -26,7 +29,7 @@ public class TagProcessorTest {
 	@Before
 	public void setup() {
 		tagRepository = new MockTagRepository();
-		dut = new TagProcessor(tagRepository, newTagRepository);
+		dut = new TagService(tagRepository, newTagRepository);
 	}
 	
 	@Test
