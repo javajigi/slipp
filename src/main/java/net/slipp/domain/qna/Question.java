@@ -1,5 +1,6 @@
 package net.slipp.domain.qna;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -31,9 +32,13 @@ import net.slipp.domain.user.SocialUser;
 import net.slipp.support.jpa.CreatedAndUpdatedDateEntityListener;
 import net.slipp.support.jpa.HasCreatedAndUpdatedDate;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.base.Function;
+import com.google.common.base.Joiner;
+import com.google.common.collect.Collections2;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -81,6 +86,9 @@ public class Question implements HasCreatedAndUpdatedDate {
 	@org.hibernate.annotations.ForeignKey(name = "fk_question_tag_question_id", inverseName = "fk_question_tag_tag_id")
 	private Set<Tag> tags = Sets.newHashSet();
 	
+	@Column(name = "denormalized_tags", length=100)
+	private String denormalizedTags; // 역정규화한 태그를 저장
+	
 	@Transient
 	private String plainTags;
 
@@ -117,6 +125,13 @@ public class Question implements HasCreatedAndUpdatedDate {
 		return tags;
 	}
 	
+	public Collection<String> getDenormalizedTags() {
+		if (StringUtils.isBlank(denormalizedTags)) {
+			return Sets.newHashSet();
+		}
+		return Arrays.asList(denormalizedTags.split(","));
+	}
+	
 	public void setContents(String newContents) {
 		if (isEmptyContentsHolder()) {
 			contentsHolder = Lists.newArrayList(newContents);
@@ -142,6 +157,7 @@ public class Question implements HasCreatedAndUpdatedDate {
 		Set<Tag> newTags = tagProcessor.processTags(plainTags);
 		Set<Tag> originalTags = tags;
 		this.tags = newTags;
+		this.denormalizedTags = tagsToDenormalizedTags(newTags);
 		addNewTags(newTags, originalTags);
 		removeTags(newTags, originalTags);
 	}
@@ -160,6 +176,17 @@ public class Question implements HasCreatedAndUpdatedDate {
 		for (Tag tag : addedTags) {
 			tag.tagged();
 		}
+	}
+	
+	String tagsToDenormalizedTags(Set<Tag> tags) {
+		Function<Tag, String> tagToString = new Function<Tag, String>() {
+			@Override
+			public String apply(Tag input) {
+				return input.getName();
+			}
+		};
+		
+		return Joiner.on(",").join(Collections2.transform(tags, tagToString));
 	}
 
 	public Long getQuestionId() {

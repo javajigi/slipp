@@ -17,8 +17,8 @@
 							</a>
 							<div class="count">
 								<span class="tags">
-									<c:forEach items="${each.tags}" var="tag">
-									<a href="/questions/tagged/${tag.name}"><strong>${tag.name}</strong></a>	
+									<c:forEach items="${each.denormalizedTags}" var="tag">
+									<a href="/questions/tagged/${tag}"><strong>${tag}</strong></a>	
 									</c:forEach> 
 								</span> 
 								<span class="countAnswer">답변수 <strong>${each.answerCount}</strong></span>

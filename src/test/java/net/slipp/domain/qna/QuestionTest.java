@@ -86,4 +86,11 @@ public class QuestionTest {
 		dut.setContents(contents);
 		assertThat(dut.getContents(), is(contents));
 	}
+	
+	@Test
+	public void tagsToDenormalizedTags() throws Exception {
+		Set<Tag> tags = Sets.newHashSet(new Tag("java"), new Tag("javascript"));
+		String result = dut.tagsToDenormalizedTags(tags);
+		assertThat(result, is("javascript,java"));
+	}
 }
