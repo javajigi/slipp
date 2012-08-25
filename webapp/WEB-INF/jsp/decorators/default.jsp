@@ -38,7 +38,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="/">SLiPP QnA</a>
+          <a class="brand" href="/">SLiPP</a>
           <div class="nav-collapse">
             <ul class="nav nav-pills pull-right">
               <sec:authorize access="!hasRole('ROLE_USER')">
@@ -47,9 +47,10 @@
               <sec:authorize access="hasRole('ROLE_USER')">
               <li class="active logoutBtn"><a href="/logout">로그아웃</a></li>
               </sec:authorize>
-              <li><a href="http://www.slipp.net/wiki">Wiki</a></li>
-              <li><a href="http://www.slipp.net/code">Code</a></li>
-              <li><a href="http://www.slipp.net/about">SLiPP.net</a></li>
+              <li><a href="${slippUrl}/questions">QnA</a></li>
+              <li><a href="${slippUrl}/wiki">Wiki</a></li>
+              <li><a href="${slippUrl}/code">Code</a></li>
+              <li><a href="${slippUrl}/about">SLiPP.net</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>

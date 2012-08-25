@@ -4,6 +4,7 @@
 	<excludes>
 		<pattern>/popup/*</pattern>
 		<pattern>/attachments*</pattern>
+		<pattern>/rss*</pattern>
 		<pattern>/wikis/preview*</pattern>
 	</excludes>
 

@@ -33,6 +33,9 @@
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
 	
+	<bean id="wikiDao" class="net.slipp.domain.wiki.WikiDao"
+		p:dataSource-ref="wikiDataSource" 
+	/>
 
 	<!-- proxy-target-class is needed for secured annotations to be honoured -->
 	<security:global-method-security

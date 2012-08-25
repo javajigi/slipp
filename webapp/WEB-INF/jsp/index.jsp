@@ -1,60 +1,47 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/tags.jspf"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
-<link href="${url:resource('/stylesheets/boards.css')}" rel="stylesheet">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>SLiPP</title>
+<link rel="stylesheet" media="screen" href="/public/stylesheets/boards.css">
 </head>
 <body>
-    <slipp:header type="1"/>
-	<div class="container-fluid">
-		<div class="row-fluid">
-			<div class="span10">
-				<div class="forumList">
-					<c:forEach items="${questions}" var="each">
-					<div class="forum">
-						<div class="list">
-							<a href="/qna/${each.questionId}"> <strong class="subject">${each.title}</strong>
-							</a>
-							<div class="count">
-								<span class="tags">
-									<c:forEach items="${each.tags}" var="tag">
-									<a href="@{Threads.tagged(tag.name)}"><strong>${tag.name}</strong></a>	
-									</c:forEach> 
-								</span> 
-								<span class="countAnswer">답변수 <strong>${each.answerCount}</strong></span>
-							</div>
-						</div>
-						<div class="nickArea">${each.writerName}</div>
-						<div class="regDate"><fmt:formatDate value="${each.createdDate}" pattern="yyyy-MM-dd HH:mm" /></div>
-					</div>					
-					</c:forEach>
-				</div>
-
-				<div class="pagination pagination-centered">
-					<ul>
-						<li><a href="#">&laquo;</a></li>
-						<li><a href="#">10</a></li>
-						<li class="active"><a href="#">11</a></li>
-						<li><a href="#">12</a></li>
-						<li><a href="#">&raquo;</a></li>
-					</ul>
-				</div>
-
-				<div class="pull-right">
-					<a href="/questions/form" class="btn btn-primary btn-large pull-right">질문하기</a>
-				</div>
-			</div>
-
-			<div class="span2">
-				<div class="tags">
-					<ul>
-						<c:forEach items="${tags}" var="each">
-						<li>${each.name} X ${each.taggedCount}</li>	
-						</c:forEach>
-					</ul>
-				</div>
+<!-- start page -->
+<div id="page">
+	<!-- start content -->
+	<div id="content">
+		<div class="forumTop">
+			<div class="rss">
+				<a href="http://feeds.feedburner.com/slipp"><img src="http://feeds.feedburner.com/~fc/slipp?bg=99CCFF&amp;fg=444444&amp;anim=0" height="26" width="88" style="border:0" alt="" /></a>
 			</div>
 		</div>
+		<c:forEach items="${pages}" var="page">
+		<div class="forumView">
+			<div class="nickArea"> 
+				<p class='nick'>자바지기</p>
+				<p class="regDate">${page.creationDate}</p> 
+			</div>
+			<div class="cont">
+				<strong class="subject"><a href="/wiki/pages/viewpage.action?pageId=${page.pageId}">${page.title}</a></strong>
+				<div>${page.shortContents}</div>
+			</div>
+		</div>
+		</c:forEach>
 	</div>
+	<!-- end content -->
+	<!-- start sidebar -->
+	<div id="sidebar">
+		<ul>
+			<li><a href="http://www.javajigi.net">자바지기</a></li>
+			<li><a href="http://www.facebook.com/javajigi">자바지기 페이스북</a></li>
+			<li><a href="https://twitter.com/#!/javajigi">자바지기 트위터</a></li>
+		</ul>
+	</div>
+	<!-- end sidebar -->
+	<div style="clear: both;">&nbsp;</div>
+</div>
+<!-- end page -->
 </body>
 </html>
