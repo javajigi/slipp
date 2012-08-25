@@ -1,16 +1,52 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
+%><%@include file="/WEB-INF/jsp/include/tags.jspf"
+%><html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>SLiPP</title>
 <link rel="stylesheet" media="screen" href="/public/stylesheets/boards.css">
 </head>
 <body>
-<!-- start page -->
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span10">
+			<div class="forumList">
+				<c:forEach items="${questions.content}" var="each">
+				<div class="forum">
+					<div class="list">
+						<a href="/questions/${each.questionId}"> <strong class="subject">${each.title}</strong>
+						</a>
+						<div class="count">
+							<span class="tags">
+								<c:forEach items="${each.denormalizedTags}" var="tag">
+								<a href="/questions/tagged/${tag}"><strong>${tag}</strong></a>	
+								</c:forEach> 
+							</span> 
+							<span class="countAnswer">답변수 <strong>${each.answerCount}</strong></span>
+						</div>
+					</div>
+					<div class="nickArea">${each.writer.displayName}</div>
+					<div class="regDate"><fmt:formatDate value="${each.createdDate}" pattern="yyyy-MM-dd HH:mm" /></div>
+				</div>					
+				</c:forEach>
+			</div>
+
+			<div class="pagination pagination-centered">
+				<ul>
+					<sl:pager page="${questions}" prefixUri="/questions"/>
+				</ul>
+			</div>
+
+			<div class="pull-right">
+				<a id="questionBtn" href="/questions/form" class="btn btn-primary btn-large pull-right">질문하기</a>
+			</div>
+		</div>
+
+		<slipp:tags tags="${tags}"/>
+	</div>
+</div>
+<%--
 <div id="page">
-	<!-- start content -->
 	<div id="content">
 		<div class="forumTop">
 			<div class="rss">
@@ -30,18 +66,7 @@
 		</div>
 		</c:forEach>
 	</div>
-	<!-- end content -->
-	<!-- start sidebar -->
-	<div id="sidebar">
-		<ul>
-			<li><a href="http://www.javajigi.net">자바지기</a></li>
-			<li><a href="http://www.facebook.com/javajigi">자바지기 페이스북</a></li>
-			<li><a href="https://twitter.com/#!/javajigi">자바지기 트위터</a></li>
-		</ul>
-	</div>
-	<!-- end sidebar -->
-	<div style="clear: both;">&nbsp;</div>
 </div>
-<!-- end page -->
+ --%>
 </body>
 </html>

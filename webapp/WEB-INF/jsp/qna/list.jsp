@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/tags.jspf"%>
 <html>
 <head>
-<link href="${url:resource('/stylesheets/boards.css')}" rel="stylesheet">
 </head>
 <body>
 	<slipp:header type="1"/>
