@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/tags.jspf"%>
 <html>
 <head>
-<link href="${url:resource('/stylesheets/boards.css')}" rel="stylesheet">
 <link href="${url:resource('/stylesheets/wiki-style.css')}" rel="stylesheet">
 <link href="${url:resource('/stylesheets/wiki-textile-style.css')}" rel="stylesheet">
 <link href="${url:resource('/stylesheets/wiki-imageupload-plugins.css')}" rel="stylesheet">
@@ -52,7 +51,7 @@
 <script src="http://ajax.microsoft.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>
 <script type="text/javascript" src="${url:resource('/javascripts/jquery.markitup.js')}"></script>
 <script type="text/javascript">
-var uploaderUrl = "http://localhost:8080";
+var uploaderUrl = "${slippUrl}";
 </script>
 <script type="text/javascript"	src="${url:resource('/javascripts/qna/image.upload.js')}"></script>
 <script type="text/javascript" src="${url:resource('/javascripts/qna/qna-set.js')}"></script>
