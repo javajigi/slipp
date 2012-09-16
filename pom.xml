@@ -44,7 +44,7 @@
 			<groupId>org.springframework.social</groupId>
 			<artifactId>spring-social-web</artifactId>
 			<version>${org.springframework.social.version}</version>
-		</dependency>		
+		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
@@ -250,7 +250,7 @@
 			<resource>
 				<directory>src/main/resources-${environment}</directory>
 			</resource>
-		</resources>		
+		</resources>
 		<testResources>
 			<testResource>
 				<directory>src/test/java</directory>
@@ -344,6 +344,17 @@
 						<configuration>
 							<sources>
 								<source>${jpametamodel.generated.dir}</source>
+							</sources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>add-test-source</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-test-source</goal>
+						</goals>
+						<configuration>
+							<sources>
 								<source>${acceptance.test.dir}</source>
 							</sources>
 						</configuration>
@@ -368,7 +379,7 @@
 				<environment>production</environment>
 			</properties>
 		</profile>
-	</profiles>	
+	</profiles>
 	<reports>
 		<report>maven-emma-plugin</report>
 		<report>maven-pmd-plugin</report>
