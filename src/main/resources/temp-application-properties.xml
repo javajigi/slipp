@@ -33,6 +33,9 @@
 	<entry key="facebook.password">password</entry>
 	<entry key="facebook.clientId">client</entry>
 	<entry key="facebook.clientSecret">clientSecret</entry>
+	
+	<entry key="naver.consumerKey">consumerKey</entry>	
+	<entry key="naver.consumerSecret">consumerSecret</entry>
 
 	<entry key="slipp.remember.token.key">rememberkey</entry>
 	
