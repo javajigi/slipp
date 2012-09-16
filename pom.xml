@@ -363,9 +363,9 @@
 			</properties>
 		</profile>
 		<profile>
-			<id>integration</id>
+			<id>production</id>
 			<properties>
-				<environment>integration</environment>
+				<environment>production</environment>
 			</properties>
 		</profile>
 	</profiles>	
