@@ -26,6 +26,7 @@ public class AdminController {
 	@RequestMapping(value = "/tags", method = RequestMethod.GET)
 	public String tags(Integer page, ModelMap model) throws Exception {
 		model.addAttribute("tags", tagService.findTags(createPageable(page)));
+		model.addAttribute("parentTags", tagService.findParents());
 		return "admin/tags";
 	}
 
@@ -39,14 +40,25 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value = "/tags", method = RequestMethod.POST)
-	public String create(String name, ModelMap model) throws Exception {
+	public String create(String name, Long parentTag, ModelMap model) throws Exception {
 		Tag originalTag = tagService.findTagByName(name);
 		if (originalTag != null) {
 			model.addAttribute("errorMessage", name + " 태그는 이미 존재합니다.");
 			return tags(1, model);
 		}
+		
+		if (parentTag == 0) {
+			tagService.saveTag(new Tag(name));
+			return "redirect:/admin/tags";
+		}
+		
+		Tag parent = tagService.findTagById(parentTag);
+		if (parent == null) {
+			model.addAttribute("errorMessage", parentTag + " 태그 아이디는 존재하지 않습니다.");
+			return tags(1, model);
+		}
 				
-		tagService.saveTag(new Tag(name));
+		tagService.saveTag(new Tag(name, parent));
 		return "redirect:/admin/tags";
 	}
 	

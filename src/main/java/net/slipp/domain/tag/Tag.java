@@ -13,7 +13,7 @@ public class Tag {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long tagId;
 
-	@Column(name = "name", length = 50, nullable = false)
+	@Column(name = "name", length = 50, unique=true, nullable = false)
 	private String name;
 
 	private int taggedCount = 0;
@@ -26,7 +26,12 @@ public class Tag {
 	}
 
 	public Tag(String name) {
+		this(name, null);
+	}
+
+	public Tag(String name, Tag parent) {
 		this.name = name;
+		this.parent = parent;
 	}
 
 	public Long getTagId() {
@@ -61,6 +66,10 @@ public class Tag {
 		taggedCount -= 1;
 	}
 
+	public Tag getParent() {
+		return this.parent;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

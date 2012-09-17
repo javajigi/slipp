@@ -15,6 +15,7 @@
 					<th class="span2">아이디</th>
 					<th>이름</th>
 					<th class="span2">taggedCount</th>
+					<th>부모 태그</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -23,6 +24,11 @@
 					<td>${each.tagId}</td>
 					<td>${each.name}</td>
 					<td>${each.taggedCount}</td>
+					<td>
+						<c:if test="${not empty each.parent}">
+						${each.parent.name}
+						</c:if>
+					</td>
 					<!-- 
 					<td><button class="btn btn-primary" href="#">수정</button>&nbsp;&nbsp;
 						<button class="btn btn-danger" href="#">삭제</button></td>
@@ -41,6 +47,12 @@
 	<div class="span8">
 		<form id="tagForm" class="form-search" action="/admin/tags" method="post">
       		<input type="text" id="name" name="name" class="input-medium">
+      		<select id="parentTag" name="parentTag">
+      			<option value="0">없음</option>
+      			<c:forEach items="${parentTags}" var="each">
+      			<option value="${each.tagId}">${each.name}</option>
+      			</c:forEach>
+      		</select>
       		<button type="submit" class="btn btn-primary">추가</button>
       		<c:if test="${not empty errorMessage}">
       		<label for="tag" class="error" style="">${errorMessage}</label>

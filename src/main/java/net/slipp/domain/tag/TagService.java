@@ -1,5 +1,6 @@
 package net.slipp.domain.tag;
 
+import java.util.List;
 import java.util.Set;
 import java.util.StringTokenizer;
 
@@ -77,6 +78,10 @@ public class TagService {
 		return tagRepository.findAll(page);
 	}
 	
+	public List<Tag> findParents() {
+		return tagRepository.findParents();
+	}
+	
 	public Page<NewTag> findNewTags(Pageable page) {
 		return newTagRepository.findAll(page);
 	}
@@ -87,5 +92,9 @@ public class TagService {
 	
 	public Tag findTagByName(String name) {
 		return tagRepository.findByName(name);
+	}
+	
+	public Tag findTagById(Long id) {
+		return tagRepository.findOne(id);
 	}
 }
