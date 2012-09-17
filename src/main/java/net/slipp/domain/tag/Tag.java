@@ -70,6 +70,21 @@ public class Tag {
 		return this.parent;
 	}
 	
+	private boolean isRootTag() {
+	    return parent == null;
+	}
+	
+    /**
+     * Root 태그인 경우 자기 자신, 자식 태그인 경우 부모 태그를 반환한다.
+     * @return
+     */
+    public Tag getRevisedTag() {
+        if (isRootTag()) {
+            return this;
+        }
+        return this.parent;
+    }
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

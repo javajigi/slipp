@@ -37,6 +37,7 @@
 							<span class="answerNum">답변수 <strong>${question.answerCount}</strong></span>
 						</p>
 					</div>
+
 					<div class="snsIcon">
 						<div class="facebook">
 							<div id="fb-root"></div>
@@ -66,7 +67,7 @@
 						<a href="/questions/${question.questionId}/form"><button class="btn">수정하기</button></a>
 						<a id="deleteQuestionBtn" href="#"><button class="btn">삭제하기</button></a>
 						</c:if>
-						<a href="/questions"><button class="btn pull-right">목록으로</button></a>				
+						<a href="/questions"><button class="btn">목록으로</button></a>				
 					</div>
 					<form id="deleteQuestionForm" action="/questions/${question.questionId}" method="POST">
 						<input type="hidden" name="_method" value="DELETE" />
@@ -119,7 +120,6 @@
 	</div>
 <script src="http://ajax.microsoft.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>
 <script type="text/javascript" src="${url:resource('/javascripts/jquery.markitup.js')}"></script>
-<script type="text/javascript" src="${url:resource('/javascripts/jquery.autocomplete.js')}"></script>
 <script type="text/javascript">
 var uploaderUrl = "${slippUrl}";
 </script>

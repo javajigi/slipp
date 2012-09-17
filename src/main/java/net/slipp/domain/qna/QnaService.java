@@ -80,7 +80,7 @@ public class QnaService {
 	}
 
 	public Iterable<Tag> findsTag() {
-		return tagRepository.findAll();
+		return tagRepository.findParents();
 	}
 
 	public void createAnswer(SocialUser user, Long questionId, Answer answer) {

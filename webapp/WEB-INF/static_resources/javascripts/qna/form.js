@@ -28,7 +28,7 @@ $(document).ready(function() {
 		parse: function(data) {
 			var array = new Array();
             for(var i=0;i<data.length;i++) {
-                    array[array.length] = { data: data[i], value: data[i] };
+            	array[array.length] = { data: data[i], value: data[i] };
             }
             return array;
 		},

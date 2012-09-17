@@ -47,7 +47,7 @@ public class AdminController {
 			return tags(1, model);
 		}
 		
-		if (parentTag == 0) {
+		if (parentTag == null) {
 			tagService.saveTag(new Tag(name));
 			return "redirect:/admin/tags";
 		}

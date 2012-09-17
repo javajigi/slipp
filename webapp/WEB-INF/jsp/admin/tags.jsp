@@ -48,7 +48,7 @@
 		<form id="tagForm" class="form-search" action="/admin/tags" method="post">
       		<input type="text" id="name" name="name" class="input-medium">
       		<select id="parentTag" name="parentTag">
-      			<option value="0">없음</option>
+      			<option value="">없음</option>
       			<c:forEach items="${parentTags}" var="each">
       			<option value="${each.tagId}">${each.name}</option>
       			</c:forEach>

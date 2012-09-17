@@ -37,7 +37,7 @@ public class TagService {
 		for (String parsedTag : parsedTags) {
 			Tag tag = tagRepository.findByName(parsedTag);
 			if(tag != null) {
-				pooledTags.add(tagRepository.findByName(parsedTag));				
+				pooledTags.add(tag.getRevisedTag());				
 			} else {
 				saveNewTag(parsedTag);
 			}

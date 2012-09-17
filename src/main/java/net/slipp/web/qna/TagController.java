@@ -1,5 +1,6 @@
 package net.slipp.web.qna;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -22,8 +23,13 @@ public class TagController {
 	private TagRepository tagRepository;
 	
 	@RequestMapping("/search")
-	public @ResponseBody List<Tag> searchByTagName(String name) {
+	public @ResponseBody List<TagForm> searchByTagName(String name) {
 		logger.debug("search tag by name : {}", name);
-		return tagRepository.findByNameLike(name + "%");
+		List<Tag> searchedTags = tagRepository.findByNameLike(name + "%");
+		List<TagForm> tags = new ArrayList<TagForm>();
+		for (Tag tag : searchedTags) {
+            tags.add(new TagForm(tag.getName()));
+        }
+		return tags;
 	}
 }
