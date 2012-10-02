@@ -84,12 +84,13 @@ public class Tag {
         }
         return this.parent;
     }
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((parent == null) ? 0 : parent.hashCode());
 		result = prime * result + ((tagId == null) ? 0 : tagId.hashCode());
 		return result;
 	}
@@ -108,11 +109,21 @@ public class Tag {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
+		if (parent == null) {
+			if (other.parent != null)
+				return false;
+		} else if (!parent.equals(other.parent))
+			return false;
 		if (tagId == null) {
 			if (other.tagId != null)
 				return false;
 		} else if (!tagId.equals(other.tagId))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Tag [tagId=" + tagId + ", name=" + name + ", taggedCount=" + taggedCount + ", parent=" + parent + "]";
 	}
 }

@@ -18,8 +18,10 @@ import org.mockito.runners.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class TagServiceTest {
 	private TagService dut;
+	
 	@Mock
 	private TagRepository tagRepository;
+	
 	@Mock
 	private NewTagRepository newTagRepository;
 	
