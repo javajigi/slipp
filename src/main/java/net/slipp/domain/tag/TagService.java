@@ -64,14 +64,19 @@ public class TagService {
 		return parsedTags;
 	}
 
-	public void moveToTagPool(Long tagId) {
+	public void moveToTagPool(Long tagId, Long parentTagId) {
+		Tag parentTag = null;
+		if (parentTagId != null) {
+			parentTag = tagRepository.findOne(parentTagId);
+		}
+		
 		NewTag newTag = newTagRepository.findOne(tagId);
 		
 		Tag tag = tagRepository.findByName(newTag.getName());
 		if (tag == null) {
-			tagRepository.save(newTag.createTag());
-			newTagRepository.delete(newTag);
+			tagRepository.save(newTag.createTag(parentTag));
 		}
+		newTagRepository.delete(newTag);
 	}
 	
 	public Page<Tag> findTags(Pageable page) {

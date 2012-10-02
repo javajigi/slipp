@@ -63,14 +63,30 @@ public class TagServiceTest {
 	}
 	
 	@Test
-	public void moveToTagPool() throws Exception {
+	public void moveToTagPool_부모_태그_ID_is_null() throws Exception {
 		Long tagId = 1L;
+		Long parentTagId = null;
 		NewTag newTag = new NewTag(tagId, "newTag");
 		when(newTagRepository.findOne(tagId)).thenReturn(newTag);
 		
-		dut.moveToTagPool(tagId);
+		dut.moveToTagPool(tagId, parentTagId);
 		
-		verify(tagRepository).save(newTag.createTag());
+		verify(tagRepository).save(newTag.createTag(null));
+		verify(newTagRepository).delete(newTag);
+	}
+	
+	@Test
+	public void moveToTagPool_부모_태그가_존재함() throws Exception {
+		Long tagId = 1L;
+		Long parentTagId = 5L;
+		NewTag newTag = new NewTag(tagId, "newTag");
+		Tag parentTag = new Tag("새로운태그");
+		when(tagRepository.findOne(parentTagId)).thenReturn(parentTag);
+		when(newTagRepository.findOne(tagId)).thenReturn(newTag);
+		
+		dut.moveToTagPool(tagId, parentTagId);
+		
+		verify(tagRepository).save(newTag.createTag(parentTag));
 		verify(newTagRepository).delete(newTag);
 	}
 }

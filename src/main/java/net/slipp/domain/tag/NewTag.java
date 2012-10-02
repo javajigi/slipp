@@ -45,8 +45,8 @@ public class NewTag {
 		return taggedCount;
 	}
 	
-	public Tag createTag() {
-		return new Tag(getName());
+	public Tag createTag(Tag parentTag) {
+		return new Tag(getName(), parentTag);
 	}
 
 	@Override

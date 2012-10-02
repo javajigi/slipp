@@ -64,13 +64,14 @@ public class AdminController {
 	
 	@RequestMapping(value = "/newtags", method = RequestMethod.GET)
 	public String newTags(Integer page, ModelMap model) throws Exception {
+		model.addAttribute("parentTags", tagService.findParents());
 		model.addAttribute("newtags", tagService.findNewTags(createPageable(page)));
 		return "admin/newtags";
 	}
 	
 	@RequestMapping(value = "/moveNewTag", method = RequestMethod.POST)
-	public String moveNewTag(Long tagId) throws Exception {
-		tagService.moveToTagPool(tagId);
+	public String moveNewTag(Long tagId, Long parentTag) throws Exception {
+		tagService.moveToTagPool(tagId, parentTag);
 		return "redirect:/admin/newtags";
 	}
 }

@@ -27,6 +27,12 @@
 					<td>
 						<form class="form-search" action="/admin/moveNewTag" method="post">
 							<input type="hidden" name="tagId" value="${each.tagId}" />
+				      		<select id="parentTag" name="parentTag">
+				      			<option value="">없음</option>
+				      			<c:forEach items="${parentTags}" var="each">
+				      			<option value="${each.tagId}">${each.name}</option>
+				      			</c:forEach>
+				      		</select>							
 							<button type="submit" class="btn btn-primary">태그로 추가</button>
 						</form>
 					</td>
