@@ -3,6 +3,7 @@ package net.slipp.domain.qna;
 import javax.annotation.Resource;
 
 import net.slipp.domain.tag.Tag;
+import net.slipp.domain.tag.TagParser;
 import net.slipp.domain.tag.TagService;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.repository.qna.AnswerRepository;
@@ -36,8 +37,9 @@ public class QnaService {
 		Assert.notNull(question, "question should be not null!");
 
 		question.writedBy(loginUser);
-		question.initializeTags(tagService);
-		questionRepository.save(question);
+		TagParser tagParser = question.processTags(tagRepository);
+		Question savedQuestion = questionRepository.save(question);
+		tagService.saveNewTag(loginUser, savedQuestion, tagParser.getNewTags());
 	}
 
 	public void updateQuestion(SocialUser loginUser, Question newQuestion) {
@@ -51,8 +53,9 @@ public class QnaService {
 
 		question.writedBy(loginUser);
 		question.update(newQuestion);
-		question.initializeTags(tagService);
-		questionRepository.save(question);
+		TagParser tagParser = question.processTags(tagRepository);
+		Question savedQuestion = questionRepository.save(question);
+		tagService.saveNewTag(loginUser, savedQuestion, tagParser.getNewTags());
 	}
 
 	public void deleteQuestion(SocialUser loginUser, Long questionId) {

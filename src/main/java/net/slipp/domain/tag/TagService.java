@@ -2,10 +2,11 @@ package net.slipp.domain.tag;
 
 import java.util.List;
 import java.util.Set;
-import java.util.StringTokenizer;
 
 import javax.inject.Inject;
 
+import net.slipp.domain.qna.Question;
+import net.slipp.domain.user.SocialUser;
 import net.slipp.repository.tag.NewTagRepository;
 import net.slipp.repository.tag.TagRepository;
 
@@ -13,8 +14,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.google.common.collect.Sets;
 
 @Service
 @Transactional
@@ -31,37 +30,16 @@ public class TagService {
 		this.newTagRepository = newTagRepository;
 	}
 	
-	public Set<Tag> processTags(String plainTags) {
-		Set<String> parsedTags = parseTags(plainTags);
-		Set<Tag> pooledTags = Sets.newHashSet();
-		for (String parsedTag : parsedTags) {
-			Tag tag = tagRepository.findByName(parsedTag);
-			if(tag != null) {
-				pooledTags.add(tag.getRevisedTag());				
+	public void saveNewTag(SocialUser loginUser, Question question, Set<NewTag> newTags) {
+		for (NewTag newTag : newTags) {
+			NewTag originalTag = newTagRepository.findByName(newTag.getName());
+			if(originalTag==null) {
+				newTagRepository.save(newTag);
 			} else {
-				saveNewTag(parsedTag);
-			}
+				originalTag.tagged();
+				newTagRepository.save(newTag);
+			}			
 		}
-		return pooledTags;
-	}
-	
-	private void saveNewTag(String parsedTag) {
-		NewTag newTag = newTagRepository.findByName(parsedTag);
-		if(newTag==null) {
-			newTagRepository.save(new NewTag(parsedTag));
-		} else {
-			newTag.tagged();
-			newTagRepository.save(newTag);
-		}
-	}
-
-	public Set<String> parseTags(String plainTags) {
-		Set<String> parsedTags = Sets.newHashSet();
-		StringTokenizer tokenizer = new StringTokenizer(plainTags, " ");
-		while (tokenizer.hasMoreTokens()) {
-			parsedTags.add(tokenizer.nextToken());
-		}
-		return parsedTags;
 	}
 
 	public void moveToTagPool(Long tagId, Long parentTagId) {

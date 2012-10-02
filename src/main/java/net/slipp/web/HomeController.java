@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class HomeController {
 	private static final int DEFAULT_PAGE_NO = 0;
-	private static final int DEFAULT_PAGE_SIZE = 10;	
+	private static final int DEFAULT_PAGE_SIZE = 15;	
 	
 	@Resource(name="wikiService")
 	private WikiService wikiService;

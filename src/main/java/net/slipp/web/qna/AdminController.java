@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/admin")
 public class AdminController {
 	private static final int DEFAULT_PAGE_NO = 1;
-	private static final int DEFAULT_PAGE_SIZE = 10;
+	private static final int DEFAULT_PAGE_SIZE = 20;
 
 	@Resource(name = "tagService")
 	private TagService tagService;

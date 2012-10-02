@@ -27,7 +27,7 @@ public class QuestionController {
 	private static final Logger logger = LoggerFactory.getLogger(QuestionController.class);
 
 	private static final int DEFAULT_PAGE_NO = 1;
-	private static final int DEFAULT_PAGE_SIZE = 1;
+	private static final int DEFAULT_PAGE_SIZE = 15;
 
 	@Resource(name = "qnaService")
 	private QnaService qnaService;

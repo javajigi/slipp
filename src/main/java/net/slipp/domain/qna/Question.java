@@ -27,8 +27,9 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import net.slipp.domain.tag.Tag;
-import net.slipp.domain.tag.TagService;
+import net.slipp.domain.tag.TagParser;
 import net.slipp.domain.user.SocialUser;
+import net.slipp.repository.tag.TagRepository;
 import net.slipp.support.jpa.CreatedAndUpdatedDateEntityListener;
 import net.slipp.support.jpa.HasCreatedAndUpdatedDate;
 
@@ -36,9 +37,6 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.base.Function;
-import com.google.common.base.Joiner;
-import com.google.common.collect.Collections2;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -153,13 +151,17 @@ public class Question implements HasCreatedAndUpdatedDate {
 		return Iterables.getFirst(contentsHolder, "");
 	}
 
-	public void initializeTags(TagService tagProcessor) {
-		Set<Tag> newTags = tagProcessor.processTags(plainTags);
+	public TagParser processTags(TagRepository tagRepository) {
+		TagParser tagParser = new TagParser(tagRepository);
+		tagParser.processTags(plainTags);
+		Set<Tag> newTags = tagParser.getPooledTags();
 		Set<Tag> originalTags = tags;
 		this.tags = newTags;
-		this.denormalizedTags = tagsToDenormalizedTags(newTags);
+		this.denormalizedTags = tagParser.tagsToDenormalizedTags(newTags);
 		addNewTags(newTags, originalTags);
 		removeTags(newTags, originalTags);
+
+		return tagParser;
 	}
 
 	private void removeTags(Set<Tag> newTags, Set<Tag> orginalTags) {
@@ -178,17 +180,6 @@ public class Question implements HasCreatedAndUpdatedDate {
 		}
 	}
 	
-	String tagsToDenormalizedTags(Set<Tag> tags) {
-		Function<Tag, String> tagToString = new Function<Tag, String>() {
-			@Override
-			public String apply(Tag input) {
-				return input.getName();
-			}
-		};
-		
-		return Joiner.on(",").join(Collections2.transform(tags, tagToString));
-	}
-
 	public Long getQuestionId() {
 		return questionId;
 	}
