@@ -1,10 +1,21 @@
 package net.slipp.domain.tag;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+
+import net.slipp.domain.qna.Question;
+import net.slipp.domain.user.SocialUser;
+
+import com.google.common.collect.Sets;
 
 @Entity
 public class NewTag {
@@ -14,6 +25,16 @@ public class NewTag {
 
 	@Column(name = "name", length = 50, nullable = false)
 	private String name;
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "newtag_user", joinColumns = @JoinColumn(name = "newtag_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+	@org.hibernate.annotations.ForeignKey(name = "fk_newtag_user_newtag_id", inverseName = "fk_newtag_user_user_id")
+	private Set<SocialUser> users;
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "newtag_question", joinColumns = @JoinColumn(name = "newtag_id"), inverseJoinColumns = @JoinColumn(name = "question_id"))
+	@org.hibernate.annotations.ForeignKey(name = "fk_newtag_question_newtag_id", inverseName = "fk_newtag_question_question_id")
+	private Set<Question> questions;
 	
 	private int taggedCount = 1;
 	
@@ -43,6 +64,29 @@ public class NewTag {
 
 	public int getTaggedCount() {
 		return taggedCount;
+	}
+	
+	public void addUser(SocialUser socialUser) {
+		if (users == null) {
+			users = Sets.newHashSet();
+		}
+		users.add(socialUser);
+	}
+	
+	public Set<SocialUser> getUsers() {
+		return users;
+	}
+	
+	public void addQuestion(Question question) {
+		if (questions == null) {
+			questions = Sets.newHashSet();
+		}
+		
+		questions.add(question);
+	}
+	
+	public Set<Question> getQuestions() {
+		return questions;
 	}
 	
 	public Tag createTag(Tag parentTag) {
