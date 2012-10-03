@@ -1,6 +1,7 @@
 package net.slipp.domain.qna;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertThat;
 
 import java.util.Set;
@@ -53,6 +54,14 @@ public class QuestionTest {
 		
 		// then
 		assertThat(actual, is(false));
+	}
+	
+	@Test
+	public void newQuestion() throws Exception {
+		SocialUser loginUser = new SocialUser();
+		Question questionDto = new QuestionBuilder().tags("java javascript").build();
+		Question newQuestion = Question.newQuestion(loginUser, questionDto);
+		
 	}
 	
 //	@Test

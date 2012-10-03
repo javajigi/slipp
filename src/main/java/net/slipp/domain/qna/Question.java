@@ -154,7 +154,7 @@ public class Question implements HasCreatedAndUpdatedDate {
 	public TagParser processTags(TagRepository tagRepository) {
 		TagParser tagParser = new TagParser(tagRepository);
 		tagParser.processTags(plainTags);
-		Set<Tag> newTags = tagParser.getPooledTags();
+		Set<Tag> newTags = tagParser.getTags();
 		Set<Tag> originalTags = tags;
 		this.tags = newTags;
 		this.denormalizedTags = TagParser.tagsToDenormalizedTags(newTags);
@@ -278,6 +278,14 @@ public class Question implements HasCreatedAndUpdatedDate {
 	
 	public boolean hasTag(Tag tag) {
 		return tags.contains(tag);
+	}
+	
+	public static Question newQuestion(SocialUser loginUser, Question questionDto) {
+		Question newQuestion = new Question();
+		newQuestion.writer = loginUser;
+		newQuestion.title = questionDto.title;
+		newQuestion.setContents(questionDto.getContents());
+		return newQuestion;
 	}
 	
 	@Override
