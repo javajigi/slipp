@@ -32,17 +32,17 @@ public class TagService {
 	
 	public void saveNewTag(SocialUser loginUser, Question question, Set<NewTag> newTags) {
 		for (NewTag newTag : newTags) {
-			NewTag originalTag = newTagRepository.findByName(newTag.getName());
-			
-			if(originalTag==null) {
-				newTag.addUser(loginUser);
-				newTag.addQuestion(question);
-				newTagRepository.save(newTag);
-			} else {
-				originalTag.addUser(loginUser);
-				originalTag.addQuestion(question);				
-				originalTag.tagged();
-			}			
+			applyNewTag(loginUser, question, newTag);			
+		}
+	}
+
+	private void applyNewTag(SocialUser loginUser, Question question, NewTag newTag) {
+		NewTag originalTag = newTagRepository.findByName(newTag.getName());
+		if(originalTag==null) {
+			newTag.tagged(loginUser, question);
+			newTagRepository.save(newTag);
+		} else {
+			originalTag.tagged(loginUser, question);
 		}
 	}
 

@@ -32,12 +32,16 @@ public class TagParser {
 	public void processTags(String plainTags) {
 		Set<String> parsedTags = parseTags(plainTags);
 		for (String parsedTag : parsedTags) {
-			Tag tag = tagRepository.findByName(parsedTag);
-			if(tag != null) {
-				pooledTags.add(tag.getRevisedTag());				
-			} else {
-				newTags.add(new NewTag(parsedTag));
-			}
+			applyParsedTag(parsedTag);
+		}
+	}
+
+	private void applyParsedTag(String parsedTag) {
+		Tag tag = tagRepository.findByName(parsedTag);
+		if(tag != null) {
+			pooledTags.add(tag.getRevisedTag());				
+		} else {
+			newTags.add(new NewTag(parsedTag));
 		}
 	}
 	

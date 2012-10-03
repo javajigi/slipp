@@ -1,7 +1,15 @@
 package net.slipp.domain.tag;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import java.util.Set;
+
+import net.slipp.domain.qna.Question;
+import net.slipp.domain.user.SocialUser;
 import net.slipp.repository.tag.NewTagRepository;
 import net.slipp.repository.tag.TagRepository;
 
@@ -10,6 +18,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import com.google.common.collect.Sets;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TagServiceTest {
@@ -36,7 +46,7 @@ public class TagServiceTest {
 		dut.moveToTagPool(tagId, parentTagId);
 		
 		verify(tagRepository).save(newTag.createTag(null));
-		verify(newTagRepository).delete(newTag);
+		assertThat(newTag.isDeleted(), is(true));
 	}
 	
 	@Test
@@ -51,6 +61,34 @@ public class TagServiceTest {
 		dut.moveToTagPool(tagId, parentTagId);
 		
 		verify(tagRepository).save(newTag.createTag(parentTag));
-		verify(newTagRepository).delete(newTag);
+		assertThat(newTag.isDeleted(), is(true));
+	}
+	
+	@Test
+	public void saveNewTag_최초_신규_태그() throws Exception {
+		SocialUser loginUser = new SocialUser();
+		Question question = new Question();
+		NewTag newTag = new NewTag("newTag");
+		Set<NewTag> newTags = Sets.newHashSet(newTag);
+
+		when(newTagRepository.findByName(newTag.getName())).thenReturn(null);
+		
+		dut.saveNewTag(loginUser, question, newTags);
+		
+		verify(newTagRepository).save(newTag);
+	}
+	
+	@Test
+	public void saveNewTag_이미_존재하는_태그() throws Exception {
+		SocialUser loginUser = new SocialUser();
+		Question question = new Question();
+		NewTag newTag = new NewTag("newTag");
+		Set<NewTag> newTags = Sets.newHashSet(newTag);
+
+		when(newTagRepository.findByName(newTag.getName())).thenReturn(newTag);
+		
+		dut.saveNewTag(loginUser, question, newTags);
+		
+		verify(newTagRepository, never()).save(newTag);
 	}
 }

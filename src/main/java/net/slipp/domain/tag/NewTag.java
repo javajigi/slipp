@@ -32,14 +32,14 @@ public class NewTag {
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "newtag_user", joinColumns = @JoinColumn(name = "newtag_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	@org.hibernate.annotations.ForeignKey(name = "fk_newtag_user_newtag_id", inverseName = "fk_newtag_user_user_id")
-	private Set<SocialUser> users;
+	private Set<SocialUser> users = Sets.newHashSet();
 	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "newtag_question", joinColumns = @JoinColumn(name = "newtag_id"), inverseJoinColumns = @JoinColumn(name = "question_id"))
 	@org.hibernate.annotations.ForeignKey(name = "fk_newtag_question_newtag_id", inverseName = "fk_newtag_question_question_id")
-	private Set<Question> questions;
+	private Set<Question> questions = Sets.newHashSet();
 	
-	private int taggedCount = 1;
+	private int taggedCount = 0;
 	
 	public NewTag() {
 	}
@@ -61,7 +61,9 @@ public class NewTag {
 		return name;
 	}
 	
-	public void tagged() {
+	public void tagged(SocialUser loginUser, Question question) {
+		users.add(loginUser);
+		questions.add(question);
 		taggedCount += 1;
 	}
 	
@@ -77,23 +79,8 @@ public class NewTag {
 		return taggedCount;
 	}
 	
-	public void addUser(SocialUser socialUser) {
-		if (users == null) {
-			users = Sets.newHashSet();
-		}
-		users.add(socialUser);
-	}
-	
 	public Set<SocialUser> getUsers() {
 		return users;
-	}
-	
-	public void addQuestion(Question question) {
-		if (questions == null) {
-			questions = Sets.newHashSet();
-		}
-		
-		questions.add(question);
 	}
 	
 	public Set<Question> getQuestions() {
