@@ -53,12 +53,11 @@ public class TagService {
 		}
 		
 		NewTag newTag = newTagRepository.findOne(tagId);
-		
 		Tag tag = tagRepository.findByName(newTag.getName());
 		if (tag == null) {
 			tagRepository.save(newTag.createTag(parentTag));
 		}
-		newTagRepository.delete(newTag);
+		newTag.deleted();
 	}
 	
 	public Page<Tag> findTags(Pageable page) {

@@ -12,9 +12,10 @@
 		<table id="tags" class="table table-bordered">
 			<thead>
 				<tr>
-					<th class="span2">아이디</th>
-					<th>이름</th>
+					<th class="span1">아이디</th>
+					<th class="span2">이름</th>
 					<th class="span2">taggedCount</th>
+					<th class="span1">상태</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -24,6 +25,9 @@
 					<td>${each.tagId}</td>
 					<td>${each.name}</td>
 					<td>${each.taggedCount}</td>
+					<td>
+						<c:choose><c:when test="${each.deleted}">완료</c:when><c:otherwise>신규</c:otherwise></c:choose>
+					</td>
 					<td>
 						<form class="form-search" action="/admin/moveNewTag" method="post">
 							<input type="hidden" name="tagId" value="${each.tagId}" />

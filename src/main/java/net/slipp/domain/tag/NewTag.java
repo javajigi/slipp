@@ -26,6 +26,9 @@ public class NewTag {
 	@Column(name = "name", length = 50, nullable = false)
 	private String name;
 	
+	@Column(name = "deleted", nullable = false)
+	private boolean deleted = false;
+	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "newtag_user", joinColumns = @JoinColumn(name = "newtag_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	@org.hibernate.annotations.ForeignKey(name = "fk_newtag_user_newtag_id", inverseName = "fk_newtag_user_user_id")
@@ -60,6 +63,14 @@ public class NewTag {
 	
 	public void tagged() {
 		taggedCount += 1;
+	}
+	
+	public boolean isDeleted() {
+		return deleted;
+	}
+	
+	public void deleted() {
+		deleted = true;
 	}
 
 	public int getTaggedCount() {
