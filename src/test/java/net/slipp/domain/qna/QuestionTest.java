@@ -2,7 +2,10 @@ package net.slipp.domain.qna;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import net.slipp.domain.tag.TagService;
+
+import java.util.Set;
+
+import net.slipp.domain.tag.Tag;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.repository.tag.TagRepository;
 
@@ -11,6 +14,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import com.google.common.collect.Sets;
 
 @RunWith(MockitoJUnitRunner.class)
 public class QuestionTest {
@@ -72,6 +77,17 @@ public class QuestionTest {
 //		dut.processTags(tagProcessor);
 //		assertThat(dut.getTags().size(), is(3));
 //	}
+	
+	@Test
+	public void tag() throws Exception {
+		Tag tag = new Tag("newTag");
+		Question question = new Question();
+		question.tag(tag);
+		
+		Set<Tag> tags = Sets.newHashSet(tag);
+		assertThat(question.getTags(), is(tags));
+		assertThat(tag.getTaggedCount(), is(1));
+	}
 	
 	@Test
 	public void contents() throws Exception {

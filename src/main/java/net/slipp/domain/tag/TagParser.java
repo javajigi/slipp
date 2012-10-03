@@ -45,7 +45,7 @@ public class TagParser {
 		}
 	}
 	
-	public String tagsToDenormalizedTags(Set<Tag> tags) {
+	public static String tagsToDenormalizedTags(Set<Tag> tags) {
 		Function<Tag, String> tagToString = new Function<Tag, String>() {
 			@Override
 			public String apply(Tag input) {

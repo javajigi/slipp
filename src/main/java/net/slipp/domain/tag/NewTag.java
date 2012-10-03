@@ -90,6 +90,20 @@ public class NewTag {
 	public Tag createTag(Tag parentTag) {
 		return new Tag(getName(), parentTag);
 	}
+	
+	public void rollbackQuestionsTo(Tag tag) {
+		for (Question each : questions) {
+			each.tag(tag);
+		}
+	}
+	
+	public void moveToTag(Tag tag) {
+		this.deleted = true;
+		
+		for (Question each : questions) {
+			each.tag(tag);
+		}
+	}
 
 	@Override
 	public int hashCode() {

@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 @Service
 @Transactional
@@ -47,17 +48,29 @@ public class TagService {
 	}
 
 	public void moveToTagPool(Long tagId, Long parentTagId) {
+		Assert.notNull(tagId, "이동할 tagId는 null이 될 수 없습니다.");
+		
+		NewTag newTag = newTagRepository.findOne(tagId);
+		Tag parentTag = findParentTag(parentTagId);
+		Tag tag = moveToTag(parentTag, newTag);
+		newTag.rollbackQuestionsTo(tag.getRevisedTag());
+		newTag.deleted();
+	}
+
+	private Tag findParentTag(Long parentTagId) {
 		Tag parentTag = null;
 		if (parentTagId != null) {
 			parentTag = tagRepository.findOne(parentTagId);
 		}
-		
-		NewTag newTag = newTagRepository.findOne(tagId);
+		return parentTag;
+	}
+
+	private Tag moveToTag(Tag parentTag, NewTag newTag) {
 		Tag tag = tagRepository.findByName(newTag.getName());
 		if (tag == null) {
-			tagRepository.save(newTag.createTag(parentTag));
+			return tagRepository.save(newTag.createTag(parentTag));
 		}
-		newTag.deleted();
+		return tag;
 	}
 	
 	public Page<Tag> findTags(Pageable page) {

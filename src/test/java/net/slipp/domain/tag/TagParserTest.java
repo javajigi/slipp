@@ -52,7 +52,7 @@ public class TagParserTest {
 	@Test
 	public void tagsToDenormalizedTags() throws Exception {
 		Set<Tag> tags = Sets.newHashSet(new Tag("java"), new Tag("eclipse"));
-		String result = dut.tagsToDenormalizedTags(tags);
+		String result = TagParser.tagsToDenormalizedTags(tags);
 		assertThat(result, is("java,eclipse"));
 	}
 }

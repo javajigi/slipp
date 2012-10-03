@@ -157,7 +157,7 @@ public class Question implements HasCreatedAndUpdatedDate {
 		Set<Tag> newTags = tagParser.getPooledTags();
 		Set<Tag> originalTags = tags;
 		this.tags = newTags;
-		this.denormalizedTags = tagParser.tagsToDenormalizedTags(newTags);
+		this.denormalizedTags = TagParser.tagsToDenormalizedTags(newTags);
 		addNewTags(newTags, originalTags);
 		removeTags(newTags, originalTags);
 
@@ -268,6 +268,16 @@ public class Question implements HasCreatedAndUpdatedDate {
 	
 	public void decreaseAnswerCount() {
 		this.answerCount -= 1;
+	}
+	
+	public void tag(Tag tag) {
+		tags.add(tag);
+		this.denormalizedTags = TagParser.tagsToDenormalizedTags(tags);
+		tag.tagged();
+	}
+	
+	public boolean hasTag(Tag tag) {
+		return tags.contains(tag);
 	}
 	
 	@Override
