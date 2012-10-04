@@ -47,13 +47,17 @@ public class TagService {
 		}
 	}
 
-	public void moveToTagPool(Long tagId, Long parentTagId) {
-		Assert.notNull(tagId, "이동할 tagId는 null이 될 수 없습니다.");
+	public void moveToTag(Long newTagId, Long parentTagId) {
+		Assert.notNull(newTagId, "이동할 tagId는 null이 될 수 없습니다.");
 		
-		NewTag newTag = newTagRepository.findOne(tagId);
-		Tag parentTag = findParentTag(parentTagId);
-		Tag tag = moveToTag(parentTag, newTag);
+		NewTag newTag = newTagRepository.findOne(newTagId);
+		Tag tag = moveToTag(parentTagId, newTag);
 		newTag.moveToTag(tag);
+	}
+
+	private Tag moveToTag(Long parentTagId, NewTag newTag) {
+		Tag tag = newTag.createTag(findParentTag(parentTagId));
+		return tagRepository.save(tag);
 	}
 
 	private Tag findParentTag(Long parentTagId) {
@@ -64,14 +68,6 @@ public class TagService {
 		return parentTag;
 	}
 
-	private Tag moveToTag(Tag parentTag, NewTag newTag) {
-		Tag tag = tagRepository.findByName(newTag.getName());
-		if (tag == null) {
-			return tagRepository.save(newTag.createTag(parentTag));
-		}
-		return tag;
-	}
-	
 	public Page<Tag> findTags(Pageable page) {
 		return tagRepository.findAll(page);
 	}

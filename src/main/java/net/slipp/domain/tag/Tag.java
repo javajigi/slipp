@@ -24,6 +24,11 @@ public class Tag {
 	
 	public Tag() {
 	}
+	
+	public Tag(Long tagId, String name) {
+		this.tagId = tagId;
+		this.name = name;
+	}
 
 	public Tag(String name) {
 		this(name, null);

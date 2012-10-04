@@ -1,9 +1,9 @@
 package net.slipp.domain.qna;
 
-import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
+import net.slipp.domain.tag.TagService;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.repository.qna.AnswerRepository;
 import net.slipp.repository.qna.QuestionRepository;
@@ -23,6 +23,9 @@ public class QnaServiceTest {
 	@Mock
 	private AnswerRepository answerRepository;
 	
+	@Mock
+	private TagService tagService;
+	
 	@InjectMocks
 	private QnaService dut = new QnaService();
 	
@@ -39,7 +42,7 @@ public class QnaServiceTest {
 		dut.updateQuestion(loginUser, question);
 		
 		// then
-		verify(questionRepository).save(question);
+		verify(tagService).saveNewTag(loginUser, question, question.getNewTags());
 	}
 	
 	@Test (expected=AccessDeniedException.class)

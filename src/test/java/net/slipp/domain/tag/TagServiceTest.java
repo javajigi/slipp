@@ -37,20 +37,22 @@ public class TagServiceTest {
 	}
 	
 	@Test
-	public void moveToTagPool_부모_태그_ID_is_null() throws Exception {
-		Long tagId = 1L;
+	public void moveToTag_부모_태그_ID_is_null() throws Exception {
+		NewTag newTag = new NewTag(1L, "java"); 
 		Long parentTagId = null;
-		NewTag newTag = new NewTag(tagId, "newTag");
-		when(newTagRepository.findOne(tagId)).thenReturn(newTag);
+		when(newTagRepository.findOne(newTag.getTagId())).thenReturn(newTag);
+		when(tagRepository.findOne(parentTagId)).thenReturn(null);
+		when(tagRepository.findByName(newTag.getName())).thenReturn(null);
+		Tag tag = newTag.createTag(null);
+		when(tagRepository.save(tag)).thenReturn(tag);
 		
-		dut.moveToTagPool(tagId, parentTagId);
+		dut.moveToTag(newTag.getTagId(), parentTagId);
 		
-		verify(tagRepository).save(newTag.createTag(null));
 		assertThat(newTag.isDeleted(), is(true));
 	}
 	
 	@Test
-	public void moveToTagPool_부모_태그가_존재함() throws Exception {
+	public void moveToTag_부모_태그가_존재함() throws Exception {
 		Long tagId = 1L;
 		Long parentTagId = 5L;
 		NewTag newTag = new NewTag(tagId, "newTag");
@@ -58,7 +60,7 @@ public class TagServiceTest {
 		when(tagRepository.findOne(parentTagId)).thenReturn(parentTag);
 		when(newTagRepository.findOne(tagId)).thenReturn(newTag);
 		
-		dut.moveToTagPool(tagId, parentTagId);
+		dut.moveToTag(tagId, parentTagId);
 		
 		verify(tagRepository).save(newTag.createTag(parentTag));
 		assertThat(newTag.isDeleted(), is(true));

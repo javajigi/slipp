@@ -71,7 +71,7 @@ public class AdminController {
 	
 	@RequestMapping(value = "/moveNewTag", method = RequestMethod.POST)
 	public String moveNewTag(Long tagId, Long parentTag) throws Exception {
-		tagService.moveToTagPool(tagId, parentTag);
+		tagService.moveToTag(tagId, parentTag);
 		return "redirect:/admin/newtags";
 	}
 }
