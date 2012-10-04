@@ -3,7 +3,6 @@ package net.slipp.domain.qna;
 import javax.annotation.Resource;
 
 import net.slipp.domain.tag.Tag;
-import net.slipp.domain.tag.TagParser;
 import net.slipp.domain.tag.TagService;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.repository.qna.AnswerRepository;
@@ -36,10 +35,9 @@ public class QnaService {
 		Assert.notNull(loginUser, "loginUser should be not null!");
 		Assert.notNull(question, "question should be not null!");
 
-		question.writedBy(loginUser);
-		TagParser tagParser = question.processTags(tagRepository);
-		Question savedQuestion = questionRepository.save(question);
-		tagService.saveNewTag(loginUser, savedQuestion, tagParser.getNewTags());
+		Question newQuestion = Question.newQuestion(loginUser, question, tagRepository);
+		Question savedQuestion = questionRepository.save(newQuestion);
+		tagService.saveNewTag(loginUser, savedQuestion, newQuestion.getNewTags());
 	}
 
 	public void updateQuestion(SocialUser loginUser, Question newQuestion) {
@@ -47,15 +45,8 @@ public class QnaService {
 		Assert.notNull(newQuestion, "question should be not null!");
 
 		Question question = questionRepository.findOne(newQuestion.getQuestionId());
-		if (!question.isWritedBy(loginUser)) {
-			throw new AccessDeniedException(loginUser + " is not owner!");
-		}
-
-		question.writedBy(loginUser);
-		question.update(newQuestion);
-		TagParser tagParser = question.processTags(tagRepository);
-		Question savedQuestion = questionRepository.save(question);
-		tagService.saveNewTag(loginUser, savedQuestion, tagParser.getNewTags());
+		question.update(loginUser, newQuestion, tagRepository);
+		tagService.saveNewTag(loginUser, question, question.getNewTags());
 	}
 
 	public void deleteQuestion(SocialUser loginUser, Long questionId) {
@@ -104,6 +95,6 @@ public class QnaService {
 		}
 		answerRepository.delete(answer);
 		Question question = questionRepository.findOne(questionId);
-		question.decreaseAnswerCount();
+		question.deAnswered();
 	}
 }

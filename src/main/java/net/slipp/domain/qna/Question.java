@@ -26,27 +26,24 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import net.slipp.domain.tag.NewTag;
 import net.slipp.domain.tag.Tag;
-import net.slipp.domain.tag.TagParser;
+import net.slipp.domain.tag.TagProcessor;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.repository.tag.TagRepository;
 import net.slipp.support.jpa.CreatedAndUpdatedDateEntityListener;
 import net.slipp.support.jpa.HasCreatedAndUpdatedDate;
 
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.security.access.AccessDeniedException;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import com.google.common.collect.Sets.SetView;
 
 @Entity
 @EntityListeners({ CreatedAndUpdatedDateEntityListener.class })
 public class Question implements HasCreatedAndUpdatedDate {
-	private static final Logger logger = LoggerFactory.getLogger(Question.class);
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long questionId;
@@ -88,6 +85,9 @@ public class Question implements HasCreatedAndUpdatedDate {
 	private String denormalizedTags; // 역정규화한 태그를 저장
 	
 	@Transient
+	private Set<NewTag> newTags = Sets.newHashSet();
+	
+	@Transient
 	private String plainTags;
 
 	@OneToMany(mappedBy = "question", fetch = FetchType.LAZY)
@@ -104,13 +104,6 @@ public class Question implements HasCreatedAndUpdatedDate {
 		this.questionId = id;
 	}
 	
-	Question(SocialUser writer, String title, String contents, String plainTags) {
-		this.writer = writer;
-		this.title = title;
-		setContents(contents);
-		this.plainTags = plainTags;
-	}
-
 	public List<Answer> getAnswers() {
 		return answers;
 	}
@@ -151,35 +144,6 @@ public class Question implements HasCreatedAndUpdatedDate {
 		return Iterables.getFirst(contentsHolder, "");
 	}
 
-	public TagParser processTags(TagRepository tagRepository) {
-		TagParser tagParser = new TagParser(tagRepository);
-		tagParser.processTags(plainTags);
-		Set<Tag> newTags = tagParser.getTags();
-		Set<Tag> originalTags = tags;
-		this.tags = newTags;
-		this.denormalizedTags = TagParser.tagsToDenormalizedTags(newTags);
-		addNewTags(newTags, originalTags);
-		removeTags(newTags, originalTags);
-
-		return tagParser;
-	}
-
-	private void removeTags(Set<Tag> newTags, Set<Tag> orginalTags) {
-		SetView<Tag> removedTags = Sets.difference(orginalTags, newTags);
-		logger.debug("removedTags size : {}", removedTags.size());
-		for (Tag tag : removedTags) {
-			tag.deTagged();
-		}
-	}
-
-	private void addNewTags(Set<Tag> newTags, Set<Tag> orginalTags) {
-		SetView<Tag> addedTags = Sets.difference(newTags, orginalTags);
-		logger.debug("addedTags size : {}", addedTags.size());
-		for (Tag tag : addedTags) {
-			tag.tagged();
-		}
-	}
-	
 	public Long getQuestionId() {
 		return questionId;
 	}
@@ -252,27 +216,21 @@ public class Question implements HasCreatedAndUpdatedDate {
 		return deleted;
 	}
 	
-	public void update(Question newQuestion) {
-		this.title = newQuestion.title;
-		this.contentsHolder = newQuestion.contentsHolder;
-		this.plainTags = newQuestion.plainTags;
-	}
-	
 	public void delete() {
 		this.deleted = true;
 	}
 	
-	public void increaseAnswerCount() {
+	public void newAnswered() {
 		this.answerCount += 1;
 	}
 	
-	public void decreaseAnswerCount() {
+	public void deAnswered() {
 		this.answerCount -= 1;
 	}
 	
 	public void tag(Tag tag) {
 		tags.add(tag);
-		this.denormalizedTags = TagParser.tagsToDenormalizedTags(tags);
+		this.denormalizedTags = TagProcessor.tagsToDenormalizedTags(tags);
 		tag.tagged();
 	}
 	
@@ -280,12 +238,36 @@ public class Question implements HasCreatedAndUpdatedDate {
 		return tags.contains(tag);
 	}
 	
-	public static Question newQuestion(SocialUser loginUser, Question questionDto) {
+	public Set<NewTag> getNewTags() {
+		return newTags;
+	}
+	
+	public static Question newQuestion(SocialUser loginUser, Question questionDto, TagRepository tagRepository) {
 		Question newQuestion = new Question();
 		newQuestion.writer = loginUser;
 		newQuestion.title = questionDto.title;
-		newQuestion.setContents(questionDto.getContents());
+		newQuestion.contentsHolder = questionDto.contentsHolder;
+		newQuestion.processTags(questionDto.plainTags, tagRepository);
+		
 		return newQuestion;
+	}
+	
+	private void processTags(String plainTags, TagRepository tagRepository) {
+		TagProcessor tagProcessor = new TagProcessor(tagRepository);
+		tagProcessor.processTags(this.tags, plainTags);
+		this.tags = tagProcessor.getTags();
+		this.denormalizedTags = tagProcessor.getDenormalizedTags();
+		this.newTags = tagProcessor.getNewTags();
+	}
+	
+	public void update(SocialUser loginUser, Question questionDto, TagRepository tagRepository) {
+		if (!isWritedBy(loginUser)) {
+			throw new AccessDeniedException(loginUser + " is not owner!");
+		}
+		
+		this.title = questionDto.title;
+		this.contentsHolder = questionDto.contentsHolder;
+		this.processTags(questionDto.plainTags, tagRepository);
 	}
 	
 	@Override

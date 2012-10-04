@@ -53,8 +53,7 @@ public class TagService {
 		NewTag newTag = newTagRepository.findOne(tagId);
 		Tag parentTag = findParentTag(parentTagId);
 		Tag tag = moveToTag(parentTag, newTag);
-		newTag.rollbackQuestionsTo(tag.getRevisedTag());
-		newTag.deleted();
+		newTag.moveToTag(tag);
 	}
 
 	private Tag findParentTag(Long parentTagId) {

@@ -1,8 +1,8 @@
 package net.slipp.domain.qna;
 
-import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.*;
 
 import java.util.Set;
 
@@ -58,34 +58,41 @@ public class QuestionTest {
 	
 	@Test
 	public void newQuestion() throws Exception {
+		// given
 		SocialUser loginUser = new SocialUser();
-		Question questionDto = new QuestionBuilder().tags("java javascript").build();
-		Question newQuestion = Question.newQuestion(loginUser, questionDto);
+		Tag java = new Tag("java");
+		Question questionDto = QuestionFixture.createDto("title", "contents", "java javascript");
+		when(tagRepository.findByName(java.getName())).thenReturn(java);
 		
+		// when
+		Question newQuestion = Question.newQuestion(loginUser, questionDto, tagRepository);
+		
+		// then
+		assertThat(newQuestion.getTitle(), is(questionDto.getTitle()));
+		assertThat(newQuestion.getContents(), is(questionDto.getContents()));
+		assertThat(newQuestion.hasTag(java), is(true));
+		assertThat(newQuestion.getNewTags().size(), is(1));
 	}
 	
-//	@Test
-//	public void newQuestion() throws Exception {
-//		when(tagRepository.processTags("java javascript")).thenReturn(pooledTag);
-//		
-//		Question dut = new QuestionBuilder().tags("java javascript").build();
-//		dut.processTags(tagRepository);
-//		assertThat(dut.getTags().size(), is(2));
-//	}
-	
-//	@Test
-//	public void updateQuestion() throws Exception {
-//		Set<Tag> firstTags = Sets.newHashSet(new Tag("java"), new Tag("javascript"));
-//		when(tagProcessor.processTags("java javascript")).thenReturn(firstTags);
-//		Question dut = new QuestionBuilder().tags("java javascript").build();
-//		dut.processTags(tagProcessor);
-//		
-//		dut.setPlainTags("maven java eclipse");
-//		Set<Tag> updatedTags = Sets.newHashSet(new Tag("maven"), new Tag("java"), new Tag("eclipse"));
-//		when(tagProcessor.processTags("maven java eclipse")).thenReturn(updatedTags);
-//		dut.processTags(tagProcessor);
-//		assertThat(dut.getTags().size(), is(3));
-//	}
+	@Test
+	public void updateQuestion() throws Exception {
+		// given
+		SocialUser loginUser = new SocialUser();
+		Tag java = new Tag("java");
+		Question questionDto = QuestionFixture.createDto("title", "contents", "java javascript");
+		when(tagRepository.findByName(java.getName())).thenReturn(java);
+		Question newQuestion = Question.newQuestion(loginUser, questionDto, tagRepository);
+		Question updatedQuestionDto = QuestionFixture.createDto("title2", "contents2", "java maven");
+		
+		// when
+		newQuestion.update(loginUser, updatedQuestionDto, tagRepository);
+		
+		// then
+		assertThat(newQuestion.getTitle(), is(updatedQuestionDto.getTitle()));
+		assertThat(newQuestion.getContents(), is(updatedQuestionDto.getContents()));
+		assertThat(newQuestion.hasTag(java), is(true));
+		assertThat(newQuestion.getNewTags().size(), is(1));	
+	}
 	
 	@Test
 	public void tag() throws Exception {

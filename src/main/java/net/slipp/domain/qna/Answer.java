@@ -121,7 +121,7 @@ public class Answer implements HasCreatedAndUpdatedDate {
 
 	public void answerTo(Question question) {
 		this.question = question;
-		question.increaseAnswerCount();
+		question.newAnswered();
 	}
 
 	public void writedBy(SocialUser user) {

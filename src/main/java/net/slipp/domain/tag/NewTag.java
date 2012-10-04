@@ -91,17 +91,12 @@ public class NewTag {
 		return new Tag(getName(), parentTag);
 	}
 	
-	public void rollbackQuestionsTo(Tag tag) {
-		for (Question each : questions) {
-			each.tag(tag);
-		}
-	}
-	
 	public void moveToTag(Tag tag) {
 		this.deleted = true;
 		
+		Tag revisedTag = tag.getRevisedTag();
 		for (Question each : questions) {
-			each.tag(tag);
+			each.tag(revisedTag);
 		}
 	}
 

@@ -1,8 +1,8 @@
 package net.slipp.domain.tag;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.when;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import java.util.Set;
 
@@ -17,15 +17,15 @@ import org.mockito.runners.MockitoJUnitRunner;
 import com.google.common.collect.Sets;
 
 @RunWith(MockitoJUnitRunner.class)
-public class TagParserTest {
-	private TagParser dut;
+public class TagProcessorTest {
+	private TagProcessor dut;
 	
 	@Mock
 	private TagRepository tagRepository;
 	
 	@Before
 	public void setup() {
-		dut = new TagParser(tagRepository);
+		dut = new TagProcessor(tagRepository);
 	}
 	
 	@Test
@@ -52,23 +52,20 @@ public class TagParserTest {
 	public void processTags_수정() throws Exception {
 		// given
 		Tag java = createTaggedTag("java");
-		Tag maven = createTaggedTag("maven");
 		Tag spring = createTaggedTag("spring");
-		String plainTags = "java maven newTags";
-		Set<Tag> originalTags = Sets.newHashSet(java, maven, spring);
+		String plainTags = "java newTags";
+		Set<Tag> originalTags = Sets.newHashSet(java, spring);
 		when(tagRepository.findByName(java.getName())).thenReturn(java);
-		when(tagRepository.findByName(maven.getName())).thenReturn(maven);
 				
 		// when
 		dut.processTags(originalTags, plainTags);
 		
 		// then
 		Set<Tag> tags = dut.getTags();
-		assertThat(tags.size(), is(2));
+		assertThat(tags.size(), is(1));
 		assertThat(java.getTaggedCount(), is(1));
-		assertThat(maven.getTaggedCount(), is(1));
 		assertThat(spring.getTaggedCount(), is(0));
-		assertThat(dut.getDenormalizedTags(), is("java,maven"));
+		assertThat(dut.getDenormalizedTags(), is("java"));
 		Set<NewTag> newTags = dut.getNewTags();
 		assertThat(newTags.size(), is(1));
 	}
@@ -82,14 +79,14 @@ public class TagParserTest {
 	@Test
 	public void parseTags() throws Exception {
 		String plainTags = "java javascript";
-		Set<String> parsedTags = TagParser.parseTags(plainTags);
+		Set<String> parsedTags = TagProcessor.parseTags(plainTags);
 		assertThat(parsedTags.size(), is(2));
 	}
 	
 	@Test
 	public void tagsToDenormalizedTags() throws Exception {
 		Set<Tag> tags = Sets.newHashSet(new Tag("java"), new Tag("eclipse"));
-		String result = TagParser.tagsToDenormalizedTags(tags);
+		String result = TagProcessor.tagsToDenormalizedTags(tags);
 		assertThat(result, is("java,eclipse"));
 	}
 }

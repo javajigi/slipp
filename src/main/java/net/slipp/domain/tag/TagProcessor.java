@@ -14,8 +14,8 @@ import com.google.common.collect.Collections2;
 import com.google.common.collect.Sets;
 import com.google.common.collect.Sets.SetView;
 
-public class TagParser {
-	private static final Logger logger = LoggerFactory.getLogger(TagParser.class);
+public class TagProcessor {
+	private static final Logger logger = LoggerFactory.getLogger(TagProcessor.class);
 	
 	private TagRepository tagRepository;
 	
@@ -23,7 +23,7 @@ public class TagParser {
 	private Set<NewTag> newTags = Sets.newHashSet();
 	private String denormalizedTags;
 	
-	public TagParser(TagRepository tagRepository) {
+	public TagProcessor(TagRepository tagRepository) {
 		this.tagRepository = tagRepository;
 	}
 
