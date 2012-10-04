@@ -94,9 +94,8 @@ public class NewTag {
 	public void moveToTag(Tag tag) {
 		this.deleted = true;
 		
-		Tag revisedTag = tag.getRevisedTag();
 		for (Question each : questions) {
-			each.tag(revisedTag);
+			each.tag(tag);
 		}
 	}
 
