@@ -9,12 +9,13 @@
 <body>
 <div class="container-fluid">
 	<div class="row-fluid">
-		<div class="span10">
+		<div class="span6">
+			<h1>QnA</h1>
 			<div class="forumList">
 				<c:forEach items="${questions.content}" var="each">
 				<div class="forum">
 					<div class="list">
-						<a href="/questions/${each.questionId}"> <strong class="subject">${each.title}</strong>
+						<a href="/questions/${each.questionId}"> <strong class="subject">${each.title}&nbsp;[${each.answerCount}]</strong>
 						</a>
 						<div class="count">
 							<span class="tags">
@@ -22,51 +23,58 @@
 								<a href="/questions/tagged/${tag}"><strong>${tag}</strong></a>	
 								</c:forEach> 
 							</span> 
-							<span class="countAnswer">답변수 <strong>${each.answerCount}</strong></span>
+							<span class="countAnswer">
+								${each.writer.displayName}&nbsp;&nbsp;
+								<fmt:formatDate value="${each.createdDate}" pattern="yyyy-MM-dd HH:mm" />  
+							</span>
 						</div>
 					</div>
-					<div class="nickArea">${each.writer.displayName}</div>
-					<div class="regDate"><fmt:formatDate value="${each.createdDate}" pattern="yyyy-MM-dd HH:mm" /></div>
 				</div>					
 				</c:forEach>
 			</div>
-
+			
 			<div class="pagination pagination-centered">
 				<ul>
 					<sl:pager page="${questions}" prefixUri="/questions"/>
 				</ul>
 			</div>
-
+			
 			<div class="pull-right">
 				<a id="questionBtn" href="/questions/form" class="btn btn-primary btn-large pull-right">질문하기</a>
+			</div>				
+		</div>
+		
+		<div class="span2">
+			<div class="tags">
+				<ul>
+					<c:forEach items="${tags}" var="each">
+					<li><a href="/questions/tagged/${each.name}">${each.name}</a> X ${each.taggedCount}</li>	
+					</c:forEach>
+				</ul>
 			</div>
 		</div>
-
-		<slipp:tags tags="${tags}"/>
+		
+		<div class="span4">
+			<h1>Blog</h1>
+			<div class="forumList">
+			<c:forEach items="${pages}" var="page">
+				<div class="nickArea"> 
+					<p class='nick'>자바지기</p>
+					<p class="regDate">${page.creationDate}</p> 
+				</div>
+				<div class="cont">
+					<strong class="subject"><a href="/wiki/pages/viewpage.action?pageId=${page.pageId}">${page.title}</a></strong>
+					<div>${page.shortContents}</div>
+				</div>
+			</c:forEach>
+			</div>
+			<div class="forumTop">
+				<div class="rss">
+					<a href="http://feeds.feedburner.com/slipp"><img src="http://feeds.feedburner.com/~fc/slipp?bg=99CCFF&amp;fg=444444&amp;anim=0" height="26" width="88" style="border:0" alt="" /></a>
+				</div>
+			</div>
+		</div>		
 	</div>
 </div>
-<%--
-<div id="page">
-	<div id="content">
-		<div class="forumTop">
-			<div class="rss">
-				<a href="http://feeds.feedburner.com/slipp"><img src="http://feeds.feedburner.com/~fc/slipp?bg=99CCFF&amp;fg=444444&amp;anim=0" height="26" width="88" style="border:0" alt="" /></a>
-			</div>
-		</div>
-		<c:forEach items="${pages}" var="page">
-		<div class="forumView">
-			<div class="nickArea"> 
-				<p class='nick'>자바지기</p>
-				<p class="regDate">${page.creationDate}</p> 
-			</div>
-			<div class="cont">
-				<strong class="subject"><a href="/wiki/pages/viewpage.action?pageId=${page.pageId}">${page.title}</a></strong>
-				<div>${page.shortContents}</div>
-			</div>
-		</div>
-		</c:forEach>
-	</div>
-</div>
- --%>
 </body>
 </html>

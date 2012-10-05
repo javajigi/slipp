@@ -6,7 +6,7 @@ import java.sql.Timestamp;
 public class WikiPage implements Serializable {
 	private static final long serialVersionUID = 2244328207756692193L;
 
-	private static final int DEFAULT_SHORT_CONTENTS_LENGTH = 500;
+	private static final int DEFAULT_SHORT_CONTENTS_LENGTH = 150;
 	
 	private Long pageId;
 	private String title;
@@ -42,6 +42,6 @@ public class WikiPage implements Serializable {
 			return stripedContents;
 		}
 		
-		return stripedContents.substring(0, DEFAULT_SHORT_CONTENTS_LENGTH);
+		return stripedContents.substring(0, DEFAULT_SHORT_CONTENTS_LENGTH) + "...";
 	}
 }
