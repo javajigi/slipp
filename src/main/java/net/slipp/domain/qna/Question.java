@@ -216,7 +216,10 @@ public class Question implements HasCreatedAndUpdatedDate {
 		return deleted;
 	}
 	
-	public void delete() {
+	public void delete(SocialUser loginUser) {
+		if (!isWritedBy(loginUser)) {
+			throw new AccessDeniedException(loginUser + " is not owner!");
+		}
 		this.deleted = true;
 	}
 	

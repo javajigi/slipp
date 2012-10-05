@@ -31,21 +31,21 @@ public class QnaService {
 	@Resource(name = "tagService")
 	private TagService tagService;
 	
-	public void createQuestion(SocialUser loginUser, Question question) {
+	public void createQuestion(SocialUser loginUser, Question questionDto) {
 		Assert.notNull(loginUser, "loginUser should be not null!");
-		Assert.notNull(question, "question should be not null!");
+		Assert.notNull(questionDto, "question should be not null!");
 
-		Question newQuestion = Question.newQuestion(loginUser, question, tagRepository);
+		Question newQuestion = Question.newQuestion(loginUser, questionDto, tagRepository);
 		Question savedQuestion = questionRepository.save(newQuestion);
 		tagService.saveNewTag(loginUser, savedQuestion, newQuestion.getNewTags());
 	}
 
-	public void updateQuestion(SocialUser loginUser, Question newQuestion) {
+	public void updateQuestion(SocialUser loginUser, Question questionDto) {
 		Assert.notNull(loginUser, "loginUser should be not null!");
-		Assert.notNull(newQuestion, "question should be not null!");
+		Assert.notNull(questionDto, "question should be not null!");
 
-		Question question = questionRepository.findOne(newQuestion.getQuestionId());
-		question.update(loginUser, newQuestion, tagRepository);
+		Question question = questionRepository.findOne(questionDto.getQuestionId());
+		question.update(loginUser, questionDto, tagRepository);
 		tagService.saveNewTag(loginUser, question, question.getNewTags());
 	}
 
@@ -54,11 +54,7 @@ public class QnaService {
 		Assert.notNull(questionId, "questionId should be not null!");
 
 		Question question = questionRepository.findOne(questionId);
-		if (!question.isWritedBy(loginUser)) {
-			throw new AccessDeniedException(loginUser + " is not owner!");
-		}
-		question.delete();
-		questionRepository.save(question);
+		question.delete(loginUser);
 	}
 
 	public Page<Question> findsByTag(String name, Pageable pageable) {
