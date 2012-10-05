@@ -87,4 +87,8 @@ public class TagService {
 	public Tag findTagById(Long id) {
 		return tagRepository.findOne(id);
 	}
+	
+	public List<Tag> findsBySearch(String keyword) {
+		return tagRepository.findByNameLike(keyword + "%");
+	}
 }

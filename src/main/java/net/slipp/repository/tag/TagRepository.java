@@ -12,6 +12,6 @@ public interface TagRepository extends PagingAndSortingRepository<Tag, Long>{
 
 	List<Tag> findByNameLike(String name);
 
-	@Query("SELECT t FROM Tag t WHERE t.parent is null")
+	@Query("SELECT t FROM Tag t WHERE t.parent IS NULL ORDER BY t.taggedCount DESC")
 	List<Tag> findParents();
 }

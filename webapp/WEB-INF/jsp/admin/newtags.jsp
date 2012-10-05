@@ -6,7 +6,7 @@
 <link href="${url:resource('/stylesheets/boards.css')}" rel="stylesheet">
 </head>
 <body>
-	<slipp:header type="3" />
+	<slipp:header type="4" />
 
 	<div class="span8">
 		<table id="tags" class="table table-bordered">

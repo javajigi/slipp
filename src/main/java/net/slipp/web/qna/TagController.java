@@ -6,12 +6,18 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import net.slipp.domain.tag.Tag;
-import net.slipp.repository.tag.TagRepository;
+import net.slipp.domain.tag.TagService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -19,17 +25,36 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class TagController {
 	private static final Logger logger = LoggerFactory.getLogger(TagController.class);
 	
-	@Resource(name = "tagRepository")
-	private TagRepository tagRepository;
+	private static final int DEFAULT_PAGE_NO = 1;
+	private static final int DEFAULT_PAGE_SIZE = 20;
+
+	@Resource(name = "tagService")
+	private TagService tagService;
 	
 	@RequestMapping("/search")
 	public @ResponseBody List<TagForm> searchByTagName(String name) {
 		logger.debug("search tag by name : {}", name);
-		List<Tag> searchedTags = tagRepository.findByNameLike(name + "%");
+		List<Tag> searchedTags = tagService.findsBySearch(name);
 		List<TagForm> tags = new ArrayList<TagForm>();
 		for (Tag tag : searchedTags) {
             tags.add(new TagForm(tag.getName()));
         }
 		return tags;
+	}
+	
+	@RequestMapping(value = "", method = RequestMethod.GET)
+	public String tags(Integer page, ModelMap model) throws Exception {
+		model.addAttribute("tags", tagService.findTags(createPageable(page)));
+		model.addAttribute("parentTags", tagService.findParents());
+		return "tags/tags";
+	}
+	
+	Pageable createPageable(Integer page) {
+		if (page == null) {
+			page = DEFAULT_PAGE_NO;
+		}
+		Sort sort = new Sort(Direction.DESC, "tagId");
+		Pageable pageable = new PageRequest(page - 1, DEFAULT_PAGE_SIZE, sort);
+		return pageable;
 	}
 }

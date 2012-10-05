@@ -41,12 +41,12 @@
 						
 						<div class="form-actions">
 							<button type="submit" class="btn btn-primary">질문하기</button>
-							<a href="/questions"><button class="btn">목록보기</button></a>
+							<a href="/questions" class="btn">목록보기</a>
 						</div>
 					</fieldset>				
 				</form:form>
 			</div>
-			<slipp:tags tags="${tags}"/>
+			<slipp:side-tags tags="${tags}"/>
 		</div>
 	</div>
 <script src="http://ajax.microsoft.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>

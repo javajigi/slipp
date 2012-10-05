@@ -6,37 +6,10 @@
 <link href="${url:resource('/stylesheets/boards.css')}" rel="stylesheet">
 </head>
 <body>
-	<slipp:header type="2" />
+	<slipp:header type="3" />
 
 	<div class="span8">
-		<table id="tags" class="table table-bordered">
-			<thead>
-				<tr>
-					<th class="span2">아이디</th>
-					<th>이름</th>
-					<th class="span2">taggedCount</th>
-					<th>부모 태그</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach items="${tags.content}" var="each">
-				<tr>
-					<td>${each.tagId}</td>
-					<td>${each.name}</td>
-					<td>${each.taggedCount}</td>
-					<td>
-						<c:if test="${not empty each.parent}">
-						${each.parent.name}
-						</c:if>
-					</td>
-					<!-- 
-					<td><button class="btn btn-primary" href="#">수정</button>&nbsp;&nbsp;
-						<button class="btn btn-danger" href="#">삭제</button></td>
-					 -->
-				</tr>
-				</c:forEach>
-			</tbody>
-		</table>
+		<slipp:tags tags="${tags}"/>
 		
 		<div class="pagination pagination-centered">
 			<ul>

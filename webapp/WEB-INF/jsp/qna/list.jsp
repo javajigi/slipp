@@ -40,7 +40,7 @@
 				</div>
 			</div>
 
-			<slipp:tags tags="${tags}"/>
+			<slipp:side-tags tags="${tags}"/>
 		</div>
 	</div>
 </body>

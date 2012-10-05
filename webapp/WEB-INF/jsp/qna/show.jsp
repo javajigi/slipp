@@ -115,7 +115,7 @@
 				</sec:authorize>
 			</div>			
 
-			<slipp:tags tags="${tags}"/>
+			<slipp:side-tags tags="${tags}"/>
 		</div>
 	</div>
 <script src="http://ajax.microsoft.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>
