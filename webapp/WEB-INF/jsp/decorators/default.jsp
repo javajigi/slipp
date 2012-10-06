@@ -40,16 +40,16 @@
           <a class="brand" href="/">지속가능한 삶, 프로그래밍, 프로그래머(sustainable life, programming, programmer)</a>
           <div class="nav-collapse">
             <ul class="nav nav-pills pull-right">
-              <sec:authorize access="!hasRole('ROLE_USER')">
-              <li class="loginBtn"><a href="/login">로그인</a></li>
-              </sec:authorize>
-              <sec:authorize access="hasRole('ROLE_USER')">
-              <li class="logoutBtn"><a href="/logout">로그아웃</a></li>
-              </sec:authorize>
               <li><a href="${slippUrl}/questions">QnA</a></li>
               <li><a href="${slippUrl}/wiki">Wiki</a></li>
               <li><a href="${slippUrl}/code">Code</a></li>
               <li><a href="${slippUrl}/about">SLiPP.net</a></li>
+              <sec:authorize access="!hasRole('ROLE_USER')">
+              <li class="active loginBtn"><a href="/login">로그인</a></li>
+              </sec:authorize>
+              <sec:authorize access="hasRole('ROLE_USER')">
+              <li class="active logoutBtn"><a href="/logout">로그아웃</a></li>
+              </sec:authorize>              
             </ul>
           </div><!--/.nav-collapse -->
         </div>

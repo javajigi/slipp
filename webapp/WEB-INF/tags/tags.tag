@@ -4,9 +4,9 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 		<table id="tags" class="table table-bordered">
 			<thead>
 				<tr>
-					<th>이름</th>
-					<th class="span2">taggedCount</th>
-					<th>부모 태그</th>
+					<th class="span4">이름</th>
+					<th class="span2">태그된 질문 수</th>
+					<th class="span4">부모 태그</th>
 				</tr>
 			</thead>
 			<tbody>

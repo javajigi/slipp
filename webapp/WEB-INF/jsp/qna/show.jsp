@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/tags.jspf"%>
 <html>
 <head>
+<title>${sf:h(question.title)}</title>
 <link href="${url:resource('/stylesheets/boards.css')}" rel="stylesheet">
 <link href="${url:resource('/stylesheets/wiki-style.css')}" rel="stylesheet">
 <link href="${url:resource('/stylesheets/wiki-textile-style.css')}" rel="stylesheet">
@@ -24,7 +25,7 @@
 						<p class="regDate"><fmt:formatDate value="${question.createdDate}" pattern="yyyy-MM-dd HH:mm" /></p>
 					</div>
 					<div class="contents">
-						<strong class="subject">${question.title}</strong>
+						<strong class="subject">${sf:h(question.title)}</strong>
 						<div>${sf:wiki(question.contents, slippUrl)}</div>
 					</div>
 					<div class="follow">

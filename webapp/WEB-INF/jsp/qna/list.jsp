@@ -12,7 +12,7 @@
 					<c:forEach items="${questions.content}" var="each">
 					<div class="forum">
 						<div class="list">
-							<a href="/questions/${each.questionId}"> <strong class="subject">${each.title}</strong>
+							<a href="/questions/${each.questionId}"> <strong class="subject">${sf:h(each.title)}</strong>
 							</a>
 							<div class="count">
 								<span class="tags">

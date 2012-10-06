@@ -15,7 +15,7 @@
 				<c:forEach items="${questions.content}" var="each">
 				<div class="forum">
 					<div class="list">
-						<a href="/questions/${each.questionId}"> <strong class="subject">${each.title}&nbsp;[${each.answerCount}]</strong>
+						<a href="/questions/${each.questionId}"> <strong class="subject">${sf:h(each.title)}&nbsp;[${each.answerCount}]</strong>
 						</a>
 						<div class="count">
 							<span class="tags">
@@ -51,7 +51,6 @@
 			<div class="forumList">
 			<c:forEach items="${pages}" var="page">
 				<div class="nickArea"> 
-					<p class='nick'>자바지기</p>
 					<p class="regDate">${page.creationDate}</p> 
 				</div>
 				<div class="cont">
