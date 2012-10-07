@@ -18,12 +18,6 @@
 		<jpametamodel.generated.dir>${basedir}/target/generated-sources/jpametamodel</jpametamodel.generated.dir>
 		<acceptance.test.dir>${basedir}/src/acceptance-test/java</acceptance.test.dir>
 	</properties>
-	<repositories>
-		<repository>
-			<id>opensourceagility-snapshots</id>
-			<url>https://github.com/OpenSourceAgility/opensourceagility-mvn-repo/raw/master/snapshots</url>
-		</repository>
-	</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.social</groupId>
@@ -361,25 +355,46 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>com.carbonfive.db-support</groupId>
+				<artifactId>db-migration-maven-plugin</artifactId>
+				<version>0.9.9-m5</version>
+				<executions>
+					<execution>
+						<phase>test-compile</phase>
+						<goals>
+							<goal>migrate</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<driver>com.mysql.jdbc.Driver</driver>
+					<url>${database.url}</url>
+					<username>${database.username}</username>
+					<password>${database.password}</password>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>mysql</groupId>
+						<artifactId>mysql-connector-java</artifactId>
+						<version>5.1.18</version>
+					</dependency>
+				</dependencies>
+			</plugin>			
 		</plugins>
 	</build>
-	<profiles>
-		<profile>
-			<id>development</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<properties>
-				<environment>development</environment>
-			</properties>
-		</profile>
-		<profile>
-			<id>production</id>
-			<properties>
-				<environment>production</environment>
-			</properties>
-		</profile>
-	</profiles>
+	<repositories>
+		<repository>
+			<id>opensourceagility-snapshots</id>
+			<url>https://github.com/OpenSourceAgility/opensourceagility-mvn-repo/raw/master/snapshots</url>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+	    <pluginRepository>
+	        <id>c5-public-repository</id>
+	        <url>http://mvn.carbonfive.com/public</url>
+	    </pluginRepository>
+	</pluginRepositories>
 	<reports>
 		<report>maven-emma-plugin</report>
 		<report>maven-pmd-plugin</report>
