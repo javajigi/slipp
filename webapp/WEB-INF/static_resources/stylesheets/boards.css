@@ -16,7 +16,7 @@
 .forumList .count .countAnswer strong { color:#fe6e5f; font-size:14px }
 
 /* forum view */
-.forumView { float:left; width:95%; height:auto; border-top:3px solid #6f6f6f; margin-top:24px; padding:10px 24px 0px 15px }
+.forumView { float:left; width:95%; height:auto; border-top:3px solid #6f6f6f; padding:10px 24px 0px 15px }
 .forumView .nickArea { float:left; width:100%; border-bottom:1px solid #6f6f6f;}
 .forumView .nick { float:left; color:#4f4b4b }
 .forumView .regDate { float:right; font-size:14px; font-family:verdana; }

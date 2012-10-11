@@ -17,7 +17,7 @@
 				<c:if test="${not empty question.questionId}">
 				<c:set var="method" value="PUT" />
 				</c:if>
-				<form:form modelAttribute="question" cssClass="form-horizontal" action="/questions" method="${method}">
+				<form:form modelAttribute="question" cssClass="form-horizontal forumView" action="/questions" method="${method}">
 					<form:hidden path="questionId"/>
 					<fieldset>
 						<div class="control-group">
