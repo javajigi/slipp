@@ -8,6 +8,8 @@ import javax.annotation.Resource;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.domain.user.SocialUserService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -16,6 +18,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 public class SlippUserDetailsService implements UserDetailsService {
+	private static Logger logger = LoggerFactory.getLogger(SlippUserDetailsService.class);
+	
+	private static final String DEFAULT_ADMIN_USERNAME = "자바지기";
+	
 	@Resource(name = "socialUserService")
 	private SocialUserService socialUserService;
 
@@ -30,9 +36,10 @@ public class SlippUserDetailsService implements UserDetailsService {
 	}
 
 	private List<GrantedAuthority> createGrantedAuthorities(String username) {
+		logger.debug("UserName : {}", username);
 		List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
 		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-		if ("javajigi".equals(username)){
+		if (DEFAULT_ADMIN_USERNAME.equals(username)){
 			grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMINISTRATOR"));
 		}
 		return grantedAuthorities;

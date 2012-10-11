@@ -21,7 +21,7 @@
 			</thead>
 			<tbody>
 				<c:forEach items="${newtags.content}" var="each">
-				<tr>
+				<tr <c:if test="${each.deleted}">style="background-color:orange"</c:if>>
 					<td>${each.tagId}</td>
 					<td>${each.name}</td>
 					<td>${each.taggedCount}</td>
