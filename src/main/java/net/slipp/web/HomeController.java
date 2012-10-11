@@ -31,7 +31,7 @@ public class HomeController {
 	
 	@RequestMapping("/")
 	public String home(Model model) {
-		model.addAttribute("pages", wikiService.findWikiPages());
+		// model.addAttribute("pages", wikiService.findWikiPages());
 		model.addAttribute("questions", qnaService.findsQuestion(createPageable()));
 		model.addAttribute("tags", qnaService.findsTag());		
 		return "index";

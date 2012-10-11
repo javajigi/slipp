@@ -37,7 +37,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="/">지속가능한 삶, 프로그래밍, 프로그래머(sustainable life, programming, programmer)</a>
+          <a class="brand" href="/">지속가능한 삶, 프로그래밍, 프로그래머</a>
           <div class="nav-collapse">
             <ul class="nav nav-pills pull-right">
               <li><a href="${slippUrl}/questions">QnA</a></li>

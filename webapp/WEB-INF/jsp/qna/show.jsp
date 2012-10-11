@@ -21,7 +21,7 @@
 			<div class="span10">
 				<div class="forumView">
 					<div class="nickArea">
-						<p class='nick'><img src='${question.writer.imageUrl}'/>&nbsp;&nbsp;${question.writer.displayName}</p>
+						<p class='nick'><img src='${question.writer.imageUrl}'/>&nbsp;&nbsp;${question.writer.userId}</p>
 						<p class="regDate"><fmt:formatDate value="${question.createdDate}" pattern="yyyy-MM-dd HH:mm" /></p>
 					</div>
 					<div class="contents">
@@ -43,7 +43,7 @@
 						<div class="facebook">
 							<div id="fb-root"></div>
 							<script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>
-							<fb:like href="http://www.slipp.net/threads/{thread.id}"
+							<fb:like href="http://www.slipp.net/questions/${question.questionId}"
 								send="true" layout="button_count" width="100" show_faces="true"
 								font=""></fb:like>
 						</div>
@@ -58,7 +58,7 @@
 						</div>
 						<div class="me2day">
 							<a
-								href="http://me2day.net/posts/new?new_post[body]=&quot;{thread.title}&quot;:http://www.slipp.net/threads/{thread.id}"
+								href="http://me2day.net/posts/new?new_post[body]=&quot;${question.title}&quot;:http://www.slipp.net/questions/${question.questionId}"
 								onclick="window.open(this.href,'me2day_post', 'width=1024,height=364,scrollbars=1,resizable=1');return false;"><img
 								src="/resources/images/me2day.gif" alt="미투데이로 보내기" /></a>
 						</div>

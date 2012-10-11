@@ -31,12 +31,12 @@
 .follow .count { float:right; margin:2px 0 0 10px; color:#4b4b4b; }
 .follow .count strong { color:#fe6b12; }
 
-.snsIcon { width:75%; float:left; margin:5px 0 10px 0;}
+.snsIcon { width:73%; float:left; margin:5px 0 10px 0;}
 .snsIcon .twitter { float:left; }
 .snsIcon .googleplus { float:left; }
 .snsIcon .facebook { float:left; }
 
-.button-qna { width:25%; float:right; margin:5px 0 10px 0;}
+.button-qna { width:27%; float:right; margin:5px 0 10px 0;}
 
 .comment { width:885px; height:auto; overflow:hidden; border:1px solid #e2e2e2; padding:0 24px 0 19px; }
 .comment .commentList { float:left; width:885px; height:auto; overflow:hidden; padding:20px 0 20px 0; border-bottom:1px solid #e2e2e2; margin-bottom:-1px; }

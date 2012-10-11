@@ -72,6 +72,10 @@ public class QnaService {
 	public Iterable<Tag> findsTag() {
 		return tagRepository.findParents();
 	}
+	
+	public Tag findTagByName(String name) {
+		return tagRepository.findByName(name);
+	}
 
 	public void createAnswer(SocialUser user, Long questionId, Answer answer) {
 		Question question = questionRepository.findOne(questionId);

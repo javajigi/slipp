@@ -20,7 +20,7 @@ public class WebServerLauncher {
 	}
 
 	private static int getPort(String[] args) {
-		int port = 8080;
+		int port = 3030;
 		if (args.length == 1) {
 			port = Integer.parseInt(args[0]);
 		}

@@ -93,6 +93,7 @@ public class QuestionController {
 	@RequestMapping("/tagged/{name}")
 	public String listByTagged(@PathVariable String name, Integer page, Model model) {
 		page = revisedPage(page);
+		model.addAttribute("currentTag", qnaService.findTagByName(name));
 		model.addAttribute("questions", qnaService.findsByTag(name, createPageable(page)));
 		model.addAttribute("tags", qnaService.findsTag());
 		return "qna/list";

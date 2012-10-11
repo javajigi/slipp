@@ -8,6 +8,8 @@
 <link href="${url:resource('/stylesheets/jquery.autocomplete.css')}" rel="stylesheet">
 </head>
 <body>
+	<slipp:header type="1"/>
+	
 	<div class="container-fluid">
 		<div class="row-fluid">
 			<div class="span10">
@@ -18,7 +20,6 @@
 				<form:form modelAttribute="question" cssClass="form-horizontal" action="/questions" method="${method}">
 					<form:hidden path="questionId"/>
 					<fieldset>
-						<legend>SLiPP Q&A 질문하기</legend>
 						<div class="control-group">
 							<label class="control-label" for="title">제목</label>
 							<div class="controls">

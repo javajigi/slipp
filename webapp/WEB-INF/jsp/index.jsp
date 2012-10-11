@@ -10,7 +10,7 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="span6">
-			<h1>QnA</h1>
+			<h1><a href="/questions">QnA</a></h1>
 			<div class="forumList">
 				<c:forEach items="${questions.content}" var="each">
 				<div class="forum">
@@ -24,7 +24,7 @@
 								</c:forEach> 
 							</span> 
 							<span class="countAnswer">
-								${each.writer.displayName}&nbsp;&nbsp;
+								${each.writer.userId}&nbsp;&nbsp;
 								<fmt:formatDate value="${each.createdDate}" pattern="yyyy-MM-dd HH:mm" />  
 							</span>
 						</div>
@@ -47,7 +47,7 @@
 		<slipp:side-tags tags="${tags}"/>
 		
 		<div class="span4">
-			<h1>Blog</h1>
+			<h1><a href="/wiki">Blog</a></h1>
 			<div class="forumList">
 			<c:forEach items="${pages}" var="page">
 				<div class="nickArea"> 

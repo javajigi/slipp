@@ -36,11 +36,12 @@ public class TagPopulator {
 			tagRepository.save(new Tag("자바스크립트", javascript));
 			Tag eclipse = tagRepository.save(new Tag("eclipse"));
 			tagRepository.save(new Tag("이클립스", eclipse));
-			Tag ant = tagRepository.save(new Tag("ant"));
-			tagRepository.save(new Tag("앤트", ant));
 			Tag maven = tagRepository.save(new Tag("maven"));
 			tagRepository.save(new Tag("메이븐", maven));
 			tagRepository.save(new Tag("sql"));
+			Tag database = tagRepository.save(new Tag("database"));
+			tagRepository.save(new Tag("데이터베이스", database));
+			tagRepository.save(new Tag("db", database));
 			Tag agile = tagRepository.save(new Tag("agile"));
 			tagRepository.save(new Tag("애자일", agile));
 			tagRepository.save(new Tag("git"));
