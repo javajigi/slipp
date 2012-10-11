@@ -10,13 +10,13 @@
 	
 	<!-- Database -->
 	<entry key="database.driverClassName">com.mysql.jdbc.Driver</entry>
-	<entry key="database.url">jdbc:mysql://127.0.0.1/slipp?useUnicode=yes&amp;characterEncoding=UTF-8</entry>
+	<entry key="database.url">jdbc:mysql://127.0.0.1/slipp?uniCode=true&amp;characterEncoding=utf8</entry>
 	<entry key="database.username">username</entry>
 	<entry key="database.password">password</entry>
 	
 	<!-- WikiDatabase -->
 	<entry key="wiki.database.driverClassName">com.mysql.jdbc.Driver</entry>
-	<entry key="wiki.database.url">jdbc:mysql://127.0.0.1/wiki?useUnicode=yes&amp;characterEncoding=UTF-8</entry>
+	<entry key="wiki.database.url">jdbc:mysql://127.0.0.1/wiki?uniCode=true&amp;characterEncoding=utf8</entry>
 	<entry key="wiki.database.username">username</entry>
 	<entry key="wiki.database.password">password</entry>	
 	
