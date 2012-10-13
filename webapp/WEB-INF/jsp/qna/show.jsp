@@ -21,7 +21,7 @@
 			<div class="span10">
 				<div class="forumView">
 					<div class="nickArea">
-						<p class='nick'><img src='${question.writer.imageUrl}'/>&nbsp;&nbsp;<a href="${each.writer.homeUrl}">${question.writer.userId}</a></p>
+						<p class='nick'><img src='${question.writer.imageUrl}' width="50" height="50" />&nbsp;&nbsp;<a href="${each.writer.profileUrl}">${question.writer.userId}</a></p>
 						<p class="regDate"><fmt:formatDate value="${question.createdDate}" pattern="yyyy-MM-dd HH:mm" /></p>
 					</div>
 					<div class="contents">
@@ -79,9 +79,9 @@
 					<c:forEach items="${question.answers}" var="each">
 					<div class="commentList">
 						<div class="nickArea">
-							<p class='prphoto'><img src='${each.writer.imageUrl}'/></p>
+							<p class='prphoto'><img src='${each.writer.imageUrl}' /></p>
 							<div class="nickname">
-								<div class="tester"><span class='lv'><a href="${each.writer.homeUrl}">${each.writer.userId}</a></span></div>
+								<div class="tester"><span class='lv'><a href="${each.writer.profileUrl}">${each.writer.userId}</a></span></div>
 							</div>
 						</div>
 						<div class="list">

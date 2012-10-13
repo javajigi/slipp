@@ -23,7 +23,7 @@
 								<span class="countAnswer">답변수 <strong>${each.answerCount}</strong></span>
 							</div>
 						</div>
-						<div class="nickArea"><a href="${each.writer.homeUrl}">${each.writer.userId}</a></div>
+						<div class="nickArea"><a href="${each.writer.profileUrl}">${each.writer.userId}</a></div>
 						<div class="regDate"><fmt:formatDate value="${each.createdDate}" pattern="yyyy-MM-dd HH:mm" /></div>
 					</div>					
 					</c:forEach>

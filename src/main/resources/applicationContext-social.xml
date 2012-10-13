@@ -31,9 +31,15 @@
 		<constructor-arg value="${twitter.consumerSecret}" />
 	</bean>
 	
+	<bean id="googleConnectionFactory" class="org.springframework.social.google.connect.GoogleConnectionFactory">
+		<constructor-arg value="${google.clientId}" />
+		<constructor-arg value="${google.clientSecret}" />
+	</bean>	
+	
 	<util:list id="connectionFactories">
 		<ref local="facebookConnectionFactory"/>
 		<ref local="twitterConnectionFactory"/>
+		<ref local="googleConnectionFactory"/>
 	</util:list>
 	
 	<bean id="connectionFactoryRegistry" class="org.springframework.social.connect.support.ConnectionFactoryRegistry"

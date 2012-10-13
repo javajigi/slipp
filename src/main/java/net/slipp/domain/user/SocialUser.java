@@ -15,9 +15,6 @@ import javax.persistence.UniqueConstraint;
 		@UniqueConstraint(columnNames = { "userId", "providerId", "providerUserId" }),
         @UniqueConstraint(columnNames = { "userId", "providerId", "rank" })})
 public class SocialUser {
-	private static final String FACEBOOK_URL = "http://www.facebook.com/";
-	private static final String TWITTER_URL = "https://twitter.com/";
-	
     public static final SocialUser GUEST_USER = new GuestSocialUser();
     
 	@Id
@@ -176,14 +173,6 @@ public class SocialUser {
     	
 		return this.id == socialUser.id;
 	}
-    
-    public String getHomeUrl() {
-    	if ("facebook".equals(getProviderId())) {
-    		return FACEBOOK_URL + getDisplayName();
-    	} else {
-    		return TWITTER_URL + getDisplayName();
-    	}
-    }
     
     static class GuestSocialUser extends SocialUser {
         @Override
