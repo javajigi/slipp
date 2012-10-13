@@ -21,26 +21,17 @@
 					<form:hidden path="questionId"/>
 					<fieldset>
 						<div class="control-group">
-							<label class="control-label" for="title">제목</label>
-							<div class="controls">
-								<form:input path="title" cssClass="input-xlarge focused span7"/>
-							</div>
+							제목 : <form:input path="title" cssClass="input-xlarge focused span7"/>
 						</div>
 						<div class="control-group">
-							<label class="control-label">내용</label>
-							<div class="controls">
-								<form:textarea path="contents" cssClass="input-xlarge span7" cols="75" rows="15"/>
-							</div>
+							<form:textarea path="contents" cols="80" rows="15"/>
 						</div>
 						<div class="control-group">
-							<label class="control-label">태그</label>
-							<div class="controls">
-								<form:input path="plainTags" cssClass="input-xlarge focused span7"/><br/>
-								태그 구분자로 공백 또는 쉼표(,)를 사용할 수 있습니다.
-							</div>
+							태그 : <form:input path="plainTags" cssClass="input-xlarge focused span7"/><br/>
+							태그 구분자로 공백 또는 쉼표(,)를 사용할 수 있습니다.
 						</div>
 						
-						<div class="form-actions">
+						<div class="pull-right">
 							<button type="submit" class="btn btn-primary">질문하기</button>
 							<a href="/questions" class="btn">목록보기</a>
 						</div>

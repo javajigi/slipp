@@ -64,3 +64,7 @@
 	padding: 5px 0 5px 0;
 	border-bottom: 1px dashed #D1D1D1;
 }
+
+label.error {
+  color:orange;
+}

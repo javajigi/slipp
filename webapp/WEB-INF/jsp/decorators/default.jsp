@@ -7,9 +7,9 @@
     <title><decorator:title default="SLiPP"/></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="author" content="자바지기">
     
-    <!-- Le styles -->
+    <link rel="shortcut icon" type="image/x-icon" href="${url:resource('/images/favicon.ico')}">
     <link href="${url:resource('/stylesheets/bootstrap.css')}" rel="stylesheet">
     <style>
       body {
@@ -42,6 +42,7 @@
             <ul class="nav nav-pills pull-right">
               <li><a href="${slippUrl}/questions">QnA</a></li>
               <li><a href="${slippUrl}/wiki">Wiki</a></li>
+              <li><a href="https://github.com/javajigi/slipp/issues">Issues</a></li>
               <li><a href="${slippUrl}/code">Code</a></li>
               <li><a href="${slippUrl}/about">SLiPP.net</a></li>
               <sec:authorize access="!hasRole('ROLE_USER')">

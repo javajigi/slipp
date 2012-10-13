@@ -21,7 +21,7 @@
 			<div class="span10">
 				<div class="forumView">
 					<div class="nickArea">
-						<p class='nick'><img src='${question.writer.imageUrl}'/>&nbsp;&nbsp;${question.writer.userId}</p>
+						<p class='nick'><img src='${question.writer.imageUrl}'/>&nbsp;&nbsp;<a href="${each.writer.homeUrl}">${question.writer.userId}</a></p>
 						<p class="regDate"><fmt:formatDate value="${question.createdDate}" pattern="yyyy-MM-dd HH:mm" /></p>
 					</div>
 					<div class="contents">
@@ -81,7 +81,7 @@
 						<div class="nickArea">
 							<p class='prphoto'><img src='${each.writer.imageUrl}'/></p>
 							<div class="nickname">
-								<div class="tester"><span class='lv'>${each.writer.displayName}</span></div>
+								<div class="tester"><span class='lv'><a href="${each.writer.homeUrl}">${each.writer.userId}</a></span></div>
 							</div>
 						</div>
 						<div class="list">
@@ -105,11 +105,11 @@
 				</div>	
 				</sec:authorize>
 				<sec:authorize access="hasRole('ROLE_USER')">
-				<div class="form">
+				<div class="form pull-right">
 					<form:form modelAttribute="answer" action="/questions/${question.questionId}/answers" method="POST">
 						<form:textarea path="contents"  cols="75" rows="5"/>
 						<div class="button">
-							<button type="submit" class="btn btn-primary">답변하기</button>
+							<button type="submit" class="btn btn-primary pull-right">답변하기</button>
 						</div>					
 					</form:form>
 				</div>				

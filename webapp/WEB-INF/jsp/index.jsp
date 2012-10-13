@@ -24,7 +24,7 @@
 								</c:forEach> 
 							</span> 
 							<span class="countAnswer">
-								${each.writer.userId}&nbsp;&nbsp;
+								<a href="${each.writer.homeUrl}">${each.writer.userId}</a>&nbsp;&nbsp;
 								<fmt:formatDate value="${each.createdDate}" pattern="yyyy-MM-dd HH:mm" />  
 							</span>
 						</div>

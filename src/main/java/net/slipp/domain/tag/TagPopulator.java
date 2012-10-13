@@ -31,6 +31,8 @@ public class TagPopulator {
 			Tag hibernate = tagRepository.save(new Tag("hibernate"));
 			tagRepository.save(new Tag("하이버네이트", hibernate));
 			tagRepository.save(new Tag("mybatis"));
+			Tag web = tagRepository.save(new Tag("web"));
+			tagRepository.save(new Tag("웹", web));
 			Tag javascript = tagRepository.save(new Tag("javascript"));
 			tagRepository.save(new Tag("jquery"));
 			tagRepository.save(new Tag("자바스크립트", javascript));
