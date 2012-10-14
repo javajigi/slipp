@@ -5,10 +5,6 @@
   <head>
     <meta charset="utf-8">
     <title><decorator:title default="SLiPP"/></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="자바지기">
-    
     <link rel="shortcut icon" type="image/x-icon" href="${url:resource('/images/favicon.ico')}">
     <link href="${url:resource('/stylesheets/bootstrap.css')}" rel="stylesheet">
     <style>
