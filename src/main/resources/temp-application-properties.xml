@@ -34,6 +34,9 @@
 	<entry key="facebook.clientId">client</entry>
 	<entry key="facebook.clientSecret">clientSecret</entry>
 	
+	<entry key="google.clientId">clientId</entry>
+	<entry key="google.clientSecret">clientSecret</entry>	
+	
 	<entry key="naver.consumerKey">consumerKey</entry>	
 	<entry key="naver.consumerSecret">consumerSecret</entry>
 
