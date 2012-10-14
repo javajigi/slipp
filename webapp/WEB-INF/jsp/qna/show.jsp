@@ -101,6 +101,7 @@
 				</div>
 				<sec:authorize access="!hasRole('ROLE_USER')">
 				<div class="pull-right">
+					<p></p>
 					<a href="/login"><input class="btn btn-primary" type="button" value="로그인" /></a>을 하면 이 글에 대한 답글을 쓸 수 있습니다.
 				</div>	
 				</sec:authorize>
