@@ -79,7 +79,7 @@ public class QuestionController {
 
 	@RequestMapping("{id}")
 	public String show(@PathVariable Long id, Model model) {
-		model.addAttribute("question", qnaService.findByQuestionId(id));
+		model.addAttribute("question", qnaService.showQuestion(id));
 		model.addAttribute("answer", new Answer());
 		model.addAttribute("tags", qnaService.findsTag());
 		return "qna/show";

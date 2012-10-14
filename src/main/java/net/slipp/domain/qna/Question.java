@@ -223,6 +223,10 @@ public class Question implements HasCreatedAndUpdatedDate {
 		this.deleted = true;
 	}
 	
+	public void show() {
+		this.showCount += 1;
+	}
+	
 	public void newAnswered() {
 		this.answerCount += 1;
 	}

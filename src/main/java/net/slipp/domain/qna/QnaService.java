@@ -56,6 +56,13 @@ public class QnaService {
 		Question question = questionRepository.findOne(questionId);
 		question.delete(loginUser);
 	}
+	
+	public Question showQuestion(Long id) {
+		Question question = questionRepository.findOne(id);
+		question.show();
+		
+		return question;
+	}
 
 	public Page<Question> findsByTag(String name, Pageable pageable) {
 		return questionRepository.findsByTag(name, pageable);
