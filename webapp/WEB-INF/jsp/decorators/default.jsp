@@ -42,7 +42,7 @@
             <ul class="nav nav-pills pull-right">
               <li><a href="${slippUrl}/questions">QnA</a></li>
               <li><a href="${slippUrl}/wiki">Wiki</a></li>
-              <li><a href="https://github.com/javajigi/slipp/issues" target="_blank">Issues</a></li>
+              <li><a href="https://github.com/javajigi/slipp/issues" target="_blank">Ideas&Bugs</a></li>
               <li><a href="${slippUrl}/code">Code</a></li>
               <li><a href="${slippUrl}/about">SLiPP.net</a></li>
               <sec:authorize access="!hasRole('ROLE_USER')">

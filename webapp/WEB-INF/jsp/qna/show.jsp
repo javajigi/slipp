@@ -65,10 +65,10 @@
 					</div>
 					<div class="button-qna">
 						<c:if test="${sf:isWriter(question.writer, loginUser)}">
-						<a href="/questions/${question.questionId}/form"><button class="btn">수정하기</button></a>
-						<a id="deleteQuestionBtn" href="#"><button class="btn">삭제하기</button></a>
+						<a href="/questions/${question.questionId}/form"><button class="btn btn-primary">수정하기</button></a>
+						<a id="deleteQuestionBtn" href="#"><button class="btn btn-primary">삭제하기</button></a>
 						</c:if>
-						<a href="/questions"><button class="btn">목록으로</button></a>				
+						<a href="/questions"><button class="btn pull-right">목록으로</button></a>				
 					</div>
 					<form id="deleteQuestionForm" action="/questions/${question.questionId}" method="POST">
 						<input type="hidden" name="_method" value="DELETE" />
