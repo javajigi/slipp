@@ -85,7 +85,7 @@
 							</div>
 						</div>
 						<div class="list">
-							<div class="cont">${sf:br(each.contents)}</div>
+							<div class="cont">${sf:wiki(each.contents, slippUrl)}</div>
 							<div class="regDate"><fmt:formatDate value="${each.createdDate}" pattern="yyyy-MM-dd HH:mm" /></div>
 						</div>
 						<div class="commBtn">

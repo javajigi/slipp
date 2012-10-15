@@ -8,13 +8,10 @@ import org.eclipse.mylyn.internal.wikitext.confluence.core.block.ExtendedPreform
 import org.eclipse.mylyn.internal.wikitext.confluence.core.block.ExtendedQuoteBlock;
 import org.eclipse.mylyn.internal.wikitext.confluence.core.block.HeadingBlock;
 import org.eclipse.mylyn.internal.wikitext.confluence.core.block.ListBlock;
-import org.eclipse.mylyn.internal.wikitext.confluence.core.block.QuoteBlock;
-import org.eclipse.mylyn.internal.wikitext.confluence.core.block.TableBlock;
 import org.eclipse.mylyn.internal.wikitext.confluence.core.block.TableOfContentsBlock;
 import org.eclipse.mylyn.internal.wikitext.confluence.core.block.TextBoxBlock;
 import org.eclipse.mylyn.internal.wikitext.confluence.core.phrase.ConfluenceWrappedPhraseModifier;
 import org.eclipse.mylyn.internal.wikitext.confluence.core.phrase.EmphasisPhraseModifier;
-import org.eclipse.mylyn.internal.wikitext.confluence.core.phrase.HyperlinkPhraseModifier;
 import org.eclipse.mylyn.internal.wikitext.confluence.core.phrase.SimplePhraseModifier;
 import org.eclipse.mylyn.internal.wikitext.confluence.core.phrase.SimpleWrappedPhraseModifier;
 import org.eclipse.mylyn.internal.wikitext.confluence.core.token.AnchorReplacementToken;
@@ -62,14 +59,6 @@ public class SlippLanguage extends AbstractMarkupLanguage {
 		blocks.add(listBlock);
 		paragraphBreakingBlocks.add(listBlock);
 		nestedBlocks.add(listBlock);
-		blocks.add(new QuoteBlock());
-		TableBlock tableBlock = new TableBlock();
-		blocks.add(tableBlock);
-		paragraphBreakingBlocks.add(tableBlock);
-		nestedBlocks.add(tableBlock);
-		ExtendedQuoteBlock quoteBlock = new ExtendedQuoteBlock();
-		blocks.add(quoteBlock);
-		paragraphBreakingBlocks.add(quoteBlock);
 		ExtendedPreformattedBlock noformatBlock = new ExtendedPreformattedBlock();
 		blocks.add(noformatBlock);
 		paragraphBreakingBlocks.add(noformatBlock);
@@ -91,7 +80,6 @@ public class SlippLanguage extends AbstractMarkupLanguage {
 	@Override
 	protected void addStandardPhraseModifiers(PatternBasedSyntax phraseModifierSyntax) {
 		phraseModifierSyntax.beginGroup("(?:(?<=[\\s\\.,\\\"'?!;:\\)\\(\\[\\]])|^)(?:", 0); //$NON-NLS-1$
-		phraseModifierSyntax.add(new HyperlinkPhraseModifier());
 		phraseModifierSyntax.add(new SimplePhraseModifier("*", SpanType.STRONG, true)); //$NON-NLS-1$
 		phraseModifierSyntax.add(new EmphasisPhraseModifier());
 		phraseModifierSyntax.add(new SimplePhraseModifier("??", SpanType.CITATION, true)); //$NON-NLS-1$

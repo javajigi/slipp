@@ -101,7 +101,6 @@ public class SlippImagePhraseModifier extends PatternBasedElement {
 		}
 
 		private String createImageUrl() {
-			// return "http://" + Play.configuration.getProperty("domain.uploader") + "/attaches/" + group(CONTENT_GROUP);
 			return null;
 		}
 	}
