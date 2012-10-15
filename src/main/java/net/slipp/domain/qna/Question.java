@@ -91,7 +91,7 @@ public class Question implements HasCreatedAndUpdatedDate {
 	private String plainTags;
 
 	@OneToMany(mappedBy = "question", fetch = FetchType.LAZY)
-	@OrderBy("answerId DESC")
+	@OrderBy("answerId ASC")
 	private List<Answer> answers;
 	
 	@Column(name = "deleted", nullable = false)
