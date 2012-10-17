@@ -10,6 +10,7 @@ import net.slipp.domain.qna.Question_;
 import net.slipp.domain.wiki.WikiPage;
 import net.slipp.domain.wiki.WikiService;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -23,6 +24,9 @@ public class HomeController {
 	private static final int DEFAULT_PAGE_NO = 0;
 	private static final int DEFAULT_PAGE_SIZE = 15;	
 	
+	@Value("#{applicationProperties['environment']}")
+	private String environment;
+	
 	@Resource(name="wikiService")
 	private WikiService wikiService;
 	
@@ -31,10 +35,16 @@ public class HomeController {
 	
 	@RequestMapping("/")
 	public String home(Model model) {
-		model.addAttribute("pages", wikiService.findWikiPages());
+		if (isProductionMode()) {
+			model.addAttribute("pages", wikiService.findWikiPages());			
+		}
 		model.addAttribute("questions", qnaService.findsQuestion(createPageable()));
 		model.addAttribute("tags", qnaService.findsTag());		
 		return "index";
+	}
+
+	private boolean isProductionMode() {
+		return "PRODUCTION".equals(environment);
 	}
 	
 	private Pageable createPageable() {
