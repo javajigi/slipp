@@ -34,4 +34,11 @@ public class SlippWikiUtilsTest {
 		String actual = SlippWikiUtils.convertTabToSpace(contents);
 		logger.debug("converted contents : {}", actual);
 	}
+	
+	@Test
+	public void convert() throws Exception {
+		String contents = TestFileReader.read(this, "text.txt");
+		String actual = WikiContents.convert(contents);
+		logger.debug("convert contents : {}", actual);
+	}
 }

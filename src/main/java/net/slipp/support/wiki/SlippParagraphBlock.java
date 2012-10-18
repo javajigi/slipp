@@ -3,16 +3,20 @@ package net.slipp.support.wiki;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.eclipse.mylyn.wikitext.confluence.core.ConfluenceLanguage;
 import org.eclipse.mylyn.wikitext.core.parser.Attributes;
 import org.eclipse.mylyn.wikitext.core.parser.DocumentBuilder.BlockType;
-import org.eclipse.mylyn.wikitext.core.parser.markup.AbstractMarkupLanguage;
 import org.eclipse.mylyn.wikitext.core.parser.markup.Block;
+import org.eclipse.mylyn.wikitext.core.parser.markup.MarkupLanguage;
 
 public class SlippParagraphBlock extends Block {
 
-	private static final Pattern confluenceBlockStart = Pattern.compile("\\{(code|info|tip|warning|panel|note|toc|color|noformat|quests)(?:(:[^\\}]*))?\\}"); //$NON-NLS-1$
+	private static final Pattern confluenceBlockStart = Pattern.compile("\\{(code|info|tip|warning|panel|note|toc|noformat)(?:(:[^\\}]*))?\\}"); //$NON-NLS-1$
 
 	private int blockLineCount = 0;
+
+	public SlippParagraphBlock() {
+	}
 
 	@Override
 	public int processLineContent(String line, int offset) {
@@ -29,17 +33,14 @@ public class SlippParagraphBlock extends Block {
 
 		++blockLineCount;
 
-		
-		AbstractMarkupLanguage markupLanguage = (AbstractMarkupLanguage) getMarkupLanguage();
+		SlippLanguage markupLanguage = (SlippLanguage) getMarkupLanguage();
 
 		// NOTE: in Confluence paragraphs can have nested lists and other things, however
 		//       the resulting XHTML is invalid -- so here we allow for similar constructs
 		//       however we cause them to end the paragraph rather than being nested.
-		for (Block block : markupLanguage.getParagraphBreakingBlocks()) {
-			if (block.canStart(line, offset)) {
-				setClosed(true);
-				return 0;
-			}
+		if (paragraphBreakingBlockMatches(markupLanguage, line, offset)) {
+			setClosed(true);
+			return 0;
 		}
 
 		Matcher blockStartMatcher = confluenceBlockStart.matcher(line);
@@ -74,5 +75,15 @@ public class SlippParagraphBlock extends Block {
 			builder.endBlock();
 		}
 		super.setClosed(closed);
+	}
+
+	static boolean paragraphBreakingBlockMatches(MarkupLanguage language, String line, int offset) {
+		SlippLanguage markupLanguage = (SlippLanguage) language;
+		for (Block block : markupLanguage.getParagraphBreakingBlocks()) {
+			if (block.canStart(line, offset)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

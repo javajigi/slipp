@@ -7,7 +7,6 @@ import org.eclipse.mylyn.internal.wikitext.confluence.core.block.ColorBlock;
 import org.eclipse.mylyn.internal.wikitext.confluence.core.block.ExtendedPreformattedBlock;
 import org.eclipse.mylyn.internal.wikitext.confluence.core.block.ExtendedQuoteBlock;
 import org.eclipse.mylyn.internal.wikitext.confluence.core.block.HeadingBlock;
-import org.eclipse.mylyn.internal.wikitext.confluence.core.block.ListBlock;
 import org.eclipse.mylyn.internal.wikitext.confluence.core.block.TableOfContentsBlock;
 import org.eclipse.mylyn.internal.wikitext.confluence.core.block.TextBoxBlock;
 import org.eclipse.mylyn.internal.wikitext.confluence.core.phrase.ConfluenceWrappedPhraseModifier;
@@ -55,7 +54,7 @@ public class SlippLanguage extends AbstractMarkupLanguage {
 		blocks.add(headingBlock);
 		paragraphBreakingBlocks.add(headingBlock);
 		nestedBlocks.add(headingBlock);
-		ListBlock listBlock = new ListBlock();
+		SLiPPListBlock listBlock = new SLiPPListBlock();
 		blocks.add(listBlock);
 		paragraphBreakingBlocks.add(listBlock);
 		nestedBlocks.add(listBlock);
