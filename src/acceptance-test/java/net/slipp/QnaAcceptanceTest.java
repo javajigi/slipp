@@ -4,8 +4,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import net.slipp.qna.AdminTagPage;
 import net.slipp.qna.IndexPage;
-import net.slipp.qna.QnaFormPage;
-import net.slipp.qna.QnaShowPage;
+import net.slipp.qna.QuestionsFormPage;
+import net.slipp.qna.QuestionPage;
 import net.slipp.user.FacebookPage;
 import net.slipp.user.LoginPage;
 
@@ -78,7 +78,7 @@ public class QnaAcceptanceTest {
 	@Test
 	public void 질문하기() throws Exception {
 		login();
-		QnaFormPage qnaForm = home.goQuestionForm();
-		QnaShowPage qnaDetails = qnaForm.question("title", "this is contents", "java mytag mytag2");
+		QuestionsFormPage qnaForm = home.goQuestionForm();
+		QuestionPage qnaDetails = qnaForm.question("title", "this is contents", "java mytag mytag2");
 	}
 }

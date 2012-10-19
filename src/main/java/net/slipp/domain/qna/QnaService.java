@@ -31,22 +31,24 @@ public class QnaService {
 	@Resource(name = "tagService")
 	private TagService tagService;
 	
-	public void createQuestion(SocialUser loginUser, Question questionDto) {
+	public Question createQuestion(SocialUser loginUser, Question questionDto) {
 		Assert.notNull(loginUser, "loginUser should be not null!");
 		Assert.notNull(questionDto, "question should be not null!");
 
 		Question newQuestion = Question.newQuestion(loginUser, questionDto, tagRepository);
 		Question savedQuestion = questionRepository.save(newQuestion);
 		tagService.saveNewTag(loginUser, savedQuestion, newQuestion.getNewTags());
+		return savedQuestion;
 	}
 
-	public void updateQuestion(SocialUser loginUser, Question questionDto) {
+	public Question updateQuestion(SocialUser loginUser, Question questionDto) {
 		Assert.notNull(loginUser, "loginUser should be not null!");
 		Assert.notNull(questionDto, "question should be not null!");
 
 		Question question = questionRepository.findOne(questionDto.getQuestionId());
 		question.update(loginUser, questionDto, tagRepository);
 		tagService.saveNewTag(loginUser, question, question.getNewTags());
+		return question;
 	}
 
 	public void deleteQuestion(SocialUser loginUser, Long questionId) {

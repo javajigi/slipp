@@ -55,11 +55,11 @@ public class QuestionController {
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public String create(@LoginUser SocialUser loginUser, Question question) {
-		logger.debug("Question : {}", question);
+	public String create(@LoginUser SocialUser loginUser, Question newQuestion) {
+		logger.debug("Question : {}", newQuestion);
 
-		qnaService.createQuestion(loginUser, question);
-		return "redirect:/questions";
+		Question question = qnaService.createQuestion(loginUser, newQuestion);
+		return String.format("redirect:/questions/%s", question.getQuestionId());
 	}
 
 	@RequestMapping("/{id}/form")
@@ -70,11 +70,11 @@ public class QuestionController {
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.PUT)
-	public String update(@LoginUser SocialUser loginUser, Question question) {
-		logger.debug("Question : {}", question);
+	public String update(@LoginUser SocialUser loginUser, Question updatedQuestion) {
+		logger.debug("Question : {}", updatedQuestion);
 
-		qnaService.updateQuestion(loginUser, question);
-		return "redirect:/questions";
+		Question question = qnaService.updateQuestion(loginUser, updatedQuestion);
+		return String.format("redirect:/questions/%s", question.getQuestionId());
 	}
 
 	@RequestMapping("{id}")

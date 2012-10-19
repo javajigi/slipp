@@ -31,8 +31,8 @@
 							태그 구분자로 공백 또는 쉼표(,)를 사용할 수 있습니다.
 						</div>
 						
-						<div class="pull-right">
-							<button type="submit" class="btn btn-primary">질문하기</button>
+						<div>
+							<button id="confirmBtn" type="submit" class="btn btn-primary">질문하기</button>
 							<a href="/questions" class="btn">목록보기</a>
 						</div>
 					</fieldset>				

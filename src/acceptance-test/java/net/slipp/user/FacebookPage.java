@@ -12,7 +12,7 @@ public class FacebookPage {
 	
 	public FacebookPage(WebDriver driver) {
 		this.driver = driver;
-		assertThat(driver.getTitle(), is("Log In | Facebook"));
+		assertThat(driver.getTitle(), is("로그인 | Facebook"));
 	}
 	
 	public IndexPage login(String email, String password) {
