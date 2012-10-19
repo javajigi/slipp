@@ -13,7 +13,7 @@ public class QuestionPage {
 		assertThat(driver.getTitle(), is(title));
 	}
 
-    public void verify() {
+    public void verify(String title, String contents, String plainTags) {
         
     }
 }
