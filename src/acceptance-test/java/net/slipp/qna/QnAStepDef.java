@@ -21,7 +21,7 @@ public class QnAStepDef {
         indexPage = new IndexPage(driver);
         LoginPage loginPage = indexPage.goLoginPage();
         FacebookPage facebookPage = loginPage.loginFacebook();
-        indexPage = facebookPage.login("javajigi@gmail.com", "dPdms1129");
+        indexPage = facebookPage.login("email", "password");
     }
     
     @Given("^질문 글쓰기 페이지로 이동한다.$")
