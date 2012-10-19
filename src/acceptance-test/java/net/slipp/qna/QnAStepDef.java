@@ -20,7 +20,7 @@ public class QnAStepDef {
         indexPage = new IndexPage(driver);
         LoginPage loginPage = indexPage.goLoginPage();
         FacebookPage facebookPage = loginPage.loginFacebook();
-        indexPage = facebookPage.login("javajigi@gmail.com", "dPdms1129");
+        indexPage = facebookPage.login("email", "password");
     }
     
     @Given("^SLiPP 메인 페이지에서 로그인 후 글쓰기 버튼을 클릭한다.$")
