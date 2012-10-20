@@ -5,10 +5,10 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import net.slipp.domain.qna.QnaService;
 import net.slipp.domain.qna.Question_;
 import net.slipp.domain.wiki.WikiPage;
-import net.slipp.domain.wiki.WikiService;
+import net.slipp.service.qna.QnaService;
+import net.slipp.service.wiki.WikiService;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;

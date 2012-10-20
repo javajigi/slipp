@@ -33,6 +33,7 @@
 	<entry key="facebook.password">password</entry>
 	<entry key="facebook.clientId">client</entry>
 	<entry key="facebook.clientSecret">clientSecret</entry>
+	<entry key="facebook.accessToken">accessToken</entry>
 	
 	<entry key="google.clientId">clientId</entry>
 	<entry key="google.clientSecret">clientSecret</entry>	

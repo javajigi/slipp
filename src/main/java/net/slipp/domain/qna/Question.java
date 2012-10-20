@@ -28,9 +28,9 @@ import javax.persistence.Transient;
 
 import net.slipp.domain.tag.NewTag;
 import net.slipp.domain.tag.Tag;
-import net.slipp.domain.tag.TagProcessor;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.repository.tag.TagRepository;
+import net.slipp.service.tag.TagProcessor;
 import net.slipp.support.jpa.CreatedAndUpdatedDateEntityListener;
 import net.slipp.support.jpa.HasCreatedAndUpdatedDate;
 
@@ -275,6 +275,13 @@ public class Question implements HasCreatedAndUpdatedDate {
 		this.title = questionDto.title;
 		this.contentsHolder = questionDto.contentsHolder;
 		this.processTags(questionDto.plainTags, tagRepository);
+	}
+	
+	public Set<SocialUser> findNotificationUser(SocialUser loginUser) {
+		Answers newAnswers = new Answers(this.answers);
+		Set<SocialUser> notifierUsers = newAnswers.findFacebookAnswerers();
+		notifierUsers.add(this.writer);
+		return Sets.difference(notifierUsers, Sets.newHashSet(loginUser));
 	}
 	
 	@Override

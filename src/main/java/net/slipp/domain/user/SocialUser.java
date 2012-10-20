@@ -17,6 +17,8 @@ import javax.persistence.UniqueConstraint;
 public class SocialUser {
     public static final SocialUser GUEST_USER = new GuestSocialUser();
     
+    private static final String DEFAULT_FACEBOOK_PROVIDER_ID = "facebook";
+    
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
@@ -57,7 +59,7 @@ public class SocialUser {
 	public SocialUser(long id) {
 		this.id = id;
 	}
-
+	
 	public long getId() {
 		return id;
 	}
@@ -172,6 +174,10 @@ public class SocialUser {
     	}
     	
 		return this.id == socialUser.id;
+	}
+    
+	public boolean isFacebookUser() {
+		return DEFAULT_FACEBOOK_PROVIDER_ID.equals(getProviderId());
 	}
     
     static class GuestSocialUser extends SocialUser {

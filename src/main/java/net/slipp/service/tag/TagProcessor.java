@@ -1,8 +1,10 @@
-package net.slipp.domain.tag;
+package net.slipp.service.tag;
 
 import java.util.Set;
 import java.util.StringTokenizer;
 
+import net.slipp.domain.tag.NewTag;
+import net.slipp.domain.tag.Tag;
 import net.slipp.repository.tag.TagRepository;
 
 import org.slf4j.Logger;

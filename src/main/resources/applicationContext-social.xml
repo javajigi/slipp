@@ -56,7 +56,7 @@
 	<bean id="textEncryptor" class="org.springframework.security.crypto.encrypt.Encryptors"
 		factory-method="noOpText" />
 		
-	<bean id="socialUserService" class="net.slipp.domain.user.SocialUserService" />
+	<bean id="socialUserService" class="net.slipp.service.user.SocialUserService" />
 		
 	<bean id="slippUserDetailsService" class="net.slipp.social.security.SlippUserDetailsService" />
 	

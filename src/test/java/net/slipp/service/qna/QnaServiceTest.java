@@ -1,12 +1,15 @@
-package net.slipp.domain.qna;
+package net.slipp.service.qna;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
-import net.slipp.domain.tag.TagService;
+import net.slipp.domain.qna.Answer;
+import net.slipp.domain.qna.Question;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.repository.qna.AnswerRepository;
 import net.slipp.repository.qna.QuestionRepository;
+import net.slipp.service.qna.QnaService;
+import net.slipp.service.tag.TagService;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,4 +1,4 @@
-package net.slipp.domain.tag;
+package net.slipp.service.tag;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -9,9 +9,12 @@ import static org.mockito.Mockito.when;
 import java.util.Set;
 
 import net.slipp.domain.qna.Question;
+import net.slipp.domain.tag.NewTag;
+import net.slipp.domain.tag.Tag;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.repository.tag.NewTagRepository;
 import net.slipp.repository.tag.TagRepository;
+import net.slipp.service.tag.TagService;
 
 import org.junit.Before;
 import org.junit.Test;

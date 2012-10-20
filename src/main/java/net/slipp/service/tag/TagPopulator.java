@@ -1,8 +1,9 @@
-package net.slipp.domain.tag;
+package net.slipp.service.tag;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
+import net.slipp.domain.tag.Tag;
 import net.slipp.repository.tag.TagRepository;
 
 import org.springframework.stereotype.Component;

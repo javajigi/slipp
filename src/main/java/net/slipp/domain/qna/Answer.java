@@ -131,6 +131,10 @@ public class Answer implements HasCreatedAndUpdatedDate {
 	public boolean isWritedBy(SocialUser loginUser) {
 		return writer.isSameUser(loginUser);
 	}
+	
+	public boolean isFacebookWriter() {
+		return writer.isFacebookUser();
+	}
 
 	@Override
 	public String toString() {

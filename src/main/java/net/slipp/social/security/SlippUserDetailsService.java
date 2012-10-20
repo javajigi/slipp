@@ -6,7 +6,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import net.slipp.domain.user.SocialUser;
-import net.slipp.domain.user.SocialUserService;
+import net.slipp.service.user.SocialUserService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,9 +1,11 @@
-package net.slipp.domain.user;
+package net.slipp.service.user;
 
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import net.slipp.domain.user.ExistedUserException;
+import net.slipp.domain.user.SocialUser;
 import net.slipp.repository.user.SocialUserRepository;
 
 import org.springframework.social.connect.Connection;

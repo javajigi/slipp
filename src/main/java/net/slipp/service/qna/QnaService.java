@@ -1,13 +1,16 @@
-package net.slipp.domain.qna;
+package net.slipp.service.qna;
 
 import javax.annotation.Resource;
 
+import net.slipp.domain.qna.Answer;
+import net.slipp.domain.qna.QnaSpecifications;
+import net.slipp.domain.qna.Question;
 import net.slipp.domain.tag.Tag;
-import net.slipp.domain.tag.TagService;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.repository.qna.AnswerRepository;
 import net.slipp.repository.qna.QuestionRepository;
 import net.slipp.repository.tag.TagRepository;
+import net.slipp.service.tag.TagService;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,6 +33,9 @@ public class QnaService {
 
 	@Resource(name = "tagService")
 	private TagService tagService;
+	
+	@Resource(name = "notificationService")
+	private NotificationService notificationService;
 	
 	public Question createQuestion(SocialUser loginUser, Question questionDto) {
 		Assert.notNull(loginUser, "loginUser should be not null!");
@@ -86,11 +92,12 @@ public class QnaService {
 		return tagRepository.findByName(name);
 	}
 
-	public void createAnswer(SocialUser user, Long questionId, Answer answer) {
+	public void createAnswer(SocialUser loginUser, Long questionId, Answer answer) {
 		Question question = questionRepository.findOne(questionId);
-		answer.writedBy(user);
+		answer.writedBy(loginUser);
 		answer.answerTo(question);
 		answerRepository.save(answer);
+		notificationService.notifyToFacebook(loginUser, question);
 	}
 
 	public void deleteAnswer(SocialUser loginUser, Long questionId, Long answerId) {

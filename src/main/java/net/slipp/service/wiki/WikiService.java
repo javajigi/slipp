@@ -1,8 +1,11 @@
-package net.slipp.domain.wiki;
+package net.slipp.service.wiki;
 
 import java.util.List;
 
 import javax.annotation.Resource;
+
+import net.slipp.domain.wiki.WikiDao;
+import net.slipp.domain.wiki.WikiPage;
 
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;

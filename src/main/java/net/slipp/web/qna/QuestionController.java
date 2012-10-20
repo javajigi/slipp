@@ -3,10 +3,10 @@ package net.slipp.web.qna;
 import javax.annotation.Resource;
 
 import net.slipp.domain.qna.Answer;
-import net.slipp.domain.qna.QnaService;
 import net.slipp.domain.qna.Question;
 import net.slipp.domain.qna.Question_;
 import net.slipp.domain.user.SocialUser;
+import net.slipp.service.qna.QnaService;
 import net.slipp.support.web.argumentresolver.LoginUser;
 
 import org.slf4j.Logger;

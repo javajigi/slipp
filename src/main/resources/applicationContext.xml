@@ -29,7 +29,7 @@
 		<constructor-arg value="/login" />
 	</bean>	
 
-	<context:component-scan	base-package="net.slipp.domain">
+	<context:component-scan	base-package="net.slipp.service">
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
 	

@@ -1,4 +1,4 @@
-package net.slipp.domain.tag;
+package net.slipp.service.tag;
 
 import java.util.List;
 import java.util.Set;
@@ -6,6 +6,8 @@ import java.util.Set;
 import javax.inject.Inject;
 
 import net.slipp.domain.qna.Question;
+import net.slipp.domain.tag.NewTag;
+import net.slipp.domain.tag.Tag;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.repository.tag.NewTagRepository;
 import net.slipp.repository.tag.TagRepository;

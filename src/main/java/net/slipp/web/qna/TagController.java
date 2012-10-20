@@ -6,7 +6,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import net.slipp.domain.tag.Tag;
-import net.slipp.domain.tag.TagService;
+import net.slipp.service.tag.TagService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

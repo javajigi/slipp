@@ -3,7 +3,7 @@ package net.slipp.web.qna;
 import javax.annotation.Resource;
 
 import net.slipp.domain.tag.Tag;
-import net.slipp.domain.tag.TagService;
+import net.slipp.service.tag.TagService;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

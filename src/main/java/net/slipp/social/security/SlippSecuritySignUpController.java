@@ -3,7 +3,7 @@ package net.slipp.social.security;
 import javax.annotation.Resource;
 
 import net.slipp.domain.user.ExistedUserException;
-import net.slipp.domain.user.SocialUserService;
+import net.slipp.service.user.SocialUserService;
 
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionData;

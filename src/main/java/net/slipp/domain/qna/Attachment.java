@@ -1,4 +1,4 @@
-package net.slipp.domain.attachment;
+package net.slipp.domain.qna;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

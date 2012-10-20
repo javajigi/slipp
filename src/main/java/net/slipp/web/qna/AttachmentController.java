@@ -9,9 +9,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.slipp.domain.attachment.Attachment;
-import net.slipp.domain.attachment.AttachmentService;
+import net.slipp.domain.qna.Attachment;
 import net.slipp.domain.user.SocialUser;
+import net.slipp.service.qna.AttachmentService;
 import net.slipp.support.web.ServletDownloadManager;
 import net.slipp.support.web.argumentresolver.LoginUser;
 
