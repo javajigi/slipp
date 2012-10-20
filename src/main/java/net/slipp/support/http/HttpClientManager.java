@@ -83,7 +83,7 @@ public class HttpClientManager {
 	public <T> T post(String baseUrl, HttpInvocation<T> httpInvocation) {
 		Assert.notNull(httpInvocation, "httpInvocation 값은 null일 수 없다.");
 		PostMethod postMethod = new PostMethod(baseUrl + httpInvocation.getUri());
-
+		postMethod.setRequestHeader("Content-Type","application/x-www-form-urlencoded; charset=" + httpInvocation.getEncoding());
 		String parameterEncoding = httpInvocation.getParameterEncoding();
 		if (StringUtils.isNotBlank(parameterEncoding)) {
 			postMethod.getParams().setContentCharset(parameterEncoding);

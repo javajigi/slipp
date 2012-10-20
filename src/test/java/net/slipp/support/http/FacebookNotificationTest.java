@@ -24,7 +24,7 @@ public class FacebookNotificationTest {
 			}
 		};
 		invocation.addParameter("access_token", accessToken);
-		invocation.addParameter("template", "{1324855987} comment");
+		invocation.addParameter("template", "자바지기님이 \"github에 새로운 브랜치를 생성하는 방법은?\"에 답변을 달았습니다.");
 		invocation.addParameter("href", "/questions/1");
 		
 		HttpClientManager manager = new HttpClientManager();

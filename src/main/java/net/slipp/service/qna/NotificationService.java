@@ -31,7 +31,7 @@ public class NotificationService {
 				}
 			};
 			invocation.addParameter("access_token", accessToken);
-			invocation.addParameter("template", String.format("{%s}이 %s에 답변을 했습니다.", loginUser.getProviderUserId(), question.getTitle()));
+			invocation.addParameter("template", String.format("%s님이 \"%s\" 글에 답변을 달았습니다.", loginUser.getUserId(), question.getTitle()));
 			invocation.addParameter("href", String.format("/questions/%d", question.getQuestionId()));
 			
 			HttpClientManager manager = new HttpClientManager();
