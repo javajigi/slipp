@@ -10,14 +10,14 @@ public class QuestionsFormPage {
 		this.driver = driver;
 	}
 
-	public QuestionPage question(String title, String contents, String tags) {
+	public QuestionPage question(QuestionFixture questionFixture) {
 		driver.findElement(By.id("title")).clear();
-		driver.findElement(By.id("title")).sendKeys(title);
+		driver.findElement(By.id("title")).sendKeys(questionFixture.getTitle());
 		driver.findElement(By.id("contents")).clear();
-		driver.findElement(By.id("contents")).sendKeys(contents);
+		driver.findElement(By.id("contents")).sendKeys(questionFixture.getContents());
 		driver.findElement(By.id("plainTags")).clear();
-		driver.findElement(By.id("plainTags")).sendKeys(tags);
+		driver.findElement(By.id("plainTags")).sendKeys(questionFixture.getPlainTags());
 		driver.findElement(By.id("confirmBtn")).click();
-		return new QuestionPage(driver, title);
+		return new QuestionPage(driver, questionFixture.getTitle());
 	}
 }

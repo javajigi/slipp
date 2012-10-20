@@ -4,10 +4,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import net.slipp.qna.AdminTagPage;
 import net.slipp.qna.IndexPage;
-import net.slipp.qna.QuestionsFormPage;
-import net.slipp.qna.QuestionPage;
-import net.slipp.user.FacebookPage;
-import net.slipp.user.LoginPage;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -43,25 +39,15 @@ public class QnaAcceptanceTest {
 	@Test
 	public void 페이스북_로그인() throws Exception {
 		logger.debug("email : {}, password : {}", email, password);
-
-		login();
 	}
 
-	private void login() {
-		LoginPage loginPage = home.goLoginPage();
-		FacebookPage facebookPage = loginPage.loginFacebook();
-		home = facebookPage.login(email, password);
-	}
-	
 	@Test
 	public void 태그_관리자_탭() throws Exception {
-		login();
 		home.goAdminTagPage();		
 	}
 	
 	@Test
 	public void 태그_추가() throws Exception {
-		login();
 		AdminTagPage adminTag = home.goAdminTagPage();		
 		adminTag = adminTag.createTag("newTag");
 		adminTag.validateNewTag("newTag");
@@ -69,16 +55,8 @@ public class QnaAcceptanceTest {
 	
 	@Test
 	public void 태그_중복_추가() throws Exception {
-		login();
 		AdminTagPage adminTag = home.goAdminTagPage();	
 		adminTag = adminTag.createTag("newTag1").createTag("newTag1");
 		assertThat(adminTag.hasDuplidateErrorMessage(), is(true));
-	}
-	
-	@Test
-	public void 질문하기() throws Exception {
-		login();
-		QuestionsFormPage qnaForm = home.goQuestionForm();
-		QuestionPage qnaDetails = qnaForm.question("title", "this is contents", "java mytag mytag2");
 	}
 }

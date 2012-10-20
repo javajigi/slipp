@@ -17,6 +17,10 @@ public class LoginPage {
 
 	public FacebookPage loginFacebook() {
 		driver.findElement(By.cssSelector("input[value='페이스북 계정으로 로그인']")).click();
+		if (driver.getTitle().equals("SLiPP")) {
+			
+		}
+		
 		return new FacebookPage(driver);
 	}
 
