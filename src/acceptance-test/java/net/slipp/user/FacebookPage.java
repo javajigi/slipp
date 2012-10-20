@@ -25,7 +25,7 @@ public class FacebookPage {
 		
 		if (isFirstLogin()) {
 			LoginPage loginPage = new LoginPage(driver);
-			return loginPage.loginSlipp("javajigi");
+			return loginPage.loginSlipp("자바지기");
 		}
 		
 		return new IndexPage(driver);

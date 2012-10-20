@@ -1,4 +1,4 @@
-package net.slipp.support.selenium;
+package net.slipp.support;
 
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebDriver;

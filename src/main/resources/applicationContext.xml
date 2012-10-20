@@ -22,7 +22,7 @@
 		<constructor-arg index="0">
 			<util:properties location="classpath:application-properties.xml" />
 		</constructor-arg>
-	</bean>    
+	</bean>
     
 	<!-- Start Spring Social Security -->
 	<bean id="springSocialSecurityEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
