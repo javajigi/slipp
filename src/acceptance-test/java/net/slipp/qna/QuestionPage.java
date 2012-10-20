@@ -29,5 +29,10 @@ public class QuestionPage {
 			assertThat(tags.contains(tag), is(true));
 		}
     }
+
+	public NewTagsPage goNewTagsPage() {
+		driver.findElement(By.cssSelector("#newTagManagement > a")).click();
+		return new NewTagsPage(driver);
+	}
     
 }

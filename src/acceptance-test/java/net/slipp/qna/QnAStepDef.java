@@ -1,5 +1,7 @@
 package net.slipp.qna;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 import net.slipp.support.SharedDriver;
 import net.slipp.support.SlippEnvironment;
 import cucumber.annotation.en.Given;
@@ -55,5 +57,11 @@ public class QnAStepDef {
     @Then("^입력한 데이터가 정상적으로 등록되었는지 확인한다. 태그는 (.*)가 등록되어야 한다.$")
     public void verifyQuestion(String expectedTags) {
     	questionPage.verify(questionFixture.getTitle(), questionFixture.getContents(), expectedTags);
+    }
+    
+    @Then("^신규 태그 목록에서 (.*)를 볼 수 있어야 한다.$")
+    public void verifyNewTag(String newTag) {
+    	NewTagsPage newTagsPage = questionPage.goNewTagsPage();
+    	assertThat(newTagsPage.existNewTag(newTag), is(true));
     }
 }

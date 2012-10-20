@@ -3,7 +3,6 @@ package net.slipp.qna;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import net.slipp.user.FacebookPage;
-import net.slipp.user.LoginPage;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -45,5 +44,10 @@ public class IndexPage {
 	public QuestionsFormPage goQuestionForm() {
 		driver.findElement(By.id("questionBtn")).click();
 		return new QuestionsFormPage(driver);
+	}
+
+	public QuestionsPage goQuestionsPage() {
+		driver.findElement(By.linkText("QnA")).click();
+		return new QuestionsPage(driver);
 	}
 }
