@@ -23,14 +23,9 @@ public class QnAStepDef {
         driver.get("http://localhost:8080");
     }
     
-    private void login() {
-        indexPage = new IndexPage(driver);
-        indexPage = indexPage.login(environment.getProperty("facebook.email"), environment.getProperty("facebook.password"));
-    }
-    
     @Given("^SLiPP 메인 페이지에서 로그인 후 글쓰기 버튼을 클릭한다.$")
     public void goCreateQuestionPage() {
-        login();
+        loginToFacebook();
         qnaFormPage = indexPage.goQuestionForm();
     }
     
@@ -64,4 +59,40 @@ public class QnAStepDef {
     	NewTagsPage newTagsPage = questionPage.goNewTagsPage();
     	assertThat(newTagsPage.existNewTag(newTag), is(true));
     }
+    
+    @Given("^질문을 등록한다.$")
+    public void createQuestion() {
+        loginToFacebook();
+        qnaFormPage = indexPage.goQuestionForm();
+        questionPage = qnaFormPage.question(questionFixture);
+    }
+    
+    @When("^답변 (.*) 를 입력한다.$")
+    public void answerToQuestion(String answer) {
+    	indexPage.logout();
+    	loginToTwitter();
+    	questionPage.answer(answer);
+    }
+    
+    private void loginToFacebook() {
+        indexPage = new IndexPage(driver);
+        indexPage = indexPage.loginToFacebook(environment.getProperty("facebook.email"), environment.getProperty("facebook.password"));
+    }
+    
+    private void loginToTwitter() {
+        indexPage = new IndexPage(driver);
+        indexPage = indexPage.loginToTwitter(environment.getProperty("twitter.username"), environment.getProperty("twitter.password"));
+    }
+    
+    @Then("^답변 (.*) 정확하게 등록되어야 한다.$")
+    public void verifyAnswerContents(String answer) {
+    	questionPage.verifyAnswer(answer);
+    }
+    
+    @Then("^질문의 답변 숫자가 (.*)이어야 한다.$")
+    public void verifyAnswerCount(String answerCount) {
+    	questionPage.verifyAnswerCount(answerCount);
+    }
+    
+    
 }

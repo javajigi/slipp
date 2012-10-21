@@ -110,7 +110,7 @@
 					<form:form modelAttribute="answer" action="/questions/${question.questionId}/answers" method="POST">
 						<form:textarea path="contents"  cols="75" rows="5"/>
 						<div class="button">
-							<button type="submit" class="btn btn-primary pull-right">답변하기</button>
+							<button id="answerBtn" type="submit" class="btn btn-primary pull-right">답변하기</button>
 						</div>					
 					</form:form>
 				</div>				

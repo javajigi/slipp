@@ -8,6 +8,7 @@ import net.slipp.support.http.HttpClientManager;
 import net.slipp.support.http.HttpInvocationSupport;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,8 +17,8 @@ public class NotificationService {
 	private String accessToken;
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public void notifyToFacebook(SocialUser loginUser, Question question) {
-		Set<SocialUser> notifierUsers = question.findNotificationUser(loginUser);
+	@Async
+	public void notifyToFacebook(SocialUser loginUser, Question question, Set<SocialUser> notifierUsers) {
 		if (notifierUsers.isEmpty()) {
 			return;
 		}

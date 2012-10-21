@@ -26,6 +26,8 @@
 	<!-- security -->
 	<entry key="socialsignin.signUpView">/signUpForm</entry>
 	
+	<entry key="twitter.username">username</entry>
+	<entry key="twitter.password">password</entry>	
 	<entry key="twitter.consumerKey">consumerKey</entry>	
 	<entry key="twitter.consumerSecret">consumerSecret</entry>
 

@@ -1,4 +1,4 @@
-Feature: 질문 답변 게시판
+Feature: 질문을 한다.
 
 Scenario: 질문이 정상적으로 등록되어야 한다.
 	Given SLiPP 메인 페이지에서 로그인 후 글쓰기 버튼을 클릭한다.

@@ -97,7 +97,7 @@ public class QnaService {
 		answer.writedBy(loginUser);
 		answer.answerTo(question);
 		answerRepository.save(answer);
-		notificationService.notifyToFacebook(loginUser, question);
+		notificationService.notifyToFacebook(loginUser, question, question.findNotificationUser(loginUser));
 	}
 
 	public void deleteAnswer(SocialUser loginUser, Long questionId, Long answerId) {

@@ -3,10 +3,11 @@ package net.slipp.qna;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import net.slipp.user.FacebookPage;
+import net.slipp.user.GooglePage;
+import net.slipp.user.TwitterPage;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 
 public class IndexPage {
 	private WebDriver driver;
@@ -16,7 +17,7 @@ public class IndexPage {
 		assertThat(driver.getTitle(), is("SLiPP"));
 	}
 
-	public IndexPage login(String username, String password) {
+	public IndexPage loginToFacebook(String username, String password) {
 		driver.findElement(By.cssSelector(".loginBtn > a")).click();
 		driver.findElement(By.cssSelector("input[value='페이스북 계정으로 로그인']")).click();
 		if (driver.getTitle().equals("SLiPP")) {
@@ -27,15 +28,33 @@ public class IndexPage {
         return facebookPage.login(username, password);
 	}
 	
-	public boolean logout() {
-		WebElement webElement = driver.findElement(By.cssSelector(".loginBtn > a"));
-		if (webElement == null) {
-			return false;
-		} else {
-			return true;
+	public IndexPage loginToGoogle(String username, String password) {
+		driver.findElement(By.cssSelector(".loginBtn > a")).click();
+		driver.findElement(By.cssSelector("input[value='구글 계정으로 로그인']")).click();
+		if (driver.getTitle().equals("SLiPP")) {
+			return new IndexPage(driver);
 		}
-	}
 
+		GooglePage googlePage = new GooglePage(driver);
+        return googlePage.login(username, password);
+	}
+	
+	public IndexPage loginToTwitter(String username, String password) {
+		driver.findElement(By.cssSelector(".loginBtn > a")).click();
+		driver.findElement(By.cssSelector("input[value='트위터 계정으로 로그인']")).click();
+		if (driver.getTitle().equals("SLiPP")) {
+			return new IndexPage(driver);
+		}
+
+		TwitterPage twitterPage = new TwitterPage(driver);
+        return twitterPage.login(username, password);
+	}
+	
+	public IndexPage logout() {
+		driver.findElement(By.linkText("로그아웃")).click();
+		return new IndexPage(driver);
+	}
+	
 	public AdminTagPage goAdminTagPage() {
 		driver.findElement(By.cssSelector("#tagManagement > a")).click();
 		return new AdminTagPage(driver);
