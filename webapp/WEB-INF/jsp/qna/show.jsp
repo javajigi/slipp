@@ -56,6 +56,14 @@
 							<script type="text/javascript"
 								src="https://platform.twitter.com/widgets.js"></script>
 						</div>
+						<c:if test="${isNotSsl}">
+						<div class="me2day">
+							<a
+								href="http://me2day.net/posts/new?new_post[body]=&quot;${question.title}&quot;:http://www.slipp.net/questions/${question.questionId}"
+								onclick="window.open(this.href,'me2day_post', 'width=1024,height=364,scrollbars=1,resizable=1');return false;"><img
+								src="/resources/images/me2day.gif" alt="미투데이로 보내기" /></a>
+						</div>
+						</c:if>			
 					</div>
 					<div class="button-qna">
 						<c:if test="${sf:isWriter(question.writer, loginUser)}">
