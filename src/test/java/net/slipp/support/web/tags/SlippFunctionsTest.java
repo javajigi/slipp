@@ -30,4 +30,15 @@ public class SlippFunctionsTest {
 		String actual = SlippFunctions.wiki(source);
 		logger.debug("convert wiki contents : {}", actual);
 	}
+	
+	@Test
+	public void stripHttpOrHttps() throws Exception {
+		String url = "http://localhost:8080";
+		String actual = SlippFunctions.stripHttpOrHttps(url);
+		assertThat(actual, is("//localhost:8080"));
+		
+		url = "https://localhost:8080";
+		actual = SlippFunctions.stripHttpOrHttps(url);
+		assertThat(actual, is("//localhost:8080"));
+	}
 }

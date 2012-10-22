@@ -21,7 +21,9 @@
 			<div class="span10">
 				<div class="forumView">
 					<div class="nickArea">
-						<p class='nick'><img src='${question.writer.imageUrl}' width="50" height="50" />&nbsp;&nbsp;<a href="${each.writer.profileUrl}">${question.writer.userId}</a></p>
+						<p class='nick'>
+							<img src='${sf:stripHttpOrHttps(question.writer.imageUrl)}' width="50" height="50" />&nbsp;&nbsp;
+							<a href="${sf:stripHttpOrHttps(question.writer.profileUrl)}">${question.writer.userId}</a></p>
 						<p class="regDate"><fmt:formatDate value="${question.createdDate}" pattern="yyyy-MM-dd HH:mm" /></p>
 					</div>
 					<div class="contents">
@@ -56,14 +58,6 @@
 							<script type="text/javascript"
 								src="https://platform.twitter.com/widgets.js"></script>
 						</div>
-						<c:if test="${isNotSsl}">
-						<div class="me2day">
-							<a
-								href="http://me2day.net/posts/new?new_post[body]=&quot;${question.title}&quot;:http://www.slipp.net/questions/${question.questionId}"
-								onclick="window.open(this.href,'me2day_post', 'width=1024,height=364,scrollbars=1,resizable=1');return false;"><img
-								src="/resources/images/me2day.gif" alt="미투데이로 보내기" /></a>
-						</div>
-						</c:if>			
 					</div>
 					<div class="button-qna">
 						<c:if test="${sf:isWriter(question.writer, loginUser)}">
@@ -81,9 +75,9 @@
 					<c:forEach items="${question.answers}" var="each">
 					<div class="commentList">
 						<div class="nickArea">
-							<p class='prphoto'><img src='${each.writer.imageUrl}' /></p>
+							<p class='prphoto'><img src='${sf:stripHttpOrHttps(each.writer.imageUrl)}' /></p>
 							<div class="nickname">
-								<div class="tester"><span class='lv'><a href="${each.writer.profileUrl}">${each.writer.userId}</a></span></div>
+								<div class="tester"><span class='lv'><a href="${sf:stripHttpOrHttps(each.writer.profileUrl)}">${each.writer.userId}</a></span></div>
 							</div>
 						</div>
 						<div class="list">

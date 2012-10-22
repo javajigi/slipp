@@ -2,6 +2,8 @@ package net.slipp.support.web.tags;
 
 import java.util.Collection;
 
+import org.apache.commons.lang.StringUtils;
+
 import net.slipp.domain.user.SocialUser;
 import net.slipp.support.utils.SlippStringUtils;
 import net.slipp.support.wiki.SlippWikiUtils;
@@ -170,5 +172,13 @@ public class SlippFunctions {
 	public static String wiki(String contents) {
 		String result = WikiContents.convert(contents);
 		return SlippWikiUtils.replaceImages(result);
+	}
+
+	public static String stripHttpOrHttps(String url) {
+		if (StringUtils.isBlank(url)) {
+			return "";
+		}
+		
+		return url.replaceAll("http:|https:", "");
 	}
 }
