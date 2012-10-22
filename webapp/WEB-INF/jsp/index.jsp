@@ -58,11 +58,13 @@
 				</div>
 			</c:forEach>
 			</div>
+			<c:if test="${isNotSsl}">
 			<div class="forumTop">
 				<div class="rss">
 					<a href="http://feeds.feedburner.com/slipp"><img src="http://feeds.feedburner.com/~fc/slipp?bg=99CCFF&amp;fg=444444&amp;anim=0" height="26" width="88" style="border:0" alt="" /></a>
 				</div>
 			</div>
+			</c:if>
 		</div>		
 	</div>
 </div>

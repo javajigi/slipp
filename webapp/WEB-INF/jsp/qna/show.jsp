@@ -42,8 +42,8 @@
 					<div class="snsIcon">
 						<div class="facebook">
 							<div id="fb-root"></div>
-							<script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>
-							<fb:like href="http://www.slipp.net/questions/${question.questionId}"
+							<script src="https://connect.facebook.net/en_US/all.js#xfbml=1"></script>
+							<fb:like href="${slippUrl}/questions/${question.questionId}"
 								send="true" layout="button_count" width="100" show_faces="true"
 								font=""></fb:like>
 						</div>
@@ -51,16 +51,10 @@
 							<g:plusone></g:plusone>
 						</div>
 						<div class="twitter">
-							<a href="http://twitter.com/share" class="twitter-share-button"
+							<a href="https://twitter.com/share" class="twitter-share-button"
 								data-count="horizontal">Tweet</a>
 							<script type="text/javascript"
-								src="http://platform.twitter.com/widgets.js"></script>
-						</div>
-						<div class="me2day">
-							<a
-								href="http://me2day.net/posts/new?new_post[body]=&quot;${question.title}&quot;:http://www.slipp.net/questions/${question.questionId}"
-								onclick="window.open(this.href,'me2day_post', 'width=1024,height=364,scrollbars=1,resizable=1');return false;"><img
-								src="/resources/images/me2day.gif" alt="미투데이로 보내기" /></a>
+								src="https://platform.twitter.com/widgets.js"></script>
 						</div>
 					</div>
 					<div class="button-qna">
@@ -120,7 +114,7 @@
 			<slipp:side-tags tags="${tags}"/>
 		</div>
 	</div>
-<script src="http://ajax.microsoft.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>
+<script src="https://ajax.microsoft.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>
 <script type="text/javascript" src="${url:resource('/javascripts/jquery.markitup.js')}"></script>
 <script type="text/javascript" src="${url:resource('/javascripts/sh/shCore.js')}"></script>
 <script type="text/javascript" src="${url:resource('/javascripts/sh/shAutoloader.js')}"></script>
