@@ -36,16 +36,16 @@ public class SlippWikiUtils {
 		return contents.replace("\t", "  ");
 	}
 
-	public static String replaceImages(String contents, String slippUrl) {
+	public static String replaceImages(String contents) {
 		Matcher matcher = IMAGE_WIKI_PATTERN.matcher(contents);
 		if (matcher.find()) {
-			contents = matcher.replaceAll(createImageHtml(slippUrl, matcher.group(1)));
+			contents = matcher.replaceAll(createImageHtml(matcher.group(1)));
 		}
 		return contents;
 	}
 	
-	private static String createImageHtml(String slippUrl, String attachmentId) {
-		String imageUrl = slippUrl + "/attachments/" + attachmentId;
+	private static String createImageHtml(String attachmentId) {
+		String imageUrl = "/attachments/" + attachmentId;
 		return "<img src=\"" + imageUrl + "\"/>";
 	}
 }

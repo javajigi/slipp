@@ -167,8 +167,8 @@ public class SlippFunctions {
 		return writer.isSameUser(loginUser);
 	}
 
-	public static String wiki(String contents, String targetUrl) {
+	public static String wiki(String contents) {
 		String result = WikiContents.convert(contents);
-		return SlippWikiUtils.replaceImages(result, targetUrl);
+		return SlippWikiUtils.replaceImages(result);
 	}
 }

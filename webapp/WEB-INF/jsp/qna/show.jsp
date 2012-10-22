@@ -26,7 +26,7 @@
 					</div>
 					<div class="contents">
 						<strong class="subject">${sf:h(question.title)}</strong>
-						<div>${sf:wiki(question.contents, slippUrl)}</div>
+						<div>${sf:wiki(question.contents)}</div>
 					</div>
 					<div class="follow">
 						<p class="tags">
@@ -85,7 +85,7 @@
 							</div>
 						</div>
 						<div class="list">
-							<div class="cont">${sf:wiki(each.contents, slippUrl)}</div>
+							<div class="cont">${sf:wiki(each.contents)}</div>
 							<div class="regDate"><fmt:formatDate value="${each.createdDate}" pattern="yyyy-MM-dd HH:mm" /></div>
 						</div>
 						<div class="commBtn">
@@ -122,9 +122,6 @@
 	</div>
 <script src="http://ajax.microsoft.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>
 <script type="text/javascript" src="${url:resource('/javascripts/jquery.markitup.js')}"></script>
-<script type="text/javascript">
-var uploaderUrl = "${slippUrl}";
-</script>
 <script type="text/javascript" src="${url:resource('/javascripts/sh/shCore.js')}"></script>
 <script type="text/javascript" src="${url:resource('/javascripts/sh/shAutoloader.js')}"></script>
 <script type="text/javascript" src="${url:resource('/javascripts/qna/syntaxhighlighter.js')}"></script>

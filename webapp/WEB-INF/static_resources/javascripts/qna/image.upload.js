@@ -6,7 +6,7 @@ var InlineUpload = {
 	options: {
 		container_class: 'markItUpInlineUpload',
 		form_id: 'inline_upload_form',
-		action: uploaderUrl + '/attachments',
+		action: '/attachments',
 		inputs: {
 			file: { label: '이미지', id: 'inline_upload_file1', name: 'inline_upload_file1' }
 		},

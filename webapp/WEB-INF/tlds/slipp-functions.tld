@@ -136,7 +136,7 @@
 		<name>wiki</name>
 		<function-class>net.slipp.support.web.tags.SlippFunctions</function-class>
 		<function-signature>
-			java.lang.String wiki(java.lang.String, java.lang.String)
+			java.lang.String wiki(java.lang.String)
 		</function-signature>
 	</function>	
 </taglib>

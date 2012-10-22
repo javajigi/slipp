@@ -4,6 +4,6 @@
 <head>
 </head>
 <body>
-${sf:wiki(contents, slippUrl)}
+${sf:wiki(contents)}
 </body>
 </html>

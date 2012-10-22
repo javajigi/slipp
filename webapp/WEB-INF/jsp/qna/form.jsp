@@ -44,9 +44,6 @@
 <script src="http://ajax.microsoft.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>
 <script type="text/javascript" src="${url:resource('/javascripts/jquery.markitup.js')}"></script>
 <script type="text/javascript" src="${url:resource('/javascripts/jquery.autocomplete.min.js')}"></script>
-<script type="text/javascript">
-var uploaderUrl = "${slippUrl}";
-</script>
 <script type="text/javascript"	src="${url:resource('/javascripts/qna/image.upload.js')}"></script>
 <script type="text/javascript" src="${url:resource('/javascripts/qna/qna-set.js')}"></script>
 <script type="text/javascript" src="${url:resource('/javascripts/qna/tagparser.js')}"></script>

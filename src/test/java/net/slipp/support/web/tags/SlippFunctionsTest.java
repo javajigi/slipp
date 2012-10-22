@@ -27,7 +27,7 @@ public class SlippFunctionsTest {
 	public void wiki() throws Exception {
 		String source = "{code:title=java}\n WikiContents wikiContents = new WikiContents();{code}\n" 
 				+ "!1234!\n !2345!";
-		String actual = SlippFunctions.wiki(source, "http://localhost:8080");
+		String actual = SlippFunctions.wiki(source);
 		logger.debug("convert wiki contents : {}", actual);
 	}
 }
