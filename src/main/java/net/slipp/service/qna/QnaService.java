@@ -34,9 +34,6 @@ public class QnaService {
 	@Resource(name = "tagService")
 	private TagService tagService;
 	
-	@Resource(name = "notificationService")
-	private NotificationService notificationService;
-	
 	public Question createQuestion(SocialUser loginUser, Question questionDto) {
 		Assert.notNull(loginUser, "loginUser should be not null!");
 		Assert.notNull(questionDto, "question should be not null!");
@@ -97,7 +94,6 @@ public class QnaService {
 		answer.writedBy(loginUser);
 		answer.answerTo(question);
 		answerRepository.save(answer);
-		notificationService.notifyToFacebook(loginUser, question, question.findNotificationUser(loginUser));
 	}
 
 	public void deleteAnswer(SocialUser loginUser, Long questionId, Long answerId) {
