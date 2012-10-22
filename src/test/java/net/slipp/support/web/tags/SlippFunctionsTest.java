@@ -32,13 +32,9 @@ public class SlippFunctionsTest {
 	}
 	
 	@Test
-	public void stripHttpOrHttps() throws Exception {
+	public void stripHttp() throws Exception {
 		String url = "http://localhost:8080";
-		String actual = SlippFunctions.stripHttpOrHttps(url);
-		assertThat(actual, is("//localhost:8080"));
-		
-		url = "https://localhost:8080";
-		actual = SlippFunctions.stripHttpOrHttps(url);
+		String actual = SlippFunctions.stripHttp(url);
 		assertThat(actual, is("//localhost:8080"));
 	}
 }

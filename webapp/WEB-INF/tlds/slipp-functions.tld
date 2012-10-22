@@ -141,10 +141,10 @@
 	</function>	
 	<function>
 		<description>url에서 http와 https를 제거해 준다.</description>
-		<name>stripHttpOrHttps</name>
+		<name>stripHttp</name>
 		<function-class>net.slipp.support.web.tags.SlippFunctions</function-class>
 		<function-signature>
-			java.lang.String stripHttpOrHttps(java.lang.String)
+			java.lang.String stripHttp(java.lang.String)
 		</function-signature>
 	</function>		
 </taglib>

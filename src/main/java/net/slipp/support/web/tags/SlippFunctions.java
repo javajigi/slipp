@@ -174,11 +174,11 @@ public class SlippFunctions {
 		return SlippWikiUtils.replaceImages(result);
 	}
 
-	public static String stripHttpOrHttps(String url) {
+	public static String stripHttp(String url) {
 		if (StringUtils.isBlank(url)) {
 			return "";
 		}
 		
-		return url.replaceAll("http:|https:", "");
+		return url.replaceAll("http:", "");
 	}
 }

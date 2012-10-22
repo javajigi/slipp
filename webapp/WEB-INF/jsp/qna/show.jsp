@@ -22,8 +22,8 @@
 				<div class="forumView">
 					<div class="nickArea">
 						<p class='nick'>
-							<img src='${sf:stripHttpOrHttps(question.writer.imageUrl)}' width="50" height="50" />&nbsp;&nbsp;
-							<a href="${sf:stripHttpOrHttps(question.writer.profileUrl)}">${question.writer.userId}</a></p>
+							<img src='${sf:stripHttp(question.writer.imageUrl)}' width="50" height="50" />&nbsp;&nbsp;
+							<a href="${sf:stripHttp(question.writer.profileUrl)}">${question.writer.userId}</a></p>
 						<p class="regDate"><fmt:formatDate value="${question.createdDate}" pattern="yyyy-MM-dd HH:mm" /></p>
 					</div>
 					<div class="contents">
@@ -75,9 +75,9 @@
 					<c:forEach items="${question.answers}" var="each">
 					<div class="commentList">
 						<div class="nickArea">
-							<p class='prphoto'><img src='${sf:stripHttpOrHttps(each.writer.imageUrl)}' /></p>
+							<p class='prphoto'><img src='${sf:stripHttp(each.writer.imageUrl)}' /></p>
 							<div class="nickname">
-								<div class="tester"><span class='lv'><a href="${sf:stripHttpOrHttps(each.writer.profileUrl)}">${each.writer.userId}</a></span></div>
+								<div class="tester"><span class='lv'><a href="${sf:stripHttp(each.writer.profileUrl)}">${each.writer.userId}</a></span></div>
 							</div>
 						</div>
 						<div class="list">
