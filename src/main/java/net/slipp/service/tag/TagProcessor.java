@@ -7,6 +7,7 @@ import net.slipp.domain.tag.NewTag;
 import net.slipp.domain.tag.Tag;
 import net.slipp.repository.tag.TagRepository;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -73,11 +74,19 @@ public class TagProcessor {
 	
 	public static Set<String> parseTags(String plainTags) {
 		Set<String> parsedTags = Sets.newHashSet();
-		StringTokenizer tokenizer = new StringTokenizer(plainTags, " ");
+		StringTokenizer tokenizer = new StringTokenizer(plainTags, " |,");
 		while (tokenizer.hasMoreTokens()) {
 			parsedTags.add(tokenizer.nextToken());
 		}
 		return parsedTags;
+	}
+	
+	public static String toLowerCaseParsedTag(String parsedTag) {
+		if (StringUtils.isBlank(parsedTag)) {
+			return null;
+		}
+		
+		return parsedTag.toLowerCase();
 	}
 	
 	public static String tagsToDenormalizedTags(Set<Tag> tags) {

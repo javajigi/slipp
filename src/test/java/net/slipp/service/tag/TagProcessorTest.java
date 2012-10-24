@@ -9,7 +9,6 @@ import java.util.Set;
 import net.slipp.domain.tag.NewTag;
 import net.slipp.domain.tag.Tag;
 import net.slipp.repository.tag.TagRepository;
-import net.slipp.service.tag.TagProcessor;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -80,9 +79,20 @@ public class TagProcessorTest {
 	}
 	
 	@Test
-	public void parseTags() throws Exception {
+	public void parseTags_space() throws Exception {
 		String plainTags = "java javascript";
 		Set<String> parsedTags = TagProcessor.parseTags(plainTags);
+		assertThat(parsedTags.size(), is(2));
+	}
+	
+	@Test
+	public void parseTags_comma() throws Exception {
+		String plainTags = "java,javascript";
+		Set<String> parsedTags = TagProcessor.parseTags(plainTags);
+		assertThat(parsedTags.size(), is(2));
+		
+		plainTags = "java,javascript,";
+		parsedTags = TagProcessor.parseTags(plainTags);
 		assertThat(parsedTags.size(), is(2));
 	}
 	
@@ -91,5 +101,11 @@ public class TagProcessorTest {
 		Set<Tag> tags = Sets.newHashSet(new Tag("java"), new Tag("eclipse"));
 		String result = TagProcessor.tagsToDenormalizedTags(tags);
 		assertThat(result, is("java,eclipse"));
+	}
+	
+	@Test
+	public void toLowerCaseParsedTag() throws Exception {
+		String actual = TagProcessor.toLowerCaseParsedTag("GitHub");
+		assertThat(actual, is("github"));
 	}
 }
