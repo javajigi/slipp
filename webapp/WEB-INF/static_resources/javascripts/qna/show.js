@@ -1,4 +1,6 @@
 $(document).ready(function(){
+	var nickNames = new Array();
+	
 	$('#contents').markItUp(mySettings);
 	
 	$("#answersForm").validate({
@@ -24,4 +26,49 @@ $(document).ready(function(){
 		$deleteAnswerForm.submit();
 		return false;
 	});
+	
+	$(".commentList").hover(function(){
+		$(this).find(".commBtn").show('fast');
+	}, function(){
+		$(this).find(".commBtn").hide('fast');
+	});
+	$(".recommentAnswerBtn").on('click', function(){
+		var orgUserId = $(this).data('answer-user-id');
+		var contents = arroundSpace( $('#contents').val(), orgUserId );
+
+		$('#contents').val('').focus().val(contents);
+		$('#contents').focus();
+		$('html, body').animate({scrollTop: $(document).height()}, 'slow');
+		return false;
+	});
+	
+	addNickNames();
+	
+	replaceNicknames();
+	
+	function replaceNicknames(){
+		$('.cont').each(function(){
+			var pattern;
+			var cont = $(this).text();
+			for (var key in nickNames) {
+				cont = cont.replace(key, '<a href="'+nickNames[key]+'">'+key+'</a>');
+			}
+			
+			$(this).html(cont);
+		});
+	}
+	function addNickNames(){
+		$('.tester').each(function(){
+			nickNames[$(this).text()] = $(this).find('a').attr('href');
+		});
+	}
+	function arroundSpace(contents, orgUserId){
+		if( $.trim(contents).length > 0) {
+			contents = contents +" "+orgUserId +" ";
+		}else{
+			contents = contents + orgUserId;
+		}
+		return contents;
+	}
+	
 });

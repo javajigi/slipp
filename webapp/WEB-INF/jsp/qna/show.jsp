@@ -84,10 +84,14 @@
 							<div class="cont">${sf:wiki(each.contents)}</div>
 							<div class="regDate"><fmt:formatDate value="${each.createdDate}" pattern="yyyy-MM-dd HH:mm" /></div>
 						</div>
-						<div class="commBtn">
+						<div class="commBtn" style="display: none;">
 							<c:if test="${sf:isWriter(each.writer, loginUser)}">
 							<a class="deleteAnswerBtn" data-answer-id="${each.answerId}" href="#">삭제</a>
+							 | 
 							</c:if>
+							<sec:authorize access="hasRole('ROLE_USER')">
+							<a class="recommentAnswerBtn" data-answer-id="${each.answerId}" data-answer-user-id="@${each.writer.userId}" href="#">댓글</a>
+							</sec:authorize>
 						</div>
 					</div>
 					</c:forEach>
@@ -96,13 +100,13 @@
 					</form>					
 				</div>
 				<sec:authorize access="!hasRole('ROLE_USER')">
-				<div class="pull-right">
+				<div class="pull-none">
 					<p></p>
 					<a href="/login"><input class="btn btn-primary" type="button" value="로그인" /></a>을 하면 이 글에 대한 답글을 쓸 수 있습니다.
 				</div>	
 				</sec:authorize>
 				<sec:authorize access="hasRole('ROLE_USER')">
-				<div class="form pull-right">
+				<div class="form pull-none">
 					<form:form modelAttribute="answer" action="/questions/${question.questionId}/answers" method="POST">
 						<form:textarea path="contents"  cols="75" rows="5"/>
 						<div class="button">
