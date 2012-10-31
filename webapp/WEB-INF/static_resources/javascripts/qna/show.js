@@ -48,7 +48,7 @@ $(document).ready(function(){
 	
 	function replaceNicknames(){
 		$('.cont').each(function(){
-			var cont = $(this).text();
+			var cont = $(this).html();
 			for (var key in nickNames) {
 				cont = cont.replace(new RegExp('@' + key, 'gi'), '<a href="'+nickNames[key]+'">'+key+'</a>');
 			}
