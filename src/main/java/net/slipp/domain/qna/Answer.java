@@ -27,7 +27,7 @@ import net.slipp.support.jpa.HasCreatedAndUpdatedDate;
 
 @Entity
 @EntityListeners({ CreatedAndUpdatedDateEntityListener.class })
-public class Answer implements HasCreatedAndUpdatedDate {
+public class Answer implements HasCreatedAndUpdatedDate, Comparable<Answer> {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long answerId;
@@ -50,6 +50,9 @@ public class Answer implements HasCreatedAndUpdatedDate {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "updated_date", nullable = false)
 	private Date updatedDate;
+	
+	@Column(name = "sum_like", nullable = true, columnDefinition="integer DEFAULT 0")
+	private Integer sumLike = 0;
 	
 	@ManyToOne
 	@org.hibernate.annotations.ForeignKey(name = "fk_answer_parent_id")
@@ -196,4 +199,24 @@ public class Answer implements HasCreatedAndUpdatedDate {
 			return false;
 		return true;
 	}
+
+	public Integer getSumLike() {
+		return sumLike;
+	}
+
+	public void setSumLike(Integer sumLike) {
+		this.sumLike = sumLike;
+	}
+
+	public void upRank() {
+		this.sumLike += 1;
+	}
+	
+	@Override
+	public int compareTo(Answer o) {
+		int t_ = this.sumLike.intValue();
+		int o_ = o.getSumLike().intValue();
+		return t_ < o_ ? 1 : (t_ > o_ ? -1 : 0);
+	}
+
 }

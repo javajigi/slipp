@@ -2,6 +2,7 @@ package net.slipp.domain.qna;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -44,6 +45,9 @@ import com.google.common.collect.Sets;
 @Entity
 @EntityListeners({ CreatedAndUpdatedDateEntityListener.class })
 public class Question implements HasCreatedAndUpdatedDate {
+	
+	private final int SHOW_BEST_ANSWER_RANGE = 1;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long questionId;
@@ -282,6 +286,22 @@ public class Question implements HasCreatedAndUpdatedDate {
 		Set<SocialUser> notifierUsers = newAnswers.findFacebookAnswerers();
 		notifierUsers.add(this.writer);
 		return Sets.difference(notifierUsers, Sets.newHashSet(loginUser));
+	}
+	
+	/**
+	 * 베스트 댓글 하나를 반환한다.
+	 * 
+	 * @return
+	 */
+	public Answer getBestAnswer() {
+		List<Answer> sortAnswers = null;
+		if( getAnswers() != null && getAnswers().size() > SHOW_BEST_ANSWER_RANGE ){
+			sortAnswers = Lists.newArrayList();
+			sortAnswers.addAll(getAnswers());
+			Collections.sort(sortAnswers);
+			return sortAnswers.get(0);
+		}
+		return null;
 	}
 	
 	@Override

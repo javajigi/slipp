@@ -70,4 +70,10 @@ $(document).ready(function(){
 		return contents;
 	}
 	
+	$(".likeAnswerBtn").on("click", function(){
+		var answerId = $(this).data("answer-id");
+		var $form = $('#likeAnswerForm');
+		$form.attr("action", $form.attr("action")+"/"+answerId+"/like");
+		$('#likeAnswerForm').submit();
+	});
 });
