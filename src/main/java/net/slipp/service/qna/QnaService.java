@@ -119,9 +119,11 @@ public class QnaService {
 	}
 
 	public void likeAnswer(SocialUser loginUser, Long answerId) {
-		Answer answer = answerRepository.findOne(answerId);
-		answer.upRank();
-		answerRepository.save(answer);
-		scoreLikeService.save(answer);
+		if (!scoreLikeService.alreadyLikedAnswer(answerId, loginUser.getId())) {
+			scoreLikeService.saveLikeAnswer(answerId, loginUser.getId());
+			Answer answer = answerRepository.findOne(answerId);
+			answer.upRank();
+			answerRepository.save(answer);
+		}
 	}
 }
