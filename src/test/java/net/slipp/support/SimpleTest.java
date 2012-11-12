@@ -1,5 +1,8 @@
 package net.slipp.support;
 
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
+
 import java.io.File;
 import java.io.StringWriter;
 
@@ -28,6 +31,6 @@ public class SimpleTest {
 	
 	@Test
 	public void knowOsName() throws Exception {
-		log.debug("os name : {}", System.getProperty("os.name"));
+		assertThat(System.getProperty("os.name").contains("Windows"), is(true));
 	}
 }

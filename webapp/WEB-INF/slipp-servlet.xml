@@ -20,6 +20,11 @@
 	
 	<mvc:interceptors>
 		<bean class="net.slipp.support.web.GlobalRequestAttributesInterceptor" />
+		
+		<mvc:interceptor>
+			<mvc:mapping path="/**/*.css"/>
+			<bean class="net.slipp.support.web.CssPreProcessorInterceptor" />
+		</mvc:interceptor>
 	</mvc:interceptors>
 	
 	<context:component-scan base-package="net.slipp.web">
