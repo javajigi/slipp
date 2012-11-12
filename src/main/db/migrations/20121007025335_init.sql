@@ -117,14 +117,6 @@ create table question_tag (
     primary key (question_id, tag_id)
 ) ENGINE=InnoDB;
 
-create table score_like (
-    id bigint not null auto_increment,
-    like_type enum('ANSWER','QUESTION') not null,
-    social_user_id bigint,
-    target_id bigint,
-    primary key (id)
-) ENGINE=InnoDB;
-    
 alter table answer 
     add index fk_answer_writer (writer), 
     add constraint fk_answer_writer 
