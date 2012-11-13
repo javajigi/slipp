@@ -72,31 +72,17 @@
 				</div>
 			
 				<div class="comment">
+					<c:if test="${!empty question.bestAnswer}">
+						<c:set var="each" value="${question.bestAnswer}"/>
+						<slipp:answer each="${each}" isBest="true"/>
+					</c:if>
 					<c:forEach items="${question.answers}" var="each">
-					<div class="commentList">
-						<div class="nickArea">
-							<p class='prphoto'><img src='${sf:stripHttp(each.writer.imageUrl)}' /></p>
-							<div class="nickname">
-								<div class="tester"><span class='lv'><a href="${sf:stripHttp(each.writer.profileUrl)}">${each.writer.userId}</a></span></div>
-							</div>
-						</div>
-						<div class="list">
-							<div class="cont">${sf:wiki(each.contents)}</div>
-							<div class="regDate"><fmt:formatDate value="${each.createdDate}" pattern="yyyy-MM-dd HH:mm" /></div>
-						</div>
-						<div class="commBtn" style="display: none;">
-							<c:if test="${sf:isWriter(each.writer, loginUser)}">
-							<a class="deleteAnswerBtn" data-answer-id="${each.answerId}" href="#">삭제</a>
-							 | 
-							</c:if>
-							<sec:authorize access="hasRole('ROLE_USER')">
-							<a class="recommentAnswerBtn" data-answer-id="${each.answerId}" data-answer-user-id="@${each.writer.userId}" href="#">댓글</a>
-							</sec:authorize>
-						</div>
-					</div>
+						<slipp:answer each="${each}" isBest="false"/>
 					</c:forEach>
 					<form id="deleteAnswerForm" action="/questions/${question.questionId}/answers/" method="POST">
 						<input type="hidden" name="_method" value="DELETE" />
+					</form>					
+					<form id="likeAnswerForm" action="/questions/${question.questionId}/answers/" method="POST">
 					</form>					
 				</div>
 				<sec:authorize access="!hasRole('ROLE_USER')">

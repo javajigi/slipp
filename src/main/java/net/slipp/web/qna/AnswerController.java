@@ -36,4 +36,11 @@ public class AnswerController {
 		qnaService.deleteAnswer(loginUser, questionId, answerId);
 		return "redirect:/questions/" + questionId;
 	}
+	
+	@RequestMapping(value = "/{answerId}/like", method = RequestMethod.POST)
+	public String like(@LoginUser SocialUser loginUser, @PathVariable Long questionId, @PathVariable Long answerId)
+			throws Exception {
+		qnaService.likeAnswer(loginUser, answerId);
+		return "redirect:/questions/" + questionId;
+	}
 }

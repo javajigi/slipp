@@ -15,7 +15,7 @@ public class GlobalRequestAttributesInterceptor extends HandlerInterceptorAdapte
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		request.setAttribute("loginUser", sessionService.getLoginUser());
-
+		
 		return super.preHandle(request, response, handler);
 	}
 }

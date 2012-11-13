@@ -19,7 +19,9 @@ drop table if exists question;
 drop table if exists tag;
 
 drop table if exists social_user;
-
+    
+drop table if exists score_like;
+    
 create table social_user (
     id bigint not null auto_increment,
     access_token varchar(255) not null,
