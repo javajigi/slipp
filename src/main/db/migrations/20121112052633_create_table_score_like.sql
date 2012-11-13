@@ -8,4 +8,4 @@ create table score_like (
     primary key (id)
 ) ENGINE=InnoDB;
 
-alter table answer add column sum_like (11) default 0 null after writer;
+alter table answer add column sum_like integer default 0 not null after writer;

@@ -45,8 +45,7 @@ import com.google.common.collect.Sets;
 @Entity
 @EntityListeners({ CreatedAndUpdatedDateEntityListener.class })
 public class Question implements HasCreatedAndUpdatedDate {
-	
-	private final int SHOW_BEST_ANSWER_RANGE = 10;
+	private static final int SHOW_BEST_ANSWER_RANGE = 10;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
