@@ -28,6 +28,8 @@ public class QnaServiceTest {
 	private AnswerRepository answerRepository;
 	@Mock
 	private TagService tagService;
+	@Mock
+	private ScoreLikeService scoreLikeService;
 	
 	@InjectMocks
 	private QnaService dut = new QnaService();
