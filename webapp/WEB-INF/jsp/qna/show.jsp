@@ -3,7 +3,7 @@
 <html>
 <head>
 <title>${sf:h(question.title)}</title>
-<link href="${url:resource('/stylesheets/boards.css')}" rel="stylesheet">
+<link href="${url:resource('/stylesheets/slipp.css')}" rel="stylesheet">
 <link href="${url:resource('/stylesheets/wiki-style.css')}" rel="stylesheet">
 <link href="${url:resource('/stylesheets/wiki-textile-style.css')}" rel="stylesheet">
 <link href="${url:resource('/stylesheets/wiki-imageupload-plugins.css')}" rel="stylesheet">

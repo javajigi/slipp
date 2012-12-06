@@ -6,11 +6,9 @@
 <link href="${url:resource('/stylesheets/boards.css')}" rel="stylesheet">
 </head>
 <body>
-	<slipp:header type="2" />
-
-	<div class="span8">
+	<div class="section-qna">
+		<slipp:header type="2" />
 		<slipp:tags tags="${tags}"/>
-		
 		<div class="pagination pagination-centered">
 			<ul>
 				<sl:pager page="${tags}" prefixUri="/tags"/>
