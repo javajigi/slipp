@@ -4,7 +4,7 @@
 <head>
 </head>
 <body>
-	<div class="section-qna qna">
+	<div class="section-qna">
 		<h1 class="hidden">QnA</h1>
 		<slipp:header type="1"/>
 		<div class="row-fluid">
