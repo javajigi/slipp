@@ -47,8 +47,8 @@
 .tags .tag:hover{text-decoration:none;background-color:#909090}
 .tags .tag .count{display:inline-block;padding:2px 3px;margin-left:3px;margin-right:-2px;-webkit-border-radius:3px;border-radius:3px;font-family:verdana;font-weight:bold;font-size:.8em;line-height:1.2em;color:#666;background-color:#fff;vertical-align:middle}
 .section-main{padding-bottom:60px;}
-.section-main .qna{zoom:1;position:relative;}
-.section-main .qna:before,.section-main .qna:after{content:"";display:table}
+.section-main .qna{*zoom:1;position:relative;}
+.section-main .qna:before,.section-main .qna:after{content:'';display:table;line-height:0}
 .section-main .qna:after{clear:both}
 .section-main .qna .btn-question{position:absolute;right:0;top:0}
 .section-main .qna .qna-list{margin-top:20px}
@@ -68,6 +68,7 @@
 .section-qna .qna-form .form-horizontal > fieldset{border:1px solid #ddd;padding:16px 10px}
 .section-qna .qna-form .form-horizontal .control-group{margin-bottom:5px}
 .section-qna .qna-comment{border:5px solid #eee;-webkit-border-radius:3px;border-radius:3px;padding:16px 10px}
+.flyaway{position:absolute;overflow:hidden;width:0;height:0;font:0/0 a}
 .button-qna{width:27%;float:right;margin:5px 0 10px 0}
 label.error{color:#ffa500}
 .rss{float:right;padding:0 10px}

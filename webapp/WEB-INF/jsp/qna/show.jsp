@@ -9,7 +9,6 @@
 <link href="${url:resource('/stylesheets/wiki-imageupload-plugins.css')}" rel="stylesheet">
 <link href="${url:resource('/stylesheets/sh/shCoreDefault.css')}" rel="stylesheet">
 <link href="${url:resource('/stylesheets/sh/shThemeEclipse.css')}" rel="stylesheet">
-
 </head>
 <body>
 
@@ -18,45 +17,44 @@
 	<div class="row-fluid">
 		<div class="span9 qna-view">
 			<div class="content">
-				<div class="nickArea">
-					<p class='nick'>
-						<img src='${sf:stripHttp(question.writer.imageUrl)}' width="50" height="50" />&nbsp;&nbsp;
-						<a href="${sf:stripHttp(question.writer.profileUrl)}">${question.writer.userId}</a></p>
-					<p class="regDate"><fmt:formatDate value="${question.createdDate}" pattern="yyyy-MM-dd HH:mm" /></p>
-				</div>
-				<div class="contents">
-					<strong class="subject">${sf:h(question.title)}</strong>
-					<div>${sf:wiki(question.contents)}</div>
-				</div>
-				<div class="follow">
-					<p class="tags">
+				<article class="article">
+					<div class="auth-info">
+						<img src='${sf:stripHttp(question.writer.imageUrl)}' width="50" height="50" class="author-thumb" />
+						<a href="${sf:stripHttp(question.writer.profileUrl)}" class="author-name">${question.writer.userId}</a>
+						<div class="time">
+							<fmt:formatDate value="${question.createdDate}" pattern="yyyy-MM-dd HH:mm" />  
+						</div>
+					</div>
+					<h1 class="subject">${sf:h(question.title)}</h1>
+					<div class="text">${sf:wiki(question.contents)}</div>
+					<div class="tags">
+						<ul>
 						<c:forEach items="${question.tags}" var="tag">
-						<a href="/questions/tagged/${tag.name}"><strong>${tag.name}</strong></a>	
-						</c:forEach> 
-					</p>
-					<p class="count">
-						<span class="answerNum">답변수 <strong>${question.answerCount}</strong></span>
-					</p>
-				</div>
-
-				<div class="snsIcon">
-					<div class="facebook">
-						<div id="fb-root"></div>
-						<script src="https://connect.facebook.net/en_US/all.js#xfbml=1"></script>
-						<fb:like href="${slippUrl}/questions/${question.questionId}"
-							send="true" layout="button_count" width="100" show_faces="true"
-							font=""></fb:like>
+							<li>
+								<a href="/questions/tagged/${tag}" class="tag">${tag.name}</a>
+							</li>
+						</c:forEach>
+						</ul>
 					</div>
-					<div class="googleplus">
-						<g:plusone></g:plusone>
+					<div class="snsIcon">
+						<div class="facebook">
+							<div id="fb-root"></div>
+							<script src="https://connect.facebook.net/en_US/all.js#xfbml=1"></script>
+							<fb:like href="${slippUrl}/questions/${question.questionId}"
+								send="true" layout="button_count" width="100" show_faces="true"
+								font=""></fb:like>
+						</div>
+						<div class="googleplus">
+							<g:plusone></g:plusone>
+						</div>
+						<div class="twitter">
+							<a href="https://twitter.com/share" class="twitter-share-button"
+								data-count="horizontal">Tweet</a>
+							<script type="text/javascript"
+								src="https://platform.twitter.com/widgets.js"></script>
+						</div>
 					</div>
-					<div class="twitter">
-						<a href="https://twitter.com/share" class="twitter-share-button"
-							data-count="horizontal">Tweet</a>
-						<script type="text/javascript"
-							src="https://platform.twitter.com/widgets.js"></script>
-					</div>
-				</div>
+				</article>
 				<div class="button-qna">
 					<c:if test="${sf:isWriter(question.writer, loginUser)}">
 					<a href="/questions/${question.questionId}/form"><button class="btn btn-primary">수정하기</button></a>
@@ -64,12 +62,15 @@
 					</c:if>
 					<a href="/questions"><button class="btn pull-right">목록으로</button></a>				
 				</div>
-				<form id="deleteQuestionForm" action="/questions/${question.questionId}" method="POST">
+				<form id="deleteQuestionForm" action="/questions/${question.questionId}" method="POST" class="flyaway">
 					<input type="hidden" name="_method" value="DELETE" />
-				</form>					
+				</form>
 			</div>
 		
 			<div class="qna-comment">
+				<p class="count">
+					<span class="answerNum">답변수 <strong>${question.answerCount}</strong></span>
+				</p>
 				<ul class="list">
 					<c:if test="${!empty question.bestAnswer}">
 						<c:set var="each" value="${question.bestAnswer}"/>
@@ -79,11 +80,11 @@
 						<slipp:answer each="${each}" isBest="false"/>
 					</c:forEach>
 				</ul>
-				<form id="deleteAnswerForm" action="/questions/${question.questionId}/answers/" method="POST">
+				<form id="deleteAnswerForm" action="/questions/${question.questionId}/answers/" method="POST" class="flyaway">
 					<input type="hidden" name="_method" value="DELETE" />
-				</form>					
-				<form id="likeAnswerForm" action="/questions/${question.questionId}/answers/" method="POST">
-				</form>		
+				</form>
+				<form id="likeAnswerForm" action="/questions/${question.questionId}/answers/" method="POST" class="flyaway">
+				</form>
 				<sec:authorize access="!hasRole('ROLE_USER')">
 					의견을 남기고 싶다면, <a href="/login" class="btn btn-primary btn-small">로그인</a>
 				</sec:authorize>
@@ -98,7 +99,7 @@
 					</form:form>
 				</sec:authorize>
 			</div>
-		</div>			
+		</div>
 		<div class="span3 qna-side">
 			<slipp:side-tags tags="${tags}"/>
 		</div>
