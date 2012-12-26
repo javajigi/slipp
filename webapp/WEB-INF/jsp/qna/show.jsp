@@ -3,7 +3,6 @@
 <html>
 <head>
 <title>${sf:h(question.title)}</title>
-<link href="${url:resource('/stylesheets/slipp.css')}" rel="stylesheet">
 <link href="${url:resource('/stylesheets/wiki-style.css')}" rel="stylesheet">
 <link href="${url:resource('/stylesheets/wiki-textile-style.css')}" rel="stylesheet">
 <link href="${url:resource('/stylesheets/wiki-imageupload-plugins.css')}" rel="stylesheet">
@@ -18,50 +17,57 @@
 		<div class="span9 qna-view">
 			<div class="content">
 				<article class="article">
-					<div class="auth-info">
-						<img src='${sf:stripHttp(question.writer.imageUrl)}' width="50" height="50" class="author-thumb" />
-						<a href="${sf:stripHttp(question.writer.profileUrl)}" class="author-name">${question.writer.userId}</a>
-						<div class="time">
-							<fmt:formatDate value="${question.createdDate}" pattern="yyyy-MM-dd HH:mm" />  
+					<div class="wrap">
+						<div class="auth-info">
+							<div class="author-thumb">
+								<img src='${sf:stripHttp(question.writer.imageUrl)}' class="user-thumb" alt="" />
+							</div>
+							<div class="author-text">
+								<a href="${sf:stripHttp(question.writer.profileUrl)}" class="author-name">${question.writer.userId}</a>
+								<span class="time">
+									<fmt:formatDate value="${question.createdDate}" pattern="yyyy-MM-dd HH:mm" />  
+								</span>
+							</div>
 						</div>
-					</div>
-					<h1 class="subject">${sf:h(question.title)}</h1>
-					<div class="text">${sf:wiki(question.contents)}</div>
-					<div class="tags">
-						<ul>
-						<c:forEach items="${question.tags}" var="tag">
-							<li>
-								<a href="/questions/tagged/${tag}" class="tag">${tag.name}</a>
-							</li>
-						</c:forEach>
-						</ul>
-					</div>
-					<div class="snsIcon">
-						<div class="facebook">
-							<div id="fb-root"></div>
-							<script src="https://connect.facebook.net/en_US/all.js#xfbml=1"></script>
-							<fb:like href="${slippUrl}/questions/${question.questionId}"
-								send="true" layout="button_count" width="100" show_faces="true"
-								font=""></fb:like>
-						</div>
-						<div class="googleplus">
-							<g:plusone></g:plusone>
-						</div>
-						<div class="twitter">
-							<a href="https://twitter.com/share" class="twitter-share-button"
-								data-count="horizontal">Tweet</a>
-							<script type="text/javascript"
-								src="https://platform.twitter.com/widgets.js"></script>
+						<div class="doc">
+							<h1 class="subject">${sf:h(question.title)}</h1>
+							<div class="tags">
+								<ul>
+								<c:forEach items="${question.tags}" var="tag">
+									<li>
+										<a href="/questions/tagged/${tag}" class="tag">${tag.name}</a>
+									</li>
+								</c:forEach>
+								</ul>
+							</div>
+							<div class="text">${sf:wiki(question.contents)}</div>
+							<div class="share">
+								<div class="facebook sns">
+									<div id="fb-root"></div>
+									<script src="https://connect.facebook.net/en_US/all.js#xfbml=1"></script>
+									<fb:like href="${slippUrl}/questions/${question.questionId}"
+										send="true" layout="button_count" width="100" show_faces="true"
+										font=""></fb:like>
+								</div>
+								<div class="googleplus sns">
+									<g:plusone></g:plusone>
+								</div>
+								<div class="twitter sns">
+									<a href="https://twitter.com/share" class="twitter-share-button"
+										data-count="horizontal">Tweet</a>
+									<script type="text/javascript"
+										src="https://platform.twitter.com/widgets.js"></script>
+								</div>
+							</div>
+							<div class="util">
+								<c:if test="${sf:isWriter(question.writer, loginUser)}">
+								<a href="/questions/${question.questionId}/form" class="btn">수정하기</a>
+								<a id="deleteQuestionBtn" href="#" class="btn btn-danger">삭제하기</a>
+								</c:if>	
+							</div>
 						</div>
 					</div>
 				</article>
-				<div class="button-qna">
-					<c:if test="${sf:isWriter(question.writer, loginUser)}">
-					<a href="/questions/${question.questionId}/form"><button class="btn btn-primary">수정하기</button></a>
-					<a id="deleteQuestionBtn" href="#"><button class="btn btn-primary">삭제하기</button></a>
-					</c:if>
-					<a href="/questions"><button class="btn pull-right">목록으로</button></a>				
-				</div>
 				<form id="deleteQuestionForm" action="/questions/${question.questionId}" method="POST" class="flyaway">
 					<input type="hidden" name="_method" value="DELETE" />
 				</form>
