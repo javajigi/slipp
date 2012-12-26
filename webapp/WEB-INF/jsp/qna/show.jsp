@@ -10,17 +10,14 @@
 <link href="${url:resource('/stylesheets/sh/shCoreDefault.css')}" rel="stylesheet">
 <link href="${url:resource('/stylesheets/sh/shThemeEclipse.css')}" rel="stylesheet">
 
-<style type="text/css">
-.markItUpEditor { height:150px; }
-</style>
 </head>
 <body>
 
 <div class="section-qna">
 	<slipp:header type="1"/>
 	<div class="row-fluid">
-		<div class="span10">
-			<div class="forumView">
+		<div class="span9 qna-view">
+			<div class="content">
 				<div class="nickArea">
 					<p class='nick'>
 						<img src='${sf:stripHttp(question.writer.imageUrl)}' width="50" height="50" />&nbsp;&nbsp;
@@ -72,41 +69,41 @@
 				</form>					
 			</div>
 		
-			<div class="comment">
-				<c:if test="${!empty question.bestAnswer}">
-					<c:set var="each" value="${question.bestAnswer}"/>
-					<slipp:answer each="${each}" isBest="true"/>
-				</c:if>
-				<c:forEach items="${question.answers}" var="each">
-					<slipp:answer each="${each}" isBest="false"/>
-				</c:forEach>
+			<div class="qna-comment">
+				<ul class="list">
+					<c:if test="${!empty question.bestAnswer}">
+						<c:set var="each" value="${question.bestAnswer}"/>
+						<slipp:answer each="${each}" isBest="true"/>
+					</c:if>
+					<c:forEach items="${question.answers}" var="each">
+						<slipp:answer each="${each}" isBest="false"/>
+					</c:forEach>
+				</ul>
 				<form id="deleteAnswerForm" action="/questions/${question.questionId}/answers/" method="POST">
 					<input type="hidden" name="_method" value="DELETE" />
 				</form>					
 				<form id="likeAnswerForm" action="/questions/${question.questionId}/answers/" method="POST">
-				</form>					
+				</form>		
+				<sec:authorize access="!hasRole('ROLE_USER')">
+					의견을 남기고 싶다면, <a href="/login" class="btn btn-primary btn-small">로그인</a>
+				</sec:authorize>
+				<sec:authorize access="hasRole('ROLE_USER')">
+					<form:form modelAttribute="answer" action="/questions/${question.questionId}/answers" method="POST" cssClass="form-horizontal">
+						<fieldset>
+							<form:textarea path="contents"  cols="80" rows="5"/>
+							<div class="pull-right">
+								<button id="answerBtn" type="submit" class="btn btn-success">답변하기</button>
+							</div>
+						</fieldset>
+					</form:form>
+				</sec:authorize>
 			</div>
-			<sec:authorize access="!hasRole('ROLE_USER')">
-			<div class="pull-none">
-				<p></p>
-				<a href="/login"><input class="btn btn-primary" type="button" value="로그인" /></a>을 하면 이 글에 대한 답글을 쓸 수 있습니다.
-			</div>	
-			</sec:authorize>
-			<sec:authorize access="hasRole('ROLE_USER')">
-			<div class="form pull-none">
-				<form:form modelAttribute="answer" action="/questions/${question.questionId}/answers" method="POST">
-					<form:textarea path="contents"  cols="75" rows="5"/>
-					<div class="button">
-						<button id="answerBtn" type="submit" class="btn btn-primary pull-right">답변하기</button>
-					</div>					
-				</form:form>
-			</div>				
-			</sec:authorize>
 		</div>			
-
-		<slipp:side-tags tags="${tags}"/>
+		<div class="span3 qna-side">
+			<slipp:side-tags tags="${tags}"/>
+		</div>
 	</div>
-
+</div>
 <script src="https://ajax.microsoft.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>
 <script type="text/javascript" src="${url:resource('/javascripts/jquery.markitup.js')}"></script>
 <script type="text/javascript" src="${url:resource('/javascripts/sh/shCore.js')}"></script>

@@ -6,7 +6,8 @@ taglib prefix="sl" uri="http://www.slipp.net/tags"%><%@
 taglib prefix="slipp" tagdir="/WEB-INF/tags" %><%@
 attribute name="each" required="true" rtexprvalue="true" type="net.slipp.domain.qna.Answer" description=" 목록"%><%@
 attribute name="isBest" required="true" rtexprvalue="true" type="java.lang.Boolean" description=" 목록" %>
-<div class="commentList" <c:if test="${isBest}">style="background-color: #efefaa"</c:if>>
+
+<li <c:if test="${isBest}">class="best"</c:if>>
 	<div class="scoreArea" style="float:left;width: 40px;margin-top: 14px;text-align: center">
 		<span style="color:#808185;font-weight: bold;font-size: 240%;">${each.sumLike}</span>
 	</div>
@@ -32,4 +33,4 @@ attribute name="isBest" required="true" rtexprvalue="true" type="java.lang.Boole
 		<a class="likeAnswerBtn" data-answer-id="${each.answerId}" href="#" alt="${each.sumLike}">좋아요</a>
 		</sec:authorize>
 	</div>
-</div>
+</li>

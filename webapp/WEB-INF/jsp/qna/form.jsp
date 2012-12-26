@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<div class="section-qna qna">
+<div class="section-qna">
 	<slipp:header type="1"/>
 	<div class="row-fluid">
 		<div class="span9 qna-form">
@@ -31,8 +31,7 @@
 					</div>
 					
 					<div class="pull-right">
-						<button id="confirmBtn" type="submit" class="btn btn-primary">질문하기</button>
-						<a href="/questions" class="btn">목록보기</a>
+						<button id="confirmBtn" type="submit" class="btn btn-success">질문하기</button>
 					</div>
 				</fieldset>				
 			</form:form>
