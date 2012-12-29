@@ -1,0 +1,49 @@
+.tags
+	ul
+		list-style: none
+		margin: 0
+		padding: 0
+	li
+		display: inline
+		list-style: none
+	.tag
+		display: inline-block
+		margin: .2em 0
+		padding: 4px 8px 4px 0
+		border-radius: 3px
+		color: #fff
+		background-color: #aaa
+		&:before
+			content: '•'
+			display: inline-block
+			color: #fff
+			font-size: 1.2em
+			vertical-align: middle
+			text-shadow: -1px -1px 0 #000
+		&:hover
+			text-decoration: none
+			background-color: darken(@background-color, 10)
+		.count
+			display: inline-block
+			padding: 2px 3px
+			margin-left: 3px
+			margin-right: -2px
+			border-radius: 3px
+			font-family: verdana
+			font-weight: bold
+			font-size: .8em
+			line-height: 1.2em
+			color: #666
+			background-color: #fff
+			vertical-align: middle
+	// in List & View
+	.qna-view .content .doc &,
+	.qna-list .list .main &
+		.tag
+			padding-top: 1px
+			padding-bottom: 1px
+	.qna-view .content .doc &
+		margin-top: 0
+		margin-bottom: 1em
+	.qna-list .list .main &
+		margin-top: .4em

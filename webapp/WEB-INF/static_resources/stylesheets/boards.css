@@ -1,70 +1,65 @@
-.rss { float:right; padding: 0 10px}
-
-/* forum list */
-.forumList { float:left; width:100%; height:auto; border-top:3px solid #6f6f6f; margin-bottom:10px }
-.forumList .forum { width:95%; height:auto; overflow:hidden; border-bottom:1px solid #dbdbdb; padding:17px 15px 8px 15px; }
-.forumList .forum .list  { float:left;width:500px; margin:0 0 0 0 }
-.forumList .forum .list .subject { display:block; width:500px; overflow:hidden;height:18px;margin-bottom:10px;text-overflow:ellipsis;-o-text-overflow:ellipsis; color:#717171 }
-.forumList .forum .list .subject a { color:#717171 }
-.forumList .forum .list .subject,x:-moz-any-link,x:default{white-space:normal;word-wrap:break-word} /* Firefox 에서 줄 바꿈이 가능하도록 변경 */
-*+html .forumList .forum .list .subject {white-space:nowrap} /* 위 행이 IE7에도 적용되므로 IE7에만 줄 바꿈이 불가능하도록 다시 복원 */
-.forumList .forum .nickArea { float:left; width:130px; text-align:right;}
-.forumList .forum .regDate { float:right; width:130px; text-align:right; font-size:12px; font-family:verdana; }
-.forumList .list .cont { display:block; height:35px; margin-bottom:8px; overflow:hidden; }
-.forumList .count .tags strong { color:#5ebeda; margin-right:5px; font-size:16px }
-.forumList .count .countAnswer { float:right; padding-left:19px; color:#545454; margin-right:5px; font-size:14px }
-.forumList .count .countAnswer strong { color:#fe6e5f; font-size:14px }
-
-/* forum view */
-.forumView { float:left; width:95%; height:auto; border-top:3px solid #6f6f6f; padding:10px 24px 0px 15px }
-.forumView .nickArea { float:left; width:100%; border-bottom:1px solid #6f6f6f;}
-.forumView .nick { float:left; color:#4f4b4b }
-.forumView .regDate { float:right; font-size:14px; font-family:verdana; }
-.forumView .contents { float:left; width:100%; margin-top:20px; word-break:break-all; word-wrap:break-word; color:#5c5c5c; }
-.forumView .contents img { max-width:100%; }
-.forumView .contents .subject { display:block; margin-bottom:20px; font-size:20px; color:#5c5c5c }
-.forumView .contents ul { list-style-type:disc; padding-left:30px;  }
-.forumView .contents ol { list-style-type:decimal;  }
-
-.follow { width:100%; padding:30px 0 10px 0; overflow:hidden; border-bottom:1px solid #6f6f6f;}
-.follow .tags { float:left; color:#5ebeda; margin:0 3px 0 10px; font-size:20px }
-.follow .count { float:right; margin:2px 0 0 10px; color:#4b4b4b; }
-.follow .count strong { color:#fe6b12; }
-
-.snsIcon { width:73%; float:left; margin:5px 0 10px 0;}
-.snsIcon .twitter { float:left; }
-.snsIcon .googleplus { float:left; }
-.snsIcon .facebook { float:left; }
-
-.button-qna { width:27%; float:right; margin:5px 0 10px 0;}
-
-.comment { width:885px; height:auto; overflow:hidden; border:1px solid #e2e2e2; padding:0 24px 0 19px; }
-.comment .commentList { float:left; width:885px; height:auto; overflow:hidden; padding:20px 0 20px 0; border-bottom:1px solid #e2e2e2; margin-bottom:-1px; }
-.comment .commentList .nickArea { float:left; width:140px; padding-right:15px  }
-.comment .commentList .prphoto { float:left; width:50px; height:50px; margin:0 8px 0 0  }
-.comment .commentList .prphoto img {width:48px; height:48px; border:1px solid #dddada }
-.comment .commentList .nick { display:block; color:#4f4b4b }
-.comment .commentList .list  { float:left;width:500px;}
-.comment .commentList .list_block  { float:left;width:650px; color:#b8b8b8; font-weight:bold }
-.comment .commentList .cont { width:620px;  font-size:14px; line-height:26px; word-break:break-all; word-wrap:break-word; color:#333  }
-.comment .commentList .cont a { color:#6d8da5 }
-.comment .commentList .cont a:hover { color:#6d8da5; text-decoration:underline }
-.comment .commentList .regDate { width:620px; font-size:11px; color:#333; font-family:verdana }
-.comment .commentList .commBtn { float:left; margin-top:18px; margin-left: 30px}
-.commBtn { float:left; margin-top:10px; }
-
-.tags ul {
-	margin: 0;
-	padding: 10px 0 0 0;
-	list-style: none;
-}
-
-.tags li {
-	margin: 5px 0 5px 0;
-	padding: 5px 0 5px 0;
-	border-bottom: 1px dashed #D1D1D1;
-}
-
-label.error {
-  color:orange;
-}
+.qna{zoom:1;padding-bottom:60px;}
+.qna:before,.qna:after{content:"";display:table}
+.qna:after{clear:both}
+.qna .qna-list .list{list-style:none;margin:0;padding:0;}
+.qna .qna-list .list > li{margin:16px 0;border:5px solid #eee;-webkit-border-radius:3px;border-radius:3px;}
+.qna .qna-list .list > li:first-child{margin-top:0}
+.qna .qna-list .list > li .wrap{border:1px solid #ddd}
+.qna .qna-list .list .main{padding:16px 10px 10px;}
+.qna .qna-list .list .main .subject{display:block;font-size:1.4em;line-height:1.4em;}
+.qna .qna-list .list .main .subject a{color:#333}
+.qna .qna-list .list .main .tags{margin-top:.4em;}
+.qna .qna-list .list .main .tags .tag{padding-top:1px;padding-bottom:1px}
+.qna .qna-list .list .reply{float:left;color:#999;}
+.qna .qna-list .list .reply .point{color:#666}
+.qna .qna-list .list .sub{padding:10px;border-top:1px solid #f5f5f5;background-color:#fafafa;}
+.qna .qna-list .list .sub .auth-info{text-align:right;}
+.qna .qna-list .list .sub .auth-info .time{color:#999;font-size:.9em}
+.qna .qna-list .list .sub .auth-info .author{font-weight:bold}
+.forumView{float:left;width:95%;height:auto;border-top:3px solid #6f6f6f;padding:10px 24px 0 15px;}
+.forumView .nickArea{float:left;width:100%;border-bottom:1px solid #6f6f6f}
+.forumView .nick{float:left;color:#4f4b4b}
+.forumView .regDate{float:right;font-size:14px;font-family:verdana}
+.forumView .contents{float:left;width:100%;margin-top:20px;word-break:break-all;word-wrap:break-word;color:#5c5c5c;}
+.forumView .contents ul{list-style-type:disc;padding-left:30px}
+.forumView .contents ol{list-style-type:decimal}
+.forumView .contents img{max-width:100%}
+.forumView .contents .subject{display:block;margin-bottom:20px;font-size:20px;color:#5c5c5c}
+.comment{width:885px;height:auto;overflow:hidden;border:1px solid #e2e2e2;padding:0 24px 0 19px;}
+.comment .commentList{float:left;width:885px;height:auto;overflow:hidden;padding:20px 0 20px 0;border-bottom:1px solid #e2e2e2;margin-bottom:-1px;}
+.comment .commentList .nickArea{float:left;width:140px;padding-right:15px}
+.comment .commentList .prphoto{float:left;width:50px;height:50px;margin:0 8px 0 0}
+.comment .commentList .prphoto img{width:48px;height:48px;border:1px solid #dddada}
+.comment .commentList .nick{display:block;color:#4f4b4b}
+.comment .commentList .list{float:left;width:500px}
+.comment .commentList .list_block{float:left;width:650px;color:#b8b8b8;font-weight:bold}
+.comment .commentList .cont{width:620px;font-size:14px;line-height:26px;word-break:break-all;word-wrap:break-word;color:#333}
+.comment .commentList .cont a{color:#6d8da5;}
+.comment .commentList .cont a:hover{color:#6d8da5;text-decoration:underline}
+.comment .commentList .regDate{width:620px;font-size:11px;color:#333;font-family:verdana}
+.comment .commentList .commBtn{float:left;margin-top:18px;margin-left:30px}
+.commBtn{float:left;margin-top:10px}
+.navbar .brand abbr[title]{font-family:Constantia,"Lucida Bright",Lucidabright,"Lucida Serif",Lucida,"DejaVu Serif","Bitstream Vera Serif","Liberation Serif",Georgia,serif;font-weight:bold;border-bottom:none;cursor:inherit}
+.navbar .brand .sub{display:inline;font-size:.8em;letter-spacing:-1px;}
+@media (max-width: 480px){.navbar .brand .sub{display:none}
+}.tags ul{list-style:none;margin:0;padding:0}
+.tags li{display:inline;list-style:none}
+.tags .tag{display:inline-block;margin:.2em 0;padding:4px 8px 4px 0;-webkit-border-radius:3px;border-radius:3px;color:#fff;background-color:#aaa;}
+.tags .tag:before{content:'•';display:inline-block;font-size:1.2em;vertical-align:middle;text-shadow:-1px -1px 0 #000}
+.tags .tag:hover{text-decoration:none;background-color:#909090}
+.tags .tag .count{display:inline-block;padding:2px 3px;margin-left:3px;margin-right:-2px;-webkit-border-radius:3px;border-radius:3px;font-family:verdana;font-weight:bold;font-size:.8em;line-height:1.2em;color:#666;background-color:#fff;vertical-align:middle}
+.section-main .qna{position:relative;}
+.section-main .qna .btn-question{position:absolute;right:0;top:0}
+.section-main .qna .qna-list{margin-top:20px}
+.section-qna .qna-side .tags li{display:block}
+.button-qna{width:27%;float:right;margin:5px 0 10px 0}
+label.error{color:#ffa500}
+.rss{float:right;padding:0 10px}
+.follow{width:100%;padding:30px 0 10px 0;overflow:hidden;border-bottom:1px solid #6f6f6f;}
+.follow .tags{float:left;color:#5ebeda;margin:0 3px 0 10px;font-size:20px}
+.follow .count{float:right;margin:2px 0 0 10px;color:#4b4b4b;}
+.follow .count strong{color:#fe6b12}
+.snsIcon{width:73%;float:left;margin:5px 0 10px 0;}
+.snsIcon .twitter{float:left}
+.snsIcon .googleplus{float:left}
+.snsIcon .facebook{float:left}
