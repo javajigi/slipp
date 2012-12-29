@@ -22,16 +22,15 @@ $(document).ready(function(){
 	var deleteAnswerUrlPrefix = $deleteAnswerForm.attr("action");
 	$deleteAnswerBtn.click(function() {
 		var deleteAnswerUrl = deleteAnswerUrlPrefix + $(this).data("answerId");
-		$deleteAnswerForm.attr("action", deleteAnswerUrl);
-		$deleteAnswerForm.submit();
+
+		if ( confirm('정말 삭제하시겠습니까?') ) {
+			$deleteAnswerForm.attr("action", deleteAnswerUrl);
+			$deleteAnswerForm.submit();
+		}
+
 		return false;
 	});
-	
-	$(".commentList").hover(function(){
-		$(this).find(".commBtn").show('fast');
-	}, function(){
-		$(this).find(".commBtn").hide('fast');
-	});
+
 	$(".recommentAnswerBtn").on('click', function(){
 		var orgUserId = $(this).data('answer-user-id');
 		var contents = arroundSpace( $('#contents').val(), orgUserId );

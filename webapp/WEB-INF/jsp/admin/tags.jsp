@@ -3,7 +3,7 @@
 <html>
 <head>
 <title>태그관리 :: SLiPP</title>
-<link href="${url:resource('/stylesheets/boards.css')}" rel="stylesheet">
+<link href="${url:resource('/stylesheets/slipp.css')}" rel="stylesheet">
 </head>
 <body>
 	<slipp:header type="3" />

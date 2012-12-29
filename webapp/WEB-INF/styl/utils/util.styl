@@ -1,0 +1,23 @@
+// UTIL
+
+// # Clear-fix
+// : ..
+clearfix()
+	*zoom: 1;
+	&:before,
+	&:after
+		content: ''
+		display: table
+		line-height: 0
+	&:after
+		clear: both
+
+// # Fly-away
+// : for invisible Element (like hidden form)  
+flyaway()
+	position: absolute
+	overflow: hidden
+	width: 0
+	height: 0
+	font: 0/0 a
+
