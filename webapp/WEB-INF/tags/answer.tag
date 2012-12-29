@@ -9,28 +9,32 @@ attribute name="isBest" required="true" rtexprvalue="true" type="java.lang.Boole
 
 <li <c:if test="${isBest}">class="best"</c:if>>
 	<div class="scoreArea" style="float:left;width: 40px;margin-top: 14px;text-align: center">
-		<span style="color:#808185;font-weight: bold;font-size: 240%;">${each.sumLike}</span>
+		<span style="color:#808185;font-weight: bold;font-size: 240%;"></span>
 	</div>
-	<div class="nickArea">
-		<p class='prphoto'><img src='${sf:stripHttp(each.writer.imageUrl)}' /></p>
-		<div class="nickname">
-			<div class="tester"><span class='lv'><a href="${sf:stripHttp(each.writer.profileUrl)}">${each.writer.userId}</a></span></div>
+	<div class="auth-info">
+		<div class="author-thumb">
+			<img src='${sf:stripHttp(each.writer.imageUrl)}' class="user-thumb" alt="" />
+		</div>
+		<div class="author-text">
+			<a href="${sf:stripHttp(each.writer.profileUrl)}" class="author-name">${each.writer.userId}</a>
+			<span class="time">
+				<fmt:formatDate value="${each.createdDate}" pattern="yyyy-MM-dd HH:mm" />
+			</span>
+			<div class="likeAnswerBtn like" data-answer-id="${each.answerId}">
+				<span class="star">★</span><strong class="like-count">${each.sumLike}</strong>
+			</div>
 		</div>
 	</div>
-	<div class="list">
-		<div class="cont">${sf:wiki(each.contents)}</div>
-		<div class="regDate"><fmt:formatDate value="${each.createdDate}" pattern="yyyy-MM-dd HH:mm" /></div>
-	</div>
-	<div class="commBtn" style="display: none;">
-		<c:if test="${sf:isWriter(each.writer, loginUser)}">
-		<a class="deleteAnswerBtn" data-answer-id="${each.answerId}" href="#">삭제</a>
-		 | 
-		</c:if>
-		
-		<sec:authorize access="hasRole('ROLE_USER')">
-		<a class="recommentAnswerBtn" data-answer-id="${each.answerId}" data-answer-user-id="@${each.writer.userId}" href="#">댓글</a>
-		 | 
-		<a class="likeAnswerBtn" data-answer-id="${each.answerId}" href="#" alt="${each.sumLike}">좋아요</a>
-		</sec:authorize>
+	<div class="doc">
+ 		<div class="text">${sf:wiki(each.contents)}</div>
+		<div class="util">
+			<a class="likeAnswerBtn btn btn-like" data-answer-id="${each.answerId}" href="#" alt="${each.sumLike}"><span class="star">★</span> 공감</a>
+			<c:if test="${sf:isWriter(each.writer, loginUser)}">
+			<a class="deleteAnswerBtn btn btn-danger" data-answer-id="${each.answerId}" href="#">삭제</a>
+			</c:if>
+			<sec:authorize access="hasRole('ROLE_USER')">
+			<a class="recommentAnswerBtn btn btn-info" data-answer-id="${each.answerId}" data-answer-user-id="@${each.writer.userId}" href="#">언급하기</a>
+			</sec:authorize>
+		</div>	
 	</div>
 </li>

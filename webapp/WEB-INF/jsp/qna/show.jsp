@@ -25,7 +25,7 @@
 							<div class="author-text">
 								<a href="${sf:stripHttp(question.writer.profileUrl)}" class="author-name">${question.writer.userId}</a>
 								<span class="time">
-									<fmt:formatDate value="${question.createdDate}" pattern="yyyy-MM-dd HH:mm" />  
+									<fmt:formatDate value="${question.createdDate}" pattern="yyyy-MM-dd HH:mm" />
 								</span>
 							</div>
 						</div>
@@ -46,7 +46,7 @@
 									<div id="fb-root"></div>
 									<script src="https://connect.facebook.net/en_US/all.js#xfbml=1"></script>
 									<fb:like href="${slippUrl}/questions/${question.questionId}"
-										send="true" layout="button_count" width="100" show_faces="true"
+									git	send="true" layout="button_count" width="100" show_faces="true"
 										font=""></fb:like>
 								</div>
 								<div class="googleplus sns">
@@ -61,8 +61,8 @@
 							</div>
 							<div class="util">
 								<c:if test="${sf:isWriter(question.writer, loginUser)}">
-								<a href="/questions/${question.questionId}/form" class="btn">수정하기</a>
-								<a id="deleteQuestionBtn" href="#" class="btn btn-danger">삭제하기</a>
+								<a href="/questions/${question.questionId}/form" class="btn">수정</a>
+								<a id="deleteQuestionBtn" href="#" class="btn btn-danger">삭제</a>
 								</c:if>	
 							</div>
 						</div>
@@ -74,9 +74,7 @@
 			</div>
 		
 			<div class="qna-comment">
-				<p class="count">
-					<span class="answerNum">답변수 <strong>${question.answerCount}</strong></span>
-				</p>
+				<p class="count"><strong>${question.answerCount}</strong>개의 답변</p>
 				<ul class="list">
 					<c:if test="${!empty question.bestAnswer}">
 						<c:set var="each" value="${question.bestAnswer}"/>

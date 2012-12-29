@@ -3,7 +3,6 @@
 <html>
 <head>
 <title>태그관리 :: SLiPP</title>
-<link href="${url:resource('/stylesheets/boards.css')}" rel="stylesheet">
 </head>
 <body>
 	<div class="section-qna">

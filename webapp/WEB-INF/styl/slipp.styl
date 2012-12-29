@@ -3,7 +3,6 @@
 @import "utils/util"
 @import "partials/list"
 @import "partials/view"
-@import "partials/comment"
 @import "partials/navbar"
 @import "partials/tag"
 @import "sections/main"
@@ -51,3 +50,17 @@ label.error
 	.facebook
 		float: left
 
+@media screen-phone
+	.navbar-fixed-top
+		margin-bottom: 8px
+		.container
+			margin-left: 0
+			margin-right: 0
+	.container
+		margin-left: -10px
+		margin-right: -10px
+	.subnav
+		.nav
+			margin-left: 5px
+
+			margin-bottom: 8px
