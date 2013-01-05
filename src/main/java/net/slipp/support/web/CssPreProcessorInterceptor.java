@@ -41,14 +41,19 @@ public class CssPreProcessorInterceptor extends HandlerInterceptorAdapter {
 		return "DEVELOPMENT".equals(environment);
 	}
 	
-	private void runStylus() throws IOException {
-		File file = new File("./webapp/WEB-INF/");
-		ProcessBuilder pb = new ProcessBuilder(file.getAbsolutePath() + "/" + shellFileName());
-		pb.directory(new File(file.getAbsolutePath()));
-		Process process = pb.start();
-		StringWriter writer = new StringWriter();
-		IOUtils.copy(process.getInputStream(), writer, "UTF-8");
-		log.debug(writer.toString());
+	private void runStylus() {
+		try {
+			File file = new File("./webapp/WEB-INF/");
+			ProcessBuilder pb = new ProcessBuilder(file.getAbsolutePath() + "/" + shellFileName());
+			log.debug("stylus file path : {}", file.getAbsolutePath());
+			pb.directory(new File(file.getAbsolutePath()));
+			Process process = pb.start();
+			StringWriter writer = new StringWriter();
+			IOUtils.copy(process.getInputStream(), writer, "UTF-8");
+			log.debug(writer.toString());
+		} catch (Exception e) {
+			log.warn("cannot find styl.sh file!");
+		}
 	}
 	
 	private String shellFileName() {
