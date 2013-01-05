@@ -61,9 +61,10 @@
 							</div>
 							<div class="util">
 								<c:if test="${sf:isWriter(question.writer, loginUser)}">
-								<a href="/questions/${question.questionId}/form" class="btn">수정</a>
+								<a href="/questions/${question.questionId}/form" class="btn btn-primary">수정</a>
 								<a id="deleteQuestionBtn" href="#" class="btn btn-danger">삭제</a>
 								</c:if>	
+								<a href="/questions"><button class="btn">목록으로</button></a>
 							</div>
 						</div>
 					</div>
