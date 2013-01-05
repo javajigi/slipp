@@ -27,14 +27,14 @@
 .qna-view .article .doc .share:after{clear:both}
 .qna-view .article .doc .share .sns{float:left;margin-right:10px}
 .qna-view .qna-comment{background-color:#eee;padding:30px 10px 10px;}
-.qna-view .qna-comment .count{margin-bottom:-10px;}
 .qna-view .qna-comment .count strong{font-size:2em}
 .qna-view .qna-comment .auth-info{position:relative;}
 .qna-view .qna-comment .auth-info .like{position:absolute;right:10px;top:32px;text-align:right;font-size:3em;cursor:pointer;}
 .qna-view .qna-comment .auth-info .like .star{color:#ebee9e;text-shadow:0 0 2px #999}
 .qna-view .qna-comment .auth-info .like .like-count{color:#999}
 .qna-view .qna-comment .list{margin:0;list-style:none;}
-.qna-view .qna-comment .list > li{margin-bottom:10px;padding-bottom:10px;border-bottom:2px dashed #fafafa}
+.qna-view .qna-comment .list > li{margin-bottom:10px;padding-bottom:10px;border-bottom:2px dashed #fafafa;}
+.qna-view .qna-comment .list > li:first-child{margin-top:-10px}
 .qna-view .qna-comment .util{*zoom:1;}
 .qna-view .qna-comment .util:before,.qna-view .qna-comment .util:after{content:'';display:table;line-height:0}
 .qna-view .qna-comment .util:after{clear:both}
