@@ -46,7 +46,7 @@ $(document).ready(function(){
 	replaceNicknames();
 	
 	function replaceNicknames(){
-		$('.cont').each(function(){
+		$('div.doc div.text').each(function(){
 			var cont = $(this).html();
 			for (var key in nickNames) {
 				cont = cont.replace(new RegExp('@' + key, 'gi'), '<a href="'+nickNames[key]+'">'+key+'</a>');
@@ -56,8 +56,8 @@ $(document).ready(function(){
 		});
 	}
 	function addNickNames(){
-		$('.tester').each(function(){
-			nickNames[$(this).text()] = $(this).find('a').attr('href');
+		$('.author-name').each(function(){
+			nickNames[$(this).text()] = $(this).attr('href');
 		});
 	}
 	function arroundSpace(contents, orgUserId){
