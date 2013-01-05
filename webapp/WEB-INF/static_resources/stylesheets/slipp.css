@@ -65,6 +65,7 @@
 .section-qna .qna-list .btn-question{display:none}
 @media (max-width: 767px){.section-qna .qna-list{position:relative}
 .section-qna .qna-list .btn-question{display:inline-block;position:absolute;right:0;top:-54px}
+}@media (max-width: 480px){.section-qna .qna-list .btn-question{top:-44px}
 }.section-qna .qna-side .tags{margin-top:30px;}
 .section-qna .qna-side .tags:first-child{margin-top:0}
 .section-qna .qna-side .tags li{display:block}
