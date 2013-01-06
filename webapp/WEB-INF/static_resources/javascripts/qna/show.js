@@ -45,6 +45,8 @@ $(document).ready(function(){
 	
 	replaceNicknames();
 	
+	setShowRealSizeImg();
+
 	function replaceNicknames(){
 		$('div.doc div.text').each(function(){
 			var cont = $(this).html();
@@ -68,7 +70,12 @@ $(document).ready(function(){
 		}
 		return contents;
 	}
-	
+	function setShowRealSizeImg() {
+		var images = $('div.doc div.text img');
+		var imageUrl = images.attr('src');
+
+		images.wrap('<a href="'+imageUrl+'" target="_blank"></a>');
+	}
 	$(".likeAnswerBtn").on("click", function(){
 		var answerId = $(this).data("answer-id");
 		var $form = $('#likeAnswerForm');
