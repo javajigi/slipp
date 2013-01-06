@@ -47,7 +47,7 @@
 		
 		<div class="pagination pagination-centered">
 			<ul>
-				<sl:pager page="${newtags}" prefixUri="/admin/tags"/>
+				<sl:pager page="${newtags}" prefixUri="/admin/newtags"/>
 			</ul>
 		</div>		
 	</div>
