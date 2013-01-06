@@ -1,5 +1,6 @@
 <%@ tag language="java" pageEncoding="UTF-8"%><%@ tag body-content="empty" %><%@
 taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%><%@
+taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%><%@
 taglib prefix="sec" uri="http://www.springframework.org/security/tags"%><%@
 taglib prefix="sf" uri="http://slipp.net/functions"%><%@
 taglib prefix="sl" uri="http://www.slipp.net/tags"%><%@
