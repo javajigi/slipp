@@ -71,6 +71,11 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
 			<version>${org.springframework.version}</version>
 		</dependency>
@@ -331,8 +336,8 @@
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>
 				<artifactId>maven-jetty-plugin</artifactId>
-				<version>6.1.22</version>
 				<configuration>
+					<webAppSourceDirectory>${basedir}/webapp</webAppSourceDirectory>
 					<contextPath>/</contextPath>
 					<scanIntervalSeconds>0</scanIntervalSeconds>
 					<connectors>

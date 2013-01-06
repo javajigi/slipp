@@ -10,7 +10,6 @@
 		<div class="container">
 			<h2>Sustainable Life, Programming, Programmer</h2>
 			<p>삶과 일의 균형을 맞추면서 행복하게 살 수 있는 세상을 꿈꿉니다.</p>
-			
 			<div class="row-fluid">
 				<div class="span4">
 					<form action="/signin/facebook" method="POST">

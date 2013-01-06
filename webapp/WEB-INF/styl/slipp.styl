@@ -1,0 +1,100 @@
+@import "nib"
+@import "utils/units"
+@import "utils/util"
+@import "partials/list"
+@import "partials/view"
+@import "partials/navbar"
+@import "partials/tag"
+@import "sections/main"
+@import "sections/qna"
+.flyaway
+	flyaway()
+
+.button-qna
+	width: 27%
+	float: right
+	margin: 5px 0 10px 0
+	
+label.error
+	color: orange
+
+.rss
+	float: right
+	padding: 0 10px
+
+.follow
+	width: 100%
+	padding: 30px 0 10px 0
+	overflow: hidden
+	border-bottom: 1px solid #6f6f6f
+	.tags
+		float: left
+		color: #5ebeda
+		margin: 0 3px 0 10px
+		font-size: 20px
+	.count
+		float: right
+		margin: 2px 0 0 10px
+		color: #4b4b4b
+		strong
+			color: #fe6b12
+
+.snsIcon
+	width: 73%
+	float: left
+	margin: 5px 0 10px 0
+	.twitter
+		float: left
+	.googleplus
+		float: left
+	.facebook
+		float: left
+
+.slipp-doc
+	.box
+		margin: 0 0 18px
+		padding: 8.5px
+		border: 1px solid #ccc
+		border-radius: 4px
+		font-size: 1.2em
+		line-height: 1.8em
+		background-color: #f5f5f5
+		.person
+			position: relative
+			padding-left: 60px
+			margin-top: 20px
+			&:first-child
+				margin-top: 0
+			.thumb
+				position: absolute
+				left: 0
+				top: 0
+				border-radius: 3px
+			h3
+				border-bottom: 1px dashed #999
+			ul
+				list-style: none
+				padding: 0
+				margin: 10px 0 0 10px
+				li
+					text-indent: -10px
+					&:before
+						content: '-'
+						padding-right: 5px
+						font-size: .8em
+						color: #999
+
+@media screen-phone
+	.navbar-fixed-top
+		margin-bottom: 8px
+		.container
+			margin-left: 0
+			margin-right: 0
+	.container
+		margin-left: -10px
+		margin-right: -10px
+	.subnav
+		.nav
+			margin-left: 5px
+
+			margin-bottom: 8px
