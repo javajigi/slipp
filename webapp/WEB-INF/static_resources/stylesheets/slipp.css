@@ -19,6 +19,7 @@
 .qna-view .auth-info .author-name{font-weight:bold;font-size:1.2em}
 .qna-view .auth-info .time{display:block}
 .qna-view .doc .util{text-align:right}
+.qna-view .doc img{max-width:100%}
 .qna-view .article{border:5px solid #eee;}
 .qna-view .article .wrap{border:1px solid #ddd}
 .qna-view .article .doc{padding:20px 10px;}
