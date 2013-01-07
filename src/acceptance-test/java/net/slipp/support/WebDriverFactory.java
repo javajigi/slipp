@@ -11,7 +11,7 @@ public class WebDriverFactory {
 	public static WebDriver createWebDriver() {
     	WebDriver driver = null;
     	if (DEFAULT_BROWSER_TYPE == WebDriverType.CHROME) {
-    		System.setProperty("webdriver.chrome.driver", "/home/javajigi/slipp-workspace/chromedriver/chromedriver");
+    		System.setProperty("webdriver.chrome.driver", "D:\\develops\\chromedriver\\chromedriver.exe");
     		driver = new ChromeDriver();
     	}
     	
