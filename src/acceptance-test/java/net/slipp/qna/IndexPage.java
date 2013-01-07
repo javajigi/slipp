@@ -69,4 +69,9 @@ public class IndexPage {
 		driver.findElement(By.linkText("QnA")).click();
 		return new QuestionsPage(driver);
 	}
+	
+	public QuestionPage goTopQuestion() {
+		driver.findElement(By.cssSelector("div.main > strong.subject > a")).click();
+		return new QuestionPage(driver);
+	}
 }

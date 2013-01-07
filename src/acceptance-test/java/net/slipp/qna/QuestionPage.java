@@ -14,6 +14,10 @@ import com.google.common.collect.Lists;
 
 public class QuestionPage {
 	private WebDriver driver;
+	
+	public QuestionPage(WebDriver driver) {
+		this.driver = driver;
+	}
 
 	public QuestionPage(WebDriver driver, String title) {
 		this.driver = driver;
@@ -38,7 +42,6 @@ public class QuestionPage {
 	}
 
 	public void answer(String answer) {
-		driver.findElement(By.cssSelector("div.main > strong.subject > a")).click();
 		driver.findElement(By.id("contents")).clear();
 		driver.findElement(By.id("contents")).sendKeys(answer);
 		driver.findElement(By.id("answerBtn")).click();
@@ -61,5 +64,14 @@ public class QuestionPage {
 	public void verifyAnswerCount(String answerCount) {
 		String actual = driver.findElement(By.cssSelector("p.count > strong")).getText();
 		assertThat(actual, is(answerCount));
+	}
+
+	public void likeAnswer() {
+		driver.findElement(By.cssSelector("a.likeAnswerBtn")).click();
+	}
+	
+	public void verifyLikeCount(String likeCount) {
+		String actual = driver.findElement(By.cssSelector("strong.like-count")).getText();
+		assertThat(actual, is(likeCount));
 	}
 }
