@@ -35,7 +35,7 @@
 								<ul>
 								<c:forEach items="${question.tags}" var="tag">
 									<li>
-										<a href="/questions/tagged/${tag}" class="tag">${tag.name}</a>
+										<a href="/questions/tagged/${tag.name}" class="tag">${tag.name}</a>
 									</li>
 								</c:forEach>
 								</ul>
