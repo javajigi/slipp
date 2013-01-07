@@ -5,8 +5,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 
-import cucumber.annotation.After;
-import cucumber.annotation.Before;
 import cucumber.runtime.ScenarioResult;
 
 public class SharedDriver extends EventFiringWebDriver {
@@ -34,12 +32,10 @@ public class SharedDriver extends EventFiringWebDriver {
         super.quit();
     }
  
-    @Before
     public void deleteAllCookies() {
         manage().deleteAllCookies();
     }
  
-    @After
     public void embedScreenshot(ScenarioResult result) {
         try {
             byte[] screenshot = getScreenshotAs(OutputType.BYTES);
