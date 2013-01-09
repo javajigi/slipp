@@ -8,9 +8,6 @@ attribute name="each" required="true" rtexprvalue="true" type="net.slipp.domain.
 attribute name="isBest" required="true" rtexprvalue="true" type="java.lang.Boolean" description=" 목록" %>
 
 <li <c:if test="${isBest}">class="best"</c:if>>
-	<div class="scoreArea" style="float:left;width: 40px;margin-top: 14px;text-align: center">
-		<span style="color:#808185;font-weight: bold;font-size: 240%;"></span>
-	</div>
 	<div class="auth-info">
 		<div class="author-thumb">
 			<img src='${sf:stripHttp(each.writer.imageUrl)}' class="user-thumb" alt="" />
@@ -26,9 +23,12 @@ attribute name="isBest" required="true" rtexprvalue="true" type="java.lang.Boole
 		</div>
 	</div>
 	<div class="doc">
- 		<div class="text">${sf:wiki(each.contents)}</div>
+		<div class="text">${sf:wiki(each.contents)}</div>
 		<div class="util">
-			<a class="likeAnswerBtn btn btn-like" data-answer-id="${each.answerId}" href="#" alt="${each.sumLike}"><span class="star">★</span> 공감</a>
+			<a class="likeAnswerBtn btn btn-like" data-answer-id="${each.answerId}" href="#" alt="${each.sumLike}">
+				<span class="star">★</span>
+				<span class="txt">공감</span>
+			</a>
 			<c:if test="${sf:isWriter(each.writer, loginUser)}">
 			<a class="deleteAnswerBtn btn btn-danger" data-answer-id="${each.answerId}" href="#">삭제</a>
 			</c:if>

@@ -7,17 +7,21 @@
 		display: inline
 		list-style: none
 	.tag
+		position: relative;
 		display: inline-block
 		margin: .2em 0
-		padding: 4px 8px 4px 0
+		padding: 4px 8px 4px 14px
 		border-radius: 3px
 		color: #fff
 		background-color: #aaa
 		&:before
 			content: '•'
-			display: inline-block
+			display: block
+			position: absolute
+			left: 4px
 			color: #fff
-			font-size: 1.2em
+			font-family: tahoma
+			font-size: 1em
 			vertical-align: middle
 			text-shadow: -1px -1px 0 #000
 		&:hover
