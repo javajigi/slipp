@@ -35,7 +35,7 @@
 								<ul>
 								<c:forEach items="${question.tags}" var="tag">
 									<li>
-										<a href="/questions/tagged/${tag}" class="tag">${tag.name}</a>
+										<a href="/questions/tagged/${tag.name}" class="tag">${tag.name}</a>
 									</li>
 								</c:forEach>
 								</ul>
@@ -88,7 +88,7 @@
 				<form id="deleteAnswerForm" action="/questions/${question.questionId}/answers/" method="POST" class="flyaway">
 					<input type="hidden" name="_method" value="DELETE" />
 				</form>
-				<form id="likeAnswerForm" action="/questions/${question.questionId}/answers/" method="POST" class="flyaway">
+				<form id="likeAnswerForm" action="/questions/${question.questionId}/answers" method="POST" class="flyaway">
 				</form>
 				<sec:authorize access="!hasRole('ROLE_USER')">
 					의견을 남기고 싶다면, <a href="/login" class="btn btn-primary btn-small">로그인</a>
