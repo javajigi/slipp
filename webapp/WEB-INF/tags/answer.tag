@@ -8,7 +8,7 @@ taglib prefix="slipp" tagdir="/WEB-INF/tags" %><%@
 attribute name="each" required="true" rtexprvalue="true" type="net.slipp.domain.qna.Answer" description=" 목록"%><%@
 attribute name="isBest" required="true" rtexprvalue="true" type="java.lang.Boolean" description=" 목록" %>
 
-<li <c:if test="${isBest}">class="best"</c:if>>
+<li id="answer-${each.answerId}" <c:if test="${isBest}">class="best"</c:if>>
 	<div class="auth-info">
 		<div class="author-thumb">
 			<img src='${sf:stripHttp(each.writer.imageUrl)}' class="user-thumb" alt="" />
@@ -20,6 +20,9 @@ attribute name="isBest" required="true" rtexprvalue="true" type="java.lang.Boole
 			</span>
 			<div class="likeAnswerBtn like" data-answer-id="${each.answerId}">
 				<span class="star">★</span><strong class="like-count">${each.sumLike}</strong>
+			</div>
+			<div>
+				링크 : <a href="${slippUrl}/questions/${question.questionId}#answer-${each.answerId}">${slippUrl}/questions/${question.questionId}#answer-${each.answerId}</a>
 			</div>
 		</div>
 	</div>
