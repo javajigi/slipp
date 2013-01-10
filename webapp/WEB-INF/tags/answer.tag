@@ -9,6 +9,8 @@ attribute name="each" required="true" rtexprvalue="true" type="net.slipp.domain.
 attribute name="isBest" required="true" rtexprvalue="true" type="java.lang.Boolean" description=" 목록" %>
 
 <li id="answer-${each.answerId}" <c:if test="${isBest}">class="best"</c:if>>
+	<a href="#answer-${each.answerId}" class="permalink">#answer-${each.answerId}</a>
+	<c:if test="${isBest}"><span class="answer-best">best</span></c:if>
 	<div class="auth-info">
 		<div class="author-thumb">
 			<img src='${sf:stripHttp(each.writer.imageUrl)}' class="user-thumb" alt="" />
@@ -22,7 +24,6 @@ attribute name="isBest" required="true" rtexprvalue="true" type="java.lang.Boole
 				<span class="star">★</span><strong class="like-count">${each.sumLike}</strong>
 			</div>
 			<div>
-				링크 : <a href="${slippUrl}/questions/${question.questionId}#answer-${each.answerId}">${slippUrl}/questions/${question.questionId}#answer-${each.answerId}</a>
 			</div>
 		</div>
 	</div>

@@ -27,16 +27,20 @@
 .qna-view .article .doc .share:before,.qna-view .article .doc .share:after{content:'';display:table;line-height:0}
 .qna-view .article .doc .share:after{clear:both}
 .qna-view .article .doc .share .sns{float:left;margin-right:10px}
-.qna-view .qna-comment{background-color:#eee;padding:30px 10px 10px;}
+.qna-view .qna-comment{background-color:#eee;padding:30px 5px 10px;}
+.qna-view .qna-comment .list{margin:20px 0 0;list-style:none;}
+.qna-view .qna-comment .list > li{margin-bottom:10px;}
+.qna-view .qna-comment .list > li:first-child{margin-top:-10px}
+.qna-view .qna-comment .list > li.best{padding-bottom:10px;border-bottom:4px dashed #fff}
 .qna-view .qna-comment .count strong{font-size:2em}
-.qna-view .qna-comment .auth-info{position:relative;}
+.qna-view .qna-comment .permalink,.qna-view .qna-comment .answer-best{float:left;display:block;height:18px;padding:3px 10px;color:#fff;font-size:.9em;font-weight:bold}
+.qna-view .qna-comment .permalink{margin-left:10px;background:#2c2c2c;-webkit-border-radius:3px 3px 0 0;border-radius:3px 3px 0 0}
+.qna-view .qna-comment .answer-best{background:#cc4c4c;-webkit-border-radius:0 3px 0 0;border-radius:0 3px 0 0}
+.qna-view .qna-comment .auth-info{position:relative;clear:left;margin-top:-1px;border-width:1px 1px 0;border-style:solid;border-color:#ddd;-webkit-border-radius:3px 0;border-radius:3px 0;}
 .qna-view .qna-comment .auth-info .like{position:absolute;right:10px;top:20px;text-align:right;font-size:3em;line-height:1em;cursor:pointer;}
 .qna-view .qna-comment .auth-info .like .star{color:#ebee9e;text-shadow:0 0 2px #999}
 .qna-view .qna-comment .auth-info .like .like-count{color:#999}
-.qna-view .qna-comment .list{margin:0;list-style:none;}
-.qna-view .qna-comment .list > li{margin-bottom:10px;border:1px solid #ddd;-webkit-border-radius:3px;border-radius:3px;}
-.qna-view .qna-comment .list > li:first-child{margin-top:-10px}
-.qna-view .qna-comment .doc{padding:10px;background-color:#fff}
+.qna-view .qna-comment .doc{padding:10px;border-width:0 1px 1px;border-style:solid;border-color:#ddd;-webkit-border-radius:0 3px;border-radius:0 3px;background-color:#fff}
 .qna-view .qna-comment .util{*zoom:1;margin-top:1em;}
 .qna-view .qna-comment .util:before,.qna-view .qna-comment .util:after{content:'';display:table;line-height:0}
 .qna-view .qna-comment .util:after{clear:both}
