@@ -40,12 +40,44 @@
 					margin-right: 10px
 	.qna-comment
 		background-color: #eee
-		padding: 30px 10px 10px
+		padding: 30px 5px 10px
+		.list
+			margin: 20px 0 0
+			list-style: none
+			> li
+				margin-bottom: 10px
+				&:first-child
+					margin-top: -10px
+				&.best
+					padding-bottom: 10px
+					border-bottom: 4px dashed #fff
 		.count
 			strong
 				font-size: 2em
+		.permalink,
+		.answer-best
+			float:left;
+			display: block;
+			height: 18px;
+			padding: 3px 10px;
+			color: #fff;
+			font-size: 0.9em;
+			font-weight: bold;
+		.permalink
+			margin-left: 10px;
+			background: #2c2c2c;
+			border-radius: 3px 3px 0 0;
+		.answer-best
+			background: #CC4C4C;
+			border-radius: 0 3px 0 0;
 		.auth-info
 			position: relative
+			clear: left
+			margin-top: -1px;
+			border-width: 1px 1px 0
+			border-style: solid
+			border-color: #ddd
+			border-radius: 3px 0
 			.like
 				position: absolute
 				right: 10px
@@ -59,17 +91,12 @@
 					text-shadow: 0 0 2px #999
 				.like-count
 					color: #999
-		.list
-			margin: 0
-			list-style: none
-			> li
-				margin-bottom: 10px
-				border: 1px solid #ddd
-				border-radius: 3px
-				&:first-child
-					margin-top: -10px
 		.doc
 			padding: 10px
+			border-width: 0 1px 1px
+			border-style: solid
+			border-color: #ddd
+			border-radius: 0 3px
 			background-color: #fff
 		.util
 			clearfix()
