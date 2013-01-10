@@ -34,6 +34,7 @@ attribute name="isBest" required="true" rtexprvalue="true" type="java.lang.Boole
 				<span class="txt">공감</span>
 			</a>
 			<c:if test="${sf:isWriter(each.writer, loginUser)}">
+			<a class="updateAnswerBtn btn btn-primary" href="/questions/${question.questionId}/answers/${each.answerId}/form">수정</a>
 			<a class="deleteAnswerBtn btn btn-danger" data-answer-id="${each.answerId}" href="#">삭제</a>
 			</c:if>
 			<sec:authorize access="hasRole('ROLE_USER')">

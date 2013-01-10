@@ -63,7 +63,7 @@ public class QuestionController {
 	}
 
 	@RequestMapping("/{id}/form")
-	public String updateForm(@PathVariable Long id, Model model) {
+	public String updateForm(@LoginUser SocialUser loginUser, @PathVariable Long id, Model model) {
 		model.addAttribute("question", qnaService.findByQuestionId(id));
 		model.addAttribute("tags", qnaService.findsTag());
 		return "qna/form";

@@ -1,6 +1,7 @@
 package net.slipp;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertThat;
 import net.slipp.qna.IndexPage;
 import net.slipp.qna.NewTagsPage;
@@ -46,6 +47,16 @@ public class QnAAT extends AbstractATTest {
     	indexPage.logout();
     	loginToTwitter();
     	answerToQuestion();
+	}
+    
+    @Test
+	public void 답변_수정() throws Exception {
+    	loginToFacebook();
+    	createQuestion(questionFixture);
+    	indexPage.logout();
+    	loginToTwitter();
+    	QuestionPage questionPage = answerToQuestion();
+    	questionPage.goToUpdateAnswerPage();
 	}
     
     @Test

@@ -10,6 +10,7 @@ import net.slipp.support.web.argumentresolver.LoginUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -37,6 +38,15 @@ public class AnswerController {
 		return "redirect:/questions/" + questionId;
 	}
 	
+	@RequestMapping(value = "{answerId}/form", method = RequestMethod.GET)
+	public String updateForm(@LoginUser SocialUser loginUser, @PathVariable Long questionId, @PathVariable Long answerId, Model model)
+		throws Exception {
+		model.addAttribute("question", qnaService.findByQuestionId(questionId));
+		model.addAttribute("answer", qnaService.findAnswerById(answerId));
+		model.addAttribute("tags", qnaService.findsTag());
+		return "qna/answer";
+	}
+		
 	@RequestMapping(value = "/{answerId}/like", method = RequestMethod.POST)
 	public String like(@LoginUser SocialUser loginUser, @PathVariable Long questionId, @PathVariable Long answerId)
 			throws Exception {

@@ -95,6 +95,10 @@ public class QnaService {
 	public Tag findTagByName(String name) {
 		return tagRepository.findByName(name);
 	}
+	
+	public Answer findAnswerById(Long answerId) {
+		return answerRepository.findOne(answerId);
+	}
 
 	public void createAnswer(SocialUser loginUser, Long questionId, Answer answer) {
 		Question question = questionRepository.findOne(questionId);
