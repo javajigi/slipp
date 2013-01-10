@@ -107,6 +107,14 @@ public class QnaService {
 		answerRepository.save(answer);
 		notificationService.notifyToFacebook(loginUser, question, question.findNotificationUser(loginUser));
 	}
+	
+	public void updateAnswer(SocialUser loginUser, Answer answerDto) {
+		Answer answer = answerRepository.findOne(answerDto.getAnswerId());
+		if (!answer.isWritedBy(loginUser)) {
+			throw new AccessDeniedException(loginUser + " is not owner!");
+		}
+		answer.updateAnswer(answerDto);
+	}
 
 	public void deleteAnswer(SocialUser loginUser, Long questionId, Long answerId) {
 		Assert.notNull(loginUser, "loginUser should be not null!");

@@ -138,6 +138,10 @@ public class Answer implements HasCreatedAndUpdatedDate, Comparable<Answer> {
 	public boolean isFacebookWriter() {
 		return writer.isFacebookUser();
 	}
+	
+	public void updateAnswer(Answer answerDto) {
+		this.contentsHolder = answerDto.contentsHolder;
+	}
 
 	@Override
 	public String toString() {
@@ -218,5 +222,4 @@ public class Answer implements HasCreatedAndUpdatedDate, Comparable<Answer> {
 		int o_ = o.getSumLike().intValue();
 		return t_ < o_ ? 1 : (t_ > o_ ? -1 : 0);
 	}
-
 }
