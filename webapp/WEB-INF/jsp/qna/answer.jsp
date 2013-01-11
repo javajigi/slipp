@@ -18,26 +18,8 @@
 			<slipp:show question="${question}"/>
 		
 			<div class="qna-comment">
-				<p class="count"><strong>${question.answerCount}</strong>개의 답변</p>
-				<ul class="list">
-					<c:if test="${!empty question.bestAnswer}">
-						<c:set var="each" value="${question.bestAnswer}"/>
-						<slipp:answer each="${each}" isBest="true"/>
-					</c:if>
-					<c:forEach items="${question.answers}" var="each">
-						<slipp:answer each="${each}" isBest="false"/>
-					</c:forEach>
-				</ul>
-				<form id="deleteAnswerForm" action="/questions/${question.questionId}/answers/" method="POST" class="flyaway">
-					<input type="hidden" name="_method" value="DELETE" />
-				</form>
-				<form id="likeAnswerForm" action="/questions/${question.questionId}/answers" method="POST" class="flyaway">
-				</form>
-				<sec:authorize access="!hasRole('ROLE_USER')">
-					의견을 남기고 싶다면, <a href="/login" class="btn btn-primary btn-small">로그인</a>
-				</sec:authorize>
 				<sec:authorize access="hasRole('ROLE_USER')">
-					<form:form modelAttribute="answer" action="/questions/${question.questionId}/answers" method="POST" cssClass="form-horizontal">
+					<form:form modelAttribute="answer" action="/questions/${question.questionId}/answers/${answer.answerId}" method="PUT" cssClass="form-horizontal">
 						<fieldset>
 							<form:textarea path="contents"  cols="80" rows="5"/>
 							<div class="pull-right">
@@ -50,7 +32,7 @@
 		</div>
 		<div class="span3 qna-side">
 			<slipp:side-tags tags="${tags}"/>
-		</div>
+		</div>		
 	</div>
 </div>
 <script src="https://ajax.microsoft.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>

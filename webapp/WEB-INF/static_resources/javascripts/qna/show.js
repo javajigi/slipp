@@ -3,7 +3,7 @@ $(document).ready(function(){
 	
 	$('#contents').markItUp(mySettings);
 	
-	$("#answersForm").validate({
+	$("#answer").validate({
 		rules: {
 			contents: "required"
 		},
@@ -13,7 +13,10 @@ $(document).ready(function(){
 	});
 	
 	$("#deleteQuestionBtn").click(function() {
-		$("#deleteQuestionForm").submit();
+		if ( confirm('정말 삭제하시겠습니까?') ) {
+			$("#deleteQuestionForm").submit();
+		}
+		
 		return false;
 	});
 	

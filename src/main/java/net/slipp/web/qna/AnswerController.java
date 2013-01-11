@@ -9,7 +9,9 @@ import net.slipp.support.web.argumentresolver.LoginUser;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,20 +29,40 @@ public class AnswerController {
 			throws Exception {
 		logger.debug("questionId :{}, answer : {}", questionId, answer);
 		qnaService.createAnswer(loginUser, questionId, answer);
-		return "redirect:/questions/" + questionId;
+		return String.format("redirect:/questions/%d", questionId);
 	}
 
 	@RequestMapping(value = "{answerId}", method = RequestMethod.DELETE)
 	public String delete(@LoginUser SocialUser loginUser, @PathVariable Long questionId, @PathVariable Long answerId)
 			throws Exception {
 		qnaService.deleteAnswer(loginUser, questionId, answerId);
-		return "redirect:/questions/" + questionId;
+		return String.format("redirect:/questions/%d", questionId);
 	}
 	
+	@RequestMapping(value = "{answerId}/form", method = RequestMethod.GET)
+	public String updateForm(@LoginUser SocialUser loginUser, @PathVariable Long questionId, @PathVariable Long answerId, Model model)
+		throws Exception {
+		Answer answer = qnaService.findAnswerById(answerId);
+		if (!answer.isWritedBy(loginUser)) {
+			throw new AccessDeniedException(loginUser.getUserId() + " is not owner!");
+		}
+		
+		model.addAttribute("question", qnaService.findByQuestionId(questionId));
+		model.addAttribute("answer", answer);
+		model.addAttribute("tags", qnaService.findsTag());
+		return "qna/answer";
+	}
+	
+	@RequestMapping(value = "{answerId}", method = RequestMethod.PUT)
+	public String update(@LoginUser SocialUser loginUser, @PathVariable Long questionId, @PathVariable Long answerId, Answer answer) throws Exception {
+		qnaService.updateAnswer(loginUser, answer);
+		return String.format("redirect:/questions/%d#answer-%d", questionId, answerId);
+	}
+		
 	@RequestMapping(value = "/{answerId}/like", method = RequestMethod.POST)
 	public String like(@LoginUser SocialUser loginUser, @PathVariable Long questionId, @PathVariable Long answerId)
 			throws Exception {
 		qnaService.likeAnswer(loginUser, answerId);
-		return "redirect:/questions/" + questionId;
+		return String.format("redirect:/questions/%d#answer-%d", questionId, answerId);
 	}
 }

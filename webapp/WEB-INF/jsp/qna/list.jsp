@@ -10,7 +10,7 @@
 	<slipp:header type="1"/>
 	<div class="row-fluid">
 		<div class="span9 qna-list">
-		  <a id="questionBtn" href="/questions/form" class="btn btn-primary btn-large btn-question">질문하기</a>
+		  	<a id="questionBtn" href="/questions/form" class="btn btn-primary btn-large btn-question">질문하기</a>
 			<h2 class="hidden">list</h2>
 			<ul class="list">
 			<c:forEach items="${questions.content}" var="each">

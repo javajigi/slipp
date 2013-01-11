@@ -2,6 +2,7 @@ package net.slipp;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import net.slipp.qna.AnswerUpdateFormPage;
 import net.slipp.qna.IndexPage;
 import net.slipp.qna.NewTagsPage;
 import net.slipp.qna.QuestionFixture;
@@ -46,6 +47,19 @@ public class QnAAT extends AbstractATTest {
     	indexPage.logout();
     	loginToTwitter();
     	answerToQuestion();
+	}
+    
+    @Test
+	public void 답변_수정() throws Exception {
+    	loginToFacebook();
+    	createQuestion(questionFixture);
+    	indexPage.logout();
+    	loginToTwitter();
+    	QuestionPage questionPage = answerToQuestion();
+    	AnswerUpdateFormPage answerFormPage = questionPage.goToUpdateAnswerPage();
+    	String answer = "이 답변은 수정 답변입니다.";
+    	questionPage = answerFormPage.updateAnswer(answer);
+    	questionPage.verifyAnswer(answer);
 	}
     
     @Test
