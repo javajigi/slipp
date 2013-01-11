@@ -66,8 +66,8 @@ public class QuestionController {
 	@RequestMapping("/{id}/form")
 	public String updateForm(@LoginUser SocialUser loginUser, @PathVariable Long id, Model model) {
 		Question question = qnaService.findByQuestionId(id);
-		if (question.isWritedBy(loginUser)) {
-			throw new AccessDeniedException(loginUser + " is not owner!");
+		if (!question.isWritedBy(loginUser)) {
+			throw new AccessDeniedException(loginUser.getUserId() + " is not owner!");
 		}
 		model.addAttribute("question", question);
 		model.addAttribute("tags", qnaService.findsTag());

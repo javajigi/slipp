@@ -5,8 +5,8 @@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%><%@
 taglib prefix="sf" uri="http://slipp.net/functions"%><%@
 taglib prefix="sl" uri="http://www.slipp.net/tags"%><%@
 taglib prefix="slipp" tagdir="/WEB-INF/tags" %><%@
-attribute name="each" required="true" rtexprvalue="true" type="net.slipp.domain.qna.Answer" description=" 목록"%><%@
-attribute name="isBest" required="true" rtexprvalue="true" type="java.lang.Boolean" description=" 목록" %>
+attribute name="each" required="true" rtexprvalue="true" type="net.slipp.domain.qna.Answer" description="답변"%><%@
+attribute name="isBest" required="true" rtexprvalue="true" type="java.lang.Boolean" description="" %>
 
 <li id="answer-${each.answerId}" <c:if test="${isBest}">class="best"</c:if>>
 	<a href="#answer-${each.answerId}" class="permalink">#answer-${each.answerId}</a>

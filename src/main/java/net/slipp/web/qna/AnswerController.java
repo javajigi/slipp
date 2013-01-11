@@ -29,22 +29,22 @@ public class AnswerController {
 			throws Exception {
 		logger.debug("questionId :{}, answer : {}", questionId, answer);
 		qnaService.createAnswer(loginUser, questionId, answer);
-		return "redirect:/questions/" + questionId;
+		return String.format("redirect:/questions/%d", questionId);
 	}
 
 	@RequestMapping(value = "{answerId}", method = RequestMethod.DELETE)
 	public String delete(@LoginUser SocialUser loginUser, @PathVariable Long questionId, @PathVariable Long answerId)
 			throws Exception {
 		qnaService.deleteAnswer(loginUser, questionId, answerId);
-		return "redirect:/questions/" + questionId;
+		return String.format("redirect:/questions/%d", questionId);
 	}
 	
 	@RequestMapping(value = "{answerId}/form", method = RequestMethod.GET)
 	public String updateForm(@LoginUser SocialUser loginUser, @PathVariable Long questionId, @PathVariable Long answerId, Model model)
 		throws Exception {
 		Answer answer = qnaService.findAnswerById(answerId);
-		if (answer.isWritedBy(loginUser)) {
-			throw new AccessDeniedException(loginUser + " is not owner!");
+		if (!answer.isWritedBy(loginUser)) {
+			throw new AccessDeniedException(loginUser.getUserId() + " is not owner!");
 		}
 		
 		model.addAttribute("question", qnaService.findByQuestionId(questionId));
@@ -53,17 +53,16 @@ public class AnswerController {
 		return "qna/answer";
 	}
 	
-	@RequestMapping(value = "{answerId}/form", method = RequestMethod.PUT)
+	@RequestMapping(value = "{answerId}", method = RequestMethod.PUT)
 	public String update(@LoginUser SocialUser loginUser, @PathVariable Long questionId, @PathVariable Long answerId, Answer answer) throws Exception {
 		qnaService.updateAnswer(loginUser, answer);
-		
-		return String.format("redirect:/questions/%d", questionId);
+		return String.format("redirect:/questions/%d#answer-%d", questionId, answerId);
 	}
 		
 	@RequestMapping(value = "/{answerId}/like", method = RequestMethod.POST)
 	public String like(@LoginUser SocialUser loginUser, @PathVariable Long questionId, @PathVariable Long answerId)
 			throws Exception {
 		qnaService.likeAnswer(loginUser, answerId);
-		return "redirect:/questions/" + questionId;
+		return String.format("redirect:/questions/%d#answer-%d", questionId, answerId);
 	}
 }

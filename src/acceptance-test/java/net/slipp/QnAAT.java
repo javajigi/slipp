@@ -1,8 +1,8 @@
 package net.slipp;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertThat;
+import net.slipp.qna.AnswerUpdateFormPage;
 import net.slipp.qna.IndexPage;
 import net.slipp.qna.NewTagsPage;
 import net.slipp.qna.QuestionFixture;
@@ -56,7 +56,10 @@ public class QnAAT extends AbstractATTest {
     	indexPage.logout();
     	loginToTwitter();
     	QuestionPage questionPage = answerToQuestion();
-    	questionPage.goToUpdateAnswerPage();
+    	AnswerUpdateFormPage answerFormPage = questionPage.goToUpdateAnswerPage();
+    	String answer = "이 답변은 수정 답변입니다.";
+    	questionPage = answerFormPage.updateAnswer(answer);
+    	questionPage.verifyAnswer(answer);
 	}
     
     @Test
