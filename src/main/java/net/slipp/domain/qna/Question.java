@@ -35,6 +35,7 @@ import net.slipp.service.tag.TagProcessor;
 import net.slipp.support.jpa.CreatedAndUpdatedDateEntityListener;
 import net.slipp.support.jpa.HasCreatedAndUpdatedDate;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.security.access.AccessDeniedException;
 
@@ -45,17 +46,15 @@ import com.google.common.collect.Sets;
 @Entity
 @EntityListeners({ CreatedAndUpdatedDateEntityListener.class })
 public class Question implements HasCreatedAndUpdatedDate {
-	private static final int SHOW_BEST_ANSWER_RANGE = 10;
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long questionId;
-	
+
 	@ManyToOne
 	@org.hibernate.annotations.ForeignKey(name = "fk_question_writer")
 	private SocialUser writer;
-	
-	@Column(name = "title", length=100, nullable = false)
+
+	@Column(name = "title", length = 100, nullable = false)
 	private String title;
 
 	@ElementCollection(fetch = FetchType.LAZY)
@@ -83,49 +82,49 @@ public class Question implements HasCreatedAndUpdatedDate {
 	@JoinTable(name = "question_tag", joinColumns = @JoinColumn(name = "question_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
 	@org.hibernate.annotations.ForeignKey(name = "fk_question_tag_question_id", inverseName = "fk_question_tag_tag_id")
 	private Set<Tag> tags = Sets.newHashSet();
-	
-	@Column(name = "denormalized_tags", length=100)
+
+	@Column(name = "denormalized_tags", length = 100)
 	private String denormalizedTags; // 역정규화한 태그를 저장
-	
+
 	@Transient
 	private Set<NewTag> newTags = Sets.newHashSet();
-	
+
 	@Transient
 	private String plainTags;
 
 	@OneToMany(mappedBy = "question", fetch = FetchType.LAZY)
 	@OrderBy("answerId ASC")
 	private List<Answer> answers;
-	
+
 	@Column(name = "deleted", nullable = false)
 	private boolean deleted = false;
-	
+
 	public Question() {
 	}
-	
+
 	public Question(Long id) {
 		this.questionId = id;
 	}
-	
+
 	public List<Answer> getAnswers() {
 		return answers;
 	}
-	
+
 	public int getAnswerCount() {
 		return answerCount;
 	}
-	
+
 	public Set<Tag> getTags() {
 		return tags;
 	}
-	
+
 	public Collection<String> getDenormalizedTags() {
 		if (StringUtils.isBlank(denormalizedTags)) {
 			return Sets.newHashSet();
 		}
 		return Arrays.asList(denormalizedTags.split(","));
 	}
-	
+
 	public void setContents(String newContents) {
 		if (isEmptyContentsHolder()) {
 			contentsHolder = Lists.newArrayList(newContents);
@@ -134,7 +133,7 @@ public class Question implements HasCreatedAndUpdatedDate {
 			contentsHolder.add(newContents);
 		}
 	}
-	
+
 	private boolean isEmptyContentsHolder() {
 		return contentsHolder == null || contentsHolder.isEmpty();
 	}
@@ -154,11 +153,11 @@ public class Question implements HasCreatedAndUpdatedDate {
 	public void setQuestionId(Long questionId) {
 		this.questionId = questionId;
 	}
-	
+
 	public void writedBy(SocialUser user) {
 		this.writer = user;
 	}
-	
+
 	public boolean isWritedBy(SocialUser socialUser) {
 		return writer.isSameUser(socialUser);
 	}
@@ -214,54 +213,55 @@ public class Question implements HasCreatedAndUpdatedDate {
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
-	
+
 	public boolean isDeleted() {
 		return deleted;
 	}
-	
+
 	public void delete(SocialUser loginUser) {
 		if (!isWritedBy(loginUser)) {
 			throw new AccessDeniedException(loginUser + " is not owner!");
 		}
 		this.deleted = true;
 	}
-	
+
 	public void show() {
 		this.showCount += 1;
 	}
-	
+
 	public void newAnswered() {
 		this.answerCount += 1;
 	}
-	
+
 	public void deAnswered() {
 		this.answerCount -= 1;
 	}
-	
+
 	public void tag(Tag tag) {
 		tags.add(tag);
 		this.denormalizedTags = TagProcessor.tagsToDenormalizedTags(tags);
 		tag.tagged();
 	}
-	
+
 	public boolean hasTag(Tag tag) {
 		return tags.contains(tag);
 	}
-	
+
 	public Set<NewTag> getNewTags() {
 		return newTags;
 	}
-	
-	public static Question newQuestion(SocialUser loginUser, Question questionDto, TagRepository tagRepository) {
+
+	public static Question newQuestion(SocialUser loginUser,
+			Question questionDto, TagRepository tagRepository) {
 		Question newQuestion = new Question();
 		newQuestion.writer = loginUser;
 		newQuestion.title = questionDto.title;
 		newQuestion.contentsHolder = questionDto.contentsHolder;
 		newQuestion.processTags(questionDto.plainTags, tagRepository);
-		
+
 		return newQuestion;
 	}
-	
+
 	private void processTags(String plainTags, TagRepository tagRepository) {
 		TagProcessor tagProcessor = new TagProcessor(tagRepository);
 		tagProcessor.processTags(this.tags, plainTags);
@@ -269,45 +269,57 @@ public class Question implements HasCreatedAndUpdatedDate {
 		this.denormalizedTags = tagProcessor.getDenormalizedTags();
 		this.newTags = tagProcessor.getNewTags();
 	}
-	
-	public void update(SocialUser loginUser, Question questionDto, TagRepository tagRepository) {
+
+	public void update(SocialUser loginUser, Question questionDto,
+			TagRepository tagRepository) {
 		if (!isWritedBy(loginUser)) {
 			throw new AccessDeniedException(loginUser + " is not owner!");
 		}
-		
+
 		this.title = questionDto.title;
 		this.contentsHolder = questionDto.contentsHolder;
 		this.processTags(questionDto.plainTags, tagRepository);
 	}
-	
+
 	public Set<SocialUser> findNotificationUser(SocialUser loginUser) {
 		Answers newAnswers = new Answers(this.answers);
 		Set<SocialUser> notifierUsers = newAnswers.findFacebookAnswerers();
 		notifierUsers.add(this.writer);
 		return Sets.difference(notifierUsers, Sets.newHashSet(loginUser));
 	}
-	
+
 	/**
 	 * 베스트 댓글 하나를 반환한다.
 	 * 
 	 * @return
 	 */
 	public Answer getBestAnswer() {
-		List<Answer> sortAnswers = null;
-		if( getAnswers() != null && getAnswers().size() > SHOW_BEST_ANSWER_RANGE ){
-			sortAnswers = Lists.newArrayList();
-			sortAnswers.addAll(getAnswers());
-			Collections.sort(sortAnswers);
-			return sortAnswers.get(0);
+		if (CollectionUtils.isEmpty(getAnswers())) {
+			return null;
 		}
-		return null;
+
+		Answer answer = getTopLikeAnswer();
+		if (!answer.isBest()) {
+			return null;
+		}
+		
+		return answer;
 	}
-	
+
+	private Answer getTopLikeAnswer() {
+		List<Answer> sortAnswers = Lists.newArrayList();
+		sortAnswers.addAll(getAnswers());
+		Collections.sort(sortAnswers);
+		return sortAnswers.get(0);
+	}
+
 	@Override
 	public String toString() {
-		return "Question [questionId=" + questionId + ", writer=" + writer + ", title=" + title + ", contentsHolder="
-				+ contentsHolder + ", createdDate=" + createdDate + ", updatedDate=" + updatedDate + ", answerCount="
-				+ answerCount + ", showCount=" + showCount + ", tags=" + tags + ", plainTags=" + plainTags
+		return "Question [questionId=" + questionId + ", writer=" + writer
+				+ ", title=" + title + ", contentsHolder=" + contentsHolder
+				+ ", createdDate=" + createdDate + ", updatedDate="
+				+ updatedDate + ", answerCount=" + answerCount + ", showCount="
+				+ showCount + ", tags=" + tags + ", plainTags=" + plainTags
 				+ ", answers=" + answers + "]";
 	}
 
@@ -317,14 +329,19 @@ public class Question implements HasCreatedAndUpdatedDate {
 		int result = 1;
 		result = prime * result + answerCount;
 		result = prime * result + ((answers == null) ? 0 : answers.hashCode());
-		result = prime * result + ((contentsHolder == null) ? 0 : contentsHolder.hashCode());
-		result = prime * result + ((createdDate == null) ? 0 : createdDate.hashCode());
-		result = prime * result + ((plainTags == null) ? 0 : plainTags.hashCode());
-		result = prime * result + ((questionId == null) ? 0 : questionId.hashCode());
+		result = prime * result
+				+ ((contentsHolder == null) ? 0 : contentsHolder.hashCode());
+		result = prime * result
+				+ ((createdDate == null) ? 0 : createdDate.hashCode());
+		result = prime * result
+				+ ((plainTags == null) ? 0 : plainTags.hashCode());
+		result = prime * result
+				+ ((questionId == null) ? 0 : questionId.hashCode());
 		result = prime * result + showCount;
 		result = prime * result + ((tags == null) ? 0 : tags.hashCode());
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
-		result = prime * result + ((updatedDate == null) ? 0 : updatedDate.hashCode());
+		result = prime * result
+				+ ((updatedDate == null) ? 0 : updatedDate.hashCode());
 		result = prime * result + ((writer == null) ? 0 : writer.hashCode());
 		return result;
 	}

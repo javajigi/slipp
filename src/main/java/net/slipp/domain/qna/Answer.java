@@ -28,6 +28,8 @@ import net.slipp.support.jpa.HasCreatedAndUpdatedDate;
 @Entity
 @EntityListeners({ CreatedAndUpdatedDateEntityListener.class })
 public class Answer implements HasCreatedAndUpdatedDate, Comparable<Answer> {
+	private static final Integer DEFAULT_BEST_ANSWER = 2;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long answerId;
@@ -142,6 +144,32 @@ public class Answer implements HasCreatedAndUpdatedDate, Comparable<Answer> {
 	public void updateAnswer(Answer answerDto) {
 		this.contentsHolder = answerDto.contentsHolder;
 	}
+	
+	public Integer getSumLike() {
+		return sumLike;
+	}
+
+	public void setSumLike(Integer sumLike) {
+		this.sumLike = sumLike;
+	}
+
+	public void upRank() {
+		this.sumLike += 1;
+	}
+	
+	boolean isBest() {
+		if (getSumLike() >= DEFAULT_BEST_ANSWER) {
+			return true;
+		}
+		return false;
+	}
+	
+	@Override
+	public int compareTo(Answer o) {
+		int t_ = this.sumLike.intValue();
+		int o_ = o.getSumLike().intValue();
+		return t_ < o_ ? 1 : (t_ > o_ ? -1 : 0);
+	}
 
 	@Override
 	public String toString() {
@@ -202,24 +230,5 @@ public class Answer implements HasCreatedAndUpdatedDate, Comparable<Answer> {
 		} else if (!writer.equals(other.writer))
 			return false;
 		return true;
-	}
-
-	public Integer getSumLike() {
-		return sumLike;
-	}
-
-	public void setSumLike(Integer sumLike) {
-		this.sumLike = sumLike;
-	}
-
-	public void upRank() {
-		this.sumLike += 1;
-	}
-	
-	@Override
-	public int compareTo(Answer o) {
-		int t_ = this.sumLike.intValue();
-		int o_ = o.getSumLike().intValue();
-		return t_ < o_ ? 1 : (t_ > o_ ? -1 : 0);
 	}
 }

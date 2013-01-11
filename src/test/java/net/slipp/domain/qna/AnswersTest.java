@@ -27,6 +27,15 @@ public class AnswersTest {
 		assertThat(answerers.size(), is(1));
 	}
 	
+	@Test
+	public void isBestAnswer() throws Exception {
+		Answer answer = new Answer();
+		assertThat(answer.isBest(), is(false));
+		
+		answer.setSumLike(2);
+		assertThat(answer.isBest(), is(true));
+	}
+	
 	private SocialUser createSocialUser(long id, String providerId) {
 		SocialUser socialUser = new SocialUser(id);
 		socialUser.setProviderId(providerId);

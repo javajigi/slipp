@@ -2,8 +2,9 @@ package net.slipp.domain.qna;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
+import java.util.List;
 import java.util.Set;
 
 import net.slipp.domain.tag.Tag;
@@ -16,6 +17,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -110,5 +112,41 @@ public class QuestionTest {
 		String contents = "this is contents";
 		dut.setContents(contents);
 		assertThat(dut.getContents(), is(contents));
+	}
+	
+	@Test
+	public void getBestAnswer() throws Exception {
+		dut = new Question() {
+			@Override
+			public List<Answer> getAnswers() {
+				return Lists.newArrayList(createAnswerWithSumLike(1), createAnswerWithSumLike(0), createAnswerWithSumLike(3));
+			}
+		};
+		
+		Answer bestAnswer = dut.getBestAnswer();
+		assertThat(bestAnswer.getSumLike(), is(3));
+	}
+	
+	@Test
+	public void getBestAnswerDontExisted() throws Exception {
+		dut = new Question() {
+			@Override
+			public List<Answer> getAnswers() {
+				return Lists.newArrayList(createAnswerWithSumLike(1), createAnswerWithSumLike(0));
+			}
+		};
+		
+		assertThat(dut.getBestAnswer(), is(nullValue()));
+	}
+	
+	@Test
+	public void getBestAnswerHasNotAnswer() throws Exception {
+		assertThat(dut.getBestAnswer(), is(nullValue()));
+	}
+
+	private Answer createAnswerWithSumLike(Integer sumLike) {
+		final Answer answer = new Answer();
+		answer.setSumLike(sumLike);
+		return answer;
 	}
 }

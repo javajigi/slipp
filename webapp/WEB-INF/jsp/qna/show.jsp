@@ -21,8 +21,7 @@
 				<p class="count"><strong>${question.answerCount}</strong>개의 답변</p>
 				<ul class="list">
 					<c:if test="${!empty question.bestAnswer}">
-						<c:set var="each" value="${question.bestAnswer}"/>
-						<slipp:answer each="${each}" isBest="true"/>
+						<slipp:answer each="${question.bestAnswer}" isBest="true"/>
 					</c:if>
 					<c:forEach items="${question.answers}" var="each">
 						<slipp:answer each="${each}" isBest="false"/>
