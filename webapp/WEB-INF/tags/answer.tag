@@ -8,7 +8,7 @@ taglib prefix="slipp" tagdir="/WEB-INF/tags" %><%@
 attribute name="each" required="true" rtexprvalue="true" type="net.slipp.domain.qna.Answer" description="답변"%><%@
 attribute name="isBest" required="true" rtexprvalue="true" type="java.lang.Boolean" description="" %>
 
-<li id="answer-${each.answerId}" <c:if test="${isBest}">class="best"</c:if>>
+<li <c:if test="${not isBest}">id="answer-${each.answerId}"</c:if> <c:if test="${isBest}">class="best"</c:if>>
 	<a href="#answer-${each.answerId}" class="permalink">#answer-${each.answerId}</a>
 	<c:if test="${isBest}"><span class="answer-best">best</span></c:if>
 	<div class="auth-info">
