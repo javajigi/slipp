@@ -5,13 +5,12 @@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%><%@
 taglib prefix="sf" uri="http://slipp.net/functions"%><%@
 taglib prefix="sl" uri="http://www.slipp.net/tags"%><%@
 taglib prefix="slipp" tagdir="/WEB-INF/tags" %><%@
-attribute name="each" required="true" rtexprvalue="true" type="net.slipp.domain.qna.Answer" description=" 목록"%><%@
-attribute name="isBest" required="true" rtexprvalue="true" type="java.lang.Boolean" description=" 목록" %>
+attribute name="each" required="true" rtexprvalue="true" type="net.slipp.domain.qna.Answer" description="답변"%><%@
+attribute name="isBest" required="true" rtexprvalue="true" type="java.lang.Boolean" description="" %>
 
-<li <c:if test="${isBest}">class="best"</c:if>>
-	<div class="scoreArea" style="float:left;width: 40px;margin-top: 14px;text-align: center">
-		<span style="color:#808185;font-weight: bold;font-size: 240%;"></span>
-	</div>
+<li id="answer-${each.answerId}" <c:if test="${isBest}">class="best"</c:if>>
+	<a href="#answer-${each.answerId}" class="permalink">#answer-${each.answerId}</a>
+	<c:if test="${isBest}"><span class="answer-best">best</span></c:if>
 	<div class="auth-info">
 		<div class="author-thumb">
 			<img src='${sf:stripHttp(each.writer.imageUrl)}' class="user-thumb" alt="" />
@@ -24,13 +23,19 @@ attribute name="isBest" required="true" rtexprvalue="true" type="java.lang.Boole
 			<div class="likeAnswerBtn like" data-answer-id="${each.answerId}">
 				<span class="star">★</span><strong class="like-count">${each.sumLike}</strong>
 			</div>
+			<div>
+			</div>
 		</div>
 	</div>
 	<div class="doc">
- 		<div class="text">${sf:wiki(each.contents)}</div>
+		<div class="text">${sf:wiki(each.contents)}</div>
 		<div class="util">
-			<a class="likeAnswerBtn btn btn-like" data-answer-id="${each.answerId}" href="#" alt="${each.sumLike}"><span class="star">★</span> 공감</a>
+			<a class="likeAnswerBtn btn btn-like" data-answer-id="${each.answerId}" href="#" alt="${each.sumLike}">
+				<span class="star">★</span>
+				<span class="txt">공감</span>
+			</a>
 			<c:if test="${sf:isWriter(each.writer, loginUser)}">
+			<a class="updateAnswerBtn btn btn-primary" href="/questions/${question.questionId}/answers/${each.answerId}/form">수정</a>
 			<a class="deleteAnswerBtn btn btn-danger" data-answer-id="${each.answerId}" href="#">삭제</a>
 			</c:if>
 			<sec:authorize access="hasRole('ROLE_USER')">

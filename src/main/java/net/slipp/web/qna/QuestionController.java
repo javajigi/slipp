@@ -15,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -63,8 +64,12 @@ public class QuestionController {
 	}
 
 	@RequestMapping("/{id}/form")
-	public String updateForm(@PathVariable Long id, Model model) {
-		model.addAttribute("question", qnaService.findByQuestionId(id));
+	public String updateForm(@LoginUser SocialUser loginUser, @PathVariable Long id, Model model) {
+		Question question = qnaService.findByQuestionId(id);
+		if (!question.isWritedBy(loginUser)) {
+			throw new AccessDeniedException(loginUser.getUserId() + " is not owner!");
+		}
+		model.addAttribute("question", question);
 		model.addAttribute("tags", qnaService.findsTag());
 		return "qna/form";
 	}

@@ -6,10 +6,7 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 	<ul>
 		<c:forEach items="${tags}" var="each">
 		<li>
-			<a href="/questions/tagged/${each.name}" class="tag">
-				${each.name}
-				<span class="count">${each.taggedCount}</span>
-			</a>
+			<a href="/questions/tagged/${each.name}" class="tag">${each.name} <span class="count">${each.taggedCount}</span></a>
 		</li>	
 		</c:forEach>
 	</ul>

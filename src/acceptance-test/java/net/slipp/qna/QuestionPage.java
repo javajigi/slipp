@@ -74,4 +74,9 @@ public class QuestionPage {
 		String actual = driver.findElement(By.cssSelector("strong.like-count")).getText();
 		assertThat(actual, is(likeCount));
 	}
+
+	public AnswerUpdateFormPage goToUpdateAnswerPage() {
+		driver.findElement(By.cssSelector("a.updateAnswerBtn")).click();
+		return new AnswerUpdateFormPage(driver);
+	}
 }

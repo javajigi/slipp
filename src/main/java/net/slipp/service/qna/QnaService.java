@@ -95,6 +95,10 @@ public class QnaService {
 	public Tag findTagByName(String name) {
 		return tagRepository.findByName(name);
 	}
+	
+	public Answer findAnswerById(Long answerId) {
+		return answerRepository.findOne(answerId);
+	}
 
 	public void createAnswer(SocialUser loginUser, Long questionId, Answer answer) {
 		Question question = questionRepository.findOne(questionId);
@@ -102,6 +106,14 @@ public class QnaService {
 		answer.answerTo(question);
 		answerRepository.save(answer);
 		notificationService.notifyToFacebook(loginUser, question, question.findNotificationUser(loginUser));
+	}
+	
+	public void updateAnswer(SocialUser loginUser, Answer answerDto) {
+		Answer answer = answerRepository.findOne(answerDto.getAnswerId());
+		if (!answer.isWritedBy(loginUser)) {
+			throw new AccessDeniedException(loginUser + " is not owner!");
+		}
+		answer.updateAnswer(answerDto);
 	}
 
 	public void deleteAnswer(SocialUser loginUser, Long questionId, Long answerId) {
