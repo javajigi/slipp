@@ -3,10 +3,10 @@ package net.slipp.qna;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class QuestionsFormPage {
+public class QuestionFormPage {
 	private WebDriver driver;
 
-	public QuestionsFormPage(WebDriver driver) {
+	public QuestionFormPage(WebDriver driver) {
 		this.driver = driver;
 	}
 

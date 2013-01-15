@@ -76,7 +76,7 @@ public class QuestionController {
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.PUT)
-	public String update(@LoginUser SocialUser loginUser, Question updatedQuestion) {
+	public String update(@LoginUser SocialUser loginUser, QuestionDto updatedQuestion) {
 		logger.debug("Question : {}", updatedQuestion);
 
 		Question question = qnaService.updateQuestion(loginUser, updatedQuestion);

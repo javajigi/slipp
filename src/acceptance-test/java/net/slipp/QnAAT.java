@@ -7,7 +7,7 @@ import net.slipp.qna.IndexPage;
 import net.slipp.qna.NewTagsPage;
 import net.slipp.qna.QuestionFixture;
 import net.slipp.qna.QuestionPage;
-import net.slipp.qna.QuestionsFormPage;
+import net.slipp.qna.QuestionFormPage;
 import net.slipp.support.AbstractATTest;
 
 import org.junit.Before;
@@ -29,11 +29,23 @@ public class QnAAT extends AbstractATTest {
     	loginToFacebook();
     	createQuestion(questionFixture);
     }
+    
+    @Test
+    public void 정상적으로_수정() {
+        loginToFacebook();
+        QuestionPage questionPage = createQuestion(questionFixture);
+        QuestionFormPage qnaFormPage = questionPage.goToUpdatePage();
+        questionFixture.setTitle("update title");
+        questionFixture.setContents("update contents");
+        questionFixture.setPlainTags("java jsp servlet");
+        questionPage = qnaFormPage.question(questionFixture);
+        questionPage.verify(questionFixture.getTitle(), questionFixture.getContents(), questionFixture.getPlainTags());
+    }
 
     @Test
     public void 신규태그_정상적으로_등록() {
         loginToFacebook();
-        QuestionsFormPage qnaFormPage = indexPage.goQuestionForm();
+        QuestionFormPage qnaFormPage = indexPage.goQuestionForm();
         questionFixture.setPlainTags("java javascript newtag");
         QuestionPage questionPage = qnaFormPage.question(questionFixture);
         NewTagsPage newTagsPage = questionPage.goNewTagsPage();
@@ -92,10 +104,11 @@ public class QnAAT extends AbstractATTest {
 	}
 
     
-	private void createQuestion(QuestionFixture questionFixture) {
-        QuestionsFormPage qnaFormPage = indexPage.goQuestionForm();
+	private QuestionPage createQuestion(QuestionFixture questionFixture) {
+        QuestionFormPage qnaFormPage = indexPage.goQuestionForm();
         QuestionPage questionPage = qnaFormPage.question(questionFixture);
         questionPage.verify(questionFixture.getTitle(), questionFixture.getContents(), questionFixture.getPlainTags());
+        return questionPage;
 	}
     
     private void loginToFacebook() {

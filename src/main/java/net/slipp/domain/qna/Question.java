@@ -24,12 +24,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
-import net.slipp.domain.tag.NewTag;
 import net.slipp.domain.tag.Tag;
 import net.slipp.domain.user.SocialUser;
-import net.slipp.repository.tag.TagRepository;
 import net.slipp.service.tag.TagProcessor;
 import net.slipp.support.jpa.CreatedAndUpdatedDateEntityListener;
 import net.slipp.support.jpa.HasCreatedAndUpdatedDate;
@@ -87,12 +84,6 @@ public class Question implements HasCreatedAndUpdatedDate {
     @Column(name = "denormalized_tags", length = 100)
     private String denormalizedTags; // 역정규화한 태그를 저장
 
-    @Transient
-    private Set<NewTag> newTags = Sets.newHashSet();
-
-    @Transient
-    private String plainTags;
-
     @OneToMany(mappedBy = "question", fetch = FetchType.LAZY)
     @OrderBy("answerId ASC")
     private List<Answer> answers;
@@ -107,12 +98,12 @@ public class Question implements HasCreatedAndUpdatedDate {
         this.questionId = id;
     }
 
-    public Question(SocialUser loginUser, String title, String contents, Set<Tag> tags) {
+    public Question(SocialUser loginUser, String title, String contents, Set<Tag> pooledTags) {
         this.writer = loginUser;
         this.title = title;
         setContents(contents);
-        this.tags = tags;
-        this.denormalizedTags = tagsToDenormalizedTags(tags);
+        this.tags = pooledTags;
+        this.denormalizedTags = tagsToDenormalizedTags(pooledTags);
     }
 
     public List<Answer> getAnswers() {
@@ -132,6 +123,10 @@ public class Question implements HasCreatedAndUpdatedDate {
     }
 
     private String tagsToDenormalizedTags(Set<Tag> tags) {
+        if (tags == null) {
+            return null;
+        }
+        
         Function<Tag, String> tagToString = new Function<Tag, String>() {
             @Override
             public String apply(Tag input) {
@@ -167,14 +162,6 @@ public class Question implements HasCreatedAndUpdatedDate {
         return questionId;
     }
 
-    public void setQuestionId(Long questionId) {
-        this.questionId = questionId;
-    }
-
-    public void writedBy(SocialUser user) {
-        this.writer = user;
-    }
-
     public boolean isWritedBy(SocialUser socialUser) {
         return writer.isSameUser(socialUser);
     }
@@ -187,16 +174,8 @@ public class Question implements HasCreatedAndUpdatedDate {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public int getShowCount() {
         return showCount;
-    }
-
-    public void setShowCount(int showCount) {
-        this.showCount = showCount;
     }
 
     public String getPlainTags() {
@@ -205,14 +184,6 @@ public class Question implements HasCreatedAndUpdatedDate {
             displayTags += tag.getName() + " ";
         }
         return displayTags;
-    }
-
-    public void setPlainTags(String plainTags) {
-        this.plainTags = plainTags;
-    }
-
-    public void setAnswerCount(int answerCount) {
-        this.answerCount = answerCount;
     }
 
     public Date getCreatedDate() {
@@ -264,36 +235,11 @@ public class Question implements HasCreatedAndUpdatedDate {
         return tags.contains(tag);
     }
 
-    public Set<NewTag> getNewTags() {
-        return newTags;
-    }
-
-    public static Question newQuestion(SocialUser loginUser, Question questionDto, TagRepository tagRepository) {
-        Question newQuestion = new Question();
-        newQuestion.writer = loginUser;
-        newQuestion.title = questionDto.title;
-        newQuestion.contentsHolder = questionDto.contentsHolder;
-        newQuestion.processTags(questionDto.plainTags, tagRepository);
-
-        return newQuestion;
-    }
-
-    private void processTags(String plainTags, TagRepository tagRepository) {
-        TagProcessor tagProcessor = new TagProcessor(tagRepository);
-        tagProcessor.processTags(this.tags, plainTags);
-        this.tags = tagProcessor.getTags();
-        this.denormalizedTags = tagProcessor.getDenormalizedTags();
-        this.newTags = tagProcessor.getNewTags();
-    }
-
-    public void update(SocialUser loginUser, Question questionDto, TagRepository tagRepository) {
-        if (!isWritedBy(loginUser)) {
-            throw new AccessDeniedException(loginUser + " is not owner!");
-        }
-
-        this.title = questionDto.title;
-        this.contentsHolder = questionDto.contentsHolder;
-        this.processTags(questionDto.plainTags, tagRepository);
+    public void update(SocialUser loginUser, String title, String contents, Set<Tag> pooledTags) {
+        this.title = title;
+        setContents(contents);
+        this.tags = pooledTags;
+        this.denormalizedTags = tagsToDenormalizedTags(pooledTags);
     }
 
     public Set<SocialUser> findNotificationUser(SocialUser loginUser) {
@@ -332,8 +278,7 @@ public class Question implements HasCreatedAndUpdatedDate {
     public String toString() {
         return "Question [questionId=" + questionId + ", writer=" + writer + ", title=" + title + ", contentsHolder="
                 + contentsHolder + ", createdDate=" + createdDate + ", updatedDate=" + updatedDate + ", answerCount="
-                + answerCount + ", showCount=" + showCount + ", tags=" + tags + ", plainTags=" + plainTags
-                + ", answers=" + answers + "]";
+                + answerCount + ", showCount=" + showCount + ", tags=" + tags + ", answers=" + answers + "]";
     }
 
     @Override
@@ -344,7 +289,6 @@ public class Question implements HasCreatedAndUpdatedDate {
         result = prime * result + ((answers == null) ? 0 : answers.hashCode());
         result = prime * result + ((contentsHolder == null) ? 0 : contentsHolder.hashCode());
         result = prime * result + ((createdDate == null) ? 0 : createdDate.hashCode());
-        result = prime * result + ((plainTags == null) ? 0 : plainTags.hashCode());
         result = prime * result + ((questionId == null) ? 0 : questionId.hashCode());
         result = prime * result + showCount;
         result = prime * result + ((tags == null) ? 0 : tags.hashCode());
@@ -379,11 +323,6 @@ public class Question implements HasCreatedAndUpdatedDate {
             if (other.createdDate != null)
                 return false;
         } else if (!createdDate.equals(other.createdDate))
-            return false;
-        if (plainTags == null) {
-            if (other.plainTags != null)
-                return false;
-        } else if (!plainTags.equals(other.plainTags))
             return false;
         if (questionId == null) {
             if (other.questionId != null)

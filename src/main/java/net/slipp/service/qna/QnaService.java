@@ -56,13 +56,16 @@ public class QnaService {
         return savedQuestion;
     }
 
-    public Question updateQuestion(SocialUser loginUser, Question questionDto) {
+    public Question updateQuestion(SocialUser loginUser, QuestionDto questionDto) {
         Assert.notNull(loginUser, "loginUser should be not null!");
         Assert.notNull(questionDto, "question should be not null!");
 
         Question question = questionRepository.findOne(questionDto.getQuestionId());
-        question.update(loginUser, questionDto, tagRepository);
-        tagService.saveNewTag(loginUser, question, question.getNewTags());
+        
+        Tags tags = tagService.processTags(question.getTags(), questionDto.getPlainTags());
+        question.update(loginUser, questionDto.getTitle(), questionDto.getContents(),
+                tags.getPooledTags());
+        tagService.saveNewTag(loginUser, question, tags.getNewTags());
         return question;
     }
 

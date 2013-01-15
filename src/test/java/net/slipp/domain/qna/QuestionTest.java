@@ -36,7 +36,7 @@ public class QuestionTest {
     public void isWritedBy_sameUser() throws Exception {
         // given
         SocialUser user = new SocialUser(10);
-        dut.writedBy(user);
+        dut = new Question(user, null, null, null);
 
         // when
         boolean actual = dut.isWritedBy(user);
@@ -49,10 +49,10 @@ public class QuestionTest {
     public void isWritedBy_differentUser() throws Exception {
         // given
         SocialUser user = new SocialUser(10);
-        dut.writedBy(new SocialUser(11));
+        dut = new Question(user, null, null, null);
 
         // when
-        boolean actual = dut.isWritedBy(user);
+        boolean actual = dut.isWritedBy(new SocialUser(11));
 
         // then
         assertThat(actual, is(false));
@@ -74,26 +74,6 @@ public class QuestionTest {
         assertThat(newQuestion.getContents(), is(dto.getContents()));
         assertThat(newQuestion.hasTag(java), is(true));
         assertThat(newQuestion.getDenormalizedTags(), is(java.getName()));
-    }
-
-    @Test
-    public void updateQuestion() throws Exception {
-        // given
-        SocialUser loginUser = new SocialUser();
-        Tag java = new Tag("java");
-        Question questionDto = QuestionFixture.createDto("title", "contents", "java javascript");
-        when(tagRepository.findByName(java.getName())).thenReturn(java);
-        Question newQuestion = Question.newQuestion(loginUser, questionDto, tagRepository);
-        Question updatedQuestionDto = QuestionFixture.createDto("title2", "contents2", "java maven");
-
-        // when
-        newQuestion.update(loginUser, updatedQuestionDto, tagRepository);
-
-        // then
-        assertThat(newQuestion.getTitle(), is(updatedQuestionDto.getTitle()));
-        assertThat(newQuestion.getContents(), is(updatedQuestionDto.getContents()));
-        assertThat(newQuestion.hasTag(java), is(true));
-        assertThat(newQuestion.getNewTags().size(), is(1));
     }
 
     @Test

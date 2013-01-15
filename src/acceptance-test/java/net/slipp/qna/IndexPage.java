@@ -60,9 +60,9 @@ public class IndexPage {
 		return new AdminTagPage(driver);
 	}
 
-	public QuestionsFormPage goQuestionForm() {
+	public QuestionFormPage goQuestionForm() {
 		driver.findElement(By.id("questionBtn")).click();
-		return new QuestionsFormPage(driver);
+		return new QuestionFormPage(driver);
 	}
 
 	public QuestionsPage goQuestionsPage() {
