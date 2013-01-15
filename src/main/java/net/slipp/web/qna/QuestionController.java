@@ -4,6 +4,7 @@ import javax.annotation.Resource;
 
 import net.slipp.domain.qna.Answer;
 import net.slipp.domain.qna.Question;
+import net.slipp.domain.qna.QuestionDto;
 import net.slipp.domain.qna.Question_;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.service.qna.QnaService;
@@ -50,13 +51,13 @@ public class QuestionController {
 
 	@RequestMapping("/form")
 	public String createForm(@LoginUser SocialUser loginUser, Model model) {
-		model.addAttribute(new Question());
+		model.addAttribute("question", new QuestionDto());
 		model.addAttribute("tags", qnaService.findsTag());
 		return "qna/form";
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public String create(@LoginUser SocialUser loginUser, Question newQuestion) {
+	public String create(@LoginUser SocialUser loginUser, QuestionDto newQuestion) {
 		logger.debug("Question : {}", newQuestion);
 
 		Question question = qnaService.createQuestion(loginUser, newQuestion);

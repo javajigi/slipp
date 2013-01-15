@@ -11,10 +11,10 @@ import java.util.Set;
 import net.slipp.domain.qna.Question;
 import net.slipp.domain.tag.NewTag;
 import net.slipp.domain.tag.Tag;
+import net.slipp.domain.tag.Tags;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.repository.tag.NewTagRepository;
 import net.slipp.repository.tag.TagRepository;
-import net.slipp.service.tag.TagService;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -96,4 +96,68 @@ public class TagServiceTest {
 		
 		verify(newTagRepository, never()).save(newTag);
 	}
+	
+    @Test
+    public void processTags_최초_생성() throws Exception {
+        // given
+        Tag tag = new Tag("java");
+        String plainTags = "java newTags";
+        Set<Tag> originalTags = Sets.newHashSet();
+        when(tagRepository.findByName(tag.getName())).thenReturn(tag);
+        
+        // when
+        Tags tags = dut.processTags(originalTags, plainTags);
+        
+        // then
+        Set<Tag> pooledTags = tags.getPooledTags();
+        assertThat(pooledTags.size(), is(1));
+        assertThat(tag.getTaggedCount(), is(1));
+        Set<NewTag> newTags = tags.getNewTags();
+        assertThat(newTags.size(), is(1));
+    }
+    
+    @Test
+    public void processTags_수정() throws Exception {
+        // given
+        Tag java = createTaggedTag("java");
+        Tag spring = createTaggedTag("spring");
+        String plainTags = "java newTags";
+        Set<Tag> originalTags = Sets.newHashSet(java, spring);
+        when(tagRepository.findByName(java.getName())).thenReturn(java);
+                
+        // when
+        Tags tags = dut.processTags(originalTags, plainTags);
+        
+        // then
+        Set<Tag> pooledTags = tags.getPooledTags();
+        assertThat(pooledTags.size(), is(1));
+        assertThat(java.getTaggedCount(), is(1));
+        assertThat(spring.getTaggedCount(), is(0));
+        Set<NewTag> newTags = tags.getNewTags();
+        assertThat(newTags.size(), is(1));
+    }
+
+    private Tag createTaggedTag(String tagName) {
+        Tag tag = new Tag(tagName);
+        tag.tagged();
+        return tag;
+    }
+    
+    @Test
+    public void parseTags_space() throws Exception {
+        String plainTags = "java javascript";
+        Set<String> parsedTags = TagService.parseTags(plainTags);
+        assertThat(parsedTags.size(), is(2));
+    }
+    
+    @Test
+    public void parseTags_comma() throws Exception {
+        String plainTags = "java,javascript";
+        Set<String> parsedTags = TagService.parseTags(plainTags);
+        assertThat(parsedTags.size(), is(2));
+        
+        plainTags = "java,javascript,";
+        parsedTags = TagService.parseTags(plainTags);
+        assertThat(parsedTags.size(), is(2));
+    }
 }

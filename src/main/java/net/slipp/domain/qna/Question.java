@@ -1,6 +1,5 @@
 package net.slipp.domain.qna;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -36,9 +35,11 @@ import net.slipp.support.jpa.CreatedAndUpdatedDateEntityListener;
 import net.slipp.support.jpa.HasCreatedAndUpdatedDate;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.security.access.AccessDeniedException;
 
+import com.google.common.base.Function;
+import com.google.common.base.Joiner;
+import com.google.common.collect.Collections2;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -46,364 +47,371 @@ import com.google.common.collect.Sets;
 @Entity
 @EntityListeners({ CreatedAndUpdatedDateEntityListener.class })
 public class Question implements HasCreatedAndUpdatedDate {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long questionId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long questionId;
 
-	@ManyToOne
-	@org.hibernate.annotations.ForeignKey(name = "fk_question_writer")
-	private SocialUser writer;
+    @ManyToOne
+    @org.hibernate.annotations.ForeignKey(name = "fk_question_writer")
+    private SocialUser writer;
 
-	@Column(name = "title", length = 100, nullable = false)
-	private String title;
+    @Column(name = "title", length = 100, nullable = false)
+    private String title;
 
-	@ElementCollection(fetch = FetchType.LAZY)
-	@CollectionTable(name = "question_content_holder", joinColumns = @JoinColumn(name = "question_id", unique = true))
-	@org.hibernate.annotations.ForeignKey(name = "fk_question_content_holder_question_id")
-	@Lob
-	@Column(name = "contents", nullable = false)
-	private Collection<String> contentsHolder;
+    @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(name = "question_content_holder", joinColumns = @JoinColumn(name = "question_id", unique = true))
+    @org.hibernate.annotations.ForeignKey(name = "fk_question_content_holder_question_id")
+    @Lob
+    @Column(name = "contents", nullable = false)
+    private Collection<String> contentsHolder;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "created_date", nullable = false, updatable = false)
-	private Date createdDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_date", nullable = false, updatable = false)
+    private Date createdDate;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "updated_date", nullable = false)
-	private Date updatedDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "updated_date", nullable = false)
+    private Date updatedDate;
 
-	@Column(name = "answer_count", nullable = false)
-	private int answerCount = 0;
+    @Column(name = "answer_count", nullable = false)
+    private int answerCount = 0;
 
-	@Column(name = "show_count", nullable = false)
-	private int showCount = 0;
+    @Column(name = "show_count", nullable = false)
+    private int showCount = 0;
 
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "question_tag", joinColumns = @JoinColumn(name = "question_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
-	@org.hibernate.annotations.ForeignKey(name = "fk_question_tag_question_id", inverseName = "fk_question_tag_tag_id")
-	private Set<Tag> tags = Sets.newHashSet();
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "question_tag", joinColumns = @JoinColumn(name = "question_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    @org.hibernate.annotations.ForeignKey(name = "fk_question_tag_question_id", inverseName = "fk_question_tag_tag_id")
+    private Set<Tag> tags = Sets.newHashSet();
 
-	@Column(name = "denormalized_tags", length = 100)
-	private String denormalizedTags; // 역정규화한 태그를 저장
+    @Column(name = "denormalized_tags", length = 100)
+    private String denormalizedTags; // 역정규화한 태그를 저장
 
-	@Transient
-	private Set<NewTag> newTags = Sets.newHashSet();
+    @Transient
+    private Set<NewTag> newTags = Sets.newHashSet();
 
-	@Transient
-	private String plainTags;
+    @Transient
+    private String plainTags;
 
-	@OneToMany(mappedBy = "question", fetch = FetchType.LAZY)
-	@OrderBy("answerId ASC")
-	private List<Answer> answers;
+    @OneToMany(mappedBy = "question", fetch = FetchType.LAZY)
+    @OrderBy("answerId ASC")
+    private List<Answer> answers;
 
-	@Column(name = "deleted", nullable = false)
-	private boolean deleted = false;
+    @Column(name = "deleted", nullable = false)
+    private boolean deleted = false;
 
-	public Question() {
-	}
+    public Question() {
+    }
 
-	public Question(Long id) {
-		this.questionId = id;
-	}
+    public Question(Long id) {
+        this.questionId = id;
+    }
 
-	public List<Answer> getAnswers() {
-		return answers;
-	}
+    public Question(SocialUser loginUser, String title, String contents, Set<Tag> tags) {
+        this.writer = loginUser;
+        this.title = title;
+        setContents(contents);
+        this.tags = tags;
+        this.denormalizedTags = tagsToDenormalizedTags(tags);
+    }
 
-	public int getAnswerCount() {
-		return answerCount;
-	}
+    public List<Answer> getAnswers() {
+        return answers;
+    }
 
-	public Set<Tag> getTags() {
-		return tags;
-	}
+    public int getAnswerCount() {
+        return answerCount;
+    }
 
-	public Collection<String> getDenormalizedTags() {
-		if (StringUtils.isBlank(denormalizedTags)) {
-			return Sets.newHashSet();
-		}
-		return Arrays.asList(denormalizedTags.split(","));
-	}
+    public Set<Tag> getTags() {
+        return tags;
+    }
 
-	public void setContents(String newContents) {
-		if (isEmptyContentsHolder()) {
-			contentsHolder = Lists.newArrayList(newContents);
-		} else {
-			contentsHolder.clear();
-			contentsHolder.add(newContents);
-		}
-	}
+    public String getDenormalizedTags() {
+        return this.denormalizedTags;
+    }
 
-	private boolean isEmptyContentsHolder() {
-		return contentsHolder == null || contentsHolder.isEmpty();
-	}
+    private String tagsToDenormalizedTags(Set<Tag> tags) {
+        Function<Tag, String> tagToString = new Function<Tag, String>() {
+            @Override
+            public String apply(Tag input) {
+                return input.getName();
+            }
+        };
 
-	public String getContents() {
-		if (isEmptyContentsHolder()) {
-			return "";
-		}
+        return Joiner.on(",").join(Collections2.transform(tags, tagToString));
+    }
 
-		return Iterables.getFirst(contentsHolder, "");
-	}
+    public void setContents(String newContents) {
+        if (isEmptyContentsHolder()) {
+            contentsHolder = Lists.newArrayList(newContents);
+        } else {
+            contentsHolder.clear();
+            contentsHolder.add(newContents);
+        }
+    }
 
-	public Long getQuestionId() {
-		return questionId;
-	}
+    private boolean isEmptyContentsHolder() {
+        return contentsHolder == null || contentsHolder.isEmpty();
+    }
 
-	public void setQuestionId(Long questionId) {
-		this.questionId = questionId;
-	}
+    public String getContents() {
+        if (isEmptyContentsHolder()) {
+            return "";
+        }
 
-	public void writedBy(SocialUser user) {
-		this.writer = user;
-	}
+        return Iterables.getFirst(contentsHolder, "");
+    }
 
-	public boolean isWritedBy(SocialUser socialUser) {
-		return writer.isSameUser(socialUser);
-	}
+    public Long getQuestionId() {
+        return questionId;
+    }
 
-	public SocialUser getWriter() {
-		return writer;
-	}
+    public void setQuestionId(Long questionId) {
+        this.questionId = questionId;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public void writedBy(SocialUser user) {
+        this.writer = user;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public boolean isWritedBy(SocialUser socialUser) {
+        return writer.isSameUser(socialUser);
+    }
 
-	public int getShowCount() {
-		return showCount;
-	}
+    public SocialUser getWriter() {
+        return writer;
+    }
 
-	public void setShowCount(int showCount) {
-		this.showCount = showCount;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public String getPlainTags() {
-		String displayTags = "";
-		for (Tag tag : this.tags) {
-			displayTags += tag.getName() + " ";
-		}
-		return displayTags;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	public void setPlainTags(String plainTags) {
-		this.plainTags = plainTags;
-	}
+    public int getShowCount() {
+        return showCount;
+    }
 
-	public void setAnswerCount(int answerCount) {
-		this.answerCount = answerCount;
-	}
+    public void setShowCount(int showCount) {
+        this.showCount = showCount;
+    }
 
-	public Date getCreatedDate() {
-		return createdDate;
-	}
+    public String getPlainTags() {
+        String displayTags = "";
+        for (Tag tag : this.tags) {
+            displayTags += tag.getName() + " ";
+        }
+        return displayTags;
+    }
 
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
+    public void setPlainTags(String plainTags) {
+        this.plainTags = plainTags;
+    }
 
-	public Date getUpdatedDate() {
-		return updatedDate;
-	}
+    public void setAnswerCount(int answerCount) {
+        this.answerCount = answerCount;
+    }
 
-	public void setUpdatedDate(Date updatedDate) {
-		this.updatedDate = updatedDate;
-	}
+    public Date getCreatedDate() {
+        return createdDate;
+    }
 
-	public boolean isDeleted() {
-		return deleted;
-	}
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
 
-	public void delete(SocialUser loginUser) {
-		if (!isWritedBy(loginUser)) {
-			throw new AccessDeniedException(loginUser + " is not owner!");
-		}
-		this.deleted = true;
-	}
+    public Date getUpdatedDate() {
+        return updatedDate;
+    }
 
-	public void show() {
-		this.showCount += 1;
-	}
+    public void setUpdatedDate(Date updatedDate) {
+        this.updatedDate = updatedDate;
+    }
 
-	public void newAnswered() {
-		this.answerCount += 1;
-	}
+    public boolean isDeleted() {
+        return deleted;
+    }
 
-	public void deAnswered() {
-		this.answerCount -= 1;
-	}
+    public void delete(SocialUser loginUser) {
+        if (!isWritedBy(loginUser)) {
+            throw new AccessDeniedException(loginUser + " is not owner!");
+        }
+        this.deleted = true;
+    }
 
-	public void tag(Tag tag) {
-		tags.add(tag);
-		this.denormalizedTags = TagProcessor.tagsToDenormalizedTags(tags);
-		tag.tagged();
-	}
+    public void show() {
+        this.showCount += 1;
+    }
 
-	public boolean hasTag(Tag tag) {
-		return tags.contains(tag);
-	}
+    public void newAnswered() {
+        this.answerCount += 1;
+    }
 
-	public Set<NewTag> getNewTags() {
-		return newTags;
-	}
+    public void deAnswered() {
+        this.answerCount -= 1;
+    }
 
-	public static Question newQuestion(SocialUser loginUser,
-			Question questionDto, TagRepository tagRepository) {
-		Question newQuestion = new Question();
-		newQuestion.writer = loginUser;
-		newQuestion.title = questionDto.title;
-		newQuestion.contentsHolder = questionDto.contentsHolder;
-		newQuestion.processTags(questionDto.plainTags, tagRepository);
+    public void tag(Tag tag) {
+        tags.add(tag);
+        this.denormalizedTags = TagProcessor.tagsToDenormalizedTags(tags);
+        tag.tagged();
+    }
 
-		return newQuestion;
-	}
+    public boolean hasTag(Tag tag) {
+        return tags.contains(tag);
+    }
 
-	private void processTags(String plainTags, TagRepository tagRepository) {
-		TagProcessor tagProcessor = new TagProcessor(tagRepository);
-		tagProcessor.processTags(this.tags, plainTags);
-		this.tags = tagProcessor.getTags();
-		this.denormalizedTags = tagProcessor.getDenormalizedTags();
-		this.newTags = tagProcessor.getNewTags();
-	}
+    public Set<NewTag> getNewTags() {
+        return newTags;
+    }
 
-	public void update(SocialUser loginUser, Question questionDto,
-			TagRepository tagRepository) {
-		if (!isWritedBy(loginUser)) {
-			throw new AccessDeniedException(loginUser + " is not owner!");
-		}
+    public static Question newQuestion(SocialUser loginUser, Question questionDto, TagRepository tagRepository) {
+        Question newQuestion = new Question();
+        newQuestion.writer = loginUser;
+        newQuestion.title = questionDto.title;
+        newQuestion.contentsHolder = questionDto.contentsHolder;
+        newQuestion.processTags(questionDto.plainTags, tagRepository);
 
-		this.title = questionDto.title;
-		this.contentsHolder = questionDto.contentsHolder;
-		this.processTags(questionDto.plainTags, tagRepository);
-	}
+        return newQuestion;
+    }
 
-	public Set<SocialUser> findNotificationUser(SocialUser loginUser) {
-		Answers newAnswers = new Answers(this.answers);
-		Set<SocialUser> notifierUsers = newAnswers.findFacebookAnswerers();
-		notifierUsers.add(this.writer);
-		return Sets.difference(notifierUsers, Sets.newHashSet(loginUser));
-	}
+    private void processTags(String plainTags, TagRepository tagRepository) {
+        TagProcessor tagProcessor = new TagProcessor(tagRepository);
+        tagProcessor.processTags(this.tags, plainTags);
+        this.tags = tagProcessor.getTags();
+        this.denormalizedTags = tagProcessor.getDenormalizedTags();
+        this.newTags = tagProcessor.getNewTags();
+    }
 
-	/**
-	 * 베스트 댓글 하나를 반환한다.
-	 * 
-	 * @return
-	 */
-	public Answer getBestAnswer() {
-		if (CollectionUtils.isEmpty(getAnswers())) {
-			return null;
-		}
+    public void update(SocialUser loginUser, Question questionDto, TagRepository tagRepository) {
+        if (!isWritedBy(loginUser)) {
+            throw new AccessDeniedException(loginUser + " is not owner!");
+        }
 
-		Answer answer = getTopLikeAnswer();
-		if (!answer.isBest()) {
-			return null;
-		}
-		
-		return answer;
-	}
+        this.title = questionDto.title;
+        this.contentsHolder = questionDto.contentsHolder;
+        this.processTags(questionDto.plainTags, tagRepository);
+    }
 
-	private Answer getTopLikeAnswer() {
-		List<Answer> sortAnswers = Lists.newArrayList();
-		sortAnswers.addAll(getAnswers());
-		Collections.sort(sortAnswers);
-		return sortAnswers.get(0);
-	}
+    public Set<SocialUser> findNotificationUser(SocialUser loginUser) {
+        Answers newAnswers = new Answers(this.answers);
+        Set<SocialUser> notifierUsers = newAnswers.findFacebookAnswerers();
+        notifierUsers.add(this.writer);
+        return Sets.difference(notifierUsers, Sets.newHashSet(loginUser));
+    }
 
-	@Override
-	public String toString() {
-		return "Question [questionId=" + questionId + ", writer=" + writer
-				+ ", title=" + title + ", contentsHolder=" + contentsHolder
-				+ ", createdDate=" + createdDate + ", updatedDate="
-				+ updatedDate + ", answerCount=" + answerCount + ", showCount="
-				+ showCount + ", tags=" + tags + ", plainTags=" + plainTags
-				+ ", answers=" + answers + "]";
-	}
+    /**
+     * 베스트 댓글 하나를 반환한다.
+     * 
+     * @return
+     */
+    public Answer getBestAnswer() {
+        if (CollectionUtils.isEmpty(getAnswers())) {
+            return null;
+        }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + answerCount;
-		result = prime * result + ((answers == null) ? 0 : answers.hashCode());
-		result = prime * result
-				+ ((contentsHolder == null) ? 0 : contentsHolder.hashCode());
-		result = prime * result
-				+ ((createdDate == null) ? 0 : createdDate.hashCode());
-		result = prime * result
-				+ ((plainTags == null) ? 0 : plainTags.hashCode());
-		result = prime * result
-				+ ((questionId == null) ? 0 : questionId.hashCode());
-		result = prime * result + showCount;
-		result = prime * result + ((tags == null) ? 0 : tags.hashCode());
-		result = prime * result + ((title == null) ? 0 : title.hashCode());
-		result = prime * result
-				+ ((updatedDate == null) ? 0 : updatedDate.hashCode());
-		result = prime * result + ((writer == null) ? 0 : writer.hashCode());
-		return result;
-	}
+        Answer answer = getTopLikeAnswer();
+        if (!answer.isBest()) {
+            return null;
+        }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Question other = (Question) obj;
-		if (answerCount != other.answerCount)
-			return false;
-		if (answers == null) {
-			if (other.answers != null)
-				return false;
-		} else if (!answers.equals(other.answers))
-			return false;
-		if (contentsHolder == null) {
-			if (other.contentsHolder != null)
-				return false;
-		} else if (!contentsHolder.equals(other.contentsHolder))
-			return false;
-		if (createdDate == null) {
-			if (other.createdDate != null)
-				return false;
-		} else if (!createdDate.equals(other.createdDate))
-			return false;
-		if (plainTags == null) {
-			if (other.plainTags != null)
-				return false;
-		} else if (!plainTags.equals(other.plainTags))
-			return false;
-		if (questionId == null) {
-			if (other.questionId != null)
-				return false;
-		} else if (!questionId.equals(other.questionId))
-			return false;
-		if (showCount != other.showCount)
-			return false;
-		if (tags == null) {
-			if (other.tags != null)
-				return false;
-		} else if (!tags.equals(other.tags))
-			return false;
-		if (title == null) {
-			if (other.title != null)
-				return false;
-		} else if (!title.equals(other.title))
-			return false;
-		if (updatedDate == null) {
-			if (other.updatedDate != null)
-				return false;
-		} else if (!updatedDate.equals(other.updatedDate))
-			return false;
-		if (writer == null) {
-			if (other.writer != null)
-				return false;
-		} else if (!writer.equals(other.writer))
-			return false;
-		return true;
-	}
+        return answer;
+    }
+
+    private Answer getTopLikeAnswer() {
+        List<Answer> sortAnswers = Lists.newArrayList();
+        sortAnswers.addAll(getAnswers());
+        Collections.sort(sortAnswers);
+        return sortAnswers.get(0);
+    }
+
+    @Override
+    public String toString() {
+        return "Question [questionId=" + questionId + ", writer=" + writer + ", title=" + title + ", contentsHolder="
+                + contentsHolder + ", createdDate=" + createdDate + ", updatedDate=" + updatedDate + ", answerCount="
+                + answerCount + ", showCount=" + showCount + ", tags=" + tags + ", plainTags=" + plainTags
+                + ", answers=" + answers + "]";
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + answerCount;
+        result = prime * result + ((answers == null) ? 0 : answers.hashCode());
+        result = prime * result + ((contentsHolder == null) ? 0 : contentsHolder.hashCode());
+        result = prime * result + ((createdDate == null) ? 0 : createdDate.hashCode());
+        result = prime * result + ((plainTags == null) ? 0 : plainTags.hashCode());
+        result = prime * result + ((questionId == null) ? 0 : questionId.hashCode());
+        result = prime * result + showCount;
+        result = prime * result + ((tags == null) ? 0 : tags.hashCode());
+        result = prime * result + ((title == null) ? 0 : title.hashCode());
+        result = prime * result + ((updatedDate == null) ? 0 : updatedDate.hashCode());
+        result = prime * result + ((writer == null) ? 0 : writer.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Question other = (Question) obj;
+        if (answerCount != other.answerCount)
+            return false;
+        if (answers == null) {
+            if (other.answers != null)
+                return false;
+        } else if (!answers.equals(other.answers))
+            return false;
+        if (contentsHolder == null) {
+            if (other.contentsHolder != null)
+                return false;
+        } else if (!contentsHolder.equals(other.contentsHolder))
+            return false;
+        if (createdDate == null) {
+            if (other.createdDate != null)
+                return false;
+        } else if (!createdDate.equals(other.createdDate))
+            return false;
+        if (plainTags == null) {
+            if (other.plainTags != null)
+                return false;
+        } else if (!plainTags.equals(other.plainTags))
+            return false;
+        if (questionId == null) {
+            if (other.questionId != null)
+                return false;
+        } else if (!questionId.equals(other.questionId))
+            return false;
+        if (showCount != other.showCount)
+            return false;
+        if (tags == null) {
+            if (other.tags != null)
+                return false;
+        } else if (!tags.equals(other.tags))
+            return false;
+        if (title == null) {
+            if (other.title != null)
+                return false;
+        } else if (!title.equals(other.title))
+            return false;
+        if (updatedDate == null) {
+            if (other.updatedDate != null)
+                return false;
+        } else if (!updatedDate.equals(other.updatedDate))
+            return false;
+        if (writer == null) {
+            if (other.writer != null)
+                return false;
+        } else if (!writer.equals(other.writer))
+            return false;
+        return true;
+    }
 }
