@@ -94,19 +94,20 @@ public class Question implements HasCreatedAndUpdatedDate {
     public Question() {
     }
 
-    public Question(Long id) {
-        this.questionId = id;
-    }
-
     public Question(SocialUser loginUser, String title, String contents, Set<Tag> pooledTags) {
+        this(null, loginUser, title, contents, pooledTags);
+    }
+    
+    public Question(Long id, SocialUser loginUser, String title, String contents, Set<Tag> pooledTags) {
+    	this.questionId = id;
         this.writer = loginUser;
         this.title = title;
-        setContents(contents);
+        this.contentsHolder = Lists.newArrayList(contents);
         this.tags = pooledTags;
         this.denormalizedTags = tagsToDenormalizedTags(pooledTags);
     }
 
-    public List<Answer> getAnswers() {
+	public List<Answer> getAnswers() {
         return answers;
     }
 
@@ -135,15 +136,6 @@ public class Question implements HasCreatedAndUpdatedDate {
         };
 
         return Joiner.on(",").join(Collections2.transform(tags, tagToString));
-    }
-
-    public void setContents(String newContents) {
-        if (isEmptyContentsHolder()) {
-            contentsHolder = Lists.newArrayList(newContents);
-        } else {
-            contentsHolder.clear();
-            contentsHolder.add(newContents);
-        }
     }
 
     private boolean isEmptyContentsHolder() {
@@ -237,7 +229,7 @@ public class Question implements HasCreatedAndUpdatedDate {
 
     public void update(SocialUser loginUser, String title, String contents, Set<Tag> pooledTags) {
         this.title = title;
-        setContents(contents);
+        this.contentsHolder = Lists.newArrayList(contents);
         this.tags = pooledTags;
         this.denormalizedTags = tagsToDenormalizedTags(pooledTags);
     }

@@ -14,6 +14,11 @@ public class QuestionDto {
     }
     
     public QuestionDto(String title, String contents, String plainTags) {
+    	this(null, title, contents, plainTags);
+    }
+    
+    public QuestionDto(Long questionId, String title, String contents, String plainTags) {
+    	this.questionId = questionId;
         this.title = title;
         this.contents = contents;
         this.plainTags = plainTags;

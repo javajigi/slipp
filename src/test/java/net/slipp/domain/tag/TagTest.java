@@ -6,25 +6,24 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class TagTest {
+	public static final Tag JAVA = new Tag("java");
+	public static final Tag JAVA_CHILD = new Tag("자바", JAVA);
+	public static final Tag JAVASCRIPT = new Tag("javascript");
+	
     @Test
     public void addChild() throws Exception {
-        Tag parent = new Tag("java");
-        Tag child = new Tag("자바", parent);
-        Tag actual = child.getParent();
-        assertThat(actual, is(parent));
+        Tag actual = JAVA_CHILD.getParent();
+        assertThat(actual, is(JAVA));
     }
 
     @Test
     public void getRevisedTag_parentTag() throws Exception {
-        Tag parent = new Tag("java");
-        assertThat(parent.getRevisedTag(), is(parent));
+        assertThat(JAVA.getRevisedTag(), is(JAVA));
     }
 
     @Test
     public void getRevisedTag_childTag() throws Exception {
-        Tag parent = new Tag("java");
-        Tag child = new Tag("자바", parent);
-        assertThat(child.getRevisedTag(), is(parent));
+        assertThat(JAVA_CHILD.getRevisedTag(), is(JAVA));
     }
 
     @Test

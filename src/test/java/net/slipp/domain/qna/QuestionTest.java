@@ -1,8 +1,8 @@
 package net.slipp.domain.qna;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.when;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
 
 import java.util.List;
 import java.util.Set;
@@ -64,7 +64,6 @@ public class QuestionTest {
         SocialUser loginUser = new SocialUser();
         Tag java = new Tag("java");
         QuestionDto dto = new QuestionDto("title", "contents", "java javascript");
-        when(tagRepository.findByName(java.getName())).thenReturn(java);
 
         // when
         Question newQuestion = new Question(loginUser, dto.getTitle(), dto.getContents(), Sets.newHashSet(java));
@@ -75,6 +74,22 @@ public class QuestionTest {
         assertThat(newQuestion.hasTag(java), is(true));
         assertThat(newQuestion.getDenormalizedTags(), is(java.getName()));
     }
+    
+    @Test
+	public void updateQuestion() throws Exception {
+        // given
+        SocialUser loginUser = new SocialUser();
+        Tag java = new Tag("java");
+        QuestionDto dto = new QuestionDto("title", "contents", "java javascript");
+        Question newQuestion = new Question(loginUser, dto.getTitle(), dto.getContents(), Sets.newHashSet(java));
+
+        // when
+        newQuestion.update(loginUser, "update title", "update contents", Sets.newHashSet(java));
+        assertThat(newQuestion.getTitle(), is("update title"));
+        assertThat(newQuestion.getContents(), is("update contents"));
+        assertThat(newQuestion.hasTag(java), is(true));
+        assertThat(newQuestion.getDenormalizedTags(), is(java.getName()));        
+	}
 
     @Test
     public void tag() throws Exception {
@@ -85,13 +100,6 @@ public class QuestionTest {
         Set<Tag> tags = Sets.newHashSet(tag);
         assertThat(question.getTags(), is(tags));
         assertThat(tag.getTaggedCount(), is(1));
-    }
-
-    @Test
-    public void contents() throws Exception {
-        String contents = "this is contents";
-        dut.setContents(contents);
-        assertThat(dut.getContents(), is(contents));
     }
 
     @Test
