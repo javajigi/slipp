@@ -200,7 +200,7 @@ public class Question implements HasCreatedAndUpdatedDate {
 
     public void delete(SocialUser loginUser) {
         if (!isWritedBy(loginUser)) {
-            throw new AccessDeniedException(loginUser + " is not owner!");
+            throw new AccessDeniedException(loginUser.getDisplayName() + " is not owner!");
         }
         this.deleted = true;
     }
@@ -228,6 +228,10 @@ public class Question implements HasCreatedAndUpdatedDate {
     }
 
     public void update(SocialUser loginUser, String title, String contents, Set<Tag> pooledTags) {
+        if (!isWritedBy(loginUser)) {
+            throw new AccessDeniedException(loginUser.getDisplayName() + " is not owner!");
+        }
+    	
         this.title = title;
         this.contentsHolder = Lists.newArrayList(contents);
         this.tags = pooledTags;

@@ -26,7 +26,7 @@ public class AdminController {
 	@RequestMapping(value = "/tags", method = RequestMethod.GET)
 	public String tags(Integer page, ModelMap model) throws Exception {
 		model.addAttribute("tags", tagService.findTags(createPageable(page)));
-		model.addAttribute("parentTags", tagService.findParents());
+		model.addAttribute("parentTags", tagService.findsTag());
 		return "admin/tags";
 	}
 
@@ -64,7 +64,7 @@ public class AdminController {
 	
 	@RequestMapping(value = "/newtags", method = RequestMethod.GET)
 	public String newTags(Integer page, ModelMap model) throws Exception {
-		model.addAttribute("parentTags", tagService.findParents());
+		model.addAttribute("parentTags", tagService.findsTag());
 		model.addAttribute("newtags", tagService.findNewTags(createPageable(page)));
 		return "admin/newtags";
 	}

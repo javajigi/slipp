@@ -6,12 +6,10 @@ import net.slipp.domain.qna.Answer;
 import net.slipp.domain.qna.QnaSpecifications;
 import net.slipp.domain.qna.Question;
 import net.slipp.domain.qna.QuestionDto;
-import net.slipp.domain.tag.Tag;
 import net.slipp.domain.tag.Tags;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.repository.qna.AnswerRepository;
 import net.slipp.repository.qna.QuestionRepository;
-import net.slipp.repository.tag.TagRepository;
 import net.slipp.service.rank.ScoreLikeService;
 import net.slipp.service.tag.TagService;
 
@@ -25,9 +23,6 @@ import org.springframework.util.Assert;
 @Service("qnaService")
 @Transactional
 public class QnaService {
-    @Resource(name = "tagRepository")
-    private TagRepository tagRepository;
-
     @Resource(name = "questionRepository")
     private QuestionRepository questionRepository;
 
@@ -94,14 +89,6 @@ public class QnaService {
 
     public Question findByQuestionId(Long id) {
         return questionRepository.findOne(id);
-    }
-
-    public Iterable<Tag> findsTag() {
-        return tagRepository.findParents();
-    }
-
-    public Tag findTagByName(String name) {
-        return tagRepository.findByName(name);
     }
 
     public Answer findAnswerById(Long answerId) {

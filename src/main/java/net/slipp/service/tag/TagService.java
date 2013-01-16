@@ -107,7 +107,7 @@ public class TagService {
 		return tagRepository.findAll(page);
 	}
 	
-	public List<Tag> findParents() {
+	public Iterable<Tag> findsTag() {
 		return tagRepository.findParents();
 	}
 	

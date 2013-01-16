@@ -8,6 +8,7 @@ import net.slipp.domain.qna.QuestionDto;
 import net.slipp.domain.qna.Question_;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.service.qna.QnaService;
+import net.slipp.service.tag.TagService;
 import net.slipp.support.web.argumentresolver.LoginUser;
 
 import org.slf4j.Logger;
@@ -33,13 +34,16 @@ public class QuestionController {
 
 	@Resource(name = "qnaService")
 	private QnaService qnaService;
+	
+	@Resource(name = "tagService")
+	private TagService tagService;
 
 	@RequestMapping("")
 	public String index(Integer page, Model model) {
 		page = revisedPage(page);
 		logger.debug("currentPage : {}", page);
 		model.addAttribute("questions", qnaService.findsQuestion(createPageable(page)));
-		model.addAttribute("tags", qnaService.findsTag());
+		model.addAttribute("tags", tagService.findsTag());
 		return "qna/list";
 	}
 
@@ -52,7 +56,7 @@ public class QuestionController {
 	@RequestMapping("/form")
 	public String createForm(@LoginUser SocialUser loginUser, Model model) {
 		model.addAttribute("question", new QuestionDto());
-		model.addAttribute("tags", qnaService.findsTag());
+		model.addAttribute("tags", tagService.findsTag());
 		return "qna/form";
 	}
 
@@ -71,7 +75,7 @@ public class QuestionController {
 			throw new AccessDeniedException(loginUser.getUserId() + " is not owner!");
 		}
 		model.addAttribute("question", question);
-		model.addAttribute("tags", qnaService.findsTag());
+		model.addAttribute("tags", tagService.findsTag());
 		return "qna/form";
 	}
 
@@ -87,7 +91,7 @@ public class QuestionController {
 	public String show(@PathVariable Long id, Model model) {
 		model.addAttribute("question", qnaService.showQuestion(id));
 		model.addAttribute("answer", new Answer());
-		model.addAttribute("tags", qnaService.findsTag());
+		model.addAttribute("tags", tagService.findsTag());
 		return "qna/show";
 	}
 	
@@ -100,9 +104,9 @@ public class QuestionController {
 	@RequestMapping("/tagged/{name}")
 	public String listByTagged(@PathVariable String name, Integer page, Model model) {
 		page = revisedPage(page);
-		model.addAttribute("currentTag", qnaService.findTagByName(name));
+		model.addAttribute("currentTag", tagService.findTagByName(name));
 		model.addAttribute("questions", qnaService.findsByTag(name, createPageable(page)));
-		model.addAttribute("tags", qnaService.findsTag());
+		model.addAttribute("tags", tagService.findsTag());
 		return "qna/list";
 	}
 

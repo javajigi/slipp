@@ -2,8 +2,6 @@ package net.slipp.service.qna;
 
 import static net.slipp.domain.tag.TagTest.JAVA;
 import static net.slipp.domain.tag.TagsTest.DEFAULT_TAGS;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -58,24 +56,13 @@ public class QnaServiceTest {
 		dut.updateQuestion(loginUser, dto);
 	}
 	
-	@Test (expected=AccessDeniedException.class)
-	public void updateQuestion_differentUser() {
-		// given
-		SocialUser loginUser = new SocialUser(10);
-		Question question = new Question();
-		when(questionRepository.findOne(question.getQuestionId())).thenReturn(question);
-		
-		// when
-		// dut.updateQuestion(loginUser, question);
-	}
-	
 	@Test
 	public void deleteAnswer_sameUser() throws Exception {
 		// given
 		SocialUser loginUser = new SocialUser(10);
 		Answer answer = new Answer(2L);
 		answer.writedBy(loginUser);
-		Question question = new Question();
+		Question question = new Question(1L, loginUser, null, null, null);
 		when(answerRepository.findOne(answer.getAnswerId())).thenReturn(answer);
 		when(questionRepository.findOne(question.getQuestionId())).thenReturn(question);
 		
@@ -84,7 +71,6 @@ public class QnaServiceTest {
 		
 		// then
 		verify(answerRepository).delete(answer);
-		assertThat(question.getAnswerCount(), is(4));
 	}
 	
 	@Test (expected=AccessDeniedException.class)
