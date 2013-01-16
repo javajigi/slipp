@@ -1,11 +1,7 @@
 package net.slipp.support;
 
-import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
-
-import cucumber.runtime.ScenarioResult;
 
 public class SharedDriver extends EventFiringWebDriver {
     private static final WebDriver REAL_DRIVER = WebDriverFactory.createWebDriver();
@@ -34,14 +30,5 @@ public class SharedDriver extends EventFiringWebDriver {
  
     public void deleteAllCookies() {
         manage().deleteAllCookies();
-    }
- 
-    public void embedScreenshot(ScenarioResult result) {
-        try {
-            byte[] screenshot = getScreenshotAs(OutputType.BYTES);
-            result.embed(screenshot, "image/png");
-        } catch (WebDriverException somePlatformsDontSupportScreenshots) {
-            System.err.println(somePlatformsDontSupportScreenshots.getMessage());
-        }
     }
 }
