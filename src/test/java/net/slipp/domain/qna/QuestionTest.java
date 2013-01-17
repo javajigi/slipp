@@ -1,8 +1,7 @@
 package net.slipp.domain.qna;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
 
 import java.util.List;
 import java.util.Set;
@@ -104,38 +103,34 @@ public class QuestionTest {
 
     @Test
     public void getBestAnswer() throws Exception {
-        dut = new Question() {
-            @Override
-            public List<Answer> getAnswers() {
-                return Lists.newArrayList(createAnswerWithSumLike(1), createAnswerWithSumLike(0),
-                        createAnswerWithSumLike(3));
-            }
-        };
-
+        Question dut = createQuestion(createAnswerWithSumLike(1), createAnswerWithSumLike(0),
+                createAnswerWithSumLike(3));
         Answer bestAnswer = dut.getBestAnswer();
         assertThat(bestAnswer.getSumLike(), is(3));
     }
 
     @Test
     public void getBestAnswerDontExisted() throws Exception {
-        dut = new Question() {
-            @Override
-            public List<Answer> getAnswers() {
-                return Lists.newArrayList(createAnswerWithSumLike(1), createAnswerWithSumLike(0));
-            }
-        };
-
+    	Question dut = createQuestion(createAnswerWithSumLike(1), createAnswerWithSumLike(0));
         assertThat(dut.getBestAnswer(), is(nullValue()));
     }
-
+    
     @Test
     public void getBestAnswerHasNotAnswer() throws Exception {
+    	Question dut = createQuestion();
         assertThat(dut.getBestAnswer(), is(nullValue()));
     }
+    
+	private Question createQuestion(final Answer... answers) {
+		return new Question() {
+            @Override
+            public List<Answer> getAnswers() {
+                return Lists.newArrayList(answers);
+            }
+        };
+	}
 
-    private Answer createAnswerWithSumLike(Integer sumLike) {
-        final Answer answer = new Answer();
-        answer.setSumLike(sumLike);
-        return answer;
+    private Answer createAnswerWithSumLike(int sumLike) {
+    	return AnswerTest.createAnswerWithSumLike(sumLike);
     }
 }

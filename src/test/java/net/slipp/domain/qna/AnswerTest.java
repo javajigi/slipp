@@ -1,23 +1,30 @@
 package net.slipp.domain.qna;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
 
-import org.junit.Before;
 import org.junit.Test;
 
 public class AnswerTest {
-	private Answer dut;
-	
-	@Before
-	public void setup() {
-		dut = new Answer();
+	@Test
+	public void isBest() {
+		Answer answer = createAnswerWithSumLike(2);
+		assertThat(answer.isBest(), is(true));
+	}
+
+	static Answer createAnswerWithSumLike(final int sumLike) {
+		Answer answer = new Answer() {
+			@Override
+			public Integer getSumLike() {
+				return sumLike;
+			}
+		};
+		return answer;
 	}
 	
 	@Test
-	public void answerToQuestion() throws Exception {
-		Question question = new Question();
-		dut.answerTo(question);
-		assertThat(question.getAnswerCount(), is(1));
+	public void isNotBest() throws Exception {
+		Answer answer = createAnswerWithSumLike(1);
+		assertThat(answer.isBest(), is(false));		
 	}
 }
