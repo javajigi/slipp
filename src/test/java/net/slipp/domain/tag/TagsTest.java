@@ -1,9 +1,9 @@
 package net.slipp.domain.tag;
 
+import static net.slipp.domain.tag.NewTagTest.NEWTAG;
+import static net.slipp.domain.tag.TagTest.JAVA;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static net.slipp.domain.tag.TagTest.*;
-import static net.slipp.domain.tag.NewTagTest.*;
 
 import java.util.Set;
 

@@ -1,9 +1,12 @@
-package net.slipp.domain.wiki;
+package net.slipp.repository.wiki;
 
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
+
+import net.slipp.domain.wiki.WikiDao;
+import net.slipp.domain.wiki.WikiPage;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,8 +18,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:/infrastructure.xml")
-public class WikiDaoTest {
-	private static Logger logger = LoggerFactory.getLogger(WikiDaoTest.class);
+public class WikiDaoIT {
+	private static Logger logger = LoggerFactory.getLogger(WikiDaoIT.class);
 	
 	@Resource(name="wikiDataSource")
 	private DataSource dataSource;

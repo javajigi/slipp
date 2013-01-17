@@ -6,8 +6,8 @@ import net.slipp.qna.AnswerUpdateFormPage;
 import net.slipp.qna.IndexPage;
 import net.slipp.qna.NewTagsPage;
 import net.slipp.qna.QuestionFixture;
-import net.slipp.qna.QuestionPage;
 import net.slipp.qna.QuestionFormPage;
+import net.slipp.qna.QuestionPage;
 import net.slipp.support.AbstractATTest;
 
 import org.junit.Before;

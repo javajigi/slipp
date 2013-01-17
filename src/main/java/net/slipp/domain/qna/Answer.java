@@ -18,12 +18,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
-
 import net.slipp.domain.user.SocialUser;
 import net.slipp.support.jpa.CreatedAndUpdatedDateEntityListener;
 import net.slipp.support.jpa.HasCreatedAndUpdatedDate;
+
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 
 @Entity
 @EntityListeners({ CreatedAndUpdatedDateEntityListener.class })

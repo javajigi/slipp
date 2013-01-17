@@ -48,7 +48,7 @@ public class WebServer {
 		server.setStopAtShutdown(true);
 	}
 
-	private void prepareReloadable() {
+	void prepareReloadable() {
 		Scanner scanner = new Scanner();
 		scanner.setReportExistingFilesOnStartup(false);
 		scanner.setScanInterval(3);

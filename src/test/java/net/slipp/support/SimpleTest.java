@@ -1,8 +1,5 @@
 package net.slipp.support;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-
 import java.io.File;
 import java.io.StringWriter;
 
@@ -27,10 +24,5 @@ public class SimpleTest {
 	public void currentDir() throws Exception {
 		File file = new File("webapp\\WEB-INF\\static_resources");
 		log.debug("static path : {}", file.getAbsolutePath());
-	}
-	
-	@Test
-	public void knowOsName() throws Exception {
-		assertThat(System.getProperty("os.name").contains("Windows"), is(true));
 	}
 }
