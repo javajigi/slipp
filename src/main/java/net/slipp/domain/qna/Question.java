@@ -105,8 +105,9 @@ public class Question implements HasCreatedAndUpdatedDate {
         this.writer = loginUser;
         this.title = title;
         this.contentsHolder = Lists.newArrayList(contents);
-        this.tags = pooledTags;
-        this.denormalizedTags = tagsToDenormalizedTags(pooledTags);
+        for (Tag tag : pooledTags) {
+			tag(tag);
+		}
     }
 
 	public List<Answer> getAnswers() {
