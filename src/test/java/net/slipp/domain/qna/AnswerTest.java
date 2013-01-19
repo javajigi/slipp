@@ -7,9 +7,9 @@ import org.junit.Test;
 
 public class AnswerTest {
 	@Test
-	public void isBest() {
+	public void likedMoreThan() {
 		Answer answer = createAnswerWithSumLike(2);
-		assertThat(answer.isBest(), is(true));
+		assertThat(answer.likedMoreThan(2), is(true));
 	}
 
 	static Answer createAnswerWithSumLike(final int sumLike) {
@@ -25,6 +25,6 @@ public class AnswerTest {
 	@Test
 	public void isNotBest() throws Exception {
 		Answer answer = createAnswerWithSumLike(1);
-		assertThat(answer.isBest(), is(false));		
+		assertThat(answer.likedMoreThan(2), is(false));		
 	}
 }

@@ -44,6 +44,8 @@ import com.google.common.collect.Sets;
 @Entity
 @EntityListeners({ CreatedAndUpdatedDateEntityListener.class })
 public class Question implements HasCreatedAndUpdatedDate {
+	private static final Integer DEFAULT_BEST_ANSWER = 2;
+	
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long questionId;
@@ -256,7 +258,7 @@ public class Question implements HasCreatedAndUpdatedDate {
         }
 
         Answer answer = getTopLikeAnswer();
-        if (!answer.isBest()) {
+        if (!answer.likedMoreThan(DEFAULT_BEST_ANSWER)) {
             return null;
         }
 

@@ -28,8 +28,6 @@ import com.google.common.collect.Lists;
 @Entity
 @EntityListeners({ CreatedAndUpdatedDateEntityListener.class })
 public class Answer implements HasCreatedAndUpdatedDate, Comparable<Answer> {
-	private static final Integer DEFAULT_BEST_ANSWER = 2;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long answerId;
@@ -67,20 +65,12 @@ public class Answer implements HasCreatedAndUpdatedDate, Comparable<Answer> {
 		this.answerId = answerId;
 	}
 
-	public void setQuestion(Question question) {
-		this.question = question;
-	}
-	
 	public Question getQuestion() {
 		return this.question;
 	}
 
 	public Long getAnswerId() {
 		return answerId;
-	}
-
-	public void setAnswerId(Long answerId) {
-		this.answerId = answerId;
 	}
 
 	public SocialUser getWriter() {
@@ -149,16 +139,12 @@ public class Answer implements HasCreatedAndUpdatedDate, Comparable<Answer> {
 		return sumLike;
 	}
 
-	public void setSumLike(Integer sumLike) {
-		this.sumLike = sumLike;
-	}
-
 	public void upRank() {
 		this.sumLike += 1;
 	}
 	
-	boolean isBest() {
-		if (getSumLike() >= DEFAULT_BEST_ANSWER) {
+	boolean likedMoreThan(int totalLiked) {
+		if (getSumLike() >= totalLiked) {
 			return true;
 		}
 		return false;
@@ -166,9 +152,7 @@ public class Answer implements HasCreatedAndUpdatedDate, Comparable<Answer> {
 	
 	@Override
 	public int compareTo(Answer o) {
-		int t_ = this.sumLike.intValue();
-		int o_ = o.getSumLike().intValue();
-		return t_ < o_ ? 1 : (t_ > o_ ? -1 : 0);
+		return o.getSumLike().compareTo(getSumLike());
 	}
 
 	@Override
