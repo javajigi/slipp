@@ -1,4 +1,4 @@
-package net.slipp.repository.user;
+package net.slipp.domain.user;
 
 import net.slipp.domain.user.SocialUser;
 
@@ -18,8 +18,12 @@ public class SocialUserBuilder {
     private String profileUrl;
 
     private String imageUrl;
+    
+    public static SocialUserBuilder aSocialUser() {
+    	return new SocialUserBuilder();
+    }
 
-    public SocialUserBuilder userId(String userId) {
+    public SocialUserBuilder withUserId(String userId) {
         this.userId = userId;
         return this;
     }
