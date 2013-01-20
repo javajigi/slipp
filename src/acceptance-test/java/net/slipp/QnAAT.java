@@ -1,7 +1,10 @@
 package net.slipp;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
+
+import java.util.Set;
+
 import net.slipp.qna.AnswerUpdateFormPage;
 import net.slipp.qna.IndexPage;
 import net.slipp.qna.NewTagsPage;
@@ -12,8 +15,14 @@ import net.slipp.support.AbstractATTest;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.Cookie;
+import org.openqa.selenium.WebDriver.Options;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class QnAAT extends AbstractATTest {
+	private static final Logger log = LoggerFactory.getLogger(QnAAT.class);
+	
     private QuestionFixture questionFixture;
     private IndexPage indexPage;
     
@@ -26,13 +35,13 @@ public class QnAAT extends AbstractATTest {
     
     @Test
     public void 질문이_정상적으로_등록() {
-    	loginToFacebook();
+    	loginToFacebook(1);
     	createQuestion(questionFixture);
     }
     
     @Test
     public void 정상적으로_수정() {
-        loginToFacebook();
+        loginToFacebook(1);
         QuestionPage questionPage = createQuestion(questionFixture);
         QuestionFormPage qnaFormPage = questionPage.goToUpdatePage();
         questionFixture.setTitle("update title");
@@ -44,7 +53,7 @@ public class QnAAT extends AbstractATTest {
 
     @Test
     public void 신규태그_정상적으로_등록() {
-        loginToFacebook();
+        loginToFacebook(1);
         QuestionFormPage qnaFormPage = indexPage.goQuestionForm();
         questionFixture.setPlainTags("java javascript newtag");
         QuestionPage questionPage = qnaFormPage.question(questionFixture);
@@ -54,37 +63,53 @@ public class QnAAT extends AbstractATTest {
     
     @Test
 	public void 답변이_정상적으로_등록() throws Exception {
-    	loginToFacebook();
+    	loginToFacebook(1);
     	createQuestion(questionFixture);
-    	indexPage.logout();
-    	loginToTwitter();
+    	logout();
+    	loginToFacebook(2);
     	answerToQuestion();
 	}
     
     @Test
 	public void 답변_수정() throws Exception {
-    	loginToFacebook();
+    	loginToFacebook(1);
     	createQuestion(questionFixture);
-    	indexPage.logout();
-    	loginToTwitter();
+    	logout();
+    	loginToFacebook(2);
     	QuestionPage questionPage = answerToQuestion();
     	AnswerUpdateFormPage answerFormPage = questionPage.goToUpdateAnswerPage();
     	String answer = "이 답변은 수정 답변입니다.";
     	questionPage = answerFormPage.updateAnswer(answer);
     	questionPage.verifyAnswer(answer);
 	}
+
+	private void logout() {
+		Options options = driver.manage();
+		indexPage.logout();
+		log.debug("Before Cookies.");
+		printCookies(options.getCookies());
+		options.deleteAllCookies();
+		log.debug("After Cookies.");
+		printCookies(options.getCookies());
+	}
+
+	private void printCookies(Set<Cookie> cookies) {
+		for (Cookie cookie : cookies) {
+			log.debug("cookie : {}", cookie);
+		}
+	}
     
     @Test
 	public void 로그인과_로그아웃_답변에_대한_공감() throws Exception {
-    	loginToFacebook();
+    	loginToFacebook(1);
     	createQuestion(questionFixture);
-    	indexPage.logout();
-    	loginToTwitter();
+    	logout();
+    	loginToFacebook(2);
     	QuestionPage questionPage = answerToQuestion();
     	questionPage.likeAnswer();
     	questionPage.verifyLikeCount("1");
     	
-    	indexPage.logout();
+    	logout();
     	indexPage.goTopQuestion();
     	questionPage.likeAnswer();
     	verifyLoginPage();
@@ -111,13 +136,14 @@ public class QnAAT extends AbstractATTest {
         return questionPage;
 	}
     
-    private void loginToFacebook() {
+    private void loginToFacebook(int number) {
         indexPage = new IndexPage(driver);
-        indexPage = indexPage.loginToFacebook(environment.getProperty("facebook.email"), environment.getProperty("facebook.password"));
-    }
-    
-    private void loginToTwitter() {
-        indexPage = new IndexPage(driver);
-        indexPage = indexPage.loginToTwitter(environment.getProperty("twitter.username"), environment.getProperty("twitter.password"));
+        String email = environment.getProperty("facebook.email" + number);
+        String password = environment.getProperty("facebook.password" + number);
+        String nickName = "자바지기";
+        if (number > 1) {
+        	nickName = nickName + number;
+        }
+        indexPage = indexPage.loginToFacebook(email, password, nickName);
     }
 }
