@@ -27,7 +27,6 @@ import javax.persistence.TemporalType;
 
 import net.slipp.domain.tag.Tag;
 import net.slipp.domain.user.SocialUser;
-import net.slipp.service.tag.TagProcessor;
 import net.slipp.support.jpa.CreatedAndUpdatedDateEntityListener;
 import net.slipp.support.jpa.HasCreatedAndUpdatedDate;
 
@@ -222,10 +221,10 @@ public class Question implements HasCreatedAndUpdatedDate {
 
     public void tag(Tag tag) {
         tags.add(tag);
-        this.denormalizedTags = TagProcessor.tagsToDenormalizedTags(tags);
+        this.denormalizedTags = tagsToDenormalizedTags(tags);
         tag.tagged();
     }
-
+    
     public boolean hasTag(Tag tag) {
         return tags.contains(tag);
     }
