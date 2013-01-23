@@ -1,7 +1,7 @@
 package net.slipp.domain.qna;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
 
 import java.util.List;
 import java.util.Set;
@@ -13,7 +13,6 @@ import org.junit.Test;
 import com.google.common.collect.Lists;
 
 public class AnswersTest {
-
 	@Test
 	public void findFacebookAnswerer() {
 		Answer answer1 = new Answer();
@@ -25,15 +24,6 @@ public class AnswersTest {
 		Answers answers = new Answers(persistedAnswers);
 		Set<SocialUser> answerers = answers.findFacebookAnswerers();
 		assertThat(answerers.size(), is(1));
-	}
-	
-	@Test
-	public void isBestAnswer() throws Exception {
-		Answer answer = new Answer();
-		assertThat(answer.isBest(), is(false));
-		
-		answer.setSumLike(2);
-		assertThat(answer.isBest(), is(true));
 	}
 	
 	private SocialUser createSocialUser(long id, String providerId) {

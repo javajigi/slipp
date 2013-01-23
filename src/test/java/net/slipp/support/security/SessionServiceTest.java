@@ -1,14 +1,14 @@
 package net.slipp.support.security;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.when;
+import static net.slipp.domain.user.SocialUserBuilder.*;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import java.util.Arrays;
 import java.util.List;
 
 import net.slipp.domain.user.SocialUser;
-import net.slipp.repository.user.SocialUserBuilder;
 import net.slipp.repository.user.SocialUserRepository;
 
 import org.junit.Test;
@@ -44,7 +44,7 @@ public class SessionServiceTest {
         String userId = "loginId";
         setupLoginUser(createAuthorizedAuthentication(userId));
         
-        SocialUser socialUser = new SocialUserBuilder().userId("loginId").build();
+        SocialUser socialUser = aSocialUser().withUserId(userId).build();
         List<SocialUser> socialUsers = Arrays.asList(socialUser);
         
         when(socialUserRepository.findsByUserId("loginId")).thenReturn(socialUsers);

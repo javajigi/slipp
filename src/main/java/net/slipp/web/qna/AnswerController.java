@@ -5,6 +5,7 @@ import javax.annotation.Resource;
 import net.slipp.domain.qna.Answer;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.service.qna.QnaService;
+import net.slipp.service.tag.TagService;
 import net.slipp.support.web.argumentresolver.LoginUser;
 
 import org.slf4j.Logger;
@@ -23,6 +24,9 @@ public class AnswerController {
 
 	@Resource(name = "qnaService")
 	private QnaService qnaService;
+	
+	@Resource(name = "tagService")
+	private TagService tagService;
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	public String create(@LoginUser SocialUser loginUser, @PathVariable Long questionId, Answer answer)
@@ -49,7 +53,7 @@ public class AnswerController {
 		
 		model.addAttribute("question", qnaService.findByQuestionId(questionId));
 		model.addAttribute("answer", answer);
-		model.addAttribute("tags", qnaService.findsTag());
+		model.addAttribute("tags", tagService.findsTag());
 		return "qna/answer";
 	}
 	

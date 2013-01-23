@@ -1,23 +1,22 @@
 package net.slipp.domain.qna;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static net.slipp.domain.qna.AnswerBuilder.*;
 
-import org.junit.Before;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
+
 import org.junit.Test;
 
 public class AnswerTest {
-	private Answer dut;
-	
-	@Before
-	public void setup() {
-		dut = new Answer();
-	}
-	
 	@Test
-	public void answerToQuestion() throws Exception {
-		Question question = new Question();
-		dut.answerTo(question);
-		assertThat(question.getAnswerCount(), is(1));
+	public void likedMoreThan() {
+		Answer answer = anAnswer().withTotalLiked(2).build();
+		assertThat(answer.likedMoreThan(2), is(true));
+	}
+
+	@Test
+	public void isNotBest() throws Exception {
+		Answer answer = anAnswer().withTotalLiked(1).build();
+		assertThat(answer.likedMoreThan(2), is(false));		
 	}
 }

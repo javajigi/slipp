@@ -1,7 +1,6 @@
 package net.slipp.support.web;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.StringWriter;
 
 import javax.annotation.PostConstruct;

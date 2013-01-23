@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import net.slipp.domain.qna.Question_;
 import net.slipp.domain.wiki.WikiPage;
 import net.slipp.service.qna.QnaService;
+import net.slipp.service.tag.TagService;
 import net.slipp.service.wiki.WikiService;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -31,7 +32,10 @@ public class HomeController {
 	private WikiService wikiService;
 	
 	@Resource(name = "qnaService")
-	private QnaService qnaService;	
+	private QnaService qnaService;
+	
+	@Resource(name = "tagService")
+	private TagService tagService;
 	
 	@RequestMapping("/")
 	public String home(Model model) {
@@ -39,7 +43,7 @@ public class HomeController {
 			model.addAttribute("pages", wikiService.findWikiPages());			
 		}
 		model.addAttribute("questions", qnaService.findsQuestion(createPageable()));
-		model.addAttribute("tags", qnaService.findsTag());		
+		model.addAttribute("tags", tagService.findsTag());		
 		return "index";
 	}
 
@@ -71,7 +75,12 @@ public class HomeController {
 	}
 
     @RequestMapping("/login")
-    public String login(Model model) {
+    public String login() {
         return "login";
+    }
+    
+    @RequestMapping("/fblogout")
+    public String logout() {
+        return "fblogout";
     }
 }

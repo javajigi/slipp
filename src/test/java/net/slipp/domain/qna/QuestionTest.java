@@ -1,10 +1,11 @@
 package net.slipp.domain.qna;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.when;
+import static net.slipp.domain.qna.AnswerBuilder.anAnswer;
+import static net.slipp.domain.qna.QuestionBuilder.aQuestion;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
 
-import java.util.List;
 import java.util.Set;
 
 import net.slipp.domain.tag.Tag;
@@ -17,136 +18,122 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
 @RunWith(MockitoJUnitRunner.class)
 public class QuestionTest {
 	private Question dut;
-	
+
 	@Mock
 	private TagRepository tagRepository;
-	
+
 	@Before
 	public void setup() {
 		dut = new Question();
 	}
-	
+
 	@Test
-	public void isWritedBy_sameUser() throws Exception {
-		// given
-		SocialUser user = new SocialUser(10);
-		dut.writedBy(user);
-		
-		// when
-		boolean actual = dut.isWritedBy(user);
-		
-		// then
-		assertThat(actual, is(true));
+	public void 질문한_사람이_같다() throws Exception {
+		SocialUser writer = new SocialUser(10);
+		dut = aQuestion().withWriter(writer).build();
+
+		assertThat(dut.isWritedBy(writer), is(true));
 	}
-	
+
 	@Test
-	public void isWritedBy_differentUser() throws Exception {
-		// given
-		SocialUser user = new SocialUser(10);
-		dut.writedBy(new SocialUser(11));
-		
-		// when
-		boolean actual = dut.isWritedBy(user);
-		
-		// then
+	public void 질문한_사람이_다르다() throws Exception {
+		SocialUser writer = new SocialUser(10);
+		dut = aQuestion().withWriter(writer).build();
+
+		boolean actual = dut.isWritedBy(new SocialUser(11));
 		assertThat(actual, is(false));
 	}
-	
+
 	@Test
-	public void newQuestion() throws Exception {
+	public void 새로운_질문() throws Exception {
 		// given
-		SocialUser loginUser = new SocialUser();
+		SocialUser writer = new SocialUser();
+		String title = "title";
+		String contents = "contents";
 		Tag java = new Tag("java");
-		Question questionDto = QuestionFixture.createDto("title", "contents", "java javascript");
-		when(tagRepository.findByName(java.getName())).thenReturn(java);
-		
+
 		// when
-		Question newQuestion = Question.newQuestion(loginUser, questionDto, tagRepository);
-		
+		Question newQuestion = new Question(writer, title, contents,
+				Sets.newHashSet(java));
+
 		// then
-		assertThat(newQuestion.getTitle(), is(questionDto.getTitle()));
-		assertThat(newQuestion.getContents(), is(questionDto.getContents()));
+		assertThat(newQuestion.getTitle(), is(title));
+		assertThat(newQuestion.getContents(), is(contents));
 		assertThat(newQuestion.hasTag(java), is(true));
-		assertThat(newQuestion.getNewTags().size(), is(1));
+		assertThat(newQuestion.getDenormalizedTags(), is(java.getName()));
 	}
-	
+
 	@Test
-	public void updateQuestion() throws Exception {
+	public void 질문_수정() throws Exception {
 		// given
-		SocialUser loginUser = new SocialUser();
+		SocialUser writer = new SocialUser();
 		Tag java = new Tag("java");
-		Question questionDto = QuestionFixture.createDto("title", "contents", "java javascript");
-		when(tagRepository.findByName(java.getName())).thenReturn(java);
-		Question newQuestion = Question.newQuestion(loginUser, questionDto, tagRepository);
-		Question updatedQuestionDto = QuestionFixture.createDto("title2", "contents2", "java maven");
-		
+		Question newQuestion = new Question(writer, "title", "contents",
+				Sets.newHashSet(java));
+
 		// when
-		newQuestion.update(loginUser, updatedQuestionDto, tagRepository);
-		
-		// then
-		assertThat(newQuestion.getTitle(), is(updatedQuestionDto.getTitle()));
-		assertThat(newQuestion.getContents(), is(updatedQuestionDto.getContents()));
+		String updateTitle = "update title";
+		String updateContents = "update contents";
+		Tag javascript = new Tag("javascript");
+		newQuestion.update(writer, updateTitle, updateContents,
+				Sets.newHashSet(java, javascript));
+		assertThat(newQuestion.getTitle(), is(updateTitle));
+		assertThat(newQuestion.getContents(), is(updateContents));
 		assertThat(newQuestion.hasTag(java), is(true));
-		assertThat(newQuestion.getNewTags().size(), is(1));	
+		assertThat(newQuestion.getDenormalizedTags(), is(java.getName() + ","
+				+ javascript.getName()));
 	}
-	
+
 	@Test
-	public void tag() throws Exception {
-		Tag tag = new Tag("newTag");
-		Question question = new Question();
-		question.tag(tag);
-		
-		Set<Tag> tags = Sets.newHashSet(tag);
-		assertThat(question.getTags(), is(tags));
-		assertThat(tag.getTaggedCount(), is(1));
+	public void 태그추가() throws Exception {
+		Tag java = new Tag("java");
+		Tag javascript = new Tag("javascript");
+		Question question = aQuestion().withTag(java).withTag(javascript)
+				.build();
+		Set<Tag> tags = question.getTags();
+
+		assertThat(tags.contains(java), is(true));
+		assertThat(tags.contains(javascript), is(true));
 	}
-	
+
 	@Test
-	public void contents() throws Exception {
-		String contents = "this is contents";
-		dut.setContents(contents);
-		assertThat(dut.getContents(), is(contents));
-	}
-	
-	@Test
-	public void getBestAnswer() throws Exception {
-		dut = new Question() {
-			@Override
-			public List<Answer> getAnswers() {
-				return Lists.newArrayList(createAnswerWithSumLike(1), createAnswerWithSumLike(0), createAnswerWithSumLike(3));
-			}
-		};
-		
+	public void 화제의_답변이_존재한다() throws Exception {
+		Question dut = aQuestion()
+				.withAnswer(anAnswer().withTotalLiked(1).build())
+				.withAnswer(anAnswer().withTotalLiked(0).build())
+				.withAnswer(anAnswer().withTotalLiked(3).build()).build();
 		Answer bestAnswer = dut.getBestAnswer();
 		assertThat(bestAnswer.getSumLike(), is(3));
 	}
-	
+
 	@Test
-	public void getBestAnswerDontExisted() throws Exception {
-		dut = new Question() {
-			@Override
-			public List<Answer> getAnswers() {
-				return Lists.newArrayList(createAnswerWithSumLike(1), createAnswerWithSumLike(0));
-			}
-		};
+	public void 화제의_답변이_존재하지_않는다() throws Exception {
+		Question dut = aQuestion()
+				.withAnswer(anAnswer().withTotalLiked(1).build())
+				.withAnswer(anAnswer().withTotalLiked(0).build()).build();
 		
 		assertThat(dut.getBestAnswer(), is(nullValue()));
 	}
-	
+
 	@Test
-	public void getBestAnswerHasNotAnswer() throws Exception {
+	public void 답변이_존재하지_않는다() throws Exception {
+		Question dut = aQuestion().build();
 		assertThat(dut.getBestAnswer(), is(nullValue()));
 	}
-
-	private Answer createAnswerWithSumLike(Integer sumLike) {
-		final Answer answer = new Answer();
-		answer.setSumLike(sumLike);
-		return answer;
-	}
+	
+	@Test
+    public void 질문을_삭제한다() throws Exception {
+	    Tag java = new Tag("java");
+	    java.tagged();
+	    SocialUser writer = new SocialUser();
+	    Question dut = aQuestion().withWriter(writer).withTag(java).build();
+	    dut.delete(writer);
+	    assertThat(dut.isDeleted(), is(true));
+	    assertThat(java.getTaggedCount(), is(0));
+    }
 }

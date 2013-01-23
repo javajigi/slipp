@@ -5,8 +5,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import net.slipp.domain.qna.Question_;
-
 import org.springframework.data.jpa.domain.Specification;
 
 public class QnaSpecifications {

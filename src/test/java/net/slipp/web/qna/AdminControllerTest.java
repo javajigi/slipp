@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.slipp.domain.tag.Tag;
-import net.slipp.repository.tag.TagRepository;
+import net.slipp.service.tag.TagService;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,7 +24,7 @@ import org.springframework.ui.ModelMap;
 @RunWith(MockitoJUnitRunner.class)
 public class AdminControllerTest {
 	@Mock
-	private TagRepository tagRepository;
+	private TagService tagService;
 	
 	@InjectMocks
 	private AdminController dut = new AdminController();
@@ -35,7 +35,7 @@ public class AdminControllerTest {
 		List<Tag> tags = Arrays.asList(new Tag("java"), new Tag("svn"));
 		Page<Tag> pageTags = new PageImpl<Tag>(tags, pageable, 2L);
 		
-		when(tagRepository.findAll(dut.createPageable(null))).thenReturn(pageTags);
+		when(tagService.findTags(dut.createPageable(null))).thenReturn(pageTags);
 		
 		ModelMap model = new ModelMap();
 		String forwardUrl = dut.tags(null, model);

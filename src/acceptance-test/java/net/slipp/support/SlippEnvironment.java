@@ -21,7 +21,7 @@ public class SlippEnvironment {
 	private Properties loadProperties() {
 		Properties properties = new Properties();
 		try {
-			properties.loadFromXML(ClasspathResourceUtils.getResourceAsStream("application-properties.xml"));
+			properties.loadFromXML(ClasspathResourceUtils.getResourceAsStream("test-application-properties.xml"));
 		} catch (IOException e) {
 		}
 		return properties;
