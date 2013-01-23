@@ -98,8 +98,6 @@ public class QuestionTest {
 
 		assertThat(tags.contains(java), is(true));
 		assertThat(tags.contains(javascript), is(true));
-		assertThat(java.getTaggedCount(), is(1));
-		assertThat(javascript.getTaggedCount(), is(1));
 	}
 
 	@Test
