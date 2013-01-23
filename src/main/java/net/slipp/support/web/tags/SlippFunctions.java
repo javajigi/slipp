@@ -2,12 +2,12 @@ package net.slipp.support.web.tags;
 
 import java.util.Collection;
 
-import org.apache.commons.lang.StringUtils;
-
 import net.slipp.domain.user.SocialUser;
 import net.slipp.support.utils.SlippStringUtils;
 import net.slipp.support.wiki.SlippWikiUtils;
 import net.slipp.support.wiki.WikiContents;
+
+import org.apache.commons.lang.StringUtils;
 
 /**
  * JSP EL Functions

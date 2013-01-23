@@ -26,13 +26,9 @@
 	<!-- security -->
 	<entry key="socialsignin.signUpView">/signUpForm</entry>
 	
-	<entry key="twitter.username">username</entry>
-	<entry key="twitter.password">password</entry>	
 	<entry key="twitter.consumerKey">consumerKey</entry>	
 	<entry key="twitter.consumerSecret">consumerSecret</entry>
 
-	<entry key="facebook.email">email</entry>
-	<entry key="facebook.password">password</entry>
 	<entry key="facebook.clientId">client</entry>
 	<entry key="facebook.clientSecret">clientSecret</entry>
 	<entry key="facebook.accessToken">accessToken</entry>

@@ -1,10 +1,10 @@
 package net.slipp.domain.qna;
 
+import static net.slipp.domain.qna.AnswerBuilder.*;
+import static net.slipp.domain.qna.QuestionBuilder.*;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.when;
 
-import java.util.List;
 import java.util.Set;
 
 import net.slipp.domain.tag.Tag;
@@ -17,117 +17,113 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
 @RunWith(MockitoJUnitRunner.class)
 public class QuestionTest {
-    private Question dut;
+	private Question dut;
 
-    @Mock
-    private TagRepository tagRepository;
+	@Mock
+	private TagRepository tagRepository;
 
-    @Before
-    public void setup() {
-        dut = new Question();
-    }
+	@Before
+	public void setup() {
+		dut = new Question();
+	}
 
-    @Test
-    public void isWritedBy_sameUser() throws Exception {
-        // given
-        SocialUser user = new SocialUser(10);
-        dut = new Question(user, null, null, null);
+	@Test
+	public void 질문한_사람이_같다() throws Exception {
+		SocialUser writer = new SocialUser(10);
+		dut = aQuestion().withWriter(writer).build();
 
-        // when
-        boolean actual = dut.isWritedBy(user);
+		assertThat(dut.isWritedBy(writer), is(true));
+	}
 
-        // then
-        assertThat(actual, is(true));
-    }
+	@Test
+	public void 질문한_사람이_다르다() throws Exception {
+		SocialUser writer = new SocialUser(10);
+		dut = aQuestion().withWriter(writer).build();
 
-    @Test
-    public void isWritedBy_differentUser() throws Exception {
-        // given
-        SocialUser user = new SocialUser(10);
-        dut = new Question(user, null, null, null);
+		boolean actual = dut.isWritedBy(new SocialUser(11));
+		assertThat(actual, is(false));
+	}
 
-        // when
-        boolean actual = dut.isWritedBy(new SocialUser(11));
+	@Test
+	public void 새로운_질문() throws Exception {
+		// given
+		SocialUser writer = new SocialUser();
+		String title = "title";
+		String contents = "contents";
+		Tag java = new Tag("java");
 
-        // then
-        assertThat(actual, is(false));
-    }
+		// when
+		Question newQuestion = new Question(writer, title, contents,
+				Sets.newHashSet(java));
 
-    @Test
-    public void newQuestion() throws Exception {
-        // given
-        SocialUser loginUser = new SocialUser();
-        Tag java = new Tag("java");
-        QuestionDto dto = new QuestionDto("title", "contents", "java javascript");
-        when(tagRepository.findByName(java.getName())).thenReturn(java);
+		// then
+		assertThat(newQuestion.getTitle(), is(title));
+		assertThat(newQuestion.getContents(), is(contents));
+		assertThat(newQuestion.hasTag(java), is(true));
+		assertThat(newQuestion.getDenormalizedTags(), is(java.getName()));
+	}
 
-        // when
-        Question newQuestion = new Question(loginUser, dto.getTitle(), dto.getContents(), Sets.newHashSet(java));
+	@Test
+	public void 질문_수정() throws Exception {
+		// given
+		SocialUser writer = new SocialUser();
+		Tag java = new Tag("java");
+		Question newQuestion = new Question(writer, "title", "contents",
+				Sets.newHashSet(java));
 
-        // then
-        assertThat(newQuestion.getTitle(), is(dto.getTitle()));
-        assertThat(newQuestion.getContents(), is(dto.getContents()));
-        assertThat(newQuestion.hasTag(java), is(true));
-        assertThat(newQuestion.getDenormalizedTags(), is(java.getName()));
-    }
+		// when
+		String updateTitle = "update title";
+		String updateContents = "update contents";
+		Tag javascript = new Tag("javascript");
+		newQuestion.update(writer, updateTitle, updateContents,
+				Sets.newHashSet(java, javascript));
+		assertThat(newQuestion.getTitle(), is(updateTitle));
+		assertThat(newQuestion.getContents(), is(updateContents));
+		assertThat(newQuestion.hasTag(java), is(true));
+		assertThat(newQuestion.getDenormalizedTags(), is(java.getName() + ","
+				+ javascript.getName()));
+	}
 
-    @Test
-    public void tag() throws Exception {
-        Tag tag = new Tag("newTag");
-        Question question = new Question();
-        question.tag(tag);
+	@Test
+	public void 태그추가() throws Exception {
+		Tag java = new Tag("java");
+		Tag javascript = new Tag("javascript");
+		Question question = aQuestion().withTag(java).withTag(javascript)
+				.build();
+		Set<Tag> tags = question.getTags();
 
-        Set<Tag> tags = Sets.newHashSet(tag);
-        assertThat(question.getTags(), is(tags));
-        assertThat(tag.getTaggedCount(), is(1));
-    }
+		assertThat(tags.contains(java), is(true));
+		assertThat(tags.contains(javascript), is(true));
+		assertThat(java.getTaggedCount(), is(1));
+		assertThat(javascript.getTaggedCount(), is(1));
+	}
 
-    @Test
-    public void contents() throws Exception {
-        String contents = "this is contents";
-        dut.setContents(contents);
-        assertThat(dut.getContents(), is(contents));
-    }
+	@Test
+	public void 화제의_답변이_존재한다() throws Exception {
+		Question dut = aQuestion()
+				.withAnswer(anAnswer().withTotalLiked(1).build())
+				.withAnswer(anAnswer().withTotalLiked(0).build())
+				.withAnswer(anAnswer().withTotalLiked(3).build()).build();
+		Answer bestAnswer = dut.getBestAnswer();
+		assertThat(bestAnswer.getSumLike(), is(3));
+	}
 
-    @Test
-    public void getBestAnswer() throws Exception {
-        dut = new Question() {
-            @Override
-            public List<Answer> getAnswers() {
-                return Lists.newArrayList(createAnswerWithSumLike(1), createAnswerWithSumLike(0),
-                        createAnswerWithSumLike(3));
-            }
-        };
+	@Test
+	public void 화제의_답변이_존재하지_않는다() throws Exception {
+		Question dut = aQuestion()
+				.withAnswer(anAnswer().withTotalLiked(1).build())
+				.withAnswer(anAnswer().withTotalLiked(0).build()).build();
+		
+		assertThat(dut.getBestAnswer(), is(nullValue()));
+	}
 
-        Answer bestAnswer = dut.getBestAnswer();
-        assertThat(bestAnswer.getSumLike(), is(3));
-    }
-
-    @Test
-    public void getBestAnswerDontExisted() throws Exception {
-        dut = new Question() {
-            @Override
-            public List<Answer> getAnswers() {
-                return Lists.newArrayList(createAnswerWithSumLike(1), createAnswerWithSumLike(0));
-            }
-        };
-
-        assertThat(dut.getBestAnswer(), is(nullValue()));
-    }
-
-    @Test
-    public void getBestAnswerHasNotAnswer() throws Exception {
-        assertThat(dut.getBestAnswer(), is(nullValue()));
-    }
-
-    private Answer createAnswerWithSumLike(Integer sumLike) {
-        final Answer answer = new Answer();
-        answer.setSumLike(sumLike);
-        return answer;
-    }
+	@Test
+	public void 답변이_존재하지_않는다() throws Exception {
+		Question dut = aQuestion().build();
+		assertThat(dut.getBestAnswer(), is(nullValue()));
+	}
 }

@@ -1,5 +1,7 @@
 package net.slipp.domain.tag;
 
+import static net.slipp.domain.tag.NewTagTest.NEWTAG;
+import static net.slipp.domain.tag.TagTest.JAVA;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -10,22 +12,26 @@ import org.junit.Test;
 import com.google.common.collect.Sets;
 
 public class TagsTest {
+	public static final Tags DEFAULT_TAGS = createTags(JAVA, NEWTAG);
+	
     @Test
     public void processTags() throws Exception {
-        Set<Tag> originalTags = Sets.newHashSet();
-        Tags tags = new Tags(originalTags);
-        
-        Tag java = new Tag("java");
-        tags.addTag(java);
-        NewTag javascript = new NewTag("javascript");
-        tags.addNewTag(javascript);
+        Tags tags = createTags(JAVA, NEWTAG);
         
         tags.processTags();
         
         Set<Tag> pooledTags = tags.getPooledTags();
-        assertThat(pooledTags.contains(java), is(true));
-        assertThat(java.getTaggedCount(), is(1));
+        assertThat(pooledTags.contains(JAVA), is(true));
+        assertThat(JAVA.getTaggedCount(), is(1));
         Set<NewTag> newTags = tags.getNewTags();
-        assertThat(newTags.contains(javascript), is(true));
+        assertThat(newTags.contains(NEWTAG), is(true));
+    }
+    
+    public static Tags createTags(Tag tag, NewTag newTag) {
+    	Set<Tag> originalTags = Sets.newHashSet();
+        Tags tags = new Tags(originalTags);
+        tags.addTag(tag);
+        tags.addNewTag(newTag);
+    	return tags;
     }
 }

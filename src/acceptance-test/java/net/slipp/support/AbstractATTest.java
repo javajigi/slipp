@@ -7,7 +7,11 @@ public class AbstractATTest {
 
 	public void setup() {
         this.driver = new SharedDriver();
-        this.driver.deleteAllCookies();
+        deleteAllCookies(driver);
         this.environment = new SlippEnvironment();
+	}
+
+	protected void deleteAllCookies(SharedDriver sharedDriver) {
+		sharedDriver.deleteAllCookies();
 	}
 }

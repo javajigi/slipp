@@ -27,7 +27,6 @@ import javax.persistence.TemporalType;
 
 import net.slipp.domain.tag.Tag;
 import net.slipp.domain.user.SocialUser;
-import net.slipp.service.tag.TagProcessor;
 import net.slipp.support.jpa.CreatedAndUpdatedDateEntityListener;
 import net.slipp.support.jpa.HasCreatedAndUpdatedDate;
 
@@ -44,6 +43,8 @@ import com.google.common.collect.Sets;
 @Entity
 @EntityListeners({ CreatedAndUpdatedDateEntityListener.class })
 public class Question implements HasCreatedAndUpdatedDate {
+	private static final Integer DEFAULT_BEST_ANSWER = 2;
+	
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long questionId;
@@ -94,19 +95,21 @@ public class Question implements HasCreatedAndUpdatedDate {
     public Question() {
     }
 
-    public Question(Long id) {
-        this.questionId = id;
-    }
-
     public Question(SocialUser loginUser, String title, String contents, Set<Tag> pooledTags) {
+        this(null, loginUser, title, contents, pooledTags);
+    }
+    
+    public Question(Long id, SocialUser loginUser, String title, String contents, Set<Tag> pooledTags) {
+    	this.questionId = id;
         this.writer = loginUser;
         this.title = title;
-        setContents(contents);
-        this.tags = pooledTags;
-        this.denormalizedTags = tagsToDenormalizedTags(pooledTags);
+        this.contentsHolder = Lists.newArrayList(contents);
+        for (Tag tag : pooledTags) {
+			tag(tag);
+		}
     }
 
-    public List<Answer> getAnswers() {
+	public List<Answer> getAnswers() {
         return answers;
     }
 
@@ -135,15 +138,6 @@ public class Question implements HasCreatedAndUpdatedDate {
         };
 
         return Joiner.on(",").join(Collections2.transform(tags, tagToString));
-    }
-
-    public void setContents(String newContents) {
-        if (isEmptyContentsHolder()) {
-            contentsHolder = Lists.newArrayList(newContents);
-        } else {
-            contentsHolder.clear();
-            contentsHolder.add(newContents);
-        }
     }
 
     private boolean isEmptyContentsHolder() {
@@ -208,7 +202,7 @@ public class Question implements HasCreatedAndUpdatedDate {
 
     public void delete(SocialUser loginUser) {
         if (!isWritedBy(loginUser)) {
-            throw new AccessDeniedException(loginUser + " is not owner!");
+            throw new AccessDeniedException(loginUser.getDisplayName() + " is not owner!");
         }
         this.deleted = true;
     }
@@ -227,17 +221,21 @@ public class Question implements HasCreatedAndUpdatedDate {
 
     public void tag(Tag tag) {
         tags.add(tag);
-        this.denormalizedTags = TagProcessor.tagsToDenormalizedTags(tags);
+        this.denormalizedTags = tagsToDenormalizedTags(tags);
         tag.tagged();
     }
-
+    
     public boolean hasTag(Tag tag) {
         return tags.contains(tag);
     }
 
     public void update(SocialUser loginUser, String title, String contents, Set<Tag> pooledTags) {
+        if (!isWritedBy(loginUser)) {
+            throw new AccessDeniedException(loginUser.getDisplayName() + " is not owner!");
+        }
+    	
         this.title = title;
-        setContents(contents);
+        this.contentsHolder = Lists.newArrayList(contents);
         this.tags = pooledTags;
         this.denormalizedTags = tagsToDenormalizedTags(pooledTags);
     }
@@ -260,7 +258,7 @@ public class Question implements HasCreatedAndUpdatedDate {
         }
 
         Answer answer = getTopLikeAnswer();
-        if (!answer.isBest()) {
+        if (!answer.likedMoreThan(DEFAULT_BEST_ANSWER)) {
             return null;
         }
 

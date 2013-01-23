@@ -1,7 +1,7 @@
 package net.slipp.repository.tag;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:/test-applicationContext.xml")
-public class TagRepositoryTest {
+public class TagRepositoryIT {
 	@Autowired
 	private TagRepository tagRepository;
 	

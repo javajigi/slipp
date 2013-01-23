@@ -15,7 +15,7 @@ public class FacebookPage {
 		assertThat(driver.getTitle(), is("로그인 | Facebook"));
 	}
 	
-	public IndexPage login(String email, String password) {
+	public IndexPage login(String email, String password, String nickName) {
 		driver.findElement(By.id("email")).clear();
 		driver.findElement(By.id("email")).sendKeys(email);
 		driver.findElement(By.id("pass")).clear();
@@ -25,7 +25,7 @@ public class FacebookPage {
 		
 		if (isFirstLogin()) {
 			LoginPage loginPage = new LoginPage(driver);
-			return loginPage.loginSlipp("자바지기");
+			return loginPage.loginSlipp(nickName);
 		}
 		
 		return new IndexPage(driver);

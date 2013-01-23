@@ -1,11 +1,16 @@
 package net.slipp.service.qna;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static net.slipp.domain.tag.TagTest.JAVA;
+import static net.slipp.domain.tag.TagsTest.DEFAULT_TAGS;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import java.util.Set;
+
 import net.slipp.domain.qna.Answer;
 import net.slipp.domain.qna.Question;
+import net.slipp.domain.qna.QuestionDto;
+import net.slipp.domain.tag.Tag;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.repository.qna.AnswerRepository;
 import net.slipp.repository.qna.QuestionRepository;
@@ -19,6 +24,8 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.security.access.AccessDeniedException;
 
+import com.google.common.collect.Sets;
+
 @RunWith(MockitoJUnitRunner.class)
 public class QnaServiceTest {
 	@Mock
@@ -26,6 +33,7 @@ public class QnaServiceTest {
 	
 	@Mock
 	private AnswerRepository answerRepository;
+	
 	@Mock
 	private TagService tagService;
 	@Mock
@@ -38,22 +46,14 @@ public class QnaServiceTest {
 	public void updateQuestion_sameUser() {
 		// given
 		SocialUser loginUser = new SocialUser(10);
-		Question question = new Question(1L);
-		when(questionRepository.findOne(question.getQuestionId())).thenReturn(question);
+		QuestionDto dto = new QuestionDto(1L, "title", "contents", "java javascript");
+		Set<Tag> originalTags = Sets.newHashSet(JAVA);
+		Question existedQuestion = new Question(1L, loginUser, dto.getTitle(), dto.getContents(), originalTags);
+		when(questionRepository.findOne(dto.getQuestionId())).thenReturn(existedQuestion);
+		when(tagService.processTags(originalTags, dto.getPlainTags())).thenReturn(DEFAULT_TAGS);
 		
 		// when
-		// dut.updateQuestion(loginUser, question);
-	}
-	
-	@Test (expected=AccessDeniedException.class)
-	public void updateQuestion_differentUser() {
-		// given
-		SocialUser loginUser = new SocialUser(10);
-		Question question = new Question(1L);
-		when(questionRepository.findOne(question.getQuestionId())).thenReturn(question);
-		
-		// when
-		// dut.updateQuestion(loginUser, question);
+		dut.updateQuestion(loginUser, dto);
 	}
 	
 	@Test
@@ -62,7 +62,7 @@ public class QnaServiceTest {
 		SocialUser loginUser = new SocialUser(10);
 		Answer answer = new Answer(2L);
 		answer.writedBy(loginUser);
-		Question question = new Question(1L);
+		Question question = new Question(1L, loginUser, null, null, null);
 		when(answerRepository.findOne(answer.getAnswerId())).thenReturn(answer);
 		when(questionRepository.findOne(question.getQuestionId())).thenReturn(question);
 		
@@ -71,7 +71,6 @@ public class QnaServiceTest {
 		
 		// then
 		verify(answerRepository).delete(answer);
-		assertThat(question.getAnswerCount(), is(4));
 	}
 	
 	@Test (expected=AccessDeniedException.class)
@@ -96,3 +95,4 @@ public class QnaServiceTest {
 		dut.likeAnswer(loginUser, answer.getAnswerId());
 	}
 }
+

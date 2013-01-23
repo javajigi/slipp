@@ -13,6 +13,7 @@ import org.junit.Test;
 import com.google.common.collect.Iterables;
 
 public class NewTagTest {
+	public static final NewTag NEWTAG = new NewTag("newTag");
 
 	@Test
 	public void moveToTag() {
@@ -35,7 +36,7 @@ public class NewTagTest {
 		return Iterables.getOnlyElement(questions);
 	}
 
-	private NewTag createNewTag(String tagName) {
+	private static NewTag createNewTag(String tagName) {
 		SocialUser loginUser = new SocialUser();
 		Question question = new Question();
 		NewTag newTag = new NewTag(tagName);
