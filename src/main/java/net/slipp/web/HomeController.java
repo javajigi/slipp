@@ -79,8 +79,8 @@ public class HomeController {
         return "login";
     }
     
-    @RequestMapping("/logout")
+    @RequestMapping("/fblogout")
     public String logout() {
-        return "logout";
+        return "fblogout";
     }
 }

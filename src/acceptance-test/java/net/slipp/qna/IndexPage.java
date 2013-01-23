@@ -1,7 +1,7 @@
 package net.slipp.qna;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 import net.slipp.user.FacebookPage;
 import net.slipp.user.GooglePage;
 import net.slipp.user.TwitterPage;
@@ -56,6 +56,11 @@ public class IndexPage {
 	}
 	
 	public IndexPage logout() {
+	    driver.get("http://localhost:8080/fblogout");
+	    try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {}
+	    driver.findElement(By.id("fbLogoutBtn")).click();
 		driver.findElement(By.linkText("로그아웃")).click();
 		return new IndexPage(driver);
 	}

@@ -6,7 +6,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 
 public class WebDriverFactory {
-	private static final WebDriverType DEFAULT_BROWSER_TYPE = WebDriverType.FF;
+	private static final WebDriverType DEFAULT_BROWSER_TYPE = WebDriverType.CHROME;
 
 	public static WebDriver createWebDriver() {
     	WebDriver driver = null;

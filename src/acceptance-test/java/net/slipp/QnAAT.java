@@ -1,10 +1,7 @@
 package net.slipp;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-
-import java.util.Set;
-
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 import net.slipp.qna.AnswerUpdateFormPage;
 import net.slipp.qna.IndexPage;
 import net.slipp.qna.NewTagsPage;
@@ -15,14 +12,8 @@ import net.slipp.support.AbstractATTest;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.Cookie;
-import org.openqa.selenium.WebDriver.Options;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class QnAAT extends AbstractATTest {
-	private static final Logger log = LoggerFactory.getLogger(QnAAT.class);
-	
     private QuestionFixture questionFixture;
     private IndexPage indexPage;
     
@@ -84,21 +75,9 @@ public class QnAAT extends AbstractATTest {
 	}
 
 	private void logout() {
-		Options options = driver.manage();
 		indexPage.logout();
-		log.debug("Before Cookies.");
-		printCookies(options.getCookies());
-		options.deleteAllCookies();
-		log.debug("After Cookies.");
-		printCookies(options.getCookies());
 	}
 
-	private void printCookies(Set<Cookie> cookies) {
-		for (Cookie cookie : cookies) {
-			log.debug("cookie : {}", cookie);
-		}
-	}
-    
     @Test
 	public void 로그인과_로그아웃_답변에_대한_공감() throws Exception {
     	loginToFacebook(1);
