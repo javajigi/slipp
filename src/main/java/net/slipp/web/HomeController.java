@@ -71,7 +71,12 @@ public class HomeController {
 	}
 
     @RequestMapping("/login")
-    public String login(Model model) {
+    public String login() {
         return "login";
+    }
+    
+    @RequestMapping("/logout")
+    public String logout() {
+        return "logout";
     }
 }
