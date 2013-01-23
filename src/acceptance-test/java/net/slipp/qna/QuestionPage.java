@@ -66,13 +66,14 @@ public class QuestionPage {
         assertThat(actual, is(answerCount));
     }
 
-    public void likeAnswer() {
+    public QuestionPage likeAnswer() {
         driver.findElement(By.cssSelector("a.likeAnswerBtn")).click();
+        return new QuestionPage(driver);
     }
 
-    public void verifyLikeCount(String likeCount) {
+    public void verifyLikeCount(int likeCount) {
         String actual = driver.findElement(By.cssSelector("strong.like-count")).getText();
-        assertThat(actual, is(likeCount));
+        assertThat(actual, is(likeCount + ""));
     }
 
     public AnswerUpdateFormPage goToUpdateAnswerPage() {
@@ -83,5 +84,10 @@ public class QuestionPage {
     public QuestionFormPage goToUpdatePage() {
         driver.findElement(By.id("updateQuestionBtn")).click();
         return new QuestionFormPage(driver);
+    }
+
+    public void verifyBestAnswer() {
+        String answerBest = driver.findElement(By.cssSelector("span.answer-best")).getText();
+        assertThat(answerBest, is("best"));
     }
 }

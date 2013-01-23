@@ -10,6 +10,7 @@ import net.slipp.qna.QuestionFormPage;
 import net.slipp.qna.QuestionPage;
 import net.slipp.support.AbstractATTest;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -56,8 +57,7 @@ public class QnAAT extends AbstractATTest {
 	public void 답변이_정상적으로_등록() throws Exception {
     	loginToFacebook(1);
     	createQuestion(questionFixture);
-    	logout();
-    	loginToFacebook(2);
+    	loginToAnotherUser(2);
     	answerToQuestion();
 	}
     
@@ -65,8 +65,7 @@ public class QnAAT extends AbstractATTest {
 	public void 답변_수정() throws Exception {
     	loginToFacebook(1);
     	createQuestion(questionFixture);
-    	logout();
-    	loginToFacebook(2);
+    	loginToAnotherUser(2);
     	QuestionPage questionPage = answerToQuestion();
     	AnswerUpdateFormPage answerFormPage = questionPage.goToUpdateAnswerPage();
     	String answer = "이 답변은 수정 답변입니다.";
@@ -82,17 +81,43 @@ public class QnAAT extends AbstractATTest {
 	public void 로그인과_로그아웃_답변에_대한_공감() throws Exception {
     	loginToFacebook(1);
     	createQuestion(questionFixture);
-    	logout();
-    	loginToFacebook(2);
-    	QuestionPage questionPage = answerToQuestion();
-    	questionPage.likeAnswer();
-    	questionPage.verifyLikeCount("1");
-    	
+        loginToAnotherUser(2);
+        QuestionPage questionPage = answerToQuestion();
+        questionPage = questionPage.likeAnswer();
+        questionPage.verifyLikeCount(1);
+        
     	logout();
     	indexPage.goTopQuestion();
     	questionPage.likeAnswer();
     	verifyLoginPage();
 	}
+
+    private void loginToAnotherUser(int userNo) {
+        logout();
+        loginToFacebook(userNo);
+    }
+    
+    @Test
+    public void 베스트_답변() throws Exception {
+        loginToFacebook(1);
+        createQuestion(questionFixture);
+        loginToAnotherUser(2);
+        answerToQuestion();
+        
+        QuestionPage questionPage = likeAnswer(3, 1);
+        questionPage = likeAnswer(4, 2);
+        questionPage = likeAnswer(5, 3);
+        
+        questionPage.verifyBestAnswer();
+    }
+
+    private QuestionPage likeAnswer(int userNo, int likeCount) {
+        loginToAnotherUser(userNo);
+        QuestionPage questionPage = indexPage.goTopQuestion();
+        questionPage = questionPage.likeAnswer();
+        questionPage.verifyLikeCount(likeCount);
+        return questionPage;
+    }
 
 	private void verifyLoginPage() {
 		assertThat(driver.getTitle(), is("로그인 :: SLiPP"));
@@ -124,5 +149,10 @@ public class QnAAT extends AbstractATTest {
         	nickName = nickName + number;
         }
         indexPage = indexPage.loginToFacebook(email, password, nickName);
+    }
+    
+    @After
+    public void tearDown() {
+        logout();
     }
 }
