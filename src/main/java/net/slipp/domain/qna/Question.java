@@ -204,6 +204,9 @@ public class Question implements HasCreatedAndUpdatedDate {
             throw new AccessDeniedException(loginUser.getDisplayName() + " is not owner!");
         }
         this.deleted = true;
+        for (Tag tag : this.tags) {
+            tag.deTagged();
+        }
     }
 
     public void show() {
