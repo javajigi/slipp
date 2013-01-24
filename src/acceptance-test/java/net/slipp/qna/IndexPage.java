@@ -56,11 +56,8 @@ public class IndexPage {
 	}
 	
 	public IndexPage logout() {
-	    driver.get("http://localhost:8080/fblogout");
-	    try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {}
-	    driver.findElement(By.id("fbLogoutBtn")).click();
+	    FBLogoutPage logoutPage = new FBLogoutPage(driver);
+        logoutPage.logout();
 	    List<WebElement> logoutLinks = driver.findElements(By.linkText("로그아웃"));
 	    if (!logoutLinks.isEmpty()) {
 	        logoutLinks.get(0).click();
