@@ -14,38 +14,41 @@ public class WikiTextParserTest {
 	public void event_logging() {
 		String source = "* An item in a bulleted (unordered) list" + "* Another item in a bulleted list"
 				+ "** Second Level" + "** Second Level Items" + "*** Third level";
-		StringWriter writer = new StringWriter();
-		DocumentBuilder builder = new EventLoggingDocumentBuilder();
+		StringWriter writer = parseEventLogging(source);
+		System.out.println(writer.toString());
+	}
 
+    private StringWriter parseEventLogging(String source) {
+        StringWriter writer = new StringWriter();
+		DocumentBuilder builder = new EventLoggingDocumentBuilder();
 		MarkupParser parser = new MarkupParser(new ConfluenceLanguage());
 		parser.setBuilder(builder);
 		parser.parse(source);
-
-		System.out.println(writer.toString());
-	}
+        return writer;
+    }
 
 	@Test
 	public void parse1() throws Exception {
 		String source = "*테스트*";
-		StringWriter writer = new StringWriter();
-		HtmlDocumentBuilder builder = new HtmlDocumentBuilder(writer);
-		builder.setEmitAsDocument(false);
-		MarkupParser parser = new MarkupParser(new ConfluenceLanguage());
-		parser.setBuilder(builder);
-		parser.parse(source);
+		StringWriter writer = parse(source);
 
 		System.out.println(writer.toString());
 	}
 
-	@Test
-	public void parse2() throws Exception {
-		String source = "h1. 테스트";
-		StringWriter writer = new StringWriter();
+    private StringWriter parse(String source) {
+        StringWriter writer = new StringWriter();
 		HtmlDocumentBuilder builder = new HtmlDocumentBuilder(writer);
 		builder.setEmitAsDocument(false);
 		MarkupParser parser = new MarkupParser(new ConfluenceLanguage());
 		parser.setBuilder(builder);
 		parser.parse(source);
+        return writer;
+    }
+
+	@Test
+	public void parse2() throws Exception {
+		String source = "h1. 테스트";
+		StringWriter writer = parse(source);
 
 		System.out.println(writer.toString());
 	}
