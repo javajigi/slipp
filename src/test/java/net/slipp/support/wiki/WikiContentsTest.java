@@ -17,19 +17,19 @@ public class WikiContentsTest {
     public void parse_bullet() throws Exception {
         String source = "* An item in a bulleted (unordered) list \n* Another item in a bulleted list"
                 + "\n** Second Level\n** Second Level Items\n*** Third level";
-        logger.debug("html : {}", WikiContents.convert(source));
+        logger.debug("html : {}", WikiContents.parse(source));
     }
 
     @Test
     public void parse_code() throws Exception {
         String source = "{code:title=java}\n WikiContents wikiContents = new WikiContents(); {code}";
-        logger.debug("html : {}", WikiContents.convert(source));
+        logger.debug("html : {}", WikiContents.parse(source));
     }
 
     @Test
     public void mention() throws Exception {
         String source = "나는 @자바지기 가 쓴 글이 참 좋더라.";
-        logger.debug("html : {}", WikiContents.convert(source));
+        logger.debug("html : {}", WikiContents.parse(source));
     }
     
     @Test

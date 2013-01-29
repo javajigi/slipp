@@ -170,7 +170,7 @@ public class SlippFunctions {
 	}
 
 	public static String wiki(String contents) {
-		String result = WikiContents.convert(contents);
+		String result = WikiContents.parse(contents);
 		return SlippWikiUtils.replaceImages(result);
 	}
 
