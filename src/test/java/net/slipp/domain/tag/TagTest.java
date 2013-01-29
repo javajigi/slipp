@@ -6,8 +6,8 @@ import static org.junit.Assert.assertThat;
 import org.junit.Test;
 
 public class TagTest {
-	public static final Tag JAVA = new Tag("java");
-	public static final Tag JAVA_CHILD = new Tag("자바", JAVA);
+	public static final Tag JAVA = new Tag("java", true);
+	public static final Tag JAVA_CHILD = new Tag("자바", true, JAVA);
 	public static final Tag JAVASCRIPT = new Tag("javascript");
 	
     @Test

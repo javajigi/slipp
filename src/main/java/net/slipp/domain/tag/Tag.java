@@ -13,21 +13,18 @@ public class Tag {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long tagId;
 
-	@Column(name = "name", length = 50, unique=true, nullable = false)
+	@Column(name = "name", length = 50, unique = true, nullable = false)
 	private String name;
 
 	private int taggedCount = 0;
 
+	private boolean pooled;
+
 	@OneToOne
 	@org.hibernate.annotations.ForeignKey(name = "fk_tag_parent_id")
 	public Tag parent;
-	
+
 	public Tag() {
-	}
-	
-	public Tag(Long tagId, String name) {
-		this.tagId = tagId;
-		this.name = name;
 	}
 
 	public Tag(String name) {
@@ -37,6 +34,14 @@ public class Tag {
 	public Tag(String name, Tag parent) {
 		this.name = name;
 		this.parent = parent;
+	}
+	
+	public Tag(String name, boolean pooled) {
+		this(name, null);
+	}
+
+	public Tag(String name, boolean pooled, Tag java) {
+		// TODO Auto-generated constructor stub
 	}
 
 	public Long getTagId() {
@@ -59,12 +64,16 @@ public class Tag {
 		this.taggedCount = taggedCount;
 	}
 
-	public void tagged() {
-		taggedCount += 1;
-	}
-
 	public int getTaggedCount() {
 		return taggedCount;
+	}
+
+	public boolean isPooled() {
+		return pooled;
+	}
+
+	public void tagged() {
+		taggedCount += 1;
 	}
 
 	public void deTagged() {
@@ -74,21 +83,22 @@ public class Tag {
 	public Tag getParent() {
 		return this.parent;
 	}
-	
+
 	private boolean isRootTag() {
-	    return parent == null;
+		return parent == null;
 	}
-	
-    /**
-     * Root 태그인 경우 자기 자신, 자식 태그인 경우 부모 태그를 반환한다.
-     * @return
-     */
-    public Tag getRevisedTag() {
-        if (isRootTag()) {
-            return this;
-        }
-        return this.parent;
-    }
+
+	/**
+	 * Root 태그인 경우 자기 자신, 자식 태그인 경우 부모 태그를 반환한다.
+	 * 
+	 * @return
+	 */
+	public Tag getRevisedTag() {
+		if (isRootTag()) {
+			return this;
+		}
+		return this.parent;
+	}
 
 	@Override
 	public int hashCode() {
@@ -129,6 +139,7 @@ public class Tag {
 
 	@Override
 	public String toString() {
-		return "Tag [tagId=" + tagId + ", name=" + name + ", taggedCount=" + taggedCount + ", parent=" + parent + "]";
+		return "Tag [tagId=" + tagId + ", name=" + name + ", taggedCount="
+				+ taggedCount + ", parent=" + parent + "]";
 	}
 }
