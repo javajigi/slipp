@@ -39,16 +39,16 @@ public class WikiContentsTest {
         Pattern p =Pattern.compile(regExp);
         Matcher m =p.matcher(source);
         assertThat(m.find(), is(true));
-        assertThat(m.group(1), is("@자바.지기"));
+        assertThat(m.group(1), is("자바.지기"));
         
         source ="진달이 아이디는 @jhindhal.jhang 이다.";
         m =p.matcher(source);
         assertThat(m.find(), is(true));
-        assertThat(m.group(1), is("@jhindhal.jhang"));
+        assertThat(m.group(1), is("jhindhal.jhang"));
         
         source ="진달이 아이디는 @@jhindhal.jhang 이다.";
         m =p.matcher(source);
         assertThat(m.find(), is(true));
-        assertThat(m.group(1), is("@@jhindhal.jhang"));
+        assertThat(m.group(1), is("@jhindhal.jhang"));
     }
 }
