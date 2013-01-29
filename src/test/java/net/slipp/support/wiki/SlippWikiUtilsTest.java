@@ -37,7 +37,7 @@ public class SlippWikiUtilsTest {
 	@Test
 	public void convert() throws Exception {
 		String contents = TestFileReader.read(this, "text.txt");
-		String actual = WikiContents.convert(contents);
+		String actual = WikiContents.parse(contents);
 		logger.debug("convert contents : {}", actual);
 	}
 }
