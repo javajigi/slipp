@@ -3,6 +3,7 @@ package net.slipp.service.tag;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
+import static net.slipp.domain.tag.TagBuilder.*;
 
 import java.util.Set;
 
@@ -38,32 +39,14 @@ public class TagServiceTest {
 	
 	@Test
 	public void moveToTag_부모_태그_ID_is_null() throws Exception {
-		NewTag newTag = new NewTag(1L, "java"); 
 		Long parentTagId = null;
-		when(newTagRepository.findOne(newTag.getTagId())).thenReturn(newTag);
+		Tag newTag = aTag().withId(1L).withName("newTag").withPooled(false).build();
 		when(tagRepository.findOne(parentTagId)).thenReturn(null);
-		when(tagRepository.findByName(newTag.getName())).thenReturn(null);
-		Tag tag = newTag.createTag(null);
-		when(tagRepository.save(tag)).thenReturn(tag);
+		when(tagRepository.findOne(newTag.getTagId())).thenReturn(newTag);
 		
 		dut.moveToTag(newTag.getTagId(), parentTagId);
 		
-		assertThat(newTag.isDeleted(), is(true));
-	}
-	
-	@Test
-	public void moveToTag_부모_태그가_존재함() throws Exception {
-		Long tagId = 1L;
-		Long parentTagId = 5L;
-		NewTag newTag = new NewTag(tagId, "newTag");
-		Tag parentTag = Tag.pooledTag("새로운태그");
-		when(tagRepository.findOne(parentTagId)).thenReturn(parentTag);
-		when(newTagRepository.findOne(tagId)).thenReturn(newTag);
-		
-		dut.moveToTag(tagId, parentTagId);
-		
-		verify(tagRepository).save(newTag.createTag(parentTag));
-		assertThat(newTag.isDeleted(), is(true));
+		assertThat(newTag.isPooled(), is(true));
 	}
 	
 	@Test

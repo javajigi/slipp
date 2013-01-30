@@ -80,18 +80,17 @@ public class TagService {
 	public void moveToTag(Long newTagId, Long parentTagId) {
 		Assert.notNull(newTagId, "이동할 tagId는 null이 될 수 없습니다.");
 		
-		NewTag newTag = newTagRepository.findOne(newTagId);
 		Tag parentTag = findParentTag(parentTagId);
-		Tag tag = saveTag(newTag.createTag(parentTag));
-		newTag.moveToTag(tag);
+		Tag tag = tagRepository.findOne(newTagId);
+		tag.movePooled(parentTag);
 	}
 
 	private Tag findParentTag(Long parentTagId) {
-		Tag parentTag = null;
-		if (parentTagId != null) {
-			parentTag = tagRepository.findOne(parentTagId);
+		if (parentTagId == null) {
+			return null;
 		}
-		return parentTag;
+		
+		return tagRepository.findOne(parentTagId);
 	}
 
 	public Page<Tag> findTags(Pageable page) {

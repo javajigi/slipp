@@ -61,4 +61,18 @@ public class TagTest {
 		assertThat(dut.getName(), is(name));
 		assertThat(dut.getParent(), is(nullValue()));
 	}
+    
+    @Test
+	public void movePooled() throws Exception {
+    	Tag parent = null;
+		Tag newTag = Tag.newTag("newTag");
+		newTag.movePooled(parent);
+		assertThat(newTag.isPooled(), is(true));
+		
+		parent = Tag.pooledTag("java");
+		newTag = Tag.newTag("newTag");
+		newTag.movePooled(parent);
+		assertThat(newTag.isPooled(), is(true));
+		assertThat(newTag.getParent(), is(parent));
+	}
 }

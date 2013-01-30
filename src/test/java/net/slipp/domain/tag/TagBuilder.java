@@ -1,6 +1,7 @@
 package net.slipp.domain.tag;
 
 public class TagBuilder {
+	private Long id;
 	private String name;
 	private int taggedCount;
 	private boolean pooled;
@@ -8,6 +9,11 @@ public class TagBuilder {
 
 	public static TagBuilder aTag() {
 		return new TagBuilder();
+	}
+	
+	public TagBuilder withId(Long id) {
+		this.id = id;
+		return this;
 	}
 	
 	public TagBuilder withName(String name) {
@@ -31,7 +37,12 @@ public class TagBuilder {
 	}
 	
 	public Tag build() {
-		Tag tag = new Tag(name, parentTag, pooled);
+		Tag tag = new Tag(name, parentTag, pooled) {
+			public Long getTagId() {
+				return id;
+			}
+		};
+		
 		for (int i = 0; i < taggedCount; i++) {
 			tag.tagged();
 		}

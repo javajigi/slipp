@@ -76,6 +76,11 @@ public class Tag {
 	private boolean isRootTag() {
 		return parent == null;
 	}
+	
+	public void movePooled(Tag parent) {
+		this.pooled = true;
+		this.parent = parent;
+	}
 
 	/**
 	 * Root 태그인 경우 자기 자신, 자식 태그인 경우 부모 태그를 반환한다.
