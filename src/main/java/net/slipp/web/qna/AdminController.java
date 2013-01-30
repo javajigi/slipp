@@ -48,7 +48,7 @@ public class AdminController {
 		}
 		
 		if (parentTag == null) {
-			tagService.saveTag(new Tag(name));
+			tagService.saveTag(Tag.pooledTag(name));
 			return "redirect:/admin/tags";
 		}
 		
@@ -58,7 +58,7 @@ public class AdminController {
 			return tags(1, model);
 		}
 				
-		tagService.saveTag(new Tag(name, parent));
+		tagService.saveTag(Tag.pooledTag(name, parent));
 		return "redirect:/admin/tags";
 	}
 	

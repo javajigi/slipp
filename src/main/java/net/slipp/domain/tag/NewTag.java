@@ -88,7 +88,7 @@ public class NewTag {
 	}
 	
 	public Tag createTag(Tag parentTag) {
-		return new Tag(getName(), parentTag);
+		return Tag.pooledTag(getName(), parentTag);
 	}
 	
 	public void moveToTag(Tag tag) {

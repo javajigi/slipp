@@ -1,7 +1,6 @@
 package net.slipp.service.qna;
 
-import static net.slipp.domain.tag.TagTest.JAVA;
-import static net.slipp.domain.tag.TagsTest.DEFAULT_TAGS;
+import static net.slipp.domain.tag.TagTest.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -50,7 +49,8 @@ public class QnaServiceTest {
 		Set<Tag> originalTags = Sets.newHashSet(JAVA);
 		Question existedQuestion = new Question(1L, loginUser, dto.getTitle(), dto.getContents(), originalTags);
 		when(questionRepository.findOne(dto.getQuestionId())).thenReturn(existedQuestion);
-		when(tagService.processTags(originalTags, dto.getPlainTags())).thenReturn(DEFAULT_TAGS);
+		Set<Tag> tags = Sets.newHashSet(JAVA, NEWTAG);
+		when(tagService.processTags(dto.getPlainTags())).thenReturn(tags);
 		
 		// when
 		dut.updateQuestion(loginUser, dto);

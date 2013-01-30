@@ -27,21 +27,10 @@ public class Tag {
 	public Tag() {
 	}
 
-	public Tag(String name) {
-		this(name, null);
-	}
-
-	public Tag(String name, Tag parent) {
+	public Tag(String name, Tag parent, boolean pooled) {
 		this.name = name;
 		this.parent = parent;
-	}
-	
-	public Tag(String name, boolean pooled) {
-		this(name, null);
-	}
-
-	public Tag(String name, boolean pooled, Tag java) {
-		// TODO Auto-generated constructor stub
+		this.pooled = pooled;
 	}
 
 	public Long getTagId() {
@@ -99,13 +88,24 @@ public class Tag {
 		}
 		return this.parent;
 	}
+	
+	public static Tag pooledTag(String name) {
+		return pooledTag(name, null);
+	}
+	
+	public static Tag pooledTag(String name, Tag parent) {
+		return new Tag(name, parent, true);
+	}
+	
+	public static Tag newTag(String name) {
+		return new Tag(name, null, false);
+	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((parent == null) ? 0 : parent.hashCode());
 		result = prime * result + ((tagId == null) ? 0 : tagId.hashCode());
 		return result;
 	}
@@ -124,11 +124,6 @@ public class Tag {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
-		if (parent == null) {
-			if (other.parent != null)
-				return false;
-		} else if (!parent.equals(other.parent))
-			return false;
 		if (tagId == null) {
 			if (other.tagId != null)
 				return false;
@@ -139,7 +134,7 @@ public class Tag {
 
 	@Override
 	public String toString() {
-		return "Tag [tagId=" + tagId + ", name=" + name + ", taggedCount="
-				+ taggedCount + ", parent=" + parent + "]";
+		return "Tag [tagId=" + tagId + ", name=" + name + ", taggedCount=" + taggedCount + ", pooled=" + pooled
+				+ ", parent=" + parent + "]";
 	}
 }

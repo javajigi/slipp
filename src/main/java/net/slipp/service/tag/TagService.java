@@ -9,7 +9,6 @@ import javax.inject.Inject;
 import net.slipp.domain.qna.Question;
 import net.slipp.domain.tag.NewTag;
 import net.slipp.domain.tag.Tag;
-import net.slipp.domain.tag.Tags;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.repository.tag.NewTagRepository;
 import net.slipp.repository.tag.TagRepository;
@@ -37,28 +36,20 @@ public class TagService {
 		this.newTagRepository = newTagRepository;
 	}
 	
-    private void applyParsedTag(String parsedTag, Tags tags) {
-        Tag tag = tagRepository.findByName(parsedTag);
-        if(tag != null) {
-            tags.addTag(tag.getRevisedTag());
-        } else {
-            tags.addNewTag(new NewTag(parsedTag));
-        }
-    }
-    
-    public Tags processTags(String plainTags) {
-        Set<Tag> originalTags = Sets.newHashSet();
-        return processTags(originalTags, plainTags);
-    }
-    
-    public Tags processTags(Set<Tag> originalTags, String plainTags) {
-        Set<String> parsedTags = parseTags(plainTags);
-        Tags tags = new Tags(originalTags);
-        for (String parsedTag : parsedTags) {
-            applyParsedTag(parsedTag, tags);
-        }
-        tags.processTags();
-        return tags;
+    public Set<Tag> processTags(String plainTags) {
+    	Set<String> parsedTags = parseTags(plainTags);
+    	Set<Tag> tags = Sets.newHashSet();
+    	for (String each : parsedTags) {
+            Tag tag = tagRepository.findByName(each);
+            if (tag == null) {
+                Tag newTag = Tag.newTag(each);
+                Tag persisted = tagRepository.save(newTag);
+                tags.add(persisted);
+            } else {
+                tags.add(tag);                
+            }			
+		}
+    	return tags;
     }
     
     static Set<String> parseTags(String plainTags) {

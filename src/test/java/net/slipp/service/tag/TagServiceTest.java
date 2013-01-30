@@ -1,17 +1,14 @@
 package net.slipp.service.tag;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import java.util.Set;
 
 import net.slipp.domain.qna.Question;
 import net.slipp.domain.tag.NewTag;
 import net.slipp.domain.tag.Tag;
-import net.slipp.domain.tag.Tags;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.repository.tag.NewTagRepository;
 import net.slipp.repository.tag.TagRepository;
@@ -59,7 +56,7 @@ public class TagServiceTest {
 		Long tagId = 1L;
 		Long parentTagId = 5L;
 		NewTag newTag = new NewTag(tagId, "newTag");
-		Tag parentTag = new Tag("새로운태그");
+		Tag parentTag = Tag.pooledTag("새로운태그");
 		when(tagRepository.findOne(parentTagId)).thenReturn(parentTag);
 		when(newTagRepository.findOne(tagId)).thenReturn(newTag);
 		
@@ -100,47 +97,18 @@ public class TagServiceTest {
     @Test
     public void processTags_최초_생성() throws Exception {
         // given
-        Tag tag = new Tag("java");
-        String plainTags = "java newTags";
-        Set<Tag> originalTags = Sets.newHashSet();
-        when(tagRepository.findByName(tag.getName())).thenReturn(tag);
-        
-        // when
-        Tags tags = dut.processTags(originalTags, plainTags);
-        
-        // then
-        Set<Tag> pooledTags = tags.getPooledTags();
-        assertThat(pooledTags.size(), is(1));
-        assertThat(tag.getTaggedCount(), is(1));
-        Set<NewTag> newTags = tags.getNewTags();
-        assertThat(newTags.size(), is(1));
-    }
-    
-    @Test
-    public void processTags_수정() throws Exception {
-        // given
-        Tag java = createTaggedTag("java");
-        Tag spring = createTaggedTag("spring");
-        String plainTags = "java newTags";
-        Set<Tag> originalTags = Sets.newHashSet(java, spring);
+        Tag java = Tag.pooledTag("java");
+        Tag newTag = Tag.newTag("newTag");
+        String plainTags = String.format("%s %s", java.getName(), newTag.getName());
         when(tagRepository.findByName(java.getName())).thenReturn(java);
-                
+        when(tagRepository.save(newTag)).thenReturn(newTag);
+        
         // when
-        Tags tags = dut.processTags(originalTags, plainTags);
+        Set<Tag> tags = dut.processTags(plainTags);
         
         // then
-        Set<Tag> pooledTags = tags.getPooledTags();
-        assertThat(pooledTags.size(), is(1));
-        assertThat(java.getTaggedCount(), is(1));
-        assertThat(spring.getTaggedCount(), is(0));
-        Set<NewTag> newTags = tags.getNewTags();
-        assertThat(newTags.size(), is(1));
-    }
-
-    private Tag createTaggedTag(String tagName) {
-        Tag tag = new Tag(tagName);
-        tag.tagged();
-        return tag;
+        assertThat(tags.contains(java), is(true));
+        assertThat(tags.contains(newTag), is(true));
     }
     
     @Test
