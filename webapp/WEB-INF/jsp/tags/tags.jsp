@@ -7,7 +7,7 @@
 <body>
 	<div class="section-qna">
 		<slipp:header type="2" />
-		<slipp:tags tags="${tags}"/>
+		<slipp:tags tags="${tags}" admin="false"/>
 		<div class="pagination pagination-centered">
 			<ul>
 				<sl:pager page="${tags}" prefixUri="/tags"/>

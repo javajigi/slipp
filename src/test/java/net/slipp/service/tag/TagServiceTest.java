@@ -1,16 +1,13 @@
 package net.slipp.service.tag;
 
+import static net.slipp.domain.tag.TagBuilder.*;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
-import static net.slipp.domain.tag.TagBuilder.*;
 
 import java.util.Set;
 
-import net.slipp.domain.qna.Question;
-import net.slipp.domain.tag.NewTag;
 import net.slipp.domain.tag.Tag;
-import net.slipp.domain.user.SocialUser;
 import net.slipp.repository.tag.NewTagRepository;
 import net.slipp.repository.tag.TagRepository;
 
@@ -19,8 +16,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import com.google.common.collect.Sets;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TagServiceTest {
@@ -47,34 +42,6 @@ public class TagServiceTest {
 		dut.moveToTag(newTag.getTagId(), parentTagId);
 		
 		assertThat(newTag.isPooled(), is(true));
-	}
-	
-	@Test
-	public void saveNewTag_최초_신규_태그() throws Exception {
-		SocialUser loginUser = new SocialUser();
-		Question question = new Question();
-		NewTag newTag = new NewTag("newTag");
-		Set<NewTag> newTags = Sets.newHashSet(newTag);
-
-		when(newTagRepository.findByName(newTag.getName())).thenReturn(null);
-		
-		dut.saveNewTag(loginUser, question, newTags);
-		
-		verify(newTagRepository).save(newTag);
-	}
-	
-	@Test
-	public void saveNewTag_이미_존재하는_태그() throws Exception {
-		SocialUser loginUser = new SocialUser();
-		Question question = new Question();
-		NewTag newTag = new NewTag("newTag");
-		Set<NewTag> newTags = Sets.newHashSet(newTag);
-
-		when(newTagRepository.findByName(newTag.getName())).thenReturn(newTag);
-		
-		dut.saveNewTag(loginUser, question, newTags);
-		
-		verify(newTagRepository, never()).save(newTag);
 	}
 	
     @Test

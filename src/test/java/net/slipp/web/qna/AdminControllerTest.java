@@ -35,7 +35,7 @@ public class AdminControllerTest {
 		List<Tag> tags = Arrays.asList(Tag.pooledTag("java"), Tag.pooledTag("svn"));
 		Page<Tag> pageTags = new PageImpl<Tag>(tags, pageable, 2L);
 		
-		when(tagService.findTags(dut.createPageable(null))).thenReturn(pageTags);
+		when(tagService.findAllTags(dut.createPageable(null))).thenReturn(pageTags);
 		
 		ModelMap model = new ModelMap();
 		String forwardUrl = dut.tags(null, model);

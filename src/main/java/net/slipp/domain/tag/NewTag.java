@@ -91,14 +91,6 @@ public class NewTag {
 		return Tag.pooledTag(getName(), parentTag);
 	}
 	
-	public void moveToTag(Tag tag) {
-		this.deleted = true;
-		
-		for (Question each : questions) {
-			each.tag(tag);
-		}
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;

@@ -27,7 +27,7 @@ public class TagRepositoryIT {
 		tagRepository.save(Tag.pooledTag("child2", parent1));
 		tagRepository.save(Tag.pooledTag("parent2"));
 		
-		List<Tag> tags = tagRepository.findParents();
+		List<Tag> tags = tagRepository.findPooledParents();
 		assertThat(tags.size(), is(2));
 	}
 }

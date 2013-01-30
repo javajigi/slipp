@@ -6,10 +6,8 @@ import java.util.StringTokenizer;
 
 import javax.inject.Inject;
 
-import net.slipp.domain.qna.Question;
 import net.slipp.domain.tag.NewTag;
 import net.slipp.domain.tag.Tag;
-import net.slipp.domain.user.SocialUser;
 import net.slipp.repository.tag.NewTagRepository;
 import net.slipp.repository.tag.TagRepository;
 
@@ -61,22 +59,6 @@ public class TagService {
         return parsedTags;
     }
 	
-	public void saveNewTag(SocialUser loginUser, Question question, Set<NewTag> newTags) {
-		for (NewTag newTag : newTags) {
-			applyNewTag(loginUser, question, newTag);			
-		}
-	}
-
-	private void applyNewTag(SocialUser loginUser, Question question, NewTag newTag) {
-		NewTag originalTag = newTagRepository.findByName(newTag.getName());
-		if(originalTag==null) {
-			newTag.tagged(loginUser, question);
-			newTagRepository.save(newTag);
-		} else {
-			originalTag.tagged(loginUser, question);
-		}
-	}
-
 	public void moveToTag(Long newTagId, Long parentTagId) {
 		Assert.notNull(newTagId, "이동할 tagId는 null이 될 수 없습니다.");
 		
@@ -92,13 +74,17 @@ public class TagService {
 		
 		return tagRepository.findOne(parentTagId);
 	}
+	
+	public Page<Tag> findPooledTags(Pageable page) {
+		return tagRepository.findByPooledTag(page);
+	}
 
-	public Page<Tag> findTags(Pageable page) {
+	public Page<Tag> findAllTags(Pageable page) {
 		return tagRepository.findAll(page);
 	}
 	
-	public Iterable<Tag> findsTag() {
-		return tagRepository.findParents();
+	public Iterable<Tag> findPooledTags() {
+		return tagRepository.findPooledParents();
 	}
 	
 	public Page<NewTag> findNewTags(Pageable page) {

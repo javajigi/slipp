@@ -182,7 +182,7 @@ public class Question implements HasCreatedAndUpdatedDate {
 
     public String getPlainTags() {
         String displayTags = "";
-        for (Tag tag : this.tags) {
+        for (Tag tag : getPooledTags()) {
             displayTags += tag.getName() + " ";
         }
         return displayTags;
@@ -228,11 +228,9 @@ public class Question implements HasCreatedAndUpdatedDate {
         this.answerCount -= 1;
     }
 
-    public void tag(Tag tag) {
-        tags.add(tag);
-        this.denormalizedTags = tagsToDenormalizedTags(tags);
-        tag.tagged();
-    }
+	public void tagsToDenormalizedTags() {
+		this.denormalizedTags = tagsToDenormalizedTags(tags);
+	}
     
     public boolean hasTag(Tag tag) {
         return tags.contains(tag);

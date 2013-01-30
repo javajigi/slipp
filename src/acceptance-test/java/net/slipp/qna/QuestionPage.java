@@ -1,7 +1,7 @@
 package net.slipp.qna;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -34,11 +34,6 @@ public class QuestionPage {
             String tag = each.findElement(By.cssSelector("a")).getText();
             assertThat(tags.contains(tag), is(true));
         }
-    }
-
-    public NewTagsPage goNewTagsPage() {
-        driver.findElement(By.cssSelector("#newTagManagement > a")).click();
-        return new NewTagsPage(driver);
     }
 
     public void answer(String answer) {

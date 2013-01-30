@@ -27,7 +27,7 @@ public class Tag {
 	public Tag() {
 	}
 
-	public Tag(String name, Tag parent, boolean pooled) {
+	Tag(String name, Tag parent, boolean pooled) {
 		this.name = name;
 		this.parent = parent;
 		this.pooled = pooled;

@@ -43,7 +43,7 @@ public class QuestionController {
 		page = revisedPage(page);
 		logger.debug("currentPage : {}", page);
 		model.addAttribute("questions", qnaService.findsQuestion(createPageable(page)));
-		model.addAttribute("tags", tagService.findsTag());
+		model.addAttribute("tags", tagService.findPooledTags());
 		return "qna/list";
 	}
 
@@ -56,7 +56,7 @@ public class QuestionController {
 	@RequestMapping("/form")
 	public String createForm(@LoginUser SocialUser loginUser, Model model) {
 		model.addAttribute("question", new QuestionDto());
-		model.addAttribute("tags", tagService.findsTag());
+		model.addAttribute("tags", tagService.findPooledTags());
 		return "qna/form";
 	}
 
@@ -75,7 +75,7 @@ public class QuestionController {
 			throw new AccessDeniedException(loginUser.getUserId() + " is not owner!");
 		}
 		model.addAttribute("question", question);
-		model.addAttribute("tags", tagService.findsTag());
+		model.addAttribute("tags", tagService.findPooledTags());
 		return "qna/form";
 	}
 
@@ -91,7 +91,7 @@ public class QuestionController {
 	public String show(@PathVariable Long id, Model model) {
 		model.addAttribute("question", qnaService.showQuestion(id));
 		model.addAttribute("answer", new Answer());
-		model.addAttribute("tags", tagService.findsTag());
+		model.addAttribute("tags", tagService.findPooledTags());
 		return "qna/show";
 	}
 	
@@ -106,7 +106,7 @@ public class QuestionController {
 		page = revisedPage(page);
 		model.addAttribute("currentTag", tagService.findTagByName(name));
 		model.addAttribute("questions", qnaService.findsByTag(name, createPageable(page)));
-		model.addAttribute("tags", tagService.findsTag());
+		model.addAttribute("tags", tagService.findPooledTags());
 		return "qna/list";
 	}
 
