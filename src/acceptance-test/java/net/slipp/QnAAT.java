@@ -51,6 +51,9 @@ public class QnAAT extends AbstractATTest {
         qnaFormPage.question(questionFixture);
         AdminTagPage adminTagPage = indexPage.goAdminTagPage();
     	assertThat(adminTagPage.existNewTag("newtag"), is(true));
+    	adminTagPage = adminTagPage.moveToPoolTag();
+    	assertThat(adminTagPage.existNewTag("newtag"), is(false));
+    	
     }
     
     @Test

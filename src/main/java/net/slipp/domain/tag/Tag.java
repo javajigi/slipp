@@ -1,11 +1,19 @@
 package net.slipp.domain.tag;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+
+import net.slipp.domain.qna.Question;
+
+import com.google.common.collect.Sets;
 
 @Entity
 public class Tag {
@@ -23,6 +31,9 @@ public class Tag {
 	@OneToOne
 	@org.hibernate.annotations.ForeignKey(name = "fk_tag_parent_id")
 	public Tag parent;
+	
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy="tags")
+	private Set<Question> questions = Sets.newHashSet();
 
 	public Tag() {
 	}
@@ -80,6 +91,10 @@ public class Tag {
 	public void movePooled(Tag parent) {
 		this.pooled = true;
 		this.parent = parent;
+		
+		for (Question each : questions) {
+			each.tagsToDenormalizedTags();
+		}
 	}
 
 	/**

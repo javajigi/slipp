@@ -58,4 +58,9 @@ public class AdminTagPage {
 			return false;
 		}
 	}
+
+	public AdminTagPage moveToPoolTag() {
+		driver.findElement(By.id("moveToPoolTagBtn")).click();
+		return this;
+	}
 }

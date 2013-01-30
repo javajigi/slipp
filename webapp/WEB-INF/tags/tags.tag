@@ -34,7 +34,7 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 				      			<option value="${pooledTag.tagId}">${pooledTag.name}</option>
 				      			</c:forEach>
 				      		</select>							
-							<button type="submit" class="btn btn-primary">태그로 추가</button>
+							<button id="moveToPoolTagBtn" type="submit" class="btn btn-primary">태그로 추가</button>
 						</form>
 						</c:if>			
 					</td>
