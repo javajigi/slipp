@@ -107,7 +107,7 @@ public class SlippLanguage extends AbstractMarkupLanguage {
 		tokenSyntax.add(new PatternLiteralReplacementToken("(----)", "<hr/>")); // horizontal rule //$NON-NLS-1$ //$NON-NLS-2$
 		tokenSyntax.add(new ImpliedHyperlinkReplacementToken());
 		tokenSyntax.add(new AnchorReplacementToken());
-		tokenSyntax.add(new MentionReplacementToken());
+		// tokenSyntax.add(new MentionReplacementToken());
 	}
 
 	@Override
