@@ -297,10 +297,6 @@ public class Question implements HasCreatedAndUpdatedDate {
         return sortAnswers.get(0);
     }
     
-    public void tag(Tag tag) {
-        tags.add(tag);
-    }
-
     @Override
     public String toString() {
         return "Question [questionId=" + questionId + ", writer=" + writer + ", title=" + title + ", contentsHolder="
