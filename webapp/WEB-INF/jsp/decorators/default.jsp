@@ -40,7 +40,7 @@
             <li><a href="/wiki">Wiki</a></li>
             <li><a href="https://github.com/javajigi/slipp/issues" target="_blank">Ideas&amp;Bugs</a></li>
             <li><a href="/code">Code</a></li>
-            <li><a href="/about">about</a></li>
+            <li><a href="/about">About</a></li>
             <sec:authorize access="!hasRole('ROLE_USER')">
             <li class="active loginBtn"><a href="/login">로그인</a></li>
             </sec:authorize>
