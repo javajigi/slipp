@@ -6,13 +6,10 @@ import java.util.StringTokenizer;
 
 import javax.inject.Inject;
 
-import net.slipp.domain.tag.NewTag;
 import net.slipp.domain.tag.Tag;
-import net.slipp.repository.tag.NewTagRepository;
 import net.slipp.repository.tag.TagRepository;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,15 +21,13 @@ import com.google.common.collect.Sets;
 @Transactional
 public class TagService {
     private TagRepository tagRepository;
-    private NewTagRepository newTagRepository;
 
     public TagService() {
     }
 
     @Inject
-    public TagService(TagRepository tagRepository, NewTagRepository newTagRepository) {
+    public TagService(TagRepository tagRepository) {
         this.tagRepository = tagRepository;
-        this.newTagRepository = newTagRepository;
     }
 
     public Set<Tag> processTags(String plainTags) {
@@ -88,10 +83,6 @@ public class TagService {
         return tagRepository.findPooledParents();
     }
 
-    public Page<NewTag> findNewTags(Pageable page) {
-        return newTagRepository.findAll(page);
-    }
-
     public Tag saveTag(Tag tag) {
         return tagRepository.save(tag);
     }
@@ -106,19 +97,5 @@ public class TagService {
 
     public List<Tag> findsBySearch(String keyword) {
         return tagRepository.findByNameLike(keyword + "%");
-    }
-
-    public void migrations() {
-        Pageable pageable = new PageRequest(0, 100);
-        Page<NewTag> newTags = newTagRepository.findAll(pageable);
-        for (NewTag newTag : newTags) {
-            if (!newTag.isDeleted()) {
-                Tag tag = Tag.newTag(newTag.getName());
-                for(int i=0; i < newTag.getTaggedCount(); i++) {
-                    tag.tagged();
-                }
-                newTag.moveToTag(tagRepository.save(tag));
-            }
-        }
     }
 }

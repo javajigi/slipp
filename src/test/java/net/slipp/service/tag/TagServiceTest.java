@@ -1,14 +1,13 @@
 package net.slipp.service.tag;
 
-import static net.slipp.domain.tag.TagBuilder.*;
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static net.slipp.domain.tag.TagBuilder.aTag;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.when;
 
 import java.util.Set;
 
 import net.slipp.domain.tag.Tag;
-import net.slipp.repository.tag.NewTagRepository;
 import net.slipp.repository.tag.TagRepository;
 
 import org.junit.Before;
@@ -24,12 +23,9 @@ public class TagServiceTest {
 	@Mock
 	private TagRepository tagRepository;
 	
-	@Mock
-	private NewTagRepository newTagRepository;
-	
 	@Before
 	public void setup() {
-		dut = new TagService(tagRepository, newTagRepository);
+		dut = new TagService(tagRepository);
 	}
 	
 	@Test
