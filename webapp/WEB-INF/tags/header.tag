@@ -15,7 +15,6 @@
       <li id="tags" <c:if test="${type == 2}">class="active"</c:if>><a href="/tags">Tags</a></li>
       <sec:authorize access="hasRole('ROLE_ADMINISTRATOR')">
       <li id="tagManagement" <c:if test="${type == 3}">class="active"</c:if>><a href="/admin/tags">태그관리</a></li>
-      <li id="newTagManagement" <c:if test="${type == 4}">class="active"</c:if>><a href="/admin/newtags">신규태그관리</a></li>
       </sec:authorize>
     </ul>
   </div>

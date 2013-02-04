@@ -43,7 +43,7 @@ public class HomeController {
 			model.addAttribute("pages", wikiService.findWikiPages());			
 		}
 		model.addAttribute("questions", qnaService.findsQuestion(createPageable()));
-		model.addAttribute("tags", tagService.findsTag());		
+		model.addAttribute("tags", tagService.findPooledTags());		
 		return "index";
 	}
 

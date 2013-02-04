@@ -22,7 +22,7 @@ attribute name="question" required="true" rtexprvalue="true" type="net.slipp.dom
 							<h1 class="subject">${sf:h(question.title)}</h1>
 							<div class="tags">
 								<ul>
-								<c:forEach items="${question.tags}" var="tag">
+								<c:forEach items="${question.pooledTags}" var="tag">
 									<li>
 										<a href="/questions/tagged/${tag.name}" class="tag">${tag.name}</a>
 									</li>

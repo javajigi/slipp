@@ -21,13 +21,13 @@ public class TagRepositoryIT {
 	
 	@Test
 	public void findParents() throws Exception {
-		Tag parent1 = new Tag("parent1");
+		Tag parent1 = Tag.pooledTag("parent1");
 		tagRepository.save(parent1);
-		tagRepository.save(new Tag("child1", parent1));
-		tagRepository.save(new Tag("child2", parent1));
-		tagRepository.save(new Tag("parent2"));
+		tagRepository.save(Tag.pooledTag("child1", parent1));
+		tagRepository.save(Tag.pooledTag("child2", parent1));
+		tagRepository.save(Tag.pooledTag("parent2"));
 		
-		List<Tag> tags = tagRepository.findParents();
+		List<Tag> tags = tagRepository.findPooledParents();
 		assertThat(tags.size(), is(2));
 	}
 }

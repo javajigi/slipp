@@ -1,10 +1,11 @@
 package net.slipp.domain.qna;
 
-import static net.slipp.domain.qna.AnswerBuilder.anAnswer;
-import static net.slipp.domain.qna.QuestionBuilder.aQuestion;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
+import static net.slipp.domain.qna.AnswerBuilder.*;
+import static net.slipp.domain.qna.QuestionBuilder.*;
+import static net.slipp.domain.tag.TagBuilder.*;
+import static net.slipp.domain.tag.TagTest.*;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
 
 import java.util.Set;
 
@@ -55,11 +56,10 @@ public class QuestionTest {
 		SocialUser writer = new SocialUser();
 		String title = "title";
 		String contents = "contents";
-		Tag java = new Tag("java");
+		Tag java = JAVA;
 
 		// when
-		Question newQuestion = new Question(writer, title, contents,
-				Sets.newHashSet(java));
+		Question newQuestion = new Question(writer, title, contents, Sets.newHashSet(java));
 
 		// then
 		assertThat(newQuestion.getTitle(), is(title));
@@ -72,51 +72,33 @@ public class QuestionTest {
 	public void 질문_수정() throws Exception {
 		// given
 		SocialUser writer = new SocialUser();
-		Tag java = new Tag("java");
-		Question newQuestion = new Question(writer, "title", "contents",
-				Sets.newHashSet(java));
+		Tag java = JAVA;
+		Question newQuestion = new Question(writer, "title", "contents", Sets.newHashSet(java));
 
 		// when
 		String updateTitle = "update title";
 		String updateContents = "update contents";
-		Tag javascript = new Tag("javascript");
-		newQuestion.update(writer, updateTitle, updateContents,
-				Sets.newHashSet(java, javascript));
+		Tag javascript = JAVASCRIPT;
+		newQuestion.update(writer, updateTitle, updateContents, Sets.newHashSet(java, javascript));
 		assertThat(newQuestion.getTitle(), is(updateTitle));
 		assertThat(newQuestion.getContents(), is(updateContents));
 		assertThat(newQuestion.hasTag(java), is(true));
-		assertThat(newQuestion.getDenormalizedTags(), is(java.getName() + ","
-				+ javascript.getName()));
-	}
-
-	@Test
-	public void 태그추가() throws Exception {
-		Tag java = new Tag("java");
-		Tag javascript = new Tag("javascript");
-		Question question = aQuestion().withTag(java).withTag(javascript)
-				.build();
-		Set<Tag> tags = question.getTags();
-
-		assertThat(tags.contains(java), is(true));
-		assertThat(tags.contains(javascript), is(true));
 	}
 
 	@Test
 	public void 화제의_답변이_존재한다() throws Exception {
-		Question dut = aQuestion()
-				.withAnswer(anAnswer().withTotalLiked(1).build())
-				.withAnswer(anAnswer().withTotalLiked(0).build())
-				.withAnswer(anAnswer().withTotalLiked(3).build()).build();
+		Question dut = aQuestion().withAnswer(anAnswer().withTotalLiked(1).build())
+				.withAnswer(anAnswer().withTotalLiked(0).build()).withAnswer(anAnswer().withTotalLiked(3).build())
+				.build();
 		Answer bestAnswer = dut.getBestAnswer();
 		assertThat(bestAnswer.getSumLike(), is(3));
 	}
 
 	@Test
 	public void 화제의_답변이_존재하지_않는다() throws Exception {
-		Question dut = aQuestion()
-				.withAnswer(anAnswer().withTotalLiked(1).build())
+		Question dut = aQuestion().withAnswer(anAnswer().withTotalLiked(1).build())
 				.withAnswer(anAnswer().withTotalLiked(0).build()).build();
-		
+
 		assertThat(dut.getBestAnswer(), is(nullValue()));
 	}
 
@@ -125,15 +107,55 @@ public class QuestionTest {
 		Question dut = aQuestion().build();
 		assertThat(dut.getBestAnswer(), is(nullValue()));
 	}
-	
+
 	@Test
-    public void 질문을_삭제한다() throws Exception {
-	    Tag java = new Tag("java");
-	    java.tagged();
-	    SocialUser writer = new SocialUser();
-	    Question dut = aQuestion().withWriter(writer).withTag(java).build();
-	    dut.delete(writer);
-	    assertThat(dut.isDeleted(), is(true));
-	    assertThat(java.getTaggedCount(), is(0));
-    }
+	public void 질문을_삭제한다() throws Exception {
+		Tag java = aTag().withName("java").build();
+		SocialUser writer = new SocialUser();
+		Question dut = aQuestion().withWriter(writer).withTag(java).build();
+		dut.delete(writer);
+		assertThat(dut.isDeleted(), is(true));
+		assertThat(java.getTaggedCount(), is(0));
+	}
+
+	@Test
+	public void newTags() throws Exception {
+		// given
+		Tag java = aTag().withName("java").withPooled(true).withTaggedCount(3).build();
+		Tag javascript = aTag().withName("javascript").withPooled(true).withTaggedCount(2).build();
+		Tag newTag = aTag().withName("newTag").withPooled(false).build();
+		Question question = aQuestion().withTag(java).withTag(javascript).withTag(newTag).build();
+		
+		// when
+		Set<Tag> tags = question.getTags();
+		Set<Tag> pooledTags = question.getPooledTags();
+		String denormalizedTags = question.getDenormalizedTags();
+		
+		// then
+		assertThat(tags.size(), is(3));
+		assertThat(pooledTags.size(), is(2));
+		assertThat(denormalizedTags.split(",").length, is(2));
+	}
+
+	@Test
+	public void detaggedTags() throws Exception {
+		Tag java = aTag().withName("java").withTaggedCount(3).build();
+		Tag javascript = aTag().withName("javascript").withTaggedCount(2).build();
+		Set<Tag> originalTags = Sets.newHashSet(java, javascript);
+		Question.detaggedTags(originalTags);
+
+		assertThat(java.getTaggedCount(), is(2));
+		assertThat(javascript.getTaggedCount(), is(1));
+	}
+
+	@Test
+	public void taggedTags() throws Exception {
+		Tag java = aTag().withName("java").withTaggedCount(3).build();
+		Tag javascript = aTag().withName("javascript").withTaggedCount(2).build();
+		Set<Tag> originalTags = Sets.newHashSet(java, javascript);
+		Question.taggedTags(originalTags);
+
+		assertThat(java.getTaggedCount(), is(4));
+		assertThat(javascript.getTaggedCount(), is(3));
+	}
 }

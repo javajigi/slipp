@@ -1,10 +1,10 @@
 package net.slipp;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
+import net.slipp.qna.AdminTagPage;
 import net.slipp.qna.AnswerUpdateFormPage;
 import net.slipp.qna.IndexPage;
-import net.slipp.qna.NewTagsPage;
 import net.slipp.qna.QuestionFixture;
 import net.slipp.qna.QuestionFormPage;
 import net.slipp.qna.QuestionPage;
@@ -44,13 +44,16 @@ public class QnAAT extends AbstractATTest {
     }
 
     @Test
-    public void 신규태그_정상적으로_등록() {
+    public void newTags() {
         loginToFacebook(1);
         QuestionFormPage qnaFormPage = indexPage.goQuestionForm();
         questionFixture.setPlainTags("java javascript newtag");
-        QuestionPage questionPage = qnaFormPage.question(questionFixture);
-        NewTagsPage newTagsPage = questionPage.goNewTagsPage();
-    	assertThat(newTagsPage.existNewTag("newtag"), is(true));
+        qnaFormPage.question(questionFixture);
+        AdminTagPage adminTagPage = indexPage.goAdminTagPage();
+    	assertThat(adminTagPage.existNewTag("newtag"), is(true));
+    	adminTagPage = adminTagPage.moveToPoolTag();
+    	assertThat(adminTagPage.existNewTag("newtag"), is(false));
+    	
     }
     
     @Test

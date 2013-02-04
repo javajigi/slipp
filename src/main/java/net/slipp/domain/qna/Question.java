@@ -99,13 +99,12 @@ public class Question implements HasCreatedAndUpdatedDate {
         this(null, loginUser, title, contents, pooledTags);
     }
     
-    public Question(Long id, SocialUser loginUser, String title, String contents, Set<Tag> pooledTags) {
+    public Question(Long id, SocialUser loginUser, String title, String contents, Set<Tag> newTags) {
     	this.questionId = id;
         this.writer = loginUser;
         this.title = title;
         this.contentsHolder = Lists.newArrayList(contents);
-        this.tags = pooledTags;
-        this.denormalizedTags = tagsToDenormalizedTags(pooledTags);
+        newTags(newTags);
     }
 
 	public List<Answer> getAnswers() {
@@ -119,6 +118,16 @@ public class Question implements HasCreatedAndUpdatedDate {
     public Set<Tag> getTags() {
         return tags;
     }
+    
+	public Set<Tag> getPooledTags() {
+		Set<Tag> pooledTags = Sets.newHashSet();
+		for (Tag tag : getTags()) {
+			if (tag.isPooled()) {
+				pooledTags.add(tag);
+			}
+		}
+		return pooledTags;
+	}
 
     public String getDenormalizedTags() {
         return this.denormalizedTags;
@@ -173,7 +182,7 @@ public class Question implements HasCreatedAndUpdatedDate {
 
     public String getPlainTags() {
         String displayTags = "";
-        for (Tag tag : this.tags) {
+        for (Tag tag : getPooledTags()) {
             displayTags += tag.getName() + " ";
         }
         return displayTags;
@@ -204,9 +213,7 @@ public class Question implements HasCreatedAndUpdatedDate {
             throw new AccessDeniedException(loginUser.getDisplayName() + " is not owner!");
         }
         this.deleted = true;
-        for (Tag tag : this.tags) {
-            tag.deTagged();
-        }
+        detaggedTags(this.tags);
     }
 
     public void show() {
@@ -221,25 +228,41 @@ public class Question implements HasCreatedAndUpdatedDate {
         this.answerCount -= 1;
     }
 
-    public void tag(Tag tag) {
-        tags.add(tag);
-        this.denormalizedTags = tagsToDenormalizedTags(tags);
-        tag.tagged();
-    }
+	public void tagsToDenormalizedTags() {
+		this.denormalizedTags = tagsToDenormalizedTags(getPooledTags());
+	}
     
     public boolean hasTag(Tag tag) {
         return tags.contains(tag);
     }
+    
+    void newTags(Set<Tag> newTags) {
+    	detaggedTags(tags);
+    	taggedTags(newTags);
+    	this.tags = newTags;
+    	this.denormalizedTags = tagsToDenormalizedTags(getPooledTags());
+    }
+    
+	static void detaggedTags(Set<Tag> originalTags) {
+		for (Tag tag : originalTags) {
+			tag.deTagged();
+		}
+	}
+	
+	static void taggedTags(Set<Tag> newTags) {
+		for (Tag tag : newTags) {
+			tag.tagged();
+		}
+	}
 
-    public void update(SocialUser loginUser, String title, String contents, Set<Tag> pooledTags) {
+    public void update(SocialUser loginUser, String title, String contents, Set<Tag> newTags) {
         if (!isWritedBy(loginUser)) {
             throw new AccessDeniedException(loginUser.getDisplayName() + " is not owner!");
         }
     	
         this.title = title;
         this.contentsHolder = Lists.newArrayList(contents);
-        this.tags = pooledTags;
-        this.denormalizedTags = tagsToDenormalizedTags(pooledTags);
+        newTags(newTags);
     }
 
     public Set<SocialUser> findNotificationUser(SocialUser loginUser) {
@@ -272,6 +295,10 @@ public class Question implements HasCreatedAndUpdatedDate {
         sortAnswers.addAll(getAnswers());
         Collections.sort(sortAnswers);
         return sortAnswers.get(0);
+    }
+    
+    public void tag(Tag tag) {
+        tags.add(tag);
     }
 
     @Override

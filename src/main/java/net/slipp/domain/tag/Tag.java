@@ -1,11 +1,19 @@
 package net.slipp.domain.tag;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+
+import net.slipp.domain.qna.Question;
+
+import com.google.common.collect.Sets;
 
 @Entity
 public class Tag {
@@ -13,30 +21,27 @@ public class Tag {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long tagId;
 
-	@Column(name = "name", length = 50, unique=true, nullable = false)
+	@Column(name = "name", length = 50, unique = true, nullable = false)
 	private String name;
 
 	private int taggedCount = 0;
+
+	private boolean pooled;
 
 	@OneToOne
 	@org.hibernate.annotations.ForeignKey(name = "fk_tag_parent_id")
 	public Tag parent;
 	
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy="tags")
+	private Set<Question> questions = Sets.newHashSet();
+
 	public Tag() {
 	}
-	
-	public Tag(Long tagId, String name) {
-		this.tagId = tagId;
-		this.name = name;
-	}
 
-	public Tag(String name) {
-		this(name, null);
-	}
-
-	public Tag(String name, Tag parent) {
+	Tag(String name, Tag parent, boolean pooled) {
 		this.name = name;
 		this.parent = parent;
+		this.pooled = pooled;
 	}
 
 	public Long getTagId() {
@@ -59,12 +64,16 @@ public class Tag {
 		this.taggedCount = taggedCount;
 	}
 
-	public void tagged() {
-		taggedCount += 1;
-	}
-
 	public int getTaggedCount() {
 		return taggedCount;
+	}
+
+	public boolean isPooled() {
+		return pooled;
+	}
+
+	public void tagged() {
+		taggedCount += 1;
 	}
 
 	public void deTagged() {
@@ -74,28 +83,49 @@ public class Tag {
 	public Tag getParent() {
 		return this.parent;
 	}
-	
+
 	private boolean isRootTag() {
-	    return parent == null;
+		return parent == null;
 	}
 	
-    /**
-     * Root 태그인 경우 자기 자신, 자식 태그인 경우 부모 태그를 반환한다.
-     * @return
-     */
-    public Tag getRevisedTag() {
-        if (isRootTag()) {
-            return this;
-        }
-        return this.parent;
-    }
+	public void movePooled(Tag parent) {
+		this.pooled = true;
+		this.parent = parent;
+		
+		for (Question each : questions) {
+			each.tagsToDenormalizedTags();
+		}
+	}
+
+	/**
+	 * Root 태그인 경우 자기 자신, 자식 태그인 경우 부모 태그를 반환한다.
+	 * 
+	 * @return
+	 */
+	public Tag getRevisedTag() {
+		if (isRootTag()) {
+			return this;
+		}
+		return this.parent;
+	}
+	
+	public static Tag pooledTag(String name) {
+		return pooledTag(name, null);
+	}
+	
+	public static Tag pooledTag(String name, Tag parent) {
+		return new Tag(name, parent, true);
+	}
+	
+	public static Tag newTag(String name) {
+		return new Tag(name, null, false);
+	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((parent == null) ? 0 : parent.hashCode());
 		result = prime * result + ((tagId == null) ? 0 : tagId.hashCode());
 		return result;
 	}
@@ -114,11 +144,6 @@ public class Tag {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
-		if (parent == null) {
-			if (other.parent != null)
-				return false;
-		} else if (!parent.equals(other.parent))
-			return false;
 		if (tagId == null) {
 			if (other.tagId != null)
 				return false;
@@ -129,6 +154,7 @@ public class Tag {
 
 	@Override
 	public String toString() {
-		return "Tag [tagId=" + tagId + ", name=" + name + ", taggedCount=" + taggedCount + ", parent=" + parent + "]";
+		return "Tag [tagId=" + tagId + ", name=" + name + ", taggedCount=" + taggedCount + ", pooled=" + pooled
+				+ ", parent=" + parent + "]";
 	}
 }

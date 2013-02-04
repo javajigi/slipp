@@ -44,8 +44,8 @@ public class TagController {
 	
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String tags(Integer page, ModelMap model) throws Exception {
-		model.addAttribute("tags", tagService.findTags(createPageable(page)));
-		model.addAttribute("parentTags", tagService.findsTag());
+		model.addAttribute("tags", tagService.findPooledTags(createPageable(page)));
+		model.addAttribute("parentTags", tagService.findPooledTags());
 		return "tags/tags";
 	}
 	

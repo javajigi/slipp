@@ -8,8 +8,8 @@
 <body>
 	<slipp:header type="3" />
 
-	<div class="span8">
-		<slipp:tags tags="${tags}"/>
+	<div class="span12">
+		<slipp:tags tags="${tags}" admin="true"/>
 		
 		<div class="pagination pagination-centered">
 			<ul>
@@ -17,7 +17,7 @@
 			</ul>
 		</div>		
 	</div>
-	<div class="span8">
+	<div class="span12">
 		<form id="tagForm" class="form-search" action="/admin/tags" method="post">
       		<input type="text" id="name" name="name" class="input-medium">
       		<select id="parentTag" name="parentTag">
