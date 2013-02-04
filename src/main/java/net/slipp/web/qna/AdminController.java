@@ -67,4 +67,10 @@ public class AdminController {
 		tagService.moveToTag(tagId, parentTag);
 		return "redirect:/admin/tags";
 	}
+	
+	@RequestMapping(value = "/migrations")
+	public String migrations() throws Exception {
+	    tagService.migrations();
+	    return "redirect:/admin/tags";
+	}
 }

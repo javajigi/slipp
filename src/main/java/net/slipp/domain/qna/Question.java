@@ -229,7 +229,7 @@ public class Question implements HasCreatedAndUpdatedDate {
     }
 
 	public void tagsToDenormalizedTags() {
-		this.denormalizedTags = tagsToDenormalizedTags(tags);
+		this.denormalizedTags = tagsToDenormalizedTags(getPooledTags());
 	}
     
     public boolean hasTag(Tag tag) {
@@ -295,6 +295,10 @@ public class Question implements HasCreatedAndUpdatedDate {
         sortAnswers.addAll(getAnswers());
         Collections.sort(sortAnswers);
         return sortAnswers.get(0);
+    }
+    
+    public void tag(Tag tag) {
+        tags.add(tag);
     }
 
     @Override
