@@ -42,7 +42,7 @@ public class ServletDownloadManager {
 	public void download(HttpServletRequest request, HttpServletResponse response, File file, String originalFileName, long expires)
 			throws ServletException, IOException {
 		log.debug("originalFileName : {}", originalFileName);
-		String mimetype = request.getSession().getServletContext().getMimeType(file.getName());
+		String mimetype = request.getSession().getServletContext().getMimeType(originalFileName);
 
 		if (file == null || !file.exists() || file.length() <= 0 || file.isDirectory()) {
 			log.warn(file.getAbsolutePath() + " 파일이 존재하지 않음.");
@@ -86,7 +86,6 @@ public class ServletDownloadManager {
 	 */
 	public void download(HttpServletRequest request, HttpServletResponse response, InputStream is, String filename,
 			long filesize, String mimetype, long expires) throws ServletException, IOException {
-
 		addMimeTypeHeader(response, mimetype);
 
 		addExpiresHeader(response, expires);
