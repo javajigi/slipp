@@ -29,7 +29,11 @@
 					<div class="control-group">
 						<form:input path="plainTags" cssClass="input-block-level " placeholder="태그 - 공백 또는 쉼표로 구분 ex) javajigi, slipp" />
 					</div>
-					
+					<c:if test="${loginUser.facebookUser and empty question.questionId}">
+					<div class="control-group">
+						내 페이스북으로 질문을 보내겠습니까?&nbsp;&nbsp;<form:checkbox path="connected" />
+					</div>
+					</c:if>
 					<div class="pull-right">
 						<button id="confirmBtn" type="submit" class="btn btn-success">질문하기</button>
 					</div>

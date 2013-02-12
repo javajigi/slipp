@@ -9,6 +9,7 @@ import java.util.Set;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
@@ -91,6 +92,9 @@ public class Question implements HasCreatedAndUpdatedDate {
 
     @Column(name = "deleted", nullable = false)
     private boolean deleted = false;
+
+    @Embedded
+    private SnsConnection snsConnection = new SnsConnection();
 
     public Question() {
     }
@@ -270,6 +274,11 @@ public class Question implements HasCreatedAndUpdatedDate {
         Set<SocialUser> notifierUsers = newAnswers.findFacebookAnswerers();
         notifierUsers.add(this.writer);
         return Sets.difference(notifierUsers, Sets.newHashSet(loginUser));
+    }
+    
+    public SnsConnection connected(String postId) {
+        this.snsConnection = new SnsConnection(SnsType.valueOf(writer.getProviderId()), postId); 
+        return this.snsConnection;
     }
 
     /**
