@@ -8,6 +8,11 @@
 <link href="${url:resource('/stylesheets/wiki-imageupload-plugins.css')}" rel="stylesheet">
 <link href="${url:resource('/stylesheets/sh/shCoreDefault.css')}" rel="stylesheet">
 <link href="${url:resource('/stylesheets/sh/shThemeEclipse.css')}" rel="stylesheet">
+<meta property="og:type" content="article" />
+<meta property="og:title" content="${sf:h(question.title)}" />
+<meta property="og:site_name" content="SLiPP" />
+<meta property="og:url" content="${slippUrl}/questions/${question.questionId}" /> 
+<meta property="og:image" content="${slippUrl}${url:resource('/images/logo_slipp.png')}" />
 </head>
 <body>
 
