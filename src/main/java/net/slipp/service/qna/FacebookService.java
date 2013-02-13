@@ -9,6 +9,8 @@ import net.slipp.support.web.tags.SlippFunctions;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,26 +22,36 @@ import com.restfb.types.FacebookType;
 @Service
 @Transactional
 public class FacebookService {
-	private static final Logger logger = LoggerFactory.getLogger(FacebookService.class);
+	private static final Logger log = LoggerFactory.getLogger(FacebookService.class);
 	
 	private static final int DEFAULT_FACEBOOK_MESSAGE_LENGTH = 250;
 	
 	@Resource(name = "questionRepository")
 	private QuestionRepository questionRepository;
 	
+	@Value("${application.url}")
+	private String applicationUrl;
+	
+	@Async
 	public void sendToMessage(SocialUser loginUser, Long questionId) {
+	    log.debug("applicationUrl : {}", applicationUrl);
 		Question question = questionRepository.findOne(questionId);
 		String message = createFacebookMessage(question.getContents());
 		
 		FacebookClient facebookClient = new DefaultFacebookClient(loginUser.getAccessToken());
 		FacebookType response = facebookClient.publish("me/feed", FacebookType.class, 
+		    Parameter.with("link", createLink(questionId)),
 			Parameter.with("message", message));
 		String postId = response.getId();
-		logger.debug("connect post id : {}", postId);
+		log.debug("connect post id : {}", postId);
 		question.connected(postId);
 	}
 
-	private String createFacebookMessage(String contents) {
+	private String createLink(Long questionId) {
+        return String.format("%s/questions/%d", applicationUrl, questionId);
+    }
+
+    private String createFacebookMessage(String contents) {
 		String wikiContents = SlippFunctions.wiki(contents);
 		return SlippFunctions.stripTagsAndCut(wikiContents, DEFAULT_FACEBOOK_MESSAGE_LENGTH, "...");
 	}

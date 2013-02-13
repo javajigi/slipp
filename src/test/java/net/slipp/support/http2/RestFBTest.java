@@ -31,7 +31,8 @@ public class RestFBTest {
 	public void post() throws Exception {
 		String message = "글쓰기 테스트입니다.";
 		FacebookType response = dut.publish("me/feed", FacebookType.class, 
-			Parameter.with("message", message));
+		    Parameter.with("link", "http://www.slipp.net/questions/87"),
+		    Parameter.with("message", message));
 		String id = response.getId();
 		logger.debug("id : {}", id);
 		
