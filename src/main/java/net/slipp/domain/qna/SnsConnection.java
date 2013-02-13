@@ -14,7 +14,7 @@ public class SnsConnection {
 	@Column(name = "sns_type", nullable = true, updatable = false, columnDefinition = SnsType.COLUMN_DEFINITION)
 	private SnsType snsType;
 	
-	@Column(name = "post_id", nullable = true)
+	@Column(name = "post_id", length = 30, nullable = true)
 	private String postId;
 
 	public SnsConnection() {
