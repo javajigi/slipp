@@ -158,4 +158,19 @@ public class QuestionTest {
 		assertThat(java.getTaggedCount(), is(4));
 		assertThat(javascript.getTaggedCount(), is(3));
 	}
+	
+    @Test
+    public void connected() throws Exception {
+        SocialUser writer = new SocialUser(10);
+        writer.setProviderId("facebook");
+        dut = aQuestion()
+                .withWriter(writer)
+              .build();
+        
+        String postId = "123456";
+        SnsConnection actual = dut.connected(postId);
+
+        SnsConnection expected = new SnsConnection(SnsType.facebook, postId);
+        assertThat(actual, is(expected));
+    }
 }

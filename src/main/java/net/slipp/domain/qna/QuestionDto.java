@@ -9,6 +9,8 @@ public class QuestionDto {
     
     private String plainTags;
     
+    private boolean connected = false;
+    
     public QuestionDto() {
         
     }
@@ -54,6 +56,14 @@ public class QuestionDto {
 
     public void setPlainTags(String plainTags) {
         this.plainTags = plainTags;
+    }
+    
+    public void setConnected(boolean connected) {
+        this.connected = connected;
+    }
+    
+    public boolean isConnected() {
+        return this.connected;
     }
 
     @Override

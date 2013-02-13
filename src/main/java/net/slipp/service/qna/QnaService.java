@@ -25,110 +25,117 @@ import org.springframework.util.Assert;
 @Service("qnaService")
 @Transactional
 public class QnaService {
-	@Resource(name = "questionRepository")
-	private QuestionRepository questionRepository;
+    @Resource(name = "questionRepository")
+    private QuestionRepository questionRepository;
 
-	@Resource(name = "answerRepository")
-	private AnswerRepository answerRepository;
+    @Resource(name = "answerRepository")
+    private AnswerRepository answerRepository;
 
-	@Resource(name = "tagService")
-	private TagService tagService;
+    @Resource(name = "tagService")
+    private TagService tagService;
 
-	@Resource(name = "notificationService")
-	private NotificationService notificationService;
+    @Resource(name = "notificationService")
+    private NotificationService notificationService;
 
-	@Resource(name = "scoreLikeService")
-	private ScoreLikeService scoreLikeService;
+    @Resource(name = "scoreLikeService")
+    private ScoreLikeService scoreLikeService;
+    
+    @Resource(name = "facebookService")
+    private FacebookService facebookService;
 
-	public Question createQuestion(SocialUser loginUser, QuestionDto questionDto) {
-		Assert.notNull(loginUser, "loginUser should be not null!");
-		Assert.notNull(questionDto, "question should be not null!");
+    public Question createQuestion(SocialUser loginUser, QuestionDto questionDto) {
+        Assert.notNull(loginUser, "loginUser should be not null!");
+        Assert.notNull(questionDto, "question should be not null!");
 
-		Set<Tag> tags = tagService.processTags(questionDto.getPlainTags());
+        Set<Tag> tags = tagService.processTags(questionDto.getPlainTags());
 
-		Question newQuestion = new Question(loginUser, questionDto.getTitle(), questionDto.getContents(), tags);
-		Question savedQuestion = questionRepository.save(newQuestion);
-		return savedQuestion;
-	}
+        Question newQuestion = new Question(loginUser, questionDto.getTitle(), questionDto.getContents(), tags);
+        Question savedQuestion = questionRepository.save(newQuestion);
 
-	public Question updateQuestion(SocialUser loginUser, QuestionDto questionDto) {
-		Assert.notNull(loginUser, "loginUser should be not null!");
-		Assert.notNull(questionDto, "question should be not null!");
+        if (questionDto.isConnected()) {
+            facebookService.sendToMessage(loginUser, savedQuestion.getQuestionId());
+        }
+        return savedQuestion;
+    }
 
-		Question question = questionRepository.findOne(questionDto.getQuestionId());
+    public Question updateQuestion(SocialUser loginUser, QuestionDto questionDto) {
+        Assert.notNull(loginUser, "loginUser should be not null!");
+        Assert.notNull(questionDto, "question should be not null!");
 
-		Set<Tag> tags = tagService.processTags(questionDto.getPlainTags());
-		question.update(loginUser, questionDto.getTitle(), questionDto.getContents(), tags);
-		return question;
-	}
+        Question question = questionRepository.findOne(questionDto.getQuestionId());
 
-	public void deleteQuestion(SocialUser loginUser, Long questionId) {
-		Assert.notNull(loginUser, "loginUser should be not null!");
-		Assert.notNull(questionId, "questionId should be not null!");
+        Set<Tag> tags = tagService.processTags(questionDto.getPlainTags());
+        question.update(loginUser, questionDto.getTitle(), questionDto.getContents(), tags);
+        return question;
+    }
 
-		Question question = questionRepository.findOne(questionId);
-		question.delete(loginUser);
-	}
+    public void deleteQuestion(SocialUser loginUser, Long questionId) {
+        Assert.notNull(loginUser, "loginUser should be not null!");
+        Assert.notNull(questionId, "questionId should be not null!");
 
-	public Question showQuestion(Long id) {
-		Question question = questionRepository.findOne(id);
-		question.show();
+        Question question = questionRepository.findOne(questionId);
+        question.delete(loginUser);
+    }
 
-		return question;
-	}
+    public Question showQuestion(Long id) {
+        Question question = questionRepository.findOne(id);
+        question.show();
 
-	public Page<Question> findsByTag(String name, Pageable pageable) {
-		return questionRepository.findsByTag(name, pageable);
-	}
+        return question;
+    }
 
-	public Page<Question> findsQuestion(Pageable pageable) {
-		return questionRepository.findAll(QnaSpecifications.equalsIsDelete(false), pageable);
-	}
+    public Page<Question> findsByTag(String name, Pageable pageable) {
+        return questionRepository.findsByTag(name, pageable);
+    }
 
-	public Question findByQuestionId(Long id) {
-		return questionRepository.findOne(id);
-	}
+    public Page<Question> findsQuestion(Pageable pageable) {
+        return questionRepository.findAll(QnaSpecifications.equalsIsDelete(false), pageable);
+    }
 
-	public Answer findAnswerById(Long answerId) {
-		return answerRepository.findOne(answerId);
-	}
+    public Question findByQuestionId(Long id) {
+        return questionRepository.findOne(id);
+    }
 
-	public void createAnswer(SocialUser loginUser, Long questionId, Answer answer) {
-		Question question = questionRepository.findOne(questionId);
-		answer.writedBy(loginUser);
-		answer.answerTo(question);
-		answerRepository.save(answer);
-		notificationService.notifyToFacebook(loginUser, question, question.findNotificationUser(loginUser));
-	}
+    public Answer findAnswerById(Long answerId) {
+        return answerRepository.findOne(answerId);
+    }
 
-	public void updateAnswer(SocialUser loginUser, Answer answerDto) {
-		Answer answer = answerRepository.findOne(answerDto.getAnswerId());
-		if (!answer.isWritedBy(loginUser)) {
-			throw new AccessDeniedException(loginUser + " is not owner!");
-		}
-		answer.updateAnswer(answerDto);
-	}
+    public void createAnswer(SocialUser loginUser, Long questionId, Answer answer) {
+        Question question = questionRepository.findOne(questionId);
+        answer.writedBy(loginUser);
+        answer.answerTo(question);
+        answerRepository.save(answer);
+        notificationService.notifyToFacebook(loginUser, question, question.findNotificationUser(loginUser));
+    }
 
-	public void deleteAnswer(SocialUser loginUser, Long questionId, Long answerId) {
-		Assert.notNull(loginUser, "loginUser should be not null!");
-		Assert.notNull(questionId, "questionId should be not null!");
-		Assert.notNull(answerId, "answerId should be not null!");
+    public void updateAnswer(SocialUser loginUser, Answer answerDto) {
+        Answer answer = answerRepository.findOne(answerDto.getAnswerId());
+        if (!answer.isWritedBy(loginUser)) {
+            throw new AccessDeniedException(loginUser + " is not owner!");
+        }
+        answer.updateAnswer(answerDto);
+    }
 
-		Answer answer = answerRepository.findOne(answerId);
-		if (!answer.isWritedBy(loginUser)) {
-			throw new AccessDeniedException(loginUser + " is not owner!");
-		}
-		answerRepository.delete(answer);
-		Question question = questionRepository.findOne(questionId);
-		question.deAnswered();
-	}
+    public void deleteAnswer(SocialUser loginUser, Long questionId, Long answerId) {
+        Assert.notNull(loginUser, "loginUser should be not null!");
+        Assert.notNull(questionId, "questionId should be not null!");
+        Assert.notNull(answerId, "answerId should be not null!");
 
-	public void likeAnswer(SocialUser loginUser, Long answerId) {
-		if (!scoreLikeService.alreadyLikedAnswer(answerId, loginUser.getId())) {
-			scoreLikeService.saveLikeAnswer(answerId, loginUser.getId());
-			Answer answer = answerRepository.findOne(answerId);
-			answer.upRank();
-			answerRepository.save(answer);
-		}
-	}
+        Answer answer = answerRepository.findOne(answerId);
+        if (!answer.isWritedBy(loginUser)) {
+            throw new AccessDeniedException(loginUser + " is not owner!");
+        }
+        answerRepository.delete(answer);
+        Question question = questionRepository.findOne(questionId);
+        question.deAnswered();
+    }
+
+    public void likeAnswer(SocialUser loginUser, Long answerId) {
+        if (!scoreLikeService.alreadyLikedAnswer(answerId, loginUser.getId())) {
+            scoreLikeService.saveLikeAnswer(answerId, loginUser.getId());
+            Answer answer = answerRepository.findOne(answerId);
+            answer.upRank();
+            answerRepository.save(answer);
+        }
+    }
 }
