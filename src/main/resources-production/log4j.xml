@@ -11,7 +11,7 @@
 	</appender>
 	
 	<logger name="net.slipp">
-		<level value="WARN" />
+		<level value="INFO" />
 	</logger>
 	
     <logger name="org.hibernate">

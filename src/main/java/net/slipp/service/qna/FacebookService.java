@@ -43,12 +43,14 @@ public class FacebookService {
 		    Parameter.with("link", createLink(questionId)),
 			Parameter.with("message", message));
 		String postId = response.getId();
-		log.debug("connect post id : {}", postId);
+		log.info("connect post id : {}", postId);
 		question.connected(postId);
 	}
 
 	private String createLink(Long questionId) {
-        return String.format("%s/questions/%d", applicationUrl, questionId);
+	    String link = String.format("%s/questions/%d", applicationUrl, questionId);
+	    log.info("create link : {}", link);
+        return link;
     }
 
     private String createFacebookMessage(String contents) {
