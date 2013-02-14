@@ -11,7 +11,7 @@ public class SnsConnection {
 	private boolean connected;
 	
 	@Enumerated(EnumType.STRING)
-	@Column(name = "sns_type", nullable = true, updatable = false, columnDefinition = SnsType.COLUMN_DEFINITION)
+	@Column(name = "sns_type", nullable = true, columnDefinition = SnsType.COLUMN_DEFINITION)
 	private SnsType snsType;
 	
 	@Column(name = "post_id", length = 30, nullable = true)
