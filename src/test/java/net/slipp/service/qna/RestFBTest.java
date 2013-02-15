@@ -1,4 +1,4 @@
-package net.slipp.support.http2;
+package net.slipp.service.qna;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
