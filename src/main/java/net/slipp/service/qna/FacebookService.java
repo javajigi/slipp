@@ -34,7 +34,7 @@ public class FacebookService {
 	
 	@Async
 	public void sendToMessage(SocialUser loginUser, Long questionId) {
-	    log.debug("applicationUrl : {}", applicationUrl);
+	    log.info("questionId : {}", questionId);
 		Question question = questionRepository.findOne(questionId);
 		String message = createFacebookMessage(question.getContents());
 		

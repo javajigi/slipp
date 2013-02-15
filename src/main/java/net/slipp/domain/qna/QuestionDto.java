@@ -12,7 +12,6 @@ public class QuestionDto {
     private boolean connected = false;
     
     public QuestionDto() {
-        
     }
     
     public QuestionDto(String title, String contents, String plainTags) {
