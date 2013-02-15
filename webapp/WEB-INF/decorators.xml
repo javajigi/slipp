@@ -6,6 +6,7 @@
 		<pattern>/attachments*</pattern>
 		<pattern>/rss*</pattern>
 		<pattern>/wikis/preview*</pattern>
+		<pattern>/robots.txt</pattern>
 	</excludes>
 
 	<decorator name="default" page="default.jsp">
