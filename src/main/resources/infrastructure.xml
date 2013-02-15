@@ -35,5 +35,5 @@
 		p:url="${wiki.database.url}"
 		p:username="${wiki.database.username}"
 		p:password="${wiki.database.password}"
-	/>	
+	/>
 </beans>

@@ -54,11 +54,11 @@ public class QnaService {
         Set<Tag> tags = tagService.processTags(questionDto.getPlainTags());
 
         Question newQuestion = new Question(loginUser, questionDto.getTitle(), questionDto.getContents(), tags);
-        Question savedQuestion = questionRepository.save(newQuestion);
+        Question savedQuestion = questionRepository.saveAndFlush(newQuestion);
 
         if (questionDto.isConnected()) {
             log.info("firing sendMessageToFacebook!");
-            facebookService.sendToMessage(loginUser, savedQuestion.getQuestionId());
+            facebookService.sendToQuestionMessage(loginUser, savedQuestion.getQuestionId());
         }
         return savedQuestion;
     }
@@ -109,8 +109,11 @@ public class QnaService {
         Question question = questionRepository.findOne(questionId);
         answer.writedBy(loginUser);
         answer.answerTo(question);
-        answerRepository.save(answer);
+        Answer savedAnswer = answerRepository.saveAndFlush(answer);
         notificationService.notifyToFacebook(loginUser, question, question.findNotificationUser(loginUser));
+        if (answer.isConnected()) {
+        	facebookService.sendToAnswerMessage(loginUser, savedAnswer.getAnswerId());
+        }
     }
 
     public void updateAnswer(SocialUser loginUser, Answer answerDto) {

@@ -17,7 +17,8 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
     <import resource="infrastructure.xml" />
     
-	<jpa:repositories base-package="net.slipp.repository" />
+	<jpa:repositories base-package="net.slipp.repository" factory-class="net.slipp.support.jpa.SlippRepositoryFactoryBean">
+	</jpa:repositories>
 	
 	<context:component-scan	base-package="net.slipp.support.security" />
 	
