@@ -15,6 +15,8 @@ import net.slipp.repository.qna.QuestionRepository;
 import net.slipp.service.rank.ScoreLikeService;
 import net.slipp.service.tag.TagService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.AccessDeniedException;
@@ -25,6 +27,8 @@ import org.springframework.util.Assert;
 @Service("qnaService")
 @Transactional
 public class QnaService {
+    private static Logger log = LoggerFactory.getLogger(QnaService.class);
+    
     @Resource(name = "questionRepository")
     private QuestionRepository questionRepository;
 
@@ -53,6 +57,7 @@ public class QnaService {
         Question savedQuestion = questionRepository.save(newQuestion);
 
         if (questionDto.isConnected()) {
+            log.info("firing sendMessageToFacebook!");
             facebookService.sendToMessage(loginUser, savedQuestion.getQuestionId());
         }
         return savedQuestion;
