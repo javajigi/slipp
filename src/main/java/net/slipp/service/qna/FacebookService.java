@@ -2,8 +2,10 @@ package net.slipp.service.qna;
 
 import javax.annotation.Resource;
 
+import net.slipp.domain.qna.Answer;
 import net.slipp.domain.qna.Question;
 import net.slipp.domain.user.SocialUser;
+import net.slipp.repository.qna.AnswerRepository;
 import net.slipp.repository.qna.QuestionRepository;
 import net.slipp.support.web.tags.SlippFunctions;
 
@@ -29,22 +31,39 @@ public class FacebookService {
 	@Resource(name = "questionRepository")
 	private QuestionRepository questionRepository;
 	
+	@Resource(name = "answerRepository")
+	private AnswerRepository answerRepository;
+	
 	@Value("${application.url}")
 	private String applicationUrl;
 	
 	@Async
-	public void sendToMessage(SocialUser loginUser, Long questionId) {
+	public void sendToQuestionMessage(SocialUser loginUser, Long questionId) {
 	    log.info("questionId : {}", questionId);
 		Question question = questionRepository.findOne(questionId);
 		String message = createFacebookMessage(question.getContents());
 		
-		FacebookClient facebookClient = new DefaultFacebookClient(loginUser.getAccessToken());
+		String postId = sendMessageToFacebook(loginUser.getAccessToken(), createLink(question.getQuestionId()), message);
+		question.connected(postId);
+	}
+
+	private String sendMessageToFacebook(String accessToken, String link, String message) {
+		FacebookClient facebookClient = new DefaultFacebookClient(accessToken);
 		FacebookType response = facebookClient.publish("me/feed", FacebookType.class, 
-		    Parameter.with("link", createLink(questionId)),
+		    Parameter.with("link", link),
 			Parameter.with("message", message));
 		String postId = response.getId();
 		log.info("connect post id : {}", postId);
-		question.connected(postId);
+		return postId;
+	}
+	
+	@Async
+	public void sendToAnswerMessage(SocialUser loginUser, Long answerId) {
+		Answer answer = answerRepository.findOne(answerId);
+		Question question = answer.getQuestion();
+		String message = createFacebookMessage(answer.getContents());
+		
+		sendMessageToFacebook(loginUser.getAccessToken(), createLink(question.getQuestionId()), message);
 	}
 
 	private String createLink(Long questionId) {

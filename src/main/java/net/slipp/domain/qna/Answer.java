@@ -17,6 +17,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import net.slipp.domain.user.SocialUser;
 import net.slipp.support.jpa.CreatedAndUpdatedDateEntityListener;
@@ -42,6 +43,9 @@ public class Answer implements HasCreatedAndUpdatedDate, Comparable<Answer> {
 	@Lob
 	@Column(name = "contents", nullable = false)
 	private Collection<String> contentsHolder;
+	
+	@Transient
+	private boolean connected;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "created_date", nullable = false, updatable = false)
@@ -133,6 +137,14 @@ public class Answer implements HasCreatedAndUpdatedDate, Comparable<Answer> {
 	
 	public boolean isFacebookWriter() {
 		return writer.isFacebookUser();
+	}
+	
+	public void setConnected(boolean connected) {
+		this.connected = connected;
+	}
+	
+	public boolean isConnected() {
+		return connected;
 	}
 	
 	public void updateAnswer(Answer answerDto) {

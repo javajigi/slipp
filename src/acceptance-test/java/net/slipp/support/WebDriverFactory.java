@@ -11,7 +11,7 @@ public class WebDriverFactory {
 	public static WebDriver createWebDriver() {
     	WebDriver driver = null;
     	if (DEFAULT_BROWSER_TYPE == WebDriverType.CHROME) {
-    		System.setProperty("webdriver.chrome.driver", "D:\\develops\\chromedriver\\chromedriver.exe");
+    		System.setProperty("webdriver.chrome.driver", ChromWebDriverUtils.getChromeWebDriverPath());
     		driver = new ChromeDriver();
     	}
     	
