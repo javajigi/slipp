@@ -45,7 +45,7 @@
 						<fieldset>
 							<form:textarea path="contents"  cols="80" rows="5"/>
 							<c:if test="${loginUser.facebookUser}">
-							내 페이스북으로 질문을 보내겠습니까?&nbsp;&nbsp;<form:checkbox path="connected" />
+							내 페이스북으로 답변을 보내겠습니까?&nbsp;&nbsp;<form:checkbox path="connected" />
 							</c:if>
 							<div class="pull-right">
 								<button id="answerBtn" type="submit" class="btn btn-success">답변하기</button>
