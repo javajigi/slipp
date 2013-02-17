@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
@@ -61,6 +62,9 @@ public class Answer implements HasCreatedAndUpdatedDate, Comparable<Answer> {
 	@ManyToOne
 	@org.hibernate.annotations.ForeignKey(name = "fk_answer_parent_id")
 	private Question question;
+	
+    @Embedded
+    private SnsConnection snsConnection = new SnsConnection();
 	
 	public Answer() {
 	}
@@ -165,6 +169,11 @@ public class Answer implements HasCreatedAndUpdatedDate, Comparable<Answer> {
 		}
 		return false;
 	}
+	
+    public SnsConnection connected(String postId) {
+        this.snsConnection = new SnsConnection(SnsType.valueOf(writer.getProviderId()), postId); 
+        return this.snsConnection;
+    }
 	
 	@Override
 	public int compareTo(Answer o) {

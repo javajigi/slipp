@@ -5,11 +5,10 @@ import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
+import org.apache.commons.lang.StringUtils;
+
 @Embeddable
 public class SnsConnection {
-	@Column(name = "connected", nullable = false)
-	private boolean connected;
-	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "sns_type", nullable = true, columnDefinition = SnsType.COLUMN_DEFINITION)
 	private SnsType snsType;
@@ -18,17 +17,15 @@ public class SnsConnection {
 	private String postId;
 
 	public SnsConnection() {
-		this.connected = false;
 	}
 
 	public SnsConnection(SnsType snsType, String postId) {
-		this.connected = true;
 		this.snsType = snsType;
 		this.postId = postId;
 	}
 	
 	public boolean isConnected() {
-		return connected;
+		return !StringUtils.isBlank(postId);
 	}
 	
 	public SnsType getSnsType() {
@@ -43,7 +40,6 @@ public class SnsConnection {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (connected ? 1231 : 1237);
 		result = prime * result + ((postId == null) ? 0 : postId.hashCode());
 		result = prime * result + ((snsType == null) ? 0 : snsType.hashCode());
 		return result;
@@ -58,8 +54,6 @@ public class SnsConnection {
 		if (getClass() != obj.getClass())
 			return false;
 		SnsConnection other = (SnsConnection) obj;
-		if (connected != other.connected)
-			return false;
 		if (postId == null) {
 			if (other.postId != null)
 				return false;
@@ -72,6 +66,6 @@ public class SnsConnection {
 
 	@Override
 	public String toString() {
-		return "SnsConnection [connected=" + connected + ", snsType=" + snsType + ", postId=" + postId + "]";
+		return "SnsConnection [snsType=" + snsType + ", postId=" + postId + "]";
 	}
 }
