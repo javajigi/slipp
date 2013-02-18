@@ -112,6 +112,7 @@ public class QnaService {
         Answer savedAnswer = answerRepository.saveAndFlush(answer);
         notificationService.notifyToFacebook(loginUser, question, question.findNotificationUser(loginUser));
         if (answer.isConnected()) {
+            log.info("firing sendMessageToFacebook!");
         	facebookService.sendToAnswerMessage(loginUser, savedAnswer.getAnswerId());
         }
     }
