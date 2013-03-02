@@ -1,13 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/tags.jspf"%>
-<html>
 <head>
-<link href="${url:resource('/stylesheets/wiki-style.css')}" rel="stylesheet">
-<link href="${url:resource('/stylesheets/wiki-textile-style.css')}" rel="stylesheet">
-<link href="${url:resource('/stylesheets/wiki-imageupload-plugins.css')}" rel="stylesheet">
-<link href="${url:resource('/stylesheets/jquery.autocomplete.css')}" rel="stylesheet">
+	<link href="${url:resource('/stylesheets/wiki-style.css')}" rel="stylesheet">
+	<link href="${url:resource('/stylesheets/wiki-textile-style.css')}" rel="stylesheet">
+	<link href="${url:resource('/stylesheets/wiki-imageupload-plugins.css')}" rel="stylesheet">
+	<link href="${url:resource('/stylesheets/jquery.autocomplete.css')}" rel="stylesheet">
 </head>
-<body>
 
 <div class="section-qna">
 	<slipp:header type="1"/>
@@ -37,7 +35,7 @@
 					<div class="pull-right">
 						<button id="confirmBtn" type="submit" class="btn btn-success">질문하기</button>
 					</div>
-				</fieldset>				
+				</fieldset>
 			</form:form>
 		</div>
 		<div class="span3 qna-side">
@@ -52,6 +50,4 @@
 <script type="text/javascript"	src="${url:resource('/javascripts/qna/image.upload.js')}"></script>
 <script type="text/javascript" src="${url:resource('/javascripts/qna/qna-set.js')}"></script>
 <script type="text/javascript" src="${url:resource('/javascripts/qna/tagparser.js')}"></script>
-<script type="text/javascript" src="${url:resource('/javascripts/qna/form.js')}"></script>	
-</body>
-</html>
+<script type="text/javascript" src="${url:resource('/javascripts/qna/form.js')}"></script>

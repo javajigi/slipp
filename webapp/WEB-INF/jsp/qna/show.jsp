@@ -1,27 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/tags.jspf"%>
-<html>
 <head>
-<title>${sf:h(question.title)}</title>
-<link href="${url:resource('/stylesheets/wiki-style.css')}" rel="stylesheet">
-<link href="${url:resource('/stylesheets/wiki-textile-style.css')}" rel="stylesheet">
-<link href="${url:resource('/stylesheets/wiki-imageupload-plugins.css')}" rel="stylesheet">
-<link href="${url:resource('/stylesheets/sh/shCoreDefault.css')}" rel="stylesheet">
-<link href="${url:resource('/stylesheets/sh/shThemeEclipse.css')}" rel="stylesheet">
-<meta property="og:type" content="article" />
-<meta property="og:title" content="${sf:h(question.title)}" />
-<meta property="og:site_name" content="SLiPP" />
-<meta property="og:url" content="${slippUrl}/questions/${question.questionId}" /> 
-<meta property="og:image" content="${slippUrl}${url:resource('/images/logo_slipp.png')}" />
+	<title>${sf:h(question.title)}</title>
+	<link href="${url:resource('/stylesheets/wiki-style.css')}" rel="stylesheet">
+	<link href="${url:resource('/stylesheets/wiki-textile-style.css')}" rel="stylesheet">
+	<link href="${url:resource('/stylesheets/wiki-imageupload-plugins.css')}" rel="stylesheet">
+	<link href="${url:resource('/stylesheets/sh/shCoreDefault.css')}" rel="stylesheet">
+	<link href="${url:resource('/stylesheets/sh/shThemeEclipse.css')}" rel="stylesheet">
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="${sf:h(question.title)}" />
+	<meta property="og:site_name" content="SLiPP" />
+	<meta property="og:url" content="${slippUrl}/questions/${question.questionId}" />
+	<meta property="og:image" content="${slippUrl}${url:resource('/images/logo_slipp.png')}" />
 </head>
-<body>
 
 <div class="section-qna">
 	<slipp:header type="1"/>
 	<div class="row-fluid">
 		<div class="span9 qna-view">
 			<slipp:show question="${question}"/>
-		
+
 			<div class="qna-comment">
 				<p class="count"><strong>${question.answerCount}</strong>개의 답변</p>
 				<ul class="list">
@@ -69,5 +67,3 @@
 <script type="text/javascript" src="${url:resource('/javascripts/qna/image.upload.js')}"></script>
 <script type="text/javascript" src="${url:resource('/javascripts/qna/tagparser.js')}"></script>
 <script type="text/javascript" src="${url:resource('/javascripts/qna/show.js')}"></script>
-</body>
-</html>

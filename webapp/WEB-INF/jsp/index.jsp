@@ -1,11 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
-%><%@include file="/WEB-INF/jsp/include/tags.jspf"
-%><html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>SLiPP</title>
-</head>
-<body>
+%><%@ include file="/WEB-INF/jsp/include/tags.jspf" %>
 
 <div class="section-main row-fluid">
 	<section class="span8">
@@ -26,7 +20,7 @@
 									<ul>
 									<c:forEach items="${each.denormalizedTags}" var="tag">
 										<li>
-											<a href="/questions/tagged/${tag}" class="tag">${tag}</a>	
+											<a href="/questions/tagged/${tag}" class="tag">${tag}</a>
 										</li>
 									</c:forEach>
 									</ul>
@@ -40,7 +34,7 @@
 								<div class="auth-info">
 									<a href="${each.writer.profileUrl}" class="author">${each.writer.userId}</a>
 									<span class="time">
-										<fmt:formatDate value="${each.createdDate}" pattern="yyyy-MM-dd HH:mm" />  
+										<fmt:formatDate value="${each.createdDate}" pattern="yyyy-MM-dd HH:mm" />
 									</span>
 								</div>
 							</div>
@@ -63,8 +57,8 @@
 		<h1><a href="/wiki">Blog</a></h1>
 		<div class="forumList">
 		<c:forEach items="${pages}" var="page">
-			<div class="nickArea"> 
-				<p class="regDate">${page.creationDate}</p> 
+			<div class="nickArea">
+				<p class="regDate">${page.creationDate}</p>
 			</div>
 			<div class="cont">
 				<strong class="subject"><a href="/wiki/pages/viewpage.action?pageId=${page.pageId}">${page.title}</a></strong>
@@ -77,8 +71,5 @@
 				<a href="http://feeds.feedburner.com/slipp"><img src="http://feeds.feedburner.com/~fc/slipp?bg=99CCFF&amp;fg=444444&amp;anim=0" height="26" width="88" style="border:0" alt="" /></a>
 			</div>
 		</div>
-	</section>		
+	</section>
 </div>
-
-</body>
-</html>

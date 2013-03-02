@@ -1,9 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/tags.jspf"%>
-<html>
-<head>
-</head>
-<body>
 
 <div class="section-qna">
 	<h1 class="hidden">QnA</h1>
@@ -38,11 +34,11 @@
 							<div class="auth-info">
 								<a href="${each.writer.profileUrl}" class="author">${each.writer.userId}</a>
 								<span class="time">
-									<fmt:formatDate value="${each.createdDate}" pattern="yyyy-MM-dd HH:mm" />  
+									<fmt:formatDate value="${each.createdDate}" pattern="yyyy-MM-dd HH:mm" />
 								</span>
 							</div>
 						</div>
-					</div>					
+					</div>
 				</li>
 			</c:forEach>
 			</ul>
@@ -58,6 +54,3 @@
 		</div>
 	</div>
 </div>
-
-</body>
-</html>
