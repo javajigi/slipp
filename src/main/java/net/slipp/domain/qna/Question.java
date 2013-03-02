@@ -310,6 +310,18 @@ public class Question implements HasCreatedDate {
         return sortAnswers.get(0);
     }
     
+	public void migrateUpdateDateAndLatestParticipant() {
+		if (Iterables.isEmpty(getAnswers())) {
+			this.updatedDate = this.createdDate;
+			this.latestParticipant = this.writer;
+			return;
+		}
+		
+		Answer answer = Iterables.getLast(getAnswers());
+		this.updatedDate = answer.getCreatedDate();
+		this.latestParticipant = answer.getWriter();
+	}
+    
     @Override
     public String toString() {
         return "Question [questionId=" + questionId + ", writer=" + writer + ", title=" + title + ", contentsHolder="
