@@ -32,7 +32,7 @@ public class QnAAT extends AbstractATTest {
     }
     
     @Test
-    public void 정상적으로_수정() {
+    public void update_question_success() {
         loginToFacebook(1);
         QuestionPage questionPage = createQuestion(questionFixture);
         QuestionFormPage qnaFormPage = questionPage.goToUpdatePage();

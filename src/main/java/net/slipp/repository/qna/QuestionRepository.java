@@ -10,7 +10,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface QuestionRepository extends SlippCommonRepository<Question, Long>{
-
 	@Query("SELECT q from Question q JOIN q.tags t where t.name = :name")
 	Page<Question> findsByTag(@Param("name") String name, Pageable pageable);
 
