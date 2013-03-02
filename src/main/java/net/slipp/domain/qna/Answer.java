@@ -128,7 +128,7 @@ public class Answer implements HasCreatedAndUpdatedDate, Comparable<Answer> {
 
 	public void answerTo(Question question) {
 		this.question = question;
-		question.newAnswered();
+		question.newAnswered(this);
 	}
 
 	public void writedBy(SocialUser user) {

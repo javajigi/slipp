@@ -59,7 +59,9 @@
 		
 	<bean id="socialUserService" class="net.slipp.service.user.SocialUserService" />
 		
-	<bean id="slippUserDetailsService" class="net.slipp.social.security.SlippUserDetailsService" />
+	<bean id="slippUserDetailsService" class="net.slipp.social.security.SlippUserDetailsService" 
+		p:adminUsers="자바지기:eclipse4j"
+	/>
 	
 	<bean id="signInAdapter" class="net.slipp.social.security.SlippSecuritySignInAdapter" />
 </beans>

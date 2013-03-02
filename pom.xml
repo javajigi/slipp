@@ -367,7 +367,8 @@
 						<phase>process-test-classes</phase>
 						<configuration>
 							<target>
-								<chmod file="target/test-classes/chromedriver/chromedriver-mac" perm="755" />
+								<chmod file="target/test-classes/chromedriver/chromedriver-mac"
+									perm="755" />
 							</target>
 						</configuration>
 						<goals>
@@ -424,6 +425,9 @@
 					<url>${database.url}</url>
 					<username>${database.username}</username>
 					<password>${database.password}</password>
+					<password>${database.password}</password>
+					<createSql>CREATE DATABASE slipp DEFAULT CHARACTER SET utf8 COLLATE
+						utf8_general_ci</createSql>
 				</configuration>
 				<dependencies>
 					<dependency>

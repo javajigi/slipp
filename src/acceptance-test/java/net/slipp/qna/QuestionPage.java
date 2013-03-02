@@ -85,4 +85,9 @@ public class QuestionPage {
         String answerBest = driver.findElement(By.cssSelector("span.answer-best")).getText();
         assertThat(answerBest, is("best"));
     }
+
+	public QuestionsPage goToQuestionsPage() {
+		driver.findElement(By.linkText("목록으로")).click();
+		return new QuestionsPage(driver);
+	}
 }
