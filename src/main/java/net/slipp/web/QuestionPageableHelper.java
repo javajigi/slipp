@@ -9,7 +9,7 @@ import org.springframework.data.domain.Sort.Direction;
 
 public class QuestionPageableHelper {
 	public static Pageable createPageable(Integer currentPage, Integer pageSize) {
-		Sort sort = new Sort(Direction.DESC, Question_.createdDate.getName());
+		Sort sort = new Sort(Direction.DESC, Question_.updatedDate.getName());
 		return new PageRequest(currentPage - 1, pageSize, sort);
 	}
 }
