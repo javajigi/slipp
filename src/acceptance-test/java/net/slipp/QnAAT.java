@@ -26,7 +26,7 @@ public class QnAAT extends AbstractATTest {
     }
     
     @Test
-    public void 질문이_정상적으로_등록() {
+    public void create_question_success() {
     	loginToFacebook(1);
     	createQuestion(questionFixture);
     }
