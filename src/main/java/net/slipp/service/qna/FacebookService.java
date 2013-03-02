@@ -59,6 +59,7 @@ public class FacebookService {
 	
 	@Async
 	public void sendToAnswerMessage(SocialUser loginUser, Long answerId) {
+	    log.info("answerId : {}", answerId);
 		Answer answer = answerRepository.findOne(answerId);
 		Question question = answer.getQuestion();
 		String message = createFacebookMessage(answer.getContents());

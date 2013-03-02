@@ -1,11 +1,12 @@
 package net.slipp.web.qna;
 
+import static net.slipp.web.QuestionPageableHelper.*;
+
 import javax.annotation.Resource;
 
 import net.slipp.domain.qna.Answer;
 import net.slipp.domain.qna.Question;
 import net.slipp.domain.qna.QuestionDto;
-import net.slipp.domain.qna.Question_;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.service.qna.QnaService;
 import net.slipp.service.tag.TagService;
@@ -13,10 +14,6 @@ import net.slipp.support.web.argumentresolver.LoginUser;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,15 +39,9 @@ public class QuestionController {
 	public String index(Integer page, Model model) {
 		page = revisedPage(page);
 		logger.debug("currentPage : {}", page);
-		model.addAttribute("questions", qnaService.findsQuestion(createPageable(page)));
+		model.addAttribute("questions", qnaService.findsQuestion(createPageable(page, DEFAULT_PAGE_SIZE)));
 		model.addAttribute("tags", tagService.findPooledTags());
 		return "qna/list";
-	}
-
-	private Pageable createPageable(Integer page) {
-		Sort sort = new Sort(Direction.DESC, Question_.createdDate.getName());
-		Pageable pageable = new PageRequest(page - 1, DEFAULT_PAGE_SIZE, sort);
-		return pageable;
 	}
 
 	@RequestMapping("/form")
@@ -105,7 +96,7 @@ public class QuestionController {
 	public String listByTagged(@PathVariable String name, Integer page, Model model) {
 		page = revisedPage(page);
 		model.addAttribute("currentTag", tagService.findTagByName(name));
-		model.addAttribute("questions", qnaService.findsByTag(name, createPageable(page)));
+		model.addAttribute("questions", qnaService.findsByTag(name, createPageable(page, DEFAULT_PAGE_SIZE)));
 		model.addAttribute("tags", tagService.findPooledTags());
 		return "qna/list";
 	}

@@ -83,10 +83,8 @@ public class QnaService {
     }
 
     public Question showQuestion(Long id) {
-        Question question = questionRepository.findOne(id);
-        question.show();
-
-        return question;
+    	questionRepository.updateShowCount(id);
+        return questionRepository.findOne(id);
     }
 
     public Page<Question> findsByTag(String name, Pageable pageable) {
@@ -112,6 +110,7 @@ public class QnaService {
         Answer savedAnswer = answerRepository.saveAndFlush(answer);
         notificationService.notifyToFacebook(loginUser, question, question.findNotificationUser(loginUser));
         if (answer.isConnected()) {
+            log.info("firing sendAnswerMessageToFacebook!");
         	facebookService.sendToAnswerMessage(loginUser, savedAnswer.getAnswerId());
         }
     }
