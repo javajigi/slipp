@@ -8,6 +8,7 @@ import net.slipp.qna.IndexPage;
 import net.slipp.qna.QuestionFixture;
 import net.slipp.qna.QuestionFormPage;
 import net.slipp.qna.QuestionPage;
+import net.slipp.qna.QuestionsPage;
 import net.slipp.support.AbstractATTest;
 
 import org.junit.After;
@@ -26,13 +27,13 @@ public class QnAAT extends AbstractATTest {
     }
     
     @Test
-    public void 질문이_정상적으로_등록() {
+    public void create_question_success() {
     	loginToFacebook(1);
     	createQuestion(questionFixture);
     }
     
     @Test
-    public void 정상적으로_수정() {
+    public void update_question_success() {
         loginToFacebook(1);
         QuestionPage questionPage = createQuestion(questionFixture);
         QuestionFormPage qnaFormPage = questionPage.goToUpdatePage();
@@ -57,7 +58,7 @@ public class QnAAT extends AbstractATTest {
     }
     
     @Test
-	public void 답변이_정상적으로_등록() throws Exception {
+	public void create_answer() throws Exception {
     	loginToFacebook(1);
     	createQuestion(questionFixture);
     	loginToAnotherUser(2);
@@ -65,7 +66,26 @@ public class QnAAT extends AbstractATTest {
 	}
     
     @Test
-	public void 답변_수정() throws Exception {
+	public void question_list_when_create_answer() throws Exception {
+    	loginToFacebook(1);
+    	String firstTitle = "this is first question.";
+    	questionFixture.setTitle(firstTitle);
+    	createQuestion(questionFixture);
+    	indexPage.goIndexPage();
+    	String secondTitle = "this is second question.";
+    	questionFixture.setTitle(secondTitle);
+    	createQuestion(questionFixture);
+    	
+    	LoginUser loginUser = loginToAnotherUser(2);
+    	QuestionPage questionPage = answerToQuestion(1);
+    	QuestionsPage questionsPage = questionPage.goToQuestionsPage();
+    	questionsPage.verifyFirstTitle(firstTitle);
+    	questionsPage.verifyFirstNickName(loginUser.getNickName());
+    	questionsPage.verifyFirstAnswerCount(1);
+	}
+    
+    @Test
+	public void update_answer() throws Exception {
     	loginToFacebook(1);
     	createQuestion(questionFixture);
     	loginToAnotherUser(2);
@@ -90,18 +110,18 @@ public class QnAAT extends AbstractATTest {
         questionPage.verifyLikeCount(1);
         
     	logout();
-    	indexPage.goTopQuestion();
+    	indexPage.goToQuestion(0);
     	questionPage.likeAnswer();
     	verifyLoginPage();
 	}
 
-    private void loginToAnotherUser(int userNo) {
+    private LoginUser loginToAnotherUser(int userNo) {
         logout();
-        loginToFacebook(userNo);
+        return loginToFacebook(userNo);
     }
     
     @Test
-    public void 베스트_답변() throws Exception {
+    public void best_answer() throws Exception {
         loginToFacebook(1);
         createQuestion(questionFixture);
         loginToAnotherUser(2);
@@ -116,7 +136,7 @@ public class QnAAT extends AbstractATTest {
 
     private QuestionPage likeAnswer(int userNo, int likeCount) {
         loginToAnotherUser(userNo);
-        QuestionPage questionPage = indexPage.goTopQuestion();
+        QuestionPage questionPage = indexPage.goToQuestion(0);
         questionPage = questionPage.likeAnswer();
         questionPage.verifyLikeCount(likeCount);
         return questionPage;
@@ -125,14 +145,18 @@ public class QnAAT extends AbstractATTest {
 	private void verifyLoginPage() {
 		assertThat(driver.getTitle(), is("로그인 :: SLiPP"));
 	}
-
-	private QuestionPage answerToQuestion() {
+	
+	private QuestionPage answerToQuestion(int index) {
 		String answer = "정확히 내가 바라는 답변이다.";
-    	QuestionPage questionPage = indexPage.goTopQuestion();
+    	QuestionPage questionPage = indexPage.goToQuestion(index);
     	questionPage.answer(answer);
     	questionPage.verifyAnswer(answer);
     	questionPage.verifyAnswerCount("1");
     	return questionPage;
+	}
+
+	private QuestionPage answerToQuestion() {
+		return answerToQuestion(0);
 	}
 
     
@@ -143,15 +167,21 @@ public class QnAAT extends AbstractATTest {
         return questionPage;
 	}
     
-    private void loginToFacebook(int number) {
+    private LoginUser loginToFacebook(int number) {
         indexPage = new IndexPage(driver);
-        String email = environment.getProperty("facebook.email" + number);
-        String password = environment.getProperty("facebook.password" + number);
-        String nickName = "자바지기";
-        if (number > 1) {
-        	nickName = nickName + number;
-        }
-        indexPage = indexPage.loginToFacebook(email, password, nickName);
+        LoginUser loginUser = getLoginUser(number);
+        indexPage = indexPage.loginToFacebook(loginUser);
+        return loginUser;
+    }
+    
+    private LoginUser getLoginUser(int number) {
+    	  String email = environment.getProperty("facebook.email" + number);
+          String password = environment.getProperty("facebook.password" + number);
+          String nickName = "자바지기";
+          if (number > 1) {
+          	nickName = nickName + number;
+          }
+          return new LoginUser(email, password, nickName);
     }
     
     @After
