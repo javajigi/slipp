@@ -121,29 +121,6 @@ public class QuestionTest {
 	}
 	
 	@Test
-	public void migrate_update_date_and_lastest_participant() throws Exception {
-		SocialUser writer1 = new SocialUser(10);
-		Question dut = aQuestion()
-				.withWriter(writer1)
-				.build();
-		dut.migrateUpdateDateAndLatestParticipant();
-		assertThat(dut.getLatestParticipant(), is(writer1));
-		SocialUser writer2 = new SocialUser(11);
-		Answer answer = anAnswer().with(writer2).build();
-		SocialUser writer3 = new SocialUser(12);
-		Answer answer2 = anAnswer().with(writer3).build();
-		
-		dut = aQuestion()
-				.withWriter(writer1)
-				.withAnswer(answer)
-				.withAnswer(answer2)
-				.build();
-		dut.migrateUpdateDateAndLatestParticipant();
-		
-		assertThat(dut.getLatestParticipant(), is(writer3));
-	}
-
-	@Test
 	public void 질문을_삭제한다() throws Exception {
 		Tag java = aTag().withName("java").build();
 		SocialUser writer = new SocialUser();

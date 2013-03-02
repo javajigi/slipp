@@ -1,10 +1,7 @@
 package net.slipp.service.qna;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
-import net.slipp.domain.qna.Question;
 import net.slipp.repository.qna.QuestionRepository;
 
 import org.springframework.stereotype.Service;
@@ -16,10 +13,4 @@ public class MigrationService {
 	@Resource(name = "questionRepository")
 	private QuestionRepository questionRepository;
 	
-	public void updateDateAndLatestParticipant() {
-		List<Question> questions = questionRepository.findAll();
-		for (Question question : questions) {
-			question.migrateUpdateDateAndLatestParticipant();
-		}
-	}
 }

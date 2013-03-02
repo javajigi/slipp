@@ -12,11 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MigrationsController {
 	@Resource(name = "migrationService")
 	private MigrationService migrationService;
-
 	
-	@RequestMapping("/latestparticipant")
-	public String updateDateAndLatestParticipant() {
-		migrationService.updateDateAndLatestParticipant();
+	@RequestMapping("")
+	public String index() {
 		return "redirect:/";
 	}
 }
