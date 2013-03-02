@@ -83,10 +83,8 @@ public class QnaService {
     }
 
     public Question showQuestion(Long id) {
-        Question question = questionRepository.findOne(id);
-        question.show();
-
-        return question;
+    	questionRepository.updateShowCount(id);
+        return questionRepository.findOne(id);
     }
 
     public Page<Question> findsByTag(String name, Pageable pageable) {
