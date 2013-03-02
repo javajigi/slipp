@@ -2,6 +2,7 @@ package net.slipp.qna;
 
 import java.util.List;
 
+import net.slipp.LoginUser;
 import net.slipp.user.FacebookPage;
 import net.slipp.user.GooglePage;
 import net.slipp.user.TwitterPage;
@@ -19,9 +20,13 @@ public class IndexPage {
 	public IndexPage(WebDriver driver) {
 		this.driver = driver;
 	}
-
-	public IndexPage loginToFacebook(String username, String password, String nickName) {
-		log.debug("username : {}", username);
+	
+	public IndexPage loginToFacebook(String email, String password, String nickName) {
+		return loginToFacebook(new LoginUser(email, password, nickName));
+	}
+	
+	public IndexPage loginToFacebook(LoginUser loginUser) {
+		log.debug("loginUser : {}", loginUser);
 		
 		driver.findElement(By.cssSelector(".loginBtn > a")).click();
 		driver.findElement(By.cssSelector("input[value='페이스북 계정으로 로그인']")).click();
@@ -30,7 +35,7 @@ public class IndexPage {
 		}
 
 		FacebookPage facebookPage = new FacebookPage(driver);
-        return facebookPage.login(username, password, nickName);
+        return facebookPage.login(loginUser);
 	}
 	
 	public IndexPage loginToGoogle(String username, String password) {
@@ -80,8 +85,14 @@ public class IndexPage {
 		return new QuestionsPage(driver);
 	}
 	
-	public QuestionPage goTopQuestion() {
-		driver.findElement(By.cssSelector("div.main > strong.subject > a")).click();
+	public IndexPage goIndexPage() {
+		driver.findElement(By.cssSelector("a.brand")).click();
+		return new IndexPage(driver);
+	}
+	
+	public QuestionPage goToQuestion(int index) {
+		List<WebElement> questions = driver.findElements(By.cssSelector("div.main > strong.subject > a"));
+		questions.get(index).click();
 		return new QuestionPage(driver);
 	}
 }
