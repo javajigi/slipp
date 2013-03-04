@@ -41,7 +41,9 @@ public class FacebookService {
 	public void sendToQuestionMessage(SocialUser loginUser, Long questionId) {
 	    log.info("questionId : {}", questionId);
 		Question question = questionRepository.findOne(questionId);
+		log.info("question : {}", question);
 		String message = createFacebookMessage(question.getContents());
+		log.info("message : {}", message);
 		
 		String postId = sendMessageToFacebook(loginUser.getAccessToken(), createLink(question.getQuestionId()), message);
 		question.connected(postId);
@@ -61,8 +63,10 @@ public class FacebookService {
 	public void sendToAnswerMessage(SocialUser loginUser, Long answerId) {
 	    log.info("answerId : {}", answerId);
 		Answer answer = answerRepository.findOne(answerId);
+		log.info("answer : {}", answer);
 		Question question = answer.getQuestion();
 		String message = createFacebookMessage(answer.getContents());
+		log.info("message : {}", message);
 		
 		String postId = sendMessageToFacebook(loginUser.getAccessToken(), createLink(question.getQuestionId()), message);
 		answer.connected(postId);
