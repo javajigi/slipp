@@ -4,54 +4,88 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title><decorator:title default="SLiPP"/></title>
 <link rel="shortcut icon" type="image/x-icon" href="${url:resource('/images/favicon.ico')}">
-<link href="${url:resource('/stylesheets/bootstrap.css')}" rel="stylesheet">
-<style>
-	body { padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */ }
-</style>
-<link href="${url:resource('/stylesheets/bootstrap-responsive.css')}" rel="stylesheet">
+<link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
 <link href="${url:resource('/stylesheets/slipp.css')}" rel="stylesheet">
 <!--[if lt IE 9]>
 	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
-<script src="${url:resource('/javascripts/bootstrap.min.js')}"></script>
 <decorator:head />
 </head>
-<body>
 
-<div class="navbar navbar-fixed-top">
-	<div class="navbar-inner">
+<body>
+<div class="wrapper">
+	<header class="header" role="banner">
 		<div class="container">
-			<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</a>
-			<a class="brand" href="/"><abbr title="Sustainable Life, Programming, Programmer">SLiPP</abbr><span class="sub"> - 지속가능한 삶, 프로그래밍, 프로그래머</span></a>
-			<div class="nav-collapse">
-				<ul class="nav nav-pills pull-right">
-					<li><a href="/questions">QnA</a></li>
-					<li><a href="/wiki">Wiki</a></li>
-					<li><a href="https://github.com/javajigi/slipp/issues" target="_blank">Ideas&amp;Bugs</a></li>
-					<li><a href="/code">Code</a></li>
-					<li><a href="/about">About</a></li>
+			<h1 class="logo">
+				<a href="/">SLiPP</a>
+			</h1>
+			<nav class="site-nav">
+				<ul>
+					<li>
+						<a href="/questions"><i class="icon-list"></i> <span class="text">글목록</span></a>
+					</li>
+					<li>
+						<a href="/questions/form"><i class="icon-write"></i> <span class="text">새글쓰기</span></a>
+					</li>
+				</ul>
+			</nav>
+			<form class="site-search" action="/search">
+				<fieldset>
+					<i class="icon-search"></i>
+					<input type="search" class="inp-search" name="q" placeholder="search" />
+				</fieldset>
+			</form>
+			<nav class="user-menu">
+				<ul role="menu">
 					<sec:authorize access="!hasRole('ROLE_USER')">
-					<li class="active loginBtn"><a href="/login">로그인</a></li>
+					<li>
+						<a href="/login" class="link-loginout"><span class="text">LogIn</span> <i class="icon-loginout"></i></a>
+					</li>
 					</sec:authorize>
 					<sec:authorize access="hasRole('ROLE_USER')">
-					<li class="active logoutBtn"><a href="/logout">로그아웃</a></li>
+					<li class="user-info">
+						<img class="user-thumb" src="//graph.facebook.com/1701115026/picture" width="24" height="24" alt="" />
+						<span class="user-name">진우</span>
+					</li>
+					<li>
+						<a href="/logout" class="link-loginout"><span class="text">LogOut</span> <i class="icon-loginout"></i></a>
+					</li>
 					</sec:authorize>
 				</ul>
-			</div>
+			</nav>
+		</div>
+	</header>
+	<div class="content" role="main">
+		<div class="container">
+			<decorator:body/>
 		</div>
 	</div>
-</div>
-<div class="container">
-	<decorator:body/>
+	<footer class="footer">
+		<div class="container">
+			<nav class="foot-nav">
+				<ul role="menu">
+					<li>
+						<a href="/about">About</a>
+					</li>
+					<li>
+						<a href="/code">Code</a>
+					</li>
+					<li>
+						<a href="/wiki">Wiki</a>
+					</li>
+					<li>
+						<a href="https://github.com/javajigi/slipp/issues" target="_blank">Ideas&amp;Bugs</a>
+					</li>
+				</ul>
+			</nav>
+			<p class="footer-text">SLiPP - 지속가능한 삷, 프로그래밍, 프로그래머</p>
+		</div>
+	</footer>
 </div>
 
 <script type="text/javascript">

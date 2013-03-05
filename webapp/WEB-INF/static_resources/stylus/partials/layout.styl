@@ -1,0 +1,162 @@
+// @media desktop
+// 	body
+// 		padding-top: 50px;
+
+.container
+	width: 980px;
+	margin: 0 auto;
+	clearfix();
+	@media not-desktop
+		width: 100%;
+
+.header
+	position: relative;
+	height: 40px;
+	background: #ededed;
+	border-bottom: 1px solid #ddd;
+	// @media desktop
+	// 	position: fixed;
+	// 	z-index: zIndex-floatingBar;
+	// 	top: 0;
+	// 	left: 0;
+	// 	width: 100%;
+	// 	box-shadow: 0 0 2em rgba(0, 0, 0, .2);
+	@media phone
+		text-align: right;
+	.logo
+		float: left;
+		margin: 0;
+		font-family: 'Oswald', sans-serif;
+		a
+			display: block;
+			width: 100px;
+			height: 50px;
+			// border-radius: 0 0 10px 10px;
+			text-align: center;
+			font-size: 26px;
+			line-height: 50px;
+			color: #fff;
+			background-color: #000;
+			&:hover,
+			&:focus
+				text-decoration: none;
+				background-color: #D58733;
+				outline: none;
+	nav
+		overflow: hidden;
+		height: 40px;
+		font-size: 14px;
+		line-height: 42px;
+		ul
+			margin: 0;
+			padding: 0;
+		li
+			float: left;
+			@media phone
+				float: none;
+				display: inline-block;
+		a
+			display: inline-block;
+			height: 40px;
+			padding-left: 1em;
+			padding-right: 1em;
+			font-weight: bold;
+			color: #333;
+			&:hover,
+			&:focus
+				text-decoration: none;
+				color: #000;
+				background-color: #fff;
+				outline: none;
+	.site-nav
+		float: left;
+		@media phone
+			float: none;
+			display: inline-block;
+			margin-left: 0;
+		margin-left: 2em;
+		border-left: 1px solid #ddd;
+		box-shadow: inset 1px 0 0 #fff;
+		li
+			border-right: 1px solid #ddd;
+			box-shadow: 1px 0 0 #fff;
+		.text
+			@media phone
+				display: none;
+		.icon-list
+			display: none;
+			@media phone
+				display: inline-block;
+	.site-search
+		float: left;
+		margin-left: 1em;
+		line-height: 42px;
+		@media phone
+			float: none;
+			position: absolute;
+			right: 0;
+			bottom: -60px;
+		.inp-search
+			width: 10em;
+			height: 1.8em;
+			margin-left: .4em;
+			border-radius: 2px;
+			border: 2px solid #ddd;
+			&:focus
+				outline: none;
+				border-color: #AAD2F7;
+	.user-menu
+		float: right;
+		@media phone
+			float: none;
+			display: inline-block;
+		li
+			border-right: 1px solid #ddd;
+			box-shadow: 1px 0 0 #fff;
+		.user-info
+			padding-left: 1em;
+			padding-right: 1em;
+			@media phone
+				padding-left: .4em;
+				padding-right: .4em;
+		.user-thumb
+			border-radius: 3px;
+			margin-right: .5em;
+			@media phone
+				margin-right: .2em;
+		.link-loginout
+			padding-left: .8em;
+			padding-right: .6em;
+			font-size: .8em;
+			@media phone
+				padding-left: 1em;
+				padding-right: 1em;
+			.text
+				@media phone
+					display: none;
+
+.footer
+	position: relative;
+	margin-top: 80px;
+	padding: 1.5em 0 3em;
+	border-top: 1px solid #ddd;
+	background-color: #efefef;
+	text-align: center;
+	.foot-nav
+		ul
+			margin: 0;
+			padding: 0;
+		li
+			display: inline-block;
+			&:before
+				content:'\b7'; // mid dot
+				padding-left: .5em;
+				padding-right: .5em;
+			&:first-child
+				&:before
+					display: none;
+		a
+			color: #000;
+	.footer-text
+		color: #999;
+		font-weight: bold;

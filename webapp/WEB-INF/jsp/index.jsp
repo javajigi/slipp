@@ -1,11 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
 %><%@ include file="/WEB-INF/jsp/include/tags.jspf" %>
 
-<div class="section-main row-fluid">
+<section class="section-main">
 	<section class="span8">
 		<div class="qna">
-			<h1><a href="/questions">QnA</a></h1>
-			<a id="questionBtn" href="/questions/form" class="btn btn-primary btn-large btn-question">질문하기</a>
+			<h1>최신글들</h1>
 			<div class="qna-list">
 				<h2 class="hidden">list</h2>
 				<ul class="list">
@@ -28,14 +27,15 @@
 							</div>
 							<div class="sub">
 								<div class="reply">
-									<i class="symbol" title="댓글">R</i>
+									<i class="icon-reply" title="댓글"></i>
 									<span class="point">${each.answerCount}</span>
 								</div>
 								<div class="auth-info">
-									<a href="${each.writer.profileUrl}" class="author">${each.writer.userId}</a>
+									latest:
 									<span class="time">
 										<fmt:formatDate value="${each.createdDate}" pattern="yyyy-MM-dd HH:mm" />
 									</span>
+									<a href="${each.writer.profileUrl}" class="author">${each.writer.userId}</a>
 								</div>
 							</div>
 						</div>
@@ -54,7 +54,7 @@
 		</div>
 	</section>
 	<section class="span4">
-		<h1><a href="/wiki">Blog</a></h1>
+		<h1><a href="/wiki">SLiPP 소식</a></h1>
 		<div class="forumList">
 		<c:forEach items="${pages}" var="page">
 			<div class="nickArea">
@@ -72,4 +72,4 @@
 			</div>
 		</div>
 	</section>
-</div>
+</section>
