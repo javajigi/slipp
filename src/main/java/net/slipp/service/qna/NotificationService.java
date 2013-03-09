@@ -13,6 +13,10 @@ import net.slipp.support.http.HttpClientManager;
 import net.slipp.support.http.HttpInvocationSupport;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -69,11 +73,12 @@ public class NotificationService {
 	}
 
 	public List<Notification> findNotifications(SocialUser loginUser) {
-		return notificationRepository.findNotifications(loginUser);
+		Pageable pageable = new PageRequest(0, 5, new Sort(Direction.DESC, "notificationId"));
+		return notificationRepository.findNotifications(loginUser, pageable);
 	}
 	
 	public void readNotifications(SocialUser loginUser) {
-		List<Notification> notifications = notificationRepository.findNotifications(loginUser);
+		List<Notification> notifications = notificationRepository.findAllNotifications(loginUser);
 		for (Notification notification : notifications) {
 			notification.read();
 		}

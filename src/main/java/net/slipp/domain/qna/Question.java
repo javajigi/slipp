@@ -32,6 +32,7 @@ import net.slipp.support.jpa.CreatedDateEntityListener;
 import net.slipp.support.jpa.HasCreatedDate;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.security.access.AccessDeniedException;
 
 import com.google.common.base.Function;
@@ -190,6 +191,10 @@ public class Question implements HasCreatedDate {
         return title;
     }
 
+    public String getSummaryTitle() {
+        return StringUtils.left(title, 8)+"...";
+    }
+    
     public int getShowCount() {
         return showCount;
     }

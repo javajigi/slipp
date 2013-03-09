@@ -46,11 +46,11 @@
             </sec:authorize>
             <sec:authorize access="hasRole('ROLE_USER')">
             <li class="active logoutBtn"><a href="/logout">로그아웃</a></li>
-            <li>${fn:length(notifications)}
-            	<div>
+            <li><a href="/notifications/read" class="notificationBtn">${fn:length(notifications)}</a>
+            	<div style="position: absolute; left:0px; top: 45px; width:380px; background-color: #EFEFEF">
             		<ul>
             			<c:forEach items="${notifications}" var="notification">
-	            			<li><a href="/questions/${notification.question.questionId}">글번호_${notification.question.questionId}에 답글이 달렸습니다.</a></li>
+	            			<li><a href="/questions/${notification.question.questionId}">${notification.question.summaryTitle}에 댓글이 달렸습니다.</a></li>
             			</c:forEach>
             		</ul>
             	</div>
@@ -64,15 +64,29 @@
   <div class="container">
     <decorator:body/>
   </div>
-
 <script type="text/javascript">
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+	$(document).ready(function(){
+		$('.notificationBtn').on('click', function(e){
+			e.preventDefault();
+			var $btn = $(this);
+			$.get($btn.attr('href'), function(result){
+				if( result != "OK" ){
+					// 오류?
+				}
+				$btn.text("0");
+			});
+		});
+	});
 </script>
 <script type="text/javascript">
-try{
-var pageTracker = _gat._getTracker("UA-22853131-1");
-pageTracker._trackPageview();
-} catch(err) {}</script>
+	var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+	document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+	try{
+	var pageTracker = _gat._getTracker("UA-22853131-1");
+	pageTracker._trackPageview();
+	} catch(err) {}
+</script>
 </body>
 </html>
