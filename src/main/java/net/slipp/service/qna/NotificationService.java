@@ -66,8 +66,14 @@ public class NotificationService {
 		}
 	}
 
-	public List<Notification> notificationCount(Long socialUserId) {
-		List<Notification> notifications = notificationRepository.count(socialUserId);
-		return notifications;
+	public List<Notification> findNotifications(SocialUser loginUser) {
+		return notificationRepository.findNotifications(loginUser.getId());
+	}
+	
+	public void readNotifications(SocialUser loginUser) {
+		List<Notification> notifications = notificationRepository.findNotifications(loginUser.getId());
+		for (Notification notification : notifications) {
+			notification.read();
+		}
 	}
 }

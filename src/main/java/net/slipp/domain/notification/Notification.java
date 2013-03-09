@@ -22,45 +22,12 @@ public class Notification implements Serializable {
 	@Column
 	private Long targetSocialUserId;
 	
-	public Long getNotificationId() {
-		return notificationId;
-	}
-
-	public void setNotificationId(Long notificationId) {
-		this.notificationId = notificationId;
-	}
-
-	public Long getPostId() {
-		return postId;
-	}
-
-	public void setPostId(Long postId) {
-		this.postId = postId;
-	}
-
-	public Long getTargetSocialUserId() {
-		return targetSocialUserId;
-	}
-
-	public void setTargetSocialUserId(Long targetSocialUserId) {
-		this.targetSocialUserId = targetSocialUserId;
-	}
-
-	public boolean isReaded() {
-		return readed;
-	}
-
-	public void setReaded(boolean readed) {
-		this.readed = readed;
-	}
-
 	@Column
 	private boolean readed = false;
 
 	public Notification() {
-
 	}
-
+	
 	public Notification(Long socialUserId, Long postId) {
 		this.targetSocialUserId = socialUserId;
 		this.postId = postId;
@@ -68,6 +35,26 @@ public class Notification implements Serializable {
 
 	public static Notification create(Long targetUserId, Long postId) {
 		return new Notification(targetUserId, postId);
+	}
+	
+	public Long getNotificationId() {
+		return notificationId;
+	}
+
+	public Long getPostId() {
+		return postId;
+	}
+
+	public Long getTargetSocialUserId() {
+		return targetSocialUserId;
+	}
+
+	public boolean isReaded() {
+		return readed;
+	}
+	
+	public void read() {
+		this.readed = true;
 	}
 
 	@Override
