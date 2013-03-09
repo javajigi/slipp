@@ -4,14 +4,12 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
-import net.slipp.domain.notification.Notification;
 import net.slipp.domain.qna.Answer;
 import net.slipp.domain.qna.QnaSpecifications;
 import net.slipp.domain.qna.Question;
 import net.slipp.domain.qna.QuestionDto;
 import net.slipp.domain.tag.Tag;
 import net.slipp.domain.user.SocialUser;
-import net.slipp.repository.notification.NotificationRepository;
 import net.slipp.repository.qna.AnswerRepository;
 import net.slipp.repository.qna.QuestionRepository;
 import net.slipp.service.rank.ScoreLikeService;

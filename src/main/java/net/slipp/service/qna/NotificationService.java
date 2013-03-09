@@ -6,7 +6,6 @@ import java.util.Set;
 import javax.annotation.Resource;
 
 import net.slipp.domain.notification.Notification;
-import net.slipp.domain.notification.NotificationSpecifications;
 import net.slipp.domain.qna.Answer;
 import net.slipp.domain.qna.Question;
 import net.slipp.domain.user.SocialUser;
@@ -55,21 +54,16 @@ public class NotificationService {
 		}
 	}
 
-	/**
-	 * 본인글의 경우 불필요.
-	 * 
-	 * @param socialUser
-	 * @param question
-	 */
 	@Async
 	public void notifyToSlipp(Question question, Answer answer) {
 		Assert.notNull(question, "Question should be not null!");
 		Assert.notNull(answer, "Answer should be not null!");
 		Assert.notNull(notificationRepository, "NotificationRepository should be not null!");
-		//if(!question.getWriter().equals(answer.getWriter())) {
+		
+		if (!question.isWritedBy(answer.getWriter())) { // 본인 글의 경우는 알림이 필요없다.
 			Notification persistNotification = Notification.create(question.getWriter().getId(), question.getQuestionId());
-			notificationRepository.saveAndFlush(persistNotification);
-		//}
+			notificationRepository.save(persistNotification);
+		}
 	}
 
 	public List<Notification> notificationCount(Long socialUserId) {
