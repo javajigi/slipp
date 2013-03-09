@@ -7,6 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
+import net.slipp.domain.qna.Question;
+import net.slipp.domain.user.SocialUser;
 
 @Entity
 public class Notification implements Serializable {
@@ -16,37 +20,44 @@ public class Notification implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long notificationId;
 
-	@Column
-	private Long postId;
-
-	@Column
-	private Long targetSocialUserId;
+    @OneToOne
+    @org.hibernate.annotations.ForeignKey(name = "fk_notification_notifier")
+	private SocialUser notifier;
 	
+    @OneToOne
+    @org.hibernate.annotations.ForeignKey(name = "fk_notification_participant")
+	private SocialUser participant;
+    
+    @OneToOne
+    @org.hibernate.annotations.ForeignKey(name = "fk_notification_question")
+	private Question question;
+
 	@Column
 	private boolean readed = false;
 
 	public Notification() {
 	}
 	
-	public Notification(Long socialUserId, Long postId) {
-		this.targetSocialUserId = socialUserId;
-		this.postId = postId;
+	public Notification(SocialUser notifier, SocialUser participant, Question question) {
+		this.notifier = notifier;
+		this.participant = participant;
+		this.question = question;
 	}
 
-	public static Notification create(Long targetUserId, Long postId) {
-		return new Notification(targetUserId, postId);
-	}
-	
 	public Long getNotificationId() {
 		return notificationId;
 	}
 
-	public Long getPostId() {
-		return postId;
+	public SocialUser getNotifier() {
+		return notifier;
 	}
 
-	public Long getTargetSocialUserId() {
-		return targetSocialUserId;
+	public SocialUser getParticipant() {
+		return participant;
+	}
+
+	public Question getQuestion() {
+		return question;
 	}
 
 	public boolean isReaded() {
@@ -56,11 +67,4 @@ public class Notification implements Serializable {
 	public void read() {
 		this.readed = true;
 	}
-
-	@Override
-	public String toString() {
-		return "Notification [postId=" + postId + ", targetSocialUserId=" + targetSocialUserId + ", readed=" + readed
-				+ "]";
-	}
-
 }

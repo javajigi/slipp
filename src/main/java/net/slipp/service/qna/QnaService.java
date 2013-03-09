@@ -108,7 +108,7 @@ public class QnaService {
         answer.writedBy(loginUser);
         answer.answerTo(question);
         Answer savedAnswer = answerRepository.saveAndFlush(answer);
-        notificationService.notifyToSlipp(question, answer);
+        notificationService.notifyToSlipp(loginUser, question, question.findNotificationUser(loginUser));
         notificationService.notifyToFacebook(loginUser, question, question.findNotificationUser(loginUser));
         if (answer.isConnected()) {
             log.info("firing sendAnswerMessageToFacebook!");

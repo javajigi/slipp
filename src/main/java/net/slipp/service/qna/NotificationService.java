@@ -6,7 +6,6 @@ import java.util.Set;
 import javax.annotation.Resource;
 
 import net.slipp.domain.notification.Notification;
-import net.slipp.domain.qna.Answer;
 import net.slipp.domain.qna.Question;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.repository.notification.NotificationRepository;
@@ -55,23 +54,26 @@ public class NotificationService {
 	}
 
 	@Async
-	public void notifyToSlipp(Question question, Answer answer) {
+	public void notifyToSlipp(SocialUser loginUser, Question question, Set<SocialUser> notifierUsers) {
+		Assert.notNull(loginUser, "LoginUser should be not null!");
 		Assert.notNull(question, "Question should be not null!");
-		Assert.notNull(answer, "Answer should be not null!");
-		Assert.notNull(notificationRepository, "NotificationRepository should be not null!");
 		
-		if (!question.isWritedBy(answer.getWriter())) { // 본인 글의 경우는 알림이 필요없다.
-			Notification persistNotification = Notification.create(question.getWriter().getId(), question.getQuestionId());
-			notificationRepository.save(persistNotification);
+		if (notifierUsers.isEmpty()) {
+			return;
+		}
+		
+		for (SocialUser notifier : notifierUsers) {
+			Notification notification = new Notification(notifier, loginUser, question);
+			notificationRepository.save(notification);
 		}
 	}
 
 	public List<Notification> findNotifications(SocialUser loginUser) {
-		return notificationRepository.findNotifications(loginUser.getId());
+		return notificationRepository.findNotifications(loginUser);
 	}
 	
 	public void readNotifications(SocialUser loginUser) {
-		List<Notification> notifications = notificationRepository.findNotifications(loginUser.getId());
+		List<Notification> notifications = notificationRepository.findNotifications(loginUser);
 		for (Notification notification : notifications) {
 			notification.read();
 		}

@@ -50,7 +50,7 @@
             	<div>
             		<ul>
             			<c:forEach items="${notifications}" var="notification">
-	            			<li><a href="/questions/${notification.postId}">글번호_${notification.postId}에 답글이 달렸습니다.</a></li>
+	            			<li><a href="/questions/${notification.question.questionId}">글번호_${notification.question.questionId}에 답글이 달렸습니다.</a></li>
             			</c:forEach>
             		</ul>
             	</div>
