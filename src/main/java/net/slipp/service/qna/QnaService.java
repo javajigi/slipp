@@ -4,12 +4,14 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
+import net.slipp.domain.notification.Notification;
 import net.slipp.domain.qna.Answer;
 import net.slipp.domain.qna.QnaSpecifications;
 import net.slipp.domain.qna.Question;
 import net.slipp.domain.qna.QuestionDto;
 import net.slipp.domain.tag.Tag;
 import net.slipp.domain.user.SocialUser;
+import net.slipp.repository.notification.NotificationRepository;
 import net.slipp.repository.qna.AnswerRepository;
 import net.slipp.repository.qna.QuestionRepository;
 import net.slipp.service.rank.ScoreLikeService;
@@ -40,7 +42,7 @@ public class QnaService {
 
     @Resource(name = "notificationService")
     private NotificationService notificationService;
-
+    
     @Resource(name = "scoreLikeService")
     private ScoreLikeService scoreLikeService;
     
@@ -108,6 +110,7 @@ public class QnaService {
         answer.writedBy(loginUser);
         answer.answerTo(question);
         Answer savedAnswer = answerRepository.saveAndFlush(answer);
+        notificationService.notifyToSlipp(question, answer);
         notificationService.notifyToFacebook(loginUser, question, question.findNotificationUser(loginUser));
         if (answer.isConnected()) {
             log.info("firing sendAnswerMessageToFacebook!");
@@ -145,4 +148,5 @@ public class QnaService {
             answerRepository.save(answer);
         }
     }
+    
 }

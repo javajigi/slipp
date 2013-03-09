@@ -4,6 +4,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.slipp.domain.user.SocialUser;
+import net.slipp.service.qna.NotificationService;
 import net.slipp.support.security.SessionService;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -12,10 +14,20 @@ public class GlobalRequestAttributesInterceptor extends HandlerInterceptorAdapte
 	@Resource (name = "sessionService")
 	private SessionService sessionService;
 	
+	@Resource (name = "notificationService")
+	private NotificationService notificationService;
+	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		request.setAttribute("loginUser", sessionService.getLoginUser());
-		
+		SocialUser socialUser = sessionService.getLoginUser();
+		request.setAttribute("loginUser", socialUser);
+		if( logined(socialUser) ){
+			request.setAttribute("notifications", notificationService.notificationCount(socialUser.getId()));
+		}
 		return super.preHandle(request, response, handler);
+	}
+
+	private boolean logined(SocialUser socialUser) {
+		return socialUser != null;
 	}
 }

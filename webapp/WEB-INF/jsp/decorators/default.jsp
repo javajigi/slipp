@@ -46,6 +46,15 @@
             </sec:authorize>
             <sec:authorize access="hasRole('ROLE_USER')">
             <li class="active logoutBtn"><a href="/logout">로그아웃</a></li>
+            <li>${fn:length(notifications)}
+            	<div>
+            		<ul>
+            			<c:forEach items="${notifications}" var="notification">
+	            			<li><a href="/questions/${notification.postId}">글번호_${notification.postId}에 답글이 달렸습니다.</a></li>
+            			</c:forEach>
+            		</ul>
+            	</div>
+            </li>
             </sec:authorize>              
           </ul>
         </div>
