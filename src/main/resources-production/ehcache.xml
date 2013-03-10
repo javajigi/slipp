@@ -12,8 +12,8 @@
 	    name="socialUser"	
 	    maxElementsInMemory="1000"
 	    eternal="false"
-	    timeToIdleSeconds="300"
-	    timeToLiveSeconds="600"
+	    timeToIdleSeconds="3600"
+	    timeToLiveSeconds="3600"
 	    overflowToDisk="false"
 	/>
 
@@ -21,8 +21,8 @@
 	    name="tag"	
 	    maxElementsInMemory="1000"
 	    eternal="false"
-	    timeToIdleSeconds="3600"
-	    timeToLiveSeconds="3600"
+	    timeToIdleSeconds="300"
+	    timeToLiveSeconds="300"
 	    overflowToDisk="false"
 	/>
 	
@@ -31,7 +31,7 @@
 	    maxElementsInMemory="1000"
 	    eternal="false"
 	    timeToIdleSeconds="300"
-	    timeToLiveSeconds="600"
+	    timeToLiveSeconds="300"
 	    overflowToDisk="false"
 	/>
 </ehcache>

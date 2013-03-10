@@ -25,6 +25,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StopWatch;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -44,6 +45,7 @@ public class NotificationRepositoryIT {
 	private StopWatch stopWatch = new StopWatch();
 	
 	@Test
+	@Transactional
 	public void notification_lifecycle() throws Exception {
 		// given
 		SocialUser notifiee = SocialUserBuilder.aSocialUser().createTestUser("javajigi");
@@ -59,15 +61,13 @@ public class NotificationRepositoryIT {
 		// when
 		Pageable pageable = new PageRequest(0, 5, new Sort(Direction.DESC, "notificationId"));
 		stopWatch.start();
-		for(int i=0; i< 100; i++) {
-			List<Notification> notifications = notificationRepository.findNotifications(notifiee, pageable);
-			assertThat(notifications.size(), is(1));
-		}
+		List<Notification> notifications = notificationRepository.findNotifications(notifiee, pageable);
+		assertThat(notifications.size(), is(1));
 		stopWatch.stop();
 		log.debug("time to create: {}", stopWatch.getLastTaskTimeMillis() + "ms");
 		
-//		notificationRepository.updateReaded(notifiee);
-//		notifications = notificationRepository.findNotifications(notifiee, pageable);
-//		assertThat(notifications.size(), is(0));
+		notificationRepository.updateReaded(notifiee);
+		notifications = notificationRepository.findNotifications(notifiee, pageable);
+		assertThat(notifications.size(), is(0));
 	}
 }
