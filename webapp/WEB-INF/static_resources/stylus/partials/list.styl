@@ -6,7 +6,8 @@
 		border-bottom: 1px solid #eaeaea;
 		> li
 			position: relative;
-			padding: .8em .8em .8em 4em;
+			padding: 1em;
+			padding-left: 4em;
 			border-top: 1px solid #eaeaea;
 		.main
 			.subject
@@ -40,10 +41,12 @@
 			text-align:center;
 			.icon-reply
 				position: absolute;
-				left: .5em;
+				left: 0;
 				top: 0;
 				font-size: 2em;
 				color: #eee;
+				@media not-desktop
+					left: .5em;
 			.point
 				position: relative;
 				z-index: 1;

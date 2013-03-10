@@ -42,11 +42,11 @@
 				</li>
 			</c:forEach>
 			</ul>
-			<div class="pagination pagination-centered">
+			<nav class="pager">
 				<ul>
 					<sl:pager page="${questions}" prefixUri="/questions"/>
 				</ul>
-			</div>
+			</nav>
 		</div>
 		<div class="span3 qna-side">
 			<a id="questionBtn" href="/questions/form" class="btn btn-primary btn-large btn-block btn-question">질문하기</a>

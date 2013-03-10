@@ -114,11 +114,11 @@ h2,h3{page-break-after:avoid}
 .tipsy-se .tipsy-arrow{bottom:0;right:10px;border-top-style:solid;border-bottom:none;border-left-color:transparent;border-right-color:transparent}
 .tipsy-e .tipsy-arrow{right:0;top:50%;margin-top:-5px;border-left-style:solid;border-right:none;border-top-color:transparent;border-bottom-color:transparent}
 .tipsy-w .tipsy-arrow{left:0;top:50%;margin-top:-5px;border-right-style:solid;border-left:none;border-top-color:transparent;border-bottom-color:transparent}
-.container{width:980px;margin:0 auto;*zoom:1;}
+.container{width:940px;margin:0 auto;*zoom:1;}
 .container:before,.container:after{content:'';display:table;line-height:0}
 .container:after{clear:both}
 @media (max-width: 979px){.container{width:100%}
-}.header{position:relative;height:40px;background:#ededed;border-bottom:1px solid #ddd;}
+}.header{position:relative;height:40px;margin-bottom:20px;background:#ededed;border-bottom:1px solid #ddd;}
 @media (max-width: 480px){.header{text-align:right}
 }.header .logo{float:left;margin:0;font-family:'Oswald',sans-serif;}
 .header .logo a{display:block;width:100px;height:50px;text-align:center;font-size:26px;line-height:50px;color:#fff;background-color:#000;}
@@ -170,7 +170,7 @@ h2,h3{page-break-after:avoid}
 .pager .active a{color:#999;cursor:default}
 .pager .disabled span,.pager .disabled a,.pager .disabled a:hover{color:#999;background-color:transparent;cursor:default}
 .qna-list .list{list-style:none;margin:0;padding:0;border-bottom:1px solid #eaeaea;}
-.qna-list .list > li{position:relative;padding:.8em .8em .8em 4em;border-top:1px solid #eaeaea}
+.qna-list .list > li{position:relative;padding:1em;padding-left:4em;border-top:1px solid #eaeaea}
 .qna-list .list .main .subject{display:block;font-size:1.2em;line-height:1.4em;}
 .qna-list .list .main .subject a{display:block;color:#333}
 .qna-list .list .tags{font-size:.9em;color:#999}
@@ -179,8 +179,9 @@ h2,h3{page-break-after:avoid}
 .qna-list .list .auth-info{margin-top:.8em;color:#999;}
 .qna-list .list .auth-info .time{font-size:.9em}
 .qna-list .list .reply{position:absolute;left:0;top:.8em;width:4em;text-align:center;}
-.qna-list .list .reply .icon-reply{position:absolute;left:.5em;top:0;font-size:2em;color:#eee}
-.qna-list .list .reply .point{position:relative;z-index:1;color:#aaa;font-size:2em;line-height:2em;letter-spacing:-.2em}
+.qna-list .list .reply .icon-reply{position:absolute;left:0;top:0;font-size:2em;color:#eee;}
+@media (max-width: 979px){.qna-list .list .reply .icon-reply{left:.5em}
+}.qna-list .list .reply .point{position:relative;z-index:1;color:#aaa;font-size:2em;line-height:2em;letter-spacing:-.2em}
 .qna-view .auth-info{display:table;width:100%;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;padding:10px 10px 10px 10px;background-color:#fafafa;border-bottom:1px solid #f5f5f5;}
 .qna-view .auth-info .author-text,.qna-view .auth-info .author-thumb{display:table-cell;vertical-align:middle}
 .qna-view .auth-info .author-thumb{width:60px}
@@ -224,7 +225,18 @@ h2,h3{page-break-after:avoid}
 .qna-view .content .doc .qna-tags .tag,.qna-list .list .main .qna-tags .tag{padding-top:1px;padding-bottom:1px}
 .qna-view .content .doc .qna-tags{margin-top:0;margin-bottom:1em}
 .qna-list .list .main .qna-tags{margin-top:.4em}
-.home-content .qna-list{margin-top:20px}
+.home-content{*zoom:1;}
+.home-content:before,.home-content:after{content:'';display:table;line-height:0}
+.home-content:after{clear:both}
+@media (max-width: 979px){.home-content{padding:0 1em}
+}.home-content .content-main{float:left;width:65%;}
+@media (max-width: 979px){.home-content .content-main{width:100%}
+}.home-content .content-sub{float:right;width:33%;}
+@media (max-width: 979px){.home-content .content-sub{width:100%}
+}@media (max-width: 979px){.home-content .qna-list .list{margin:0 -1em}
+}@media (max-width: 979px){.home-content .link-more{margin:0 -1em}
+}.home-content .link-more a{display:block;padding:.4em 1em;text-align:right;color:#333;background-color:#eaeaea;}
+.home-content .link-more a:hover{text-decoration:none;color:#fff;background-color:#aaa}
 .section-qna{padding-bottom:60px;}
 .section-qna .markItUp{width:auto;border:1px solid #ccc;-webkit-border-radius:3px;border-radius:3px}
 .section-qna .markItUpContainer{border:0 none}
