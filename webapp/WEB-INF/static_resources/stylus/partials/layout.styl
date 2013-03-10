@@ -113,6 +113,11 @@
 		li
 			border-right: 1px solid #ddd;
 			box-shadow: 1px 0 0 #fff;
+		.msg-for-login
+			padding-right: 1em;
+			font-size: .8em;
+			@media phone
+				display: none;
 		.user-info
 			padding-left: 1em;
 			padding-right: 1em;
@@ -137,10 +142,9 @@
 
 .footer
 	position: relative;
-	margin-top: 80px;
-	padding: 1.5em 0 3em;
+	margin-top: 6em;
+	padding: 1em 0 1.5em;
 	border-top: 1px solid #ddd;
-	background-color: #efefef;
 	text-align: center;
 	.foot-nav
 		ul
@@ -150,16 +154,26 @@
 			display: inline-block;
 			&:before
 				content:'\b7'; // mid dot
-				padding-left: .5em;
-				padding-right: .5em;
+				padding-left: .2em;
+				padding-right: .2em;
 			&:first-child
 				&:before
 					display: none;
 		a
+			display: inline-block;
+			position: relative;
+			padding: 3px;
+			border-radius: 3px;
 			color: #000;
+			&:hover
+				color: #fff;
+				background-color: #000;
+				text-decoration: none;
 	.footer-text
+		margin: .5em;
 		color: #999;
 		font-weight: bold;
+		letter-spacing: -1px;
 
 .pager
 	height: 36px;

@@ -40,7 +40,7 @@
 			<nav class="user-menu">
 				<ul role="menu">
 					<sec:authorize access="!hasRole('ROLE_USER')">
-					<li class="msg-to-unlogin">로그인하고 의견을 나누세요.</li>
+					<li class="msg-for-login">로그인해서 의견을 나누세요!</li>
 					<li>
 						<a href="/login" class="link-loginout"><span class="text">LogIn</span> <i class="icon-loginout"></i></a>
 					</li>

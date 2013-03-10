@@ -12,34 +12,26 @@
 						<strong class="subject">
 							<a href="/questions/${each.questionId}">${sf:h(each.title)}</a>
 						</strong>
-						<div class="tags">
-							<ul>
-							<c:forEach items="${each.denormalizedTags}" var="tag">
-								<li>
-									<a href="/questions/tagged/${tag}" class="tag">${tag}</a>
-								</li>
-							</c:forEach>
-							</ul>
-						</div>
-					</div>
-					<div class="sub">
-						<div class="reply">
-							<i class="icon-reply" title="댓글"></i>
-							<span class="point">${each.answerCount}</span>
-						</div>
+						<c:if test="${each.denormalizedTags != ''}">
+							<div class="tags">
+								<i class="icon-tag" title="태그"></i>
+								<span class="tag-list">
+									<c:forEach items="${each.denormalizedTags}" var="tag">
+										<span class="tag">${tag}</span>
+									</c:forEach>
+								</span>
+							</div>
+						</c:if>
 						<div class="auth-info">
-							<c:choose>
-								<c:when test="${each.answerCount == 0}">
-								작성
-								</c:when>
-								<c:otherwise>
-								최근답변
-								</c:otherwise>
-							</c:choose>
+							<i class="icon-addtext"></i>
 							<span class="time">
 								<fmt:formatDate value="${each.createdDate}" pattern="yyyy-MM-dd HH:mm" />
 							</span>
 							<a href="${each.writer.profileUrl}" class="author">${each.writer.userId}</a>
+						</div>
+						<div class="reply">
+							<i class="icon-reply" title="댓글"></i>
+							<span class="point">${each.answerCount + 1}</span>
 						</div>
 					</div>
 				</div>

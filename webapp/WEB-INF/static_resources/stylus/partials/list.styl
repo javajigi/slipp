@@ -3,39 +3,51 @@
 		list-style: none;
 		margin: 0;
 		padding: 0;
-		border-bottom: 5px solid #eee;
-		border-radius: 0 0 3px 3px;
+		border-bottom: 1px solid #eaeaea;
 		> li
-			border-width: 5px 5px 0;
-			border-style: solid;
-			border-color: #eee;
-			border-radius: 3px
-			&:first-child
-				margin-top: 0
-			.wrap
-				border: 1px solid #ddd
+			position: relative;
+			padding: .8em .8em .8em 4em;
+			border-top: 1px solid #eaeaea;
 		.main
-			padding: 16px 10px 10px
 			.subject
-				display: block
-				font-size: 1.4em
-				line-height: 1.4em
+				display: block;
+				font-size: 1.2em;
+				line-height: 1.4em;
 				a
-					color: #333
+					display: block;
+					color: #333;
+		.tags
+				font-size: .9em;
+				color: #999;
+			.tag
+				&:before
+					content: ', ';
+				&:first-child
+					&:before
+						content: '';
+		.auth-info
+			margin-top: .8em;
+			color: #999;
+			.time
+				font-size: .9em;
+			.author
+				// font-weight: bold;
 		.reply
-			float: left
-			font-family: tahoma
+			position: absolute;
+			left: 0;
+			top: .8em;
+			width: 4em;
+			text-align:center;
+			.icon-reply
+				position: absolute;
+				left: .5em;
+				top: 0;
+				font-size: 2em;
+				color: #eee;
 			.point
-				color: #333
-				font-weight: bold
-		.sub
-			padding: 10px
-			border-top: 1px solid #f5f5f5
-			background-color: #fafafa
-			.auth-info
-				text-align: right
-				.time
-					color: #999
-					font-size: .9em
-				.author
-					font-weight: bold
+				position: relative;
+				z-index: 1;
+				color: #aaa;
+				font-size: 2em;
+				line-height: 2em;
+				letter-spacing: -.2em;
