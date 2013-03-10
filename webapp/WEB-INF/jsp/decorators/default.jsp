@@ -46,13 +46,8 @@
             </sec:authorize>
             <sec:authorize access="hasRole('ROLE_USER')">
             <li class="active logoutBtn"><a href="/logout">로그아웃</a></li>
-            <li><a href="/notifications/read" class="notificationBtn">${fn:length(notifications)}</a>
-            	<div style="position: absolute; left:0px; top: 45px; width:380px; background-color: #EFEFEF">
-            		<ul>
-            			<c:forEach items="${notifications}" var="notification">
-	            			<li><a href="/questions/${notification.question.questionId}">${notification.question.summaryTitle}에 댓글이 달렸습니다.</a></li>
-            			</c:forEach>
-            		</ul>
+            <li><a href="/notifications" class="notificationBtn">${fn:length(notifications)}</a>
+            	<div id="notificationArea" style="position: absolute; left:0px; top: 45px; width:380px; background-color: #EFEFEF">
             	</div>
             </li>
             </sec:authorize>              
@@ -69,10 +64,15 @@
 		$('.notificationBtn').on('click', function(e){
 			e.preventDefault();
 			var $btn = $(this);
-			$.get($btn.attr('href'), function(result){
-				if( result != "OK" ){
-					// 오류?
+			$.getJSON($btn.attr('href'), function(result){
+				var notifications = eval(result);
+				$ul = $('<ul></ul>');
+				for(var i=0; i < notifications.length; i++) {
+					var notification = notifications[i];
+					$("<li></li>").append($("<a></a>").attr("href", "/questions/" + notification.questionId)
+					.text(notification.title + "에 댓글이 달렸습니다.")).appendTo($ul);
 				}
+				$("#notificationArea").append($ul);
 				$btn.text("0");
 			});
 		});

@@ -32,7 +32,7 @@ public class Notification implements Serializable {
     @org.hibernate.annotations.ForeignKey(name = "fk_notification_question")
 	private Question question;
 
-	@Column
+    @Column(name = "readed", nullable=false)
 	private boolean readed = false;
 
 	public Notification() {
@@ -62,9 +62,5 @@ public class Notification implements Serializable {
 
 	public boolean isReaded() {
 		return readed;
-	}
-	
-	public void read() {
-		this.readed = true;
 	}
 }

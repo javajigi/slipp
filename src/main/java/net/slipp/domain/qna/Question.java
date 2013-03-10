@@ -98,7 +98,7 @@ public class Question implements HasCreatedDate {
     @OrderBy("answerId ASC")
     private List<Answer> answers;
 
-    @Column(name = "deleted", nullable = false)
+    @Column(name = "deleted", nullable=false)
     private boolean deleted = false;
 
     @Embedded

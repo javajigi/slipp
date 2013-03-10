@@ -30,6 +30,7 @@ public class Tag {
 
 	private int taggedCount = 0;
 
+    @Column(name = "pooled", nullable=false)
 	private boolean pooled;
 
 	@OneToOne

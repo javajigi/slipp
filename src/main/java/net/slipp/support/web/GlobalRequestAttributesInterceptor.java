@@ -22,9 +22,6 @@ public class GlobalRequestAttributesInterceptor extends HandlerInterceptorAdapte
 		SocialUser socialUser = sessionService.getLoginUser();
 		request.setAttribute("loginUser", socialUser);
 		
-		if (!socialUser.isGuest()) {
-			request.setAttribute("notifications", notificationService.findNotifications(socialUser));
-		}
 		return super.preHandle(request, response, handler);
 	}
 }
