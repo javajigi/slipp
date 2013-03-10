@@ -32,15 +32,8 @@
 
 	<tx:annotation-driven transaction-manager="transactionManager"/>
 	
-	<bean id="wikiDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"
-		p:driverClassName="${wiki.database.driverClassName}"
-		p:url="${wiki.database.url}"
-		p:username="${wiki.database.username}"
-		p:password="${wiki.database.password}"
-	/>		
-	
 	<jpa:repositories base-package="net.slipp.repository" factory-class="net.slipp.support.jpa.SlippRepositoryFactoryBean" />
-		
+	
 	<context:property-placeholder location="classpath*:application-properties.xml" />
 	
 	<bean id="applicationProperties" class="net.slipp.support.utils.ConvenientProperties">

@@ -1,9 +1,9 @@
 package net.slipp.service.qna;
 
 import static net.slipp.domain.tag.TagTest.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import net.slipp.domain.qna.Answer;
@@ -62,7 +62,7 @@ public class QnaServiceTest {
 		SocialUser loginUser = new SocialUser(10);
 		Answer answer = new Answer(2L);
 		answer.writedBy(loginUser);
-		Question question = new Question(1L, loginUser, null, null, null);
+		Question question = new Question(1L, loginUser, null, null, new HashSet<Tag>());
 		when(answerRepository.findOne(answer.getAnswerId())).thenReturn(answer);
 		when(questionRepository.findOne(question.getQuestionId())).thenReturn(question);
 		

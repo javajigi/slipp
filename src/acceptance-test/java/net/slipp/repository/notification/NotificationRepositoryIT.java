@@ -46,11 +46,6 @@ public class NotificationRepositoryIT {
 		SocialUser notifier = SocialUserBuilder.aSocialUser().createTestUser("sanjigi");
 		notifier = socialUserRepository.save(notifier);
 		Question question = new Question(notifiee, "this is title", "this is contents", new HashSet<Tag>());
-//		Question question = QuestionBuilder.aQuestion()
-//				.withTitle("this is title")
-//				.withContents("this is contents")
-//				.withWriter(writer)
-//				.build();
 		question = questionRepository.save(question);
 		
 		Notification notification = new Notification(notifier, notifiee, question);

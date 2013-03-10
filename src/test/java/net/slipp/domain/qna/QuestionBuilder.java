@@ -1,5 +1,6 @@
 package net.slipp.domain.qna;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -46,13 +47,10 @@ public class QuestionBuilder {
 	}
 	
 	public Question build() {
-		Question question = new Question(writer, title, contents, tags) {
-			@Override
+		return new Question(writer, title, contents, new HashSet<Tag>()) {
 			public List<Answer> getAnswers() {
 				return answers;
 			}
 		};
-		
-		return question;
 	}
 }
