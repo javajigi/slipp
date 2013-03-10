@@ -29,9 +29,6 @@
 					<li>
 						<a href="/questions"><i class="icon-list"></i> <span class="text">글목록</span></a>
 					</li>
-					<li>
-						<a href="/questions/form"><i class="icon-write"></i> <span class="text">새글쓰기</span></a>
-					</li>
 				</ul>
 			</nav>
 			<form class="site-search" action="/search">
@@ -43,11 +40,15 @@
 			<nav class="user-menu">
 				<ul role="menu">
 					<sec:authorize access="!hasRole('ROLE_USER')">
+					<li class="msg-to-unlogin">로그인하고 의견을 나누세요.</li>
 					<li>
 						<a href="/login" class="link-loginout"><span class="text">LogIn</span> <i class="icon-loginout"></i></a>
 					</li>
 					</sec:authorize>
 					<sec:authorize access="hasRole('ROLE_USER')">
+					<li>
+						<a href="/questions/form"><i class="icon-write"></i> <span class="text">새글쓰기</span></a>
+					</li>
 					<li class="user-info">
 						<img class="user-thumb" src="//graph.facebook.com/1701115026/picture" width="24" height="24" alt="" />
 						<span class="user-name">진우</span>
@@ -83,7 +84,7 @@
 					</li>
 				</ul>
 			</nav>
-			<p class="footer-text">SLiPP - 지속가능한 삷, 프로그래밍, 프로그래머</p>
+			<p class="footer-text">SLiPP - Sustainable Life, Programming, Programmer</p>
 		</div>
 	</footer>
 </div>

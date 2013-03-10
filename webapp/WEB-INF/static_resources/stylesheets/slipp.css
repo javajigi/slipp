@@ -54,6 +54,11 @@ html,button,input,select,textarea{color:#222}
 body{line-height:1.4;font-family:'맑은 고딕','Malgun Gothic',dotum,sans-serif;font-size:13px}
 a{color:#08c;text-decoration:none}
 a:hover{color:#005580;text-decoration:underline}
+input,button,select,textarea{font-family:'맑은 고딕','Malgun Gothic',dotum,Sans-serif}
+input,textarea{-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,0.075);box-shadow:inset 0 1px 1px rgba(0,0,0,0.075);-webkit-transition:border linear .2s, box-shadow linear .2s;-moz-transition:border linear .2s, box-shadow linear .2s;-o-transition:border linear .2s, box-shadow linear .2s;-ms-transition:border linear .2s, box-shadow linear .2s;transition:border linear .2s,box-shadow linear .2s}
+input:focus,textarea:focus{border-color:rgba(82,168,236,0.8);-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(82,168,236,0.6);box-shadow:inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(82,168,236,0.6);outline:0;outline:thin dotted 9;}
+input[type="file"]:focus,input[type="radio"]:focus,input[type="checkbox"]:focus,select:focus{-webkit-box-shadow:none;-moz-box-shadow:none;-webkit-box-shadow:none;box-shadow:none;outline:thin dotted #333;outline:5px auto -webkit-focus-ring-color;outline-offset:-2px}
+input[disabled],select[disabled],textarea[disabled],input[readonly],select[readonly],textarea[readonly]{background-color:#eee;border-color:#ddd;cursor:not-allowed}
 ::-moz-selection{background:#b3d4fc;text-shadow:none}
 ::selection{background:#b3d4fc;text-shadow:none}
 hr{display:block;height:1px;border:0;border-top:1px solid #ccc;margin:1em 0;padding:0}
@@ -123,9 +128,10 @@ h2,h3{page-break-after:avoid}
 @media (max-width: 480px){.header .user-menu .user-info{padding-left:.4em;padding-right:.4em}
 }.header .user-menu .user-thumb{-webkit-border-radius:3px;border-radius:3px;margin-right:.5em;}
 @media (max-width: 480px){.header .user-menu .user-thumb{margin-right:.2em}
-}.header .user-menu .link-loginout{padding-left:.8em;padding-right:.6em;font-size:.8em;}
+}.header .user-menu .link-loginout{padding-left:.8em;padding-right:.6em;}
 @media (max-width: 480px){.header .user-menu .link-loginout{padding-left:1em;padding-right:1em}
-}@media (max-width: 480px){.header .user-menu .link-loginout .text{display:none}
+}.header .user-menu .link-loginout .text{font-size:.8em;}
+@media (max-width: 480px){.header .user-menu .link-loginout .text{display:none}
 }.footer{position:relative;margin-top:80px;padding:1.5em 0 3em;border-top:1px solid #ddd;background-color:#efefef;text-align:center;}
 .footer .foot-nav ul{margin:0;padding:0}
 .footer .foot-nav li{display:inline-block;}
@@ -133,6 +139,15 @@ h2,h3{page-break-after:avoid}
 .footer .foot-nav li:first-child:before{display:none}
 .footer .foot-nav a{color:#000}
 .footer .footer-text{color:#999;font-weight:bold}
+.pager{height:36px;margin:18px 0;text-align:center;}
+.pager ul{display:inline-block;*display:inline;*zoom:1;margin:0;padding:0;-webkit-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 2px rgba(0,0,0,0.05);box-shadow:0 1px 2px rgba(0,0,0,0.05)}
+.pager li{display:inline;}
+.pager li:first-child a{border-left-width:1px;-webkit-border-radius:3px 0 0 3px;border-radius:3px 0 0 3px}
+.pager li:last-child a{-webkit-border-radius:0 3px 3px 0;border-radius:0 3px 3px 0}
+.pager a{float:left;padding:0 14px;line-height:34px;text-decoration:none;border:1px solid #ddd;border-left-width:0}
+.pager a:hover,.pager .active a{background-color:#f5f5f5}
+.pager .active a{color:#999;cursor:default}
+.pager .disabled span,.pager .disabled a,.pager .disabled a:hover{color:#999;background-color:transparent;cursor:default}
 .qna-list .list{list-style:none;margin:0;padding:0;border-bottom:5px solid #eee;-webkit-border-radius:0 0 3px 3px;border-radius:0 0 3px 3px;}
 .qna-list .list > li{border-width:5px 5px 0;border-style:solid;border-color:#eee;-webkit-border-radius:3px;border-radius:3px;}
 .qna-list .list > li:first-child{margin-top:0}
@@ -181,23 +196,15 @@ h2,h3{page-break-after:avoid}
 .qna-view .qna-comment .util .btn-like{position:relative;float:left;font-weight:bold;}
 .qna-view .qna-comment .util .btn-like .star{position:absolute;top:5px;color:#e4eb3d;font-size:1.5em;line-height:1em;font-family:tahoma;text-shadow:0 0 2px #000;vertical-align:middle}
 .qna-view .qna-comment .util .btn-like .txt{margin-left:25px}
-.navbar .brand abbr[title]{border-bottom:none;cursor:inherit}
-.navbar .brand .sub{display:inline;font-size:.8em;letter-spacing:-1px;}
-@media screen-phone{.navbar .brand .sub{display:none}
-}.tags ul{list-style:none;margin:0;padding:0}
-.tags li{display:inline;list-style:none}
-.tags .tag{position:relative;display:inline-block;margin:.2em 0;padding:2px 8px;-webkit-border-radius:3px;border-radius:3px;color:#fff;background-color:#aaa;}
-.tags .tag:hover{text-decoration:none;background-color:#909090}
-.tags .tag .count{display:inline-block;padding:2px 3px;margin-left:3px;margin-right:-2px;-webkit-border-radius:3px;border-radius:3px;font-family:verdana;font-weight:bold;font-size:.8em;line-height:1.2em;color:#666;background-color:#fff;vertical-align:middle}
-.qna-view .content .doc .tags .tag,.qna-list .list .main .tags .tag{padding-top:1px;padding-bottom:1px}
-.qna-view .content .doc .tags{margin-top:0;margin-bottom:1em}
-.qna-list .list .main .tags{margin-top:.4em}
-.section-main{padding-bottom:60px;}
-.section-main .qna{*zoom:1;position:relative;}
-.section-main .qna:before,.section-main .qna:after{content:'';display:table;line-height:0}
-.section-main .qna:after{clear:both}
-.section-main .qna .btn-question{position:absolute;right:0;top:0}
-.section-main .qna .qna-list{margin-top:20px}
+.qna-tags ul,.tags ul{list-style:none;margin:0;padding:0}
+.qna-tags li,.tags li{display:inline;list-style:none}
+.qna-tags .tag,.tags .tag{position:relative;display:inline-block;margin:.2em 0;padding:2px 8px;-webkit-border-radius:3px;border-radius:3px;color:#fff;background-color:#aaa;}
+.qna-tags .tag:hover,.tags .tag:hover{text-decoration:none;background-color:#909090}
+.qna-tags .tag .count,.tags .tag .count{display:inline-block;padding:2px 3px;margin-left:3px;margin-right:-2px;-webkit-border-radius:3px;border-radius:3px;font-family:verdana;font-weight:bold;font-size:.8em;line-height:1.2em;color:#666;background-color:#fff;vertical-align:middle}
+.qna-view .content .doc .qna-tags .tag,.qna-view .content .doc .tags .tag,.qna-list .list .main .qna-tags .tag,.qna-list .list .main .tags .tag{padding-top:1px;padding-bottom:1px}
+.qna-view .content .doc .qna-tags,.qna-view .content .doc .tags{margin-top:0;margin-bottom:1em}
+.qna-list .list .main .qna-tags,.qna-list .list .main .tags{margin-top:.4em}
+.home-content .qna-list{margin-top:20px}
 .section-qna{padding-bottom:60px;}
 .section-qna .markItUp{width:auto;border:1px solid #ccc;-webkit-border-radius:3px;border-radius:3px}
 .section-qna .markItUpContainer{border:0 none}
@@ -215,17 +222,7 @@ h2,h3{page-break-after:avoid}
 .section-qna .qna-form .form-horizontal > fieldset{border:1px solid #ddd;padding:16px 10px}
 .section-qna .qna-form .form-horizontal .control-group{margin-bottom:5px}
 .flyaway{position:absolute;overflow:hidden;width:0;height:0;font:0/0 a}
-.button-qna{width:27%;float:right;margin:5px 0 10px 0}
 label.error{color:#ffa500}
-.rss{float:right;padding:0 10px}
-.follow{width:100%;padding:30px 0 10px 0;overflow:hidden;border-bottom:1px solid #6f6f6f;}
-.follow .tags{float:left;color:#5ebeda;margin:0 3px 0 10px;font-size:20px}
-.follow .count{float:right;margin:2px 0 0 10px;color:#4b4b4b;}
-.follow .count strong{color:#fe6b12}
-.snsIcon{width:73%;float:left;margin:5px 0 10px 0;}
-.snsIcon .twitter{float:left}
-.snsIcon .googleplus{float:left}
-.snsIcon .facebook{float:left}
 .slipp-doc .box{margin:0 0 18px;padding:8.5px;border:1px solid #ccc;-webkit-border-radius:4px;border-radius:4px;font-size:1.2em;line-height:1.8em;background-color:#f5f5f5;}
 .slipp-doc .box .person{position:relative;padding-left:60px;margin-top:20px;}
 .slipp-doc .box .person:first-child{margin-top:0}
@@ -234,8 +231,3 @@ label.error{color:#ffa500}
 .slipp-doc .box .person ul{list-style:none;padding:0;margin:10px 0 0 10px;}
 .slipp-doc .box .person ul li{text-indent:-10px;}
 .slipp-doc .box .person ul li:before{content:'-';padding-right:5px;font-size:.8em;color:#999}
-@media screen-phone{.navbar-fixed-top{margin-bottom:8px;}
-.navbar-fixed-top .container{margin-left:0;margin-right:0}
-.container{margin-left:-10px;margin-right:-10px}
-.subnav .nav{margin-left:5px;margin-bottom:8px}
-}

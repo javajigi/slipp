@@ -1,0 +1,46 @@
+.section-qna
+	padding-bottom: 60px
+	.markItUp
+		width: auto
+		border: 1px solid #ccc
+		border-radius: 3px
+	.markItUpContainer
+		border: 0 none
+	.markItUpEditor
+		width: 100%
+		box-sizing: border-box
+		border: 1px solid #ccc
+	.qna-list
+		.btn-question
+			display: none
+		@media screen-phone-landscape
+			position: relative
+			.btn-question
+				display: inline-block
+				position: absolute
+				right: 0
+				top: -54px
+		@media screen-phone
+			.btn-question
+				top: -44px
+	.qna-side
+		.tags
+			margin-top: 30px
+			&:first-child
+				margin-top: 0
+			li
+				display: block
+		@media screen-phone-landscape
+			.btn-question
+				display: none
+			.tags li
+				display: inline
+	.qna-form
+		.form-horizontal
+			border: 5px solid #eee
+			border-radius: 3px
+			& > fieldset
+				border: 1px solid #ddd
+				padding: 16px 10px
+			.control-group
+				margin-bottom: 5px

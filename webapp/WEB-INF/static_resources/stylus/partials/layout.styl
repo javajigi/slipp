@@ -127,11 +127,11 @@
 		.link-loginout
 			padding-left: .8em;
 			padding-right: .6em;
-			font-size: .8em;
 			@media phone
 				padding-left: 1em;
 				padding-right: 1em;
 			.text
+				font-size: .8em;
 				@media phone
 					display: none;
 
@@ -160,3 +160,44 @@
 	.footer-text
 		color: #999;
 		font-weight: bold;
+
+.pager
+	height: 36px;
+	margin: 18px 0;
+	text-align: center;
+	ul
+		display: inline-block;
+		*display: inline;
+		/* IE7 inline-block hack */
+		*zoom: 1;
+		margin: 0;
+		padding: 0;
+		border-radius: 3px;
+		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+	li
+		display: inline;
+		&:first-child a
+			border-left-width: 1px;
+			border-radius: 3px 0 0 3px;
+		&:last-child a
+			border-radius: 0 3px 3px 0;
+	a
+		float: left;
+		padding: 0 14px;
+		line-height: 34px;
+		text-decoration: none;
+		border: 1px solid #ddd;
+		border-left-width: 0;
+	a:hover,
+	.active a
+		background-color: #f5f5f5;
+	.active a
+		color: #999999;
+		cursor: default;
+	.disabled
+		span,
+		a,
+		a:hover
+			color: #999999;
+			background-color: transparent;
+			cursor: default;

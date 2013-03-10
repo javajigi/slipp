@@ -1,60 +1,60 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
 %><%@ include file="/WEB-INF/jsp/include/tags.jspf" %>
 
-<section class="section-main">
-	<section class="span8">
-		<div class="qna">
-			<h1>최신글들</h1>
-			<div class="qna-list">
-				<h2 class="hidden">list</h2>
-				<ul class="list">
-				<c:forEach items="${questions.content}" var="each">
-					<li>
-						<div class="wrap">
-							<div class="main">
-								<strong class="subject">
-									<a href="/questions/${each.questionId}">${sf:h(each.title)}</a>
-								</strong>
-								<div class="tags">
-									<ul>
-									<c:forEach items="${each.denormalizedTags}" var="tag">
-										<li>
-											<a href="/questions/tagged/${tag}" class="tag">${tag}</a>
-										</li>
-									</c:forEach>
-									</ul>
-								</div>
-							</div>
-							<div class="sub">
-								<div class="reply">
-									<i class="icon-reply" title="댓글"></i>
-									<span class="point">${each.answerCount}</span>
-								</div>
-								<div class="auth-info">
-									latest:
-									<span class="time">
-										<fmt:formatDate value="${each.createdDate}" pattern="yyyy-MM-dd HH:mm" />
-									</span>
-									<a href="${each.writer.profileUrl}" class="author">${each.writer.userId}</a>
-								</div>
-							</div>
+<div class="home-content">
+	<section class="qna-list">
+		<h1>최근화제</h1>
+		<ul class="list">
+		<c:forEach items="${questions.content}" var="each">
+			<li>
+				<div class="wrap">
+					<div class="main">
+						<strong class="subject">
+							<a href="/questions/${each.questionId}">${sf:h(each.title)}</a>
+						</strong>
+						<div class="tags">
+							<ul>
+							<c:forEach items="${each.denormalizedTags}" var="tag">
+								<li>
+									<a href="/questions/tagged/${tag}" class="tag">${tag}</a>
+								</li>
+							</c:forEach>
+							</ul>
 						</div>
-					</li>
-				</c:forEach>
-				</ul>
-				<div class="pagination pagination-centered">
-					<ul>
-						<sl:pager page="${questions}" prefixUri="/questions"/>
-					</ul>
+					</div>
+					<div class="sub">
+						<div class="reply">
+							<i class="icon-reply" title="댓글"></i>
+							<span class="point">${each.answerCount}</span>
+						</div>
+						<div class="auth-info">
+							<c:choose>
+								<c:when test="${each.answerCount == 0}">
+								작성
+								</c:when>
+								<c:otherwise>
+								최근답변
+								</c:otherwise>
+							</c:choose>
+							<span class="time">
+								<fmt:formatDate value="${each.createdDate}" pattern="yyyy-MM-dd HH:mm" />
+							</span>
+							<a href="${each.writer.profileUrl}" class="author">${each.writer.userId}</a>
+						</div>
+					</div>
 				</div>
-			</div>
-			<div class="qna-side">
-				<slipp:side-tags tags="${tags}"/>
-			</div>
-		</div>
+			</li>
+		</c:forEach>
+		</ul>
+		<nav class="pager">
+			<ul>
+				<sl:pager page="${questions}" prefixUri="/questions"/>
+			</ul>
+		</nav>
 	</section>
+	<slipp:side-tags tags="${tags}"/>
 	<section class="span4">
-		<h1><a href="/wiki">SLiPP 소식</a></h1>
+		<h1>SLiPP 소식</h1>
 		<div class="forumList">
 		<c:forEach items="${pages}" var="page">
 			<div class="nickArea">
@@ -72,4 +72,4 @@
 			</div>
 		</div>
 	</section>
-</section>
+</div>
