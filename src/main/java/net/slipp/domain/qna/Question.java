@@ -33,6 +33,8 @@ import net.slipp.support.jpa.HasCreatedDate;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.security.access.AccessDeniedException;
 
 import com.google.common.base.Function;
@@ -44,6 +46,7 @@ import com.google.common.collect.Sets;
 
 @Entity
 @EntityListeners({ CreatedDateEntityListener.class })
+@Cache(region="question", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Question implements HasCreatedDate {
 	private static final Integer DEFAULT_BEST_ANSWER = 2;
 	

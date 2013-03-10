@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache>
+    <defaultCache eternal="false" 
+            overflowToDisk="false"
+            maxElementsInMemory="1000" 
+            timeToIdleSeconds="300" 
+            timeToLiveSeconds="600"
+            memoryStoreEvictionPolicy="LRU"
+    />
+
+	<cache
+	    name="socialUser"	
+	    maxElementsInMemory="1000"
+	    eternal="false"
+	    timeToIdleSeconds="300"
+	    timeToLiveSeconds="600"
+	    overflowToDisk="false"
+	/>
+
+	<cache
+	    name="tag"	
+	    maxElementsInMemory="1000"
+	    eternal="false"
+	    timeToIdleSeconds="3600"
+	    timeToLiveSeconds="3600"
+	    overflowToDisk="false"
+	/>
+	
+	<cache
+	    name="question"	
+	    maxElementsInMemory="1000"
+	    eternal="false"
+	    timeToIdleSeconds="300"
+	    timeToLiveSeconds="600"
+	    overflowToDisk="false"
+	/>
+</ehcache>

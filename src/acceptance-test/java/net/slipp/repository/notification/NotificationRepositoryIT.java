@@ -16,6 +16,8 @@ import net.slipp.repository.user.SocialUserRepository;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -23,11 +25,13 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StopWatch;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:/test-applicationContext.xml")
 public class NotificationRepositoryIT {
+	private static final Logger log = LoggerFactory.getLogger(NotificationRepositoryIT.class);
+	
 	@Autowired
 	private NotificationRepository notificationRepository;
 	
@@ -37,8 +41,9 @@ public class NotificationRepositoryIT {
 	@Autowired
 	private SocialUserRepository socialUserRepository;
 	
+	private StopWatch stopWatch = new StopWatch();
+	
 	@Test
-	@Transactional
 	public void notification_lifecycle() throws Exception {
 		// given
 		SocialUser notifiee = SocialUserBuilder.aSocialUser().createTestUser("javajigi");
@@ -53,11 +58,16 @@ public class NotificationRepositoryIT {
 		
 		// when
 		Pageable pageable = new PageRequest(0, 5, new Sort(Direction.DESC, "notificationId"));
-		List<Notification> notifications = notificationRepository.findNotifications(notifiee, pageable);
-		assertThat(notifications.size(), is(1));
+		stopWatch.start();
+		for(int i=0; i< 100; i++) {
+			List<Notification> notifications = notificationRepository.findNotifications(notifiee, pageable);
+			assertThat(notifications.size(), is(1));
+		}
+		stopWatch.stop();
+		log.debug("time to create: {}", stopWatch.getLastTaskTimeMillis() + "ms");
 		
-		notificationRepository.updateReaded(notifiee);
-		notifications = notificationRepository.findNotifications(notifiee, pageable);
-		assertThat(notifications.size(), is(0));
+//		notificationRepository.updateReaded(notifiee);
+//		notifications = notificationRepository.findNotifications(notifiee, pageable);
+//		assertThat(notifications.size(), is(0));
 	}
 }
