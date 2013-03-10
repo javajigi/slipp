@@ -25,8 +25,8 @@ public class Notification implements Serializable {
 	private SocialUser notifier;
 	
     @OneToOne
-    @org.hibernate.annotations.ForeignKey(name = "fk_notification_participant")
-	private SocialUser participant;
+    @org.hibernate.annotations.ForeignKey(name = "fk_notification_notifiee")
+	private SocialUser notifiee;
     
     @OneToOne
     @org.hibernate.annotations.ForeignKey(name = "fk_notification_question")
@@ -38,9 +38,9 @@ public class Notification implements Serializable {
 	public Notification() {
 	}
 	
-	public Notification(SocialUser notifier, SocialUser participant, Question question) {
+	public Notification(SocialUser notifier, SocialUser notifiee, Question question) {
 		this.notifier = notifier;
-		this.participant = participant;
+		this.notifiee = notifiee;
 		this.question = question;
 	}
 
@@ -52,8 +52,8 @@ public class Notification implements Serializable {
 		return notifier;
 	}
 
-	public SocialUser getParticipant() {
-		return participant;
+	public SocialUser getNotifiee() {
+		return notifiee;
 	}
 
 	public Question getQuestion() {

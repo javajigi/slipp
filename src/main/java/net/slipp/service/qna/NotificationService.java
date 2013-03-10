@@ -34,13 +34,13 @@ public class NotificationService {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Async
-	public void notifyToFacebook(SocialUser loginUser, Question question, Set<SocialUser> notifierUsers) {
-		if (notifierUsers.isEmpty()) {
+	public void notifyToFacebook(SocialUser loginUser, Question question, Set<SocialUser> notifieeUsers) {
+		if (notifieeUsers.isEmpty()) {
 			return;
 		}
 
-		for (SocialUser socialUser : notifierUsers) {
-			String uri = String.format("/%s/notifications", socialUser.getProviderUserId());
+		for (SocialUser notifiee : notifieeUsers) {
+			String uri = String.format("/%s/notifications", notifiee.getProviderUserId());
 			HttpInvocationSupport invocation = new HttpInvocationSupport(uri) {
 				@Override
 				protected Object parseResponseBody(String body) throws Exception {
@@ -58,16 +58,16 @@ public class NotificationService {
 	}
 
 	@Async
-	public void notifyToSlipp(SocialUser loginUser, Question question, Set<SocialUser> notifierUsers) {
-		Assert.notNull(loginUser, "LoginUser should be not null!");
+	public void notifyToSlipp(SocialUser notifier, Question question, Set<SocialUser> notifieeUsers) {
+		Assert.notNull(notifier, "LoginUser should be not null!");
 		Assert.notNull(question, "Question should be not null!");
 		
-		if (notifierUsers.isEmpty()) {
+		if (notifieeUsers.isEmpty()) {
 			return;
 		}
 		
-		for (SocialUser notifier : notifierUsers) {
-			Notification notification = new Notification(notifier, loginUser, question);
+		for (SocialUser notifiee : notifieeUsers) {
+			Notification notification = new Notification(notifier, notifiee, question);
 			notificationRepository.save(notification);
 		}
 	}
@@ -78,9 +78,6 @@ public class NotificationService {
 	}
 	
 	public void readNotifications(SocialUser loginUser) {
-		List<Notification> notifications = notificationRepository.findAllNotifications(loginUser);
-		for (Notification notification : notifications) {
-			notification.read();
-		}
+		notificationRepository.updateReaded(loginUser);
 	}
 }
