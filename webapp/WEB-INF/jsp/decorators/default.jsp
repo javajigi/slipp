@@ -17,7 +17,6 @@
 <decorator:head />
 </head>
 
-<<<<<<< HEAD
 <body>
 <div class="wrapper">
 	<header class="header" role="banner">
@@ -55,6 +54,11 @@
 						<span class="user-name">진우</span>
 					</li>
 					<li>
+						<a href="/notifications" class="notificationBtn">${countNotifications}</a>
+						<div id="notificationArea" style="position: absolute; left:0px; top: 45px; width:380px; background-color: #EFEFEF">
+					</div>
+					</li>
+					<li>
 						<a href="/logout" class="link-loginout"><span class="text">LogOut</span> <i class="icon-loginout"></i></a>
 					</li>
 					</sec:authorize>
@@ -90,42 +94,6 @@
 	</footer>
 </div>
 
-=======
-  <div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-      <div class="container">
-        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </a>
-        <a class="brand" href="/"><abbr title="Sustainable Life, Programming, Programmer">SLiPP</abbr><span class="sub"> - 지속가능한 삶, 프로그래밍, 프로그래머</span></a>
-        <div class="nav-collapse">
-          <ul class="nav nav-pills pull-right">
-            <li><a href="/questions">QnA</a></li>
-            <li><a href="/wiki">Wiki</a></li>
-            <li><a href="https://github.com/javajigi/slipp/issues" target="_blank">Ideas&amp;Bugs</a></li>
-            <li><a href="/code">Code</a></li>
-            <li><a href="/about">About</a></li>
-            <sec:authorize access="!hasRole('ROLE_USER')">
-            <li class="active loginBtn"><a href="/login">로그인</a></li>
-            </sec:authorize>
-            <sec:authorize access="hasRole('ROLE_USER')">
-            <li class="active logoutBtn"><a href="/logout">로그아웃</a></li>
-            <li><a href="/notifications" class="notificationBtn">${countNotifications}</a>
-            	<div id="notificationArea" style="position: absolute; left:0px; top: 45px; width:380px; background-color: #EFEFEF">
-            	</div>
-            </li>
-            </sec:authorize>              
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="container">
-    <decorator:body/>
-  </div>
->>>>>>> develop
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('.notificationBtn').on('click', function(e){
@@ -133,7 +101,7 @@
 			var $btn = $(this);
 			var $notificationArea = $("#notificationArea");
 			$notificationArea.empty();
-			
+
 			$.getJSON($btn.attr('href'), function(result){
 				var notifications = eval(result);
 				$ul = $('<ul></ul>');
