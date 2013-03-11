@@ -3,16 +3,18 @@
 // 		padding-top: 50px;
 
 .container
-	width: 940px;
+	width: 960px;
 	margin: 0 auto;
 	clearfix();
 	@media not-desktop
-		width: 100%;
+		width: auto;
+		padding: 0 1em;
 
 .header
 	position: relative;
 	height: 40px;
 	margin-bottom: 20px;
+	box-shadow: 0 0 20px rgba(0, 0, 0, .14);
 	background: #ededed;
 	border-bottom: 1px solid #ddd;
 	// @media desktop
@@ -56,6 +58,9 @@
 			@media phone
 				float: none;
 				display: inline-block;
+		.text
+			@media phone
+				display: none;
 		a
 			display: inline-block;
 			height: 40px;
@@ -81,9 +86,6 @@
 		li
 			border-right: 1px solid #ddd;
 			box-shadow: 1px 0 0 #fff;
-		.text
-			@media phone
-				display: none;
 		.icon-list
 			display: none;
 			@media phone
@@ -125,6 +127,10 @@
 			@media phone
 				padding-left: .4em;
 				padding-right: .4em;
+		.user-name
+			@media phone
+				display: none;
+
 		.user-thumb
 			border-radius: 3px;
 			margin-right: .5em;
@@ -174,6 +180,26 @@
 		color: #999;
 		font-weight: bold;
 		letter-spacing: -1px;
+
+
+.content-main
+	float: left;
+	width: 75%;
+	@media not-desktop
+		width: 100%;
+	.home-content &
+		width: 65%;
+		@media not-desktop
+			width: 100%;
+.content-sub
+	float: right;
+	width: 23%;
+	@media not-desktop
+		width: 100%;
+	.home-content &
+		width: 33%;
+		@media not-desktop
+			width: 100%;
 
 .pager
 	height: 36px;
