@@ -10,7 +10,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<org.slf4j.version>1.6.1</org.slf4j.version>
 		<jpa.version>2.0.0</jpa.version>
-		<hibernate.version>3.5.6-Final</hibernate.version>
+		<hibernate.version>4.1.10.Final</hibernate.version>
 		<org.springframework.version>3.1.2.RELEASE</org.springframework.version>
 		<org.springframework.social.version>1.0.1.RELEASE</org.springframework.social.version>
 		<org.springframework.security.version>3.1.0.RELEASE</org.springframework.security.version>
@@ -113,12 +113,17 @@
 		<dependency>
 			<groupId>commons-dbcp</groupId>
 			<artifactId>commons-dbcp</artifactId>
-			<version>1.2.2</version>
+			<version>1.4</version>
 		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.18</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.ehcache</groupId>
+			<artifactId>ehcache-core</artifactId>
+			<version>2.6.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate.javax.persistence</groupId>
@@ -128,6 +133,11 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-ehcache</artifactId>
 			<version>${hibernate.version}</version>
 		</dependency>
 
@@ -367,7 +377,8 @@
 						<phase>process-test-classes</phase>
 						<configuration>
 							<target>
-								<chmod file="target/test-classes/chromedriver/chromedriver-mac" perm="755" />
+								<chmod file="target/test-classes/chromedriver/chromedriver-mac"
+									perm="755" />
 							</target>
 						</configuration>
 						<goals>
@@ -424,6 +435,9 @@
 					<url>${database.url}</url>
 					<username>${database.username}</username>
 					<password>${database.password}</password>
+					<password>${database.password}</password>
+					<createSql>CREATE DATABASE slipp DEFAULT CHARACTER SET utf8 COLLATE
+						utf8_general_ci</createSql>
 				</configuration>
 				<dependencies>
 					<dependency>

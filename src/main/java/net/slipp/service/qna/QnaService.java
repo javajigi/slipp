@@ -40,7 +40,7 @@ public class QnaService {
 
     @Resource(name = "notificationService")
     private NotificationService notificationService;
-
+    
     @Resource(name = "scoreLikeService")
     private ScoreLikeService scoreLikeService;
     
@@ -83,10 +83,8 @@ public class QnaService {
     }
 
     public Question showQuestion(Long id) {
-        Question question = questionRepository.findOne(id);
-        question.show();
-
-        return question;
+    	questionRepository.updateShowCount(id);
+        return questionRepository.findOne(id);
     }
 
     public Page<Question> findsByTag(String name, Pageable pageable) {
@@ -110,6 +108,7 @@ public class QnaService {
         answer.writedBy(loginUser);
         answer.answerTo(question);
         Answer savedAnswer = answerRepository.saveAndFlush(answer);
+        notificationService.notifyToSlipp(loginUser, question, question.findNotificationUser(loginUser));
         notificationService.notifyToFacebook(loginUser, question, question.findNotificationUser(loginUser));
         if (answer.isConnected()) {
             log.info("firing sendAnswerMessageToFacebook!");
@@ -147,4 +146,5 @@ public class QnaService {
             answerRepository.save(answer);
         }
     }
+    
 }

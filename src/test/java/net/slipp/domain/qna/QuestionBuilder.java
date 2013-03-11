@@ -46,13 +46,10 @@ public class QuestionBuilder {
 	}
 	
 	public Question build() {
-		Question question = new Question(writer, title, contents, tags) {
-			@Override
+		return new Question(writer, title, contents, tags) {
 			public List<Answer> getAnswers() {
 				return answers;
 			}
 		};
-		
-		return question;
 	}
 }

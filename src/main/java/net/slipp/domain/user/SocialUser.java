@@ -10,10 +10,14 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 @Entity
 @Table(uniqueConstraints = {
 		@UniqueConstraint(columnNames = { "userId", "providerId", "providerUserId" }),
         @UniqueConstraint(columnNames = { "userId", "providerId", "rank" })})
+@Cache(region="socialUser", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class SocialUser {
     public static final SocialUser GUEST_USER = new GuestSocialUser();
     

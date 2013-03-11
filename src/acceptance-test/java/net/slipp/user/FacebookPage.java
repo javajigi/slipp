@@ -1,7 +1,8 @@
 package net.slipp.user;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
+import net.slipp.LoginUser;
 import net.slipp.qna.IndexPage;
 
 import org.openqa.selenium.By;
@@ -15,17 +16,17 @@ public class FacebookPage {
 		assertThat(driver.getTitle(), is("로그인 | Facebook"));
 	}
 	
-	public IndexPage login(String email, String password, String nickName) {
+	public IndexPage login(LoginUser loginUser) {
 		driver.findElement(By.id("email")).clear();
-		driver.findElement(By.id("email")).sendKeys(email);
+		driver.findElement(By.id("email")).sendKeys(loginUser.getEmail());
 		driver.findElement(By.id("pass")).clear();
-		driver.findElement(By.id("pass")).sendKeys(password);
+		driver.findElement(By.id("pass")).sendKeys(loginUser.getPassword());
 		driver.findElement(By.id("persist_box")).click();
 		driver.findElement(By.cssSelector("#loginbutton > input")).click();
 		
 		if (isFirstLogin()) {
 			LoginPage loginPage = new LoginPage(driver);
-			return loginPage.loginSlipp(nickName);
+			return loginPage.loginSlipp(loginUser.getNickName());
 		}
 		
 		return new IndexPage(driver);

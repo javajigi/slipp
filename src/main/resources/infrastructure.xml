@@ -14,8 +14,9 @@
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
 		p:persistenceXmlLocation="classpath:META-INF/persistence.xml"
-		p:persistenceUnitName="slipp.qna" p:dataSource-ref="dataSource"
-		p:jpaDialect-ref="jpaDialect" />		
+		p:persistenceUnitName="slipp.qna" 
+		p:dataSource-ref="dataSource"
+		p:jpaDialect-ref="jpaDialect" />
 		
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />

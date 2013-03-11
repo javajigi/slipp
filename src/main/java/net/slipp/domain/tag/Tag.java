@@ -13,9 +13,13 @@ import javax.persistence.OneToOne;
 
 import net.slipp.domain.qna.Question;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import com.google.common.collect.Sets;
 
 @Entity
+@Cache(region="tag", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Tag {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,6 +30,7 @@ public class Tag {
 
 	private int taggedCount = 0;
 
+    @Column(name = "pooled", nullable=false)
 	private boolean pooled;
 
 	@OneToOne

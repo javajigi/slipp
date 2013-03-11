@@ -15,11 +15,32 @@
 							</strong>
 							<c:if test="${each.denormalizedTags != ''}">
 								<div class="tags">
+<<<<<<< HEAD
 									<i class="icon-tag" title="태그"></i>
 									<span class="tag-list">
 										<c:forEach items="${each.denormalizedTags}" var="tag">
 											<span class="tag">${tag}</span>
 										</c:forEach>
+=======
+									<ul>
+									<c:forEach items="${each.denormalizedTags}" var="tag">
+										<li>
+											<a href="/questions/tagged/${tag}" class="tag">${tag}</a>	
+										</li>
+									</c:forEach>
+									</ul>
+								</div>
+							</div>
+							<div class="sub">
+								<div class="reply">
+									<i class="symbol" title="댓글">R</i>
+									<span class="point">${each.answerCount}</span>
+								</div>
+								<div class="auth-info">
+									<a href="${each.writer.profileUrl}" class="author">${each.latestParticipant.userId}</a>
+									<span class="time">
+										<fmt:formatDate value="${each.updatedDate}" pattern="yyyy-MM-dd HH:mm" />  
+>>>>>>> develop
 									</span>
 								</div>
 							</c:if>

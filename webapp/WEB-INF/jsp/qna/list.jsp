@@ -24,9 +24,15 @@
 								</div>
 							</c:if>
 							<div class="auth-info">
+<<<<<<< HEAD
 								<i class="icon-addtext"></i>
 								<span class="time">
 									<fmt:formatDate value="${each.createdDate}" pattern="yyyy-MM-dd HH:mm" />
+=======
+								<a href="${each.writer.profileUrl}" class="author">${each.latestParticipant.userId}</a>
+								<span class="time">
+									<fmt:formatDate value="${each.updatedDate}" pattern="yyyy-MM-dd HH:mm" />  
+>>>>>>> develop
 								</span>
 								<a href="${each.writer.profileUrl}" class="author">${each.writer.userId}</a>
 							</div>

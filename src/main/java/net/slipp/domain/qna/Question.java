@@ -28,10 +28,13 @@ import javax.persistence.TemporalType;
 
 import net.slipp.domain.tag.Tag;
 import net.slipp.domain.user.SocialUser;
-import net.slipp.support.jpa.CreatedAndUpdatedDateEntityListener;
-import net.slipp.support.jpa.HasCreatedAndUpdatedDate;
+import net.slipp.support.jpa.CreatedDateEntityListener;
+import net.slipp.support.jpa.HasCreatedDate;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.security.access.AccessDeniedException;
 
 import com.google.common.base.Function;
@@ -42,8 +45,9 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
 @Entity
-@EntityListeners({ CreatedAndUpdatedDateEntityListener.class })
-public class Question implements HasCreatedAndUpdatedDate {
+@EntityListeners({ CreatedDateEntityListener.class })
+@Cache(region="question", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+public class Question implements HasCreatedDate {
 	private static final Integer DEFAULT_BEST_ANSWER = 2;
 	
     @Id
@@ -54,6 +58,10 @@ public class Question implements HasCreatedAndUpdatedDate {
     @org.hibernate.annotations.ForeignKey(name = "fk_question_writer")
     private SocialUser writer;
 
+    @ManyToOne
+    @org.hibernate.annotations.ForeignKey(name = "fk_question_latest_participant")
+	private SocialUser latestParticipant;
+    
     @Column(name = "title", length = 100, nullable = false)
     private String title;
 
@@ -90,7 +98,7 @@ public class Question implements HasCreatedAndUpdatedDate {
     @OrderBy("answerId ASC")
     private List<Answer> answers;
 
-    @Column(name = "deleted", nullable = false)
+    @Column(name = "deleted", nullable=false)
     private boolean deleted = false;
 
     @Embedded
@@ -106,9 +114,11 @@ public class Question implements HasCreatedAndUpdatedDate {
     public Question(Long id, SocialUser loginUser, String title, String contents, Set<Tag> newTags) {
     	this.questionId = id;
         this.writer = loginUser;
+        this.latestParticipant = loginUser;
         this.title = title;
         this.contentsHolder = Lists.newArrayList(contents);
         newTags(newTags);
+        this.updatedDate = new Date();
     }
 
 	public List<Answer> getAnswers() {
@@ -175,11 +185,19 @@ public class Question implements HasCreatedAndUpdatedDate {
     public SocialUser getWriter() {
         return writer;
     }
+    
+	public SocialUser getLatestParticipant() {
+		return this.latestParticipant;
+	}
 
     public String getTitle() {
         return title;
     }
 
+    public String getSummaryTitle() {
+        return StringUtils.left(title, 8)+"...";
+    }
+    
     public int getShowCount() {
         return showCount;
     }
@@ -204,10 +222,6 @@ public class Question implements HasCreatedAndUpdatedDate {
         return updatedDate;
     }
 
-    public void setUpdatedDate(Date updatedDate) {
-        this.updatedDate = updatedDate;
-    }
-
     public boolean isDeleted() {
         return deleted;
     }
@@ -220,12 +234,10 @@ public class Question implements HasCreatedAndUpdatedDate {
         detaggedTags(this.tags);
     }
 
-    public void show() {
-        this.showCount += 1;
-    }
-
-    public void newAnswered() {
+    public void newAnswered(Answer answer) {
         this.answerCount += 1;
+        this.latestParticipant = answer.getWriter();
+        this.updatedDate = new Date();
     }
 
     public void deAnswered() {

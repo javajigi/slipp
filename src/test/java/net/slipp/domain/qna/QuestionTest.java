@@ -107,7 +107,19 @@ public class QuestionTest {
 		Question dut = aQuestion().build();
 		assertThat(dut.getBestAnswer(), is(nullValue()));
 	}
-
+	
+	@Test
+	public void 질문에_답변을_한다() throws Exception {
+		SocialUser writer1 = new SocialUser(10);
+		Question dut = aQuestion().withWriter(writer1).build();
+		assertThat(dut.getLatestParticipant(), is(writer1));
+		
+		SocialUser writer2 = new SocialUser(11);
+		Answer answer = anAnswer().with(writer2).build();
+		dut.newAnswered(answer);
+		assertThat(dut.getLatestParticipant(), is(writer2));
+	}
+	
 	@Test
 	public void 질문을_삭제한다() throws Exception {
 		Tag java = aTag().withName("java").build();
