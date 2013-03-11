@@ -14,16 +14,10 @@
 	position: relative;
 	height: 40px;
 	margin-bottom: 20px;
-	box-shadow: 0 0 20px rgba(0, 0, 0, .14);
-	background: #ededed;
+	box-shadow: 0 0 14px rgba(0, 0, 0, .14);
+	background-color: #ededed;
+	background-image: linear-gradient(#fafafa, #f5f5f5);
 	border-bottom: 1px solid #ddd;
-	// @media desktop
-	// 	position: fixed;
-	// 	z-index: zIndex-floatingBar;
-	// 	top: 0;
-	// 	left: 0;
-	// 	width: 100%;
-	// 	box-shadow: 0 0 2em rgba(0, 0, 0, .2);
 	@media phone
 		text-align: right;
 	.logo
@@ -101,10 +95,11 @@
 			bottom: -60px;
 		.inp-search
 			width: 10em;
+			padding: 0 .4em;
 			height: 1.8em;
 			margin-left: .4em;
 			border-radius: 2px;
-			border: 2px solid #ddd;
+			border: 1px solid #ddd;
 			&:focus
 				outline: none;
 				border-color: #AAD2F7;
@@ -193,11 +188,11 @@
 			width: 100%;
 .content-sub
 	float: right;
-	width: 23%;
+	width: 22%;
 	@media not-desktop
 		width: 100%;
 	.home-content &
-		width: 33%;
+		width: 32%;
 		@media not-desktop
 			width: 100%;
 
