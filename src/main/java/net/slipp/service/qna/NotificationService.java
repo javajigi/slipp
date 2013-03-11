@@ -68,12 +68,18 @@ public class NotificationService {
 			notificationRepository.save(notification);
 		}
 	}
-
-	public List<Notification> findNotifications(SocialUser notifiee, Pageable pageable) {
-		return notificationRepository.findNotifications(notifiee, pageable);
+	
+	public long countByNotifiee(SocialUser notifiee) {
+	    Long count = notificationRepository.countByNotifiee(notifiee);
+	    if (count == null) {
+	        return 0L;
+	    }
+	    return count;	    
 	}
 	
-	public void readNotifications(SocialUser loginUser) {
-		notificationRepository.updateReaded(loginUser);
+	public List<Notification> findNotificationsAndReaded(SocialUser notifiee, Pageable pageable) {
+	    List<Notification> notifications = notificationRepository.findNotifications(notifiee, pageable);
+	    notificationRepository.updateReaded(notifiee);
+	    return notifications;
 	}
 }

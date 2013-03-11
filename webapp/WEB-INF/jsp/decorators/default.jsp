@@ -46,7 +46,7 @@
             </sec:authorize>
             <sec:authorize access="hasRole('ROLE_USER')">
             <li class="active logoutBtn"><a href="/logout">로그아웃</a></li>
-            <li><a href="/notifications" class="notificationBtn">${fn:length(notifications)}</a>
+            <li><a href="/notifications" class="notificationBtn">${countNotifications}</a>
             	<div id="notificationArea" style="position: absolute; left:0px; top: 45px; width:380px; background-color: #EFEFEF">
             	</div>
             </li>
@@ -64,6 +64,9 @@
 		$('.notificationBtn').on('click', function(e){
 			e.preventDefault();
 			var $btn = $(this);
+			var $notificationArea = $("#notificationArea");
+			$notificationArea.empty();
+			
 			$.getJSON($btn.attr('href'), function(result){
 				var notifications = eval(result);
 				$ul = $('<ul></ul>');
@@ -72,7 +75,7 @@
 					$("<li></li>").append($("<a></a>").attr("href", "/questions/" + notification.questionId)
 					.text(notification.title + "에 댓글이 달렸습니다.")).appendTo($ul);
 				}
-				$("#notificationArea").append($ul);
+				$notificationArea.append($ul);
 				$btn.text("0");
 			});
 		});

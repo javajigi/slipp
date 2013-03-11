@@ -26,26 +26,20 @@ public class NotificationController {
 	private static final int DEFAULT_PAGE_NO = 0;
 	private static final int DEFAULT_PAGE_SIZE = 5;
 	
-	@Resource(name = "notificationService")
-	private NotificationService notificationService;
+    @Resource (name = "notificationService")
+    private NotificationService notificationService; 
 	
 	@RequestMapping("")
 	public @ResponseBody List<NotificationVO> list(@LoginUser SocialUser notifiee) {
 		Pageable pageable = new PageRequest(DEFAULT_PAGE_NO, DEFAULT_PAGE_SIZE, new Sort(Direction.DESC, "notificationId"));
 		
 		List<NotificationVO> notificationVOs = Lists.newArrayList();
-		List<Notification> notifications = notificationService.findNotifications(notifiee, pageable);
+		List<Notification> notifications = notificationService.findNotificationsAndReaded(notifiee, pageable);
 		for (Notification notification : notifications) {
 			Question question = notification.getQuestion();
-			notificationVOs.add(new NotificationVO(question.getQuestionId(), question.getTitle()));
+			notificationVOs.add(new NotificationVO(question.getQuestionId(), question.getTitle(), notification.isReaded()));
 		}
 		
 		return notificationVOs;
-	}
-	
-	@RequestMapping("/read")
-	public @ResponseBody String read(@LoginUser SocialUser loginUser) {
-		notificationService.readNotifications(loginUser);
-		return "ok";
 	}
 }

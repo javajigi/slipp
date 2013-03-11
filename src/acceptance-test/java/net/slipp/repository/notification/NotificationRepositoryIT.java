@@ -66,8 +66,14 @@ public class NotificationRepositoryIT {
 		stopWatch.stop();
 		log.debug("time to create: {}", stopWatch.getLastTaskTimeMillis() + "ms");
 		
+		Long count = notificationRepository.countByNotifiee(notifiee);
+		assertThat(count, is(1L));
+		
 		notificationRepository.updateReaded(notifiee);
 		notifications = notificationRepository.findNotifications(notifiee, pageable);
 		assertThat(notifications.size(), is(0));
+		
+		count = notificationRepository.countByNotifiee(notifiee);
+        assertThat(count, is(nullValue()));
 	}
 }

@@ -19,8 +19,12 @@ public class GlobalRequestAttributesInterceptor extends HandlerInterceptorAdapte
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		SocialUser socialUser = sessionService.getLoginUser();
-		request.setAttribute("loginUser", socialUser);
+		SocialUser loginUser = sessionService.getLoginUser();
+		request.setAttribute("loginUser", loginUser);
+		
+		if (!loginUser.isGuest()) {
+		    request.setAttribute("countNotifications", notificationService.countByNotifiee(loginUser));
+		}
 		
 		return super.preHandle(request, response, handler);
 	}

@@ -2,6 +2,9 @@ package net.slipp;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
+
+import java.util.List;
+
 import net.slipp.qna.AdminTagPage;
 import net.slipp.qna.AnswerUpdateFormPage;
 import net.slipp.qna.IndexPage;
@@ -14,6 +17,10 @@ import net.slipp.support.AbstractATTest;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class QnAAT extends AbstractATTest {
     private QuestionFixture questionFixture;
@@ -63,7 +70,26 @@ public class QnAAT extends AbstractATTest {
     	createQuestion(questionFixture);
     	loginToAnotherUser(2);
     	answerToQuestion();
+    	assertThat(countNotifications(), is(0));
+    	loginToAnotherUser(1);
+    	assertThat(countNotifications() > 0, is(true));
+    	clickNotificationBtn();
+    	assertThat(countNotifications(), is(0));
 	}
+    
+    private void clickNotificationBtn() {
+        driver.findElement(By.cssSelector("a.notificationBtn")).click();
+        new WebDriverWait(driver, 1000).until
+            (ExpectedConditions.presenceOfElementLocated(By.cssSelector("#notificationArea > ul > li")));
+        List<WebElement> elements = driver.findElements(By.cssSelector("#notificationArea > ul > li"));
+        assertThat(elements.size() > 0, is(true));
+        assertThat(countNotifications(), is(0));
+    }
+    
+    private int countNotifications() {
+        String value = driver.findElement(By.cssSelector("a.notificationBtn")).getText();
+        return Integer.parseInt(value);
+    }
     
     @Test
 	public void question_list_when_create_answer() throws Exception {
