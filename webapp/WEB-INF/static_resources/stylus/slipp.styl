@@ -4,19 +4,25 @@
 @import "utils/units";
 @import "utils/mixins";
 @import "utils/icon";
-@import "utils/tipsy";
 @import "partials/layout";
 @import "partials/list";
 @import "partials/view";
+@import "partials/write";
 @import "partials/tag";
 @import "partials/home";
-@import "partials/qna";
-
-.flyaway
-	flyaway()
 
 label.error
-	color: orange
+	display: block;
+	color: red;
+	&:before
+		font-family: 'batch-icons';
+		speak: none;
+		font-style: normal;
+		font-weight: normal;
+		line-height: 1;
+		-webkit-font-smoothing: antialiased;
+		margin-right: .2em;
+		content:'\F15A';
 
 .slipp-doc
 	.box

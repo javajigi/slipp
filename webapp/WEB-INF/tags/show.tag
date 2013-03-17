@@ -19,14 +19,20 @@ attribute name="question" required="true" rtexprvalue="true" type="net.slipp.dom
 	</div>
 	<div class="article-doc">
 		${sf:wiki(question.contents)}
-		<c:if test="${sf:isWriter(question.writer, loginUser)}">
-			<div class="article-doc-util">
-				<a class="link-modify" href="/questions/${question.questionId}/form">수정</a>
-				<form class="form-delete" action="/questions/${question.questionId}" method="POST">
-					<input type="hidden" name="_method" value="DELETE" />
-					<button class="link-delete" type="submit">삭제</button>
-				</form>
-			</div>
-		</c:if>
 	</div>
+	<c:if test="${sf:isWriter(question.writer, loginUser)}">
+		<div class="article-util">
+			<ul class="list-util">
+				<li>
+					<a class="link-modify-article" href="/questions/${question.questionId}/form">수정</a>
+				</li>
+				<li>
+					<form class="form-delete" action="/questions/${question.questionId}" method="POST">
+						<input type="hidden" name="_method" value="DELETE" />
+						<button class="link-delete-article" type="submit">삭제</button>
+					</form>
+				</li>
+			</ul>
+		</div>
+	</c:if>
 </article>

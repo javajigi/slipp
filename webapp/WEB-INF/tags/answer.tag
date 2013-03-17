@@ -24,24 +24,34 @@ attribute name="isBest" required="true" rtexprvalue="true" type="java.lang.Boole
 			</a>
 		</div>
 	</div>
+	<form class="form-like" action="/questions/${question.questionId}/answers/${each.answerId}/like" method="POST">
+		<button type="submit" class="btn-like-article" title="공감하기">
+			<i class="icon-star"></i>
+			<strong class="like-count">${each.sumLike}</strong>
+			<span class="txt">공감</span>
+		</button>
+	</form>
 	<div class="article-doc">
 		${sf:wiki(each.contents)}
-		<div class="article-doc-util">
-			<button type="button" class="btn-like-article" data-answer-id="${each.answerId}">
-				<i class="icon-star"></i>
-				<strong class="like-count">${each.sumLike}</strong>
-				<span class="txt">공감</span>
-			</button>
+	</div>
+	<div class="article-util">
+		<ul class="list-util">
 			<c:if test="${sf:isWriter(each.writer, loginUser)}">
-				<a class="link-update-article" href="/questions/${question.questionId}/answers/${each.answerId}/form">수정</a>
+			<li>
+				<a class="link-modify-article" href="/questions/${question.questionId}/answers/${each.answerId}/form">수정</a>
+			</li>
+			<li>
 				<form class="form-delete" action="/questions/${question.questionId}/answers/${each.answerId}" method="POST">
 					<input type="hidden" name="_method" value="DELETE" />
 					<button type="submit" class="link-delete-article">삭제</button>
 				</form>
+			</li>
 			</c:if>
 			<sec:authorize access="hasRole('ROLE_USER')">
-				<button type="button" class="btn-answer-article" data-answer-id="${each.answerId}" data-answer-user-id="@${each.writer.userId}">언급 &darr;</button>
+			<li>
+				<button type="button" class="link-answer-article" data-answer-id="${each.answerId}" data-answer-user-id="@${each.writer.userId}">언급 &darr;</button>
+			</li>
 			</sec:authorize>
-		</div>
+		</ul>
 	</div>
 </article>

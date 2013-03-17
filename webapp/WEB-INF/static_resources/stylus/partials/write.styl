@@ -1,0 +1,68 @@
+.form-write
+	margin: 1em 0;
+	.title-write
+		margin-bottom .5em;
+		font-weight: bold;
+		font-size: 1.2em;
+	.box-write
+		border: 1px solid #dadada;
+		border-radius: 4px;
+		&.focused
+			border-color: #aad2f7;
+			box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+	.head-write
+		padding: .5em;
+		border-bottom: 1px solid #dadada;
+		border-radius: 4px 4px 0 0;
+		background-color: #ededed;
+		background-image: linear-gradient(#fafafa, #f5f5f5);
+		.btn-mode-write,
+		.btn-mode-preview
+			display: inline-block;
+			padding: 4px 6px;
+			border-radius: 3px;
+			color: #666;
+			&.active
+				background-color: #D1D1D1;
+	.tf-write
+		width: 100%;
+		padding: .5em;
+		display: block;
+		box-sizing: border-box;
+		border: 0 none;
+		box-shadow: none;
+		&:focus
+			border-color: none;
+			box-shadow: none;
+	.foot-write
+		text-align: right;
+		padding: .5em;
+		border-top: 1px solid #dadada;
+		border-radius: 0 0 4px 4px;
+		background-color: #ededed;
+		background-image: linear-gradient(#fafafa, #f5f5f5);
+		.link-to-md
+			text-decoration: underline;
+	.submit-write
+		text-align: right;
+		margin: .5em 0;
+		.msg-send-to-facebook
+			margin-right: 1em;
+			@media phone
+				display: block;
+				margin-right: 0;
+		.btn-submit
+			padding: .4em .8em;
+			border: 0 none;
+			border-radius: 4px;
+			color: #fff;
+			background-color: #005580;
+			&:hover
+				background-color: lighten(@background-color, 10);
+.form-fileupload
+	display: inline-block;
+	padding: .5em;
+	@media phone
+		display: none;
+	.btn-fileupload
+		box-shadow: none;

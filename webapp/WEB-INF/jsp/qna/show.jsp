@@ -16,29 +16,50 @@
 	<div class="content-main">
 		<slipp:show question="${question}"/>
 		<div class="qna-comment">
-			<p class="count"><strong>${question.answerCount}</strong>개의 답변</p>
+			<p class="article-count"><strong>${question.answerCount}</strong>개의 답변</p>
 			<c:if test="${!empty question.bestAnswer}">
 				<slipp:answer each="${question.bestAnswer}" isBest="true"/>
 			</c:if>
 			<c:forEach items="${question.answers}" var="each">
 				<slipp:answer each="${each}" isBest="false"/>
 			</c:forEach>
-			<form id="likeAnswerForm" action="/questions/${question.questionId}/answers" method="POST" class="flyaway">
 			</form>
 			<sec:authorize access="!hasRole('ROLE_USER')">
-				의견을 남기고 싶다면, <a href="/login" class="btn btn-primary btn-small">로그인</a>
+				<p class="msg-to-login">
+					<a href="/login">로그인</a>하시고 의견을 공유해 주세요!
+				</p>
 			</sec:authorize>
 			<sec:authorize access="hasRole('ROLE_USER')">
-				<form:form modelAttribute="answer" action="/questions/${question.questionId}/answers" method="POST" cssClass="form-horizontal">
+				<form:form modelAttribute="answer" action="/questions/${question.questionId}/answers" method="POST" cssClass="form-write">
 					<fieldset>
-						<form:textarea path="contents"  cols="80" rows="5"/>
-						<c:if test="${loginUser.facebookUser}">
-						내 페이스북으로 답변을 보내겠습니까?&nbsp;&nbsp;<form:checkbox path="connected" />
-						</c:if>
-						<div class="pull-right">
-							<button id="answerBtn" type="submit" class="btn btn-success">답변하기</button>
+						<legend class="title-write">의견 추가하기</legend>
+						<div class="box-write">
+							<div class="head-write">
+								<a href="javascript:;" class="btn-mode-write active">글작성</a>
+								<a href="javascript:;" class="btn-mode-preview">미리보기</a>
+							</div>
+							<div class="body-write">
+								<form:textarea path="contents" cols="80" rows="5" cssClass="tf-write" />
+								<div class="preview-write" style="display: none;"></div>
+							</div>
+							<div class="foot-write">
+								<a href="http://daringfireball.net/projects/markdown/syntax" class="link-to-md" target="_blank">Markdown</a>을 사용합니다.
+							</div>
+						</div>
+						<div class="submit-write">
+							<c:if test="${loginUser.facebookUser}">
+							<label class="msg-send-to-facebook">
+								<form:checkbox path="connected" /> 페이스북으로 답변전송
+							</label>
+							</c:if>
+							<button type="submit" class="btn-submit"><i class="icon-submit"></i> 답변하기</button>
 						</div>
 					</fieldset>
+				</form:form>
+				<form:form modelAttribute="answerFileUpload" action="/attachments" method="POST" enctype="multipart/form-data" cssClass="form-fileupload">
+					<i class="icon-image"></i>
+					<span class="text">이미지첨부</span>
+					<input type="file" class="btn-fileupload" />
 				</form:form>
 			</sec:authorize>
 		</div>
@@ -78,8 +99,8 @@
 </section>
 
 <script src="${url:resource('/javascripts/jquery.validate.min.js')}"></script>
-<script src="${url:resource('/javascripts/jquery.scrollspy.min.js')}"></script>
 <script src="${url:resource('/javascripts/highlight.pack.js')}"></script>
 <script src="${url:resource('/javascripts/qna/image.upload.js')}"></script>
 <script src="${url:resource('/javascripts/qna/tagparser.js')}"></script>
 <script src="${url:resource('/javascripts/qna/show.js')}"></script>
+<script src="${url:resource('/javascripts/qna/write.js')}"></script>
