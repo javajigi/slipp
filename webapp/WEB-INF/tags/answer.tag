@@ -8,39 +8,40 @@ taglib prefix="slipp" tagdir="/WEB-INF/tags" %><%@
 attribute name="each" required="true" rtexprvalue="true" type="net.slipp.domain.qna.Answer" description="답변"%><%@
 attribute name="isBest" required="true" rtexprvalue="true" type="java.lang.Boolean" description="" %>
 
-<li <c:if test="${not isBest}">id="answer-${each.answerId}"</c:if> <c:if test="${isBest}">class="best"</c:if>>
-	<a href="#answer-${each.answerId}" class="permalink">#answer-${each.answerId}</a>
-	<c:if test="${isBest}"><span class="answer-best">best</span></c:if>
-	<div class="auth-info">
-		<div class="author-thumb">
-			<img src='${sf:stripHttp(each.writer.imageUrl)}' class="user-thumb" alt="" />
+<article class="article<c:if test='${isBest}'> best-comment</c:if>" <c:if test="${not isBest}">id="answer-${each.answerId}"</c:if>>
+	<c:if test="${isBest}">
+		<span class="answer-best">best</span>
+	</c:if>
+	<div class="article-header">
+		<div class="article-header-thumb">
+			<img src='${sf:stripHttp(each.writer.imageUrl)}' class="article-author-thumb" alt="" />
 		</div>
-		<div class="author-text">
-			<a href="${sf:stripHttp(each.writer.profileUrl)}" class="author-name">${each.writer.userId}</a>
-			<span class="time">
+		<div class="article-header-text">
+			<a href="${sf:stripHttp(each.writer.profileUrl)}" class="article-author-name">${each.writer.userId}</a>
+			<a href="#answer-${each.answerId}" class="article-header-time" title="퍼머링크">
 				<fmt:formatDate value="${each.createdDate}" pattern="yyyy-MM-dd HH:mm" />
-			</span>
-			<div class="likeAnswerBtn like" data-answer-id="${each.answerId}">
-				<span class="star">★</span><strong class="like-count">${each.sumLike}</strong>
-			</div>
-			<div>
-			</div>
+				<i class="icon-link"></i>
+			</a>
 		</div>
 	</div>
-	<div class="doc">
-		<div class="text">${sf:wiki(each.contents)}</div>
-		<div class="util">
-			<a class="likeAnswerBtn btn btn-like" data-answer-id="${each.answerId}" href="#" alt="${each.sumLike}">
-				<span class="star">★</span>
+	<div class="article-doc">
+		${sf:wiki(each.contents)}
+		<div class="article-doc-util">
+			<button type="button" class="btn-like-article" data-answer-id="${each.answerId}">
+				<i class="icon-star"></i>
+				<strong class="like-count">${each.sumLike}</strong>
 				<span class="txt">공감</span>
-			</a>
+			</button>
 			<c:if test="${sf:isWriter(each.writer, loginUser)}">
-			<a class="updateAnswerBtn btn btn-primary" href="/questions/${question.questionId}/answers/${each.answerId}/form">수정</a>
-			<a class="deleteAnswerBtn btn btn-danger" data-answer-id="${each.answerId}" href="#">삭제</a>
+				<a class="link-update-article" href="/questions/${question.questionId}/answers/${each.answerId}/form">수정</a>
+				<form class="form-delete" action="/questions/${question.questionId}/answers/${each.answerId}" method="POST">
+					<input type="hidden" name="_method" value="DELETE" />
+					<button type="submit" class="link-delete-article">삭제</button>
+				</form>
 			</c:if>
 			<sec:authorize access="hasRole('ROLE_USER')">
-			<a class="recommentAnswerBtn btn btn-info" data-answer-id="${each.answerId}" data-answer-user-id="@${each.writer.userId}" href="#">언급하기</a>
+				<button type="button" class="btn-answer-article" data-answer-id="${each.answerId}" data-answer-user-id="@${each.writer.userId}">언급 &darr;</button>
 			</sec:authorize>
-		</div>	
+		</div>
 	</div>
-</li>
+</article>

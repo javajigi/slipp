@@ -1,8 +1,6 @@
 $(document).ready(function(){
-	var nickNames = new Array();
-	
-	$('#contents').markItUp(mySettings);
-	
+	var nickNames = [];
+
 	$("#answer").validate({
 		rules: {
 			contents: "required"
@@ -11,27 +9,11 @@ $(document).ready(function(){
 			contents: "내용을 입력하세요."
 		}
 	});
-	
-	$("#deleteQuestionBtn").click(function() {
-		if ( confirm('정말 삭제하시겠습니까?') ) {
-			$("#deleteQuestionForm").submit();
-		}
-		
-		return false;
-	});
-	
-	$deleteAnswerBtn = $(".deleteAnswerBtn");
-	$deleteAnswerForm = $("#deleteAnswerForm");
-	var deleteAnswerUrlPrefix = $deleteAnswerForm.attr("action");
-	$deleteAnswerBtn.click(function() {
-		var deleteAnswerUrl = deleteAnswerUrlPrefix + $(this).data("answerId");
 
-		if ( confirm('정말 삭제하시겠습니까?') ) {
-			$deleteAnswerForm.attr("action", deleteAnswerUrl);
-			$deleteAnswerForm.submit();
+	$(".form-delete").on('submit', function() {
+		if ( !confirm('정말 삭제하시겠습니까?') ) {
+			return false;
 		}
-
-		return false;
 	});
 
 	$(".recommentAnswerBtn").on('click', function(){
@@ -43,11 +25,11 @@ $(document).ready(function(){
 		$('html, body').animate({scrollTop: $(document).height()}, 'slow');
 		return false;
 	});
-	
+
 	addNickNames();
-	
+
 	replaceNicknames();
-	
+
 	setShowRealSizeImg();
 
 	function replaceNicknames(){
@@ -56,7 +38,7 @@ $(document).ready(function(){
 			for (var key in nickNames) {
 				cont = cont.replace(new RegExp('@' + key, 'gi'), '<a href="'+nickNames[key]+'">'+key+'</a>');
 			}
-			
+
 			$(this).html(cont);
 		});
 	}

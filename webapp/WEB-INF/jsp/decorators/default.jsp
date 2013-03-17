@@ -41,7 +41,7 @@
 				<ul role="menu">
 					<sec:authorize access="!hasRole('ROLE_USER')">
 					<li class="msg-for-login">로그인해서 의견을 나누세요!</li>
-					<li>
+					<li class="loginout">
 						<a href="/login" class="link-loginout"><span class="text">LogIn</span> <i class="icon-loginout"></i></a>
 					</li>
 					</sec:authorize>
@@ -50,15 +50,19 @@
 						<a href="/questions/form"><i class="icon-write"></i> <span class="text">새글쓰기</span></a>
 					</li>
 					<li class="user-info">
-						<img class="user-thumb" src="//graph.facebook.com/1701115026/picture" width="24" height="24" alt="" />
-						<span class="user-name">진우</span>
+						<a href="/notifications" class="notification-button">
+							<img class="user-thumb" src="//graph.facebook.com/1701115026/picture" width="24" height="24" alt="" />
+							<span class="user-name">진우</span>
+							<c:if test="${countNotifications != 0}">
+								<span class="notification-count">${countNotifications}</span>
+							</c:if>
+						</a>
+						<div class="notification-layer">
+							<strong class="title">응답알림</strong>
+							<ul></ul>
+						</div>
 					</li>
-					<li>
-						<a href="/notifications" class="notificationBtn">${countNotifications}</a>
-						<div id="notificationArea" style="position: absolute; left:0px; top: 45px; width:380px; background-color: #EFEFEF">
-					</div>
-					</li>
-					<li>
+					<li class="loginout">
 						<a href="/logout" class="link-loginout"><span class="text">LogOut</span> <i class="icon-loginout"></i></a>
 					</li>
 					</sec:authorize>
@@ -94,37 +98,59 @@
 	</footer>
 </div>
 
-<script type="text/javascript">
-	$(document).ready(function(){
-		$('.notificationBtn').on('click', function(e){
-			e.preventDefault();
-			var $btn = $(this);
-			var $notificationArea = $("#notificationArea");
-			$notificationArea.empty();
+<script>
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
 
-			$.getJSON($btn.attr('href'), function(result){
-				var notifications = eval(result);
-				$ul = $('<ul></ul>');
-				for(var i=0; i < notifications.length; i++) {
-					var notification = notifications[i];
-					$("<li></li>").append($("<a></a>").attr("href", "/questions/" + notification.questionId)
-					.text(notification.title + "에 댓글이 달렸습니다.")).appendTo($ul);
-				}
-				$notificationArea.append($ul);
-				$btn.text("0");
-			});
-		});
-	});
-</script>
-<script type="text/javascript">
-	var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-	document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
-	try{
+try{
 	var pageTracker = _gat._getTracker("UA-22853131-1");
 	pageTracker._trackPageview();
-	} catch(err) {}
+} catch(err) {}
+
+$(document).ready(function(){
+	getNotificationData();
+	$('body').on('click', function() {
+		closeNotificationLayer();
+	});
+	$('.notification-button').on('click', function(e){
+		e.stopPropagation();
+		e.preventDefault();
+		toggleNotificationLayer();
+	});
+});
+
+function toggleNotificationLayer() {
+	$('.notification-layer').toggle();
+}
+function closeNotificationLayer() {
+	$('.notification-layer').hide();
+}
+function getNotificationData() {
+	var $btn = $('.notification-button');
+	var $layer = $('.notification-layer');
+
+	$.getJSON($btn.attr('href'), function(result){
+		var items = result;
+		var length = items.length;
+		var $ul = $('<ul></ul>');
+		var item;
+
+		for(var i=0; i < length; i++) {
+			item = items[i];
+
+			$("<li></li>")
+			.append(
+				$('<a></a>')
+				.attr('href', '/questions/' + item.questionId)
+				.text('"' + item.title + '" 글에 댓글이 달렸습니다.')
+			)
+			.appendTo($ul);
+		}
+		$btn.find('.notification-count').text('0');
+
+		$layer.find($('ul')).replaceWith($ul);
+	});
+}
 </script>
 </body>
 </html>

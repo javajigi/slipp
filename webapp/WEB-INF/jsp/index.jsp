@@ -24,15 +24,28 @@
 								</div>
 							</c:if>
 							<div class="auth-info">
-								<i class="icon-addtext"></i>
-								<span class="time">
-									<fmt:formatDate value="${each.createdDate}" pattern="yyyy-MM-dd HH:mm" />
-								</span>
-								<a href="${each.writer.profileUrl}" class="author">${each.writer.userId}</a>
+								<c:choose>
+									<c:when test="${each.answerCount == 0}">
+										<i class="icon-new-article"></i>
+										<span class="type">새글</span>
+										<span class="time">
+											<fmt:formatDate value="${each.createdDate}" pattern="yyyy-MM-dd HH:mm" />
+										</span>
+										<a href="${each.writer.profileUrl}" class="author">${each.writer.userId}</a>
+									</c:when>
+									<c:otherwise>
+										<i class="icon-add-comment"></i>
+										<span class="type">응답</span>
+										<span class="time">
+											<fmt:formatDate value="${each.updatedDate}" pattern="yyyy-MM-dd HH:mm" />
+										</span>
+										<a href="${each.latestParticipant.profileUrl}" class="author">${each.latestParticipant.userId}</a>
+									</c:otherwise>
+								</c:choose>
 							</div>
 							<div class="reply" title="댓글">
 								<i class="icon-reply"></i>
-								<span class="point">${each.answerCount + 1}</span>
+								<span class="point">${each.answerCount}</span>
 							</div>
 						</div>
 					</div>
@@ -51,7 +64,7 @@
 			<p>메일주소를 등록하시면 SLiPP에 올라오는 흥미로운 이야기를 모아서 정기적으로 메일을 보내드립니다.</p>
 			<form action="/" class="mailing-form">
 				<fieldset>
-					<input type="email" class="inp-mail" placeholder="your-mail@example.com" />
+					<input type="email" class="inp-mail" placeholder="Your Email" />
 					<button type="submit" class="btn-submit">등록</button>
 				</fieldset>
 			</form>

@@ -1,14 +1,11 @@
-// @media desktop
-// 	body
-// 		padding-top: 50px;
-
 .container
 	width: 960px;
 	margin: 0 auto;
 	clearfix();
 	@media not-desktop
 		width: auto;
-		padding: 0 1em;
+		.content &
+			padding: 0 1em;
 
 .header
 	position: relative;
@@ -18,11 +15,12 @@
 	background-color: #ededed;
 	background-image: linear-gradient(#fafafa, #f5f5f5);
 	border-bottom: 1px solid #ddd;
-	@media phone
-		text-align: right;
 	.logo
+		position: relative;
+		z-index: 1;
 		float: left;
 		margin: 0;
+		// font-family: Constantia,"Lucida Bright",Lucidabright,"Lucida Serif",Lucida,"DejaVu Serif","Bitstream Vera Serif","Liberation Serif",Georgia,serif;
 		font-family: 'Oswald', sans-serif;
 		a
 			display: block;
@@ -40,39 +38,33 @@
 				background-color: #D58733;
 				outline: none;
 	nav
-		overflow: hidden;
 		height: 40px;
 		font-size: 14px;
-		line-height: 42px;
-		ul
+		line-height: 40px;
+		> ul
 			margin: 0;
 			padding: 0;
-		li
-			float: left;
-			@media phone
-				float: none;
-				display: inline-block;
+			>	li
+				float: left;
+				> a
+					display: inline-block;
+					height: 40px;
+					padding-left: 1em;
+					padding-right: 1em;
+					font-weight: bold;
+					color: #333;
+					&:hover,
+					&:focus
+						text-decoration: none;
+						color: #000;
+						background-color: #fff;
+						outline: none;
 		.text
 			@media phone
 				display: none;
-		a
-			display: inline-block;
-			height: 40px;
-			padding-left: 1em;
-			padding-right: 1em;
-			font-weight: bold;
-			color: #333;
-			&:hover,
-			&:focus
-				text-decoration: none;
-				color: #000;
-				background-color: #fff;
-				outline: none;
 	.site-nav
 		float: left;
 		@media phone
-			float: none;
-			display: inline-block;
 			margin-left: 0;
 		margin-left: 2em;
 		border-left: 1px solid #ddd;
@@ -107,46 +99,111 @@
 		float: right;
 		@media phone
 			float: none;
-			display: inline-block;
-		li
+		> ul > li
 			border-right: 1px solid #ddd;
 			box-shadow: 1px 0 0 #fff;
-		.msg-for-login
+	.msg-for-login
+		padding-right: 1em;
+		font-size: .8em;
+		@media phone
+			display: none;
+	.user-name
+		@media phone
+			display: none;
+	.user-thumb
+		border-radius: 3px;
+		margin-right: .5em;
+		@media phone
+			margin-left: .2em;
+			margin-right: .2em;
+	.user-info
+		position: relative;
+		@media phone
+			position: static;
+	.notification-button
+		display: inline-block;
+		padding-left: 1em;
+		padding-right: 1em;
+		@media phone
+			padding-left: .4em;
+			padding-right: .4em;
+	.notification-count
+		position: absolute;
+		left: 32px;
+		top: 22px;
+		display: inline-block;
+		padding: 2px 3px;
+		font-weight: normal;
+		font-size: 10px;
+		line-height: 1em;
+		color: #fff;
+		background: #E27575;
+		@media phone
+			left: 22px;
+	.notification-layer
+		display: none;
+		position absolute;
+		top: 100%;
+		right: -1px;
+		width: 20em;
+		padding-bottom: 1em;
+		border: 1px solid #ddd;
+		border-radius: 0 0 3px 3px;
+		box-shadow: 0 0 14px rgba(0, 0, 0, .14);
+		font-size: .8em;
+		line-height: 1.2em;
+		background-color: #fff;
+		@media phone
+			width: 100%;
+			right: 0;
+			box-shadow: 0 3px 10px rgba(0, 0, 0, .1);
+		.title
+			display: block;
+			padding: .5em;
+			@media phone
+				text-align:right;
+		ul
+			margin: 0;
+			padding: 0;
+			border-width: 1px 0;
+			border-style: solid;
+			border-color: #eee;
+			@media phone
+				font-size: 1.2em;
+				line-height: 2em;
+			li
+				border-top: 1px solid #eee;
+				&:first-child
+					border-top: 0;
+		a
+			display: block;
+			padding: .5em;
+			color: #999;
+			&:hover
+				color: #222;
+				text-decoration: none;
+				background-color: #eaeaea;
+	.loginout
+		@media phone
+			float: right;
+	.link-loginout
+		padding-left: .8em;
+		padding-right: .6em;
+		@media phone
+			padding-left: 1em;
 			padding-right: 1em;
+		.text
 			font-size: .8em;
 			@media phone
 				display: none;
-		.user-info
-			padding-left: 1em;
-			padding-right: 1em;
-			@media phone
-				padding-left: .4em;
-				padding-right: .4em;
-		.user-name
-			@media phone
-				display: none;
 
-		.user-thumb
-			border-radius: 3px;
-			margin-right: .5em;
-			@media phone
-				margin-right: .2em;
-		.link-loginout
-			padding-left: .8em;
-			padding-right: .6em;
-			@media phone
-				padding-left: 1em;
-				padding-right: 1em;
-			.text
-				font-size: .8em;
-				@media phone
-					display: none;
 .footer
 	position: relative;
 	margin-top: 6em;
-	padding: 1em 0 1.5em;
-	border-top: 1px solid #ddd;
 	text-align: center;
+	.container
+		padding: 1em 0 1.5em;
+		border-top: 1px solid #ddd;
 	.foot-nav
 		ul
 			margin: 0;
@@ -176,16 +233,17 @@
 		font-weight: bold;
 		letter-spacing: -1px;
 
-
 .content-main
 	float: left;
 	width: 75%;
 	@media not-desktop
-		width: 100%;
+		float: none;
+		width: auto;
 	.home-content &
 		width: 65%;
 		@media not-desktop
-			width: 100%;
+			float: none;
+			width: auto;
 .content-sub
 	float: right;
 	width: 22%;
@@ -195,6 +253,10 @@
 		width: 32%;
 		@media not-desktop
 			width: 100%;
+	.floating
+		position: fixed;
+		@media not-desktop
+			position: static;
 
 .pager
 	height: 36px;

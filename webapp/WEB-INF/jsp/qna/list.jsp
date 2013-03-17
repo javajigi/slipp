@@ -4,7 +4,7 @@
 <div class="list-content">
 	<div class="content-main">
 		<section class="qna-list">
-			<h1>전체목록</h1>
+			<slipp:header />
 			<ul class="list">
 			<c:forEach items="${questions.content}" var="each">
 				<li>
@@ -24,21 +24,28 @@
 								</div>
 							</c:if>
 							<div class="auth-info">
-<<<<<<< HEAD
-								<i class="icon-addtext"></i>
-								<span class="time">
-									<fmt:formatDate value="${each.createdDate}" pattern="yyyy-MM-dd HH:mm" />
-=======
-								<a href="${each.writer.profileUrl}" class="author">${each.latestParticipant.userId}</a>
-								<span class="time">
-									<fmt:formatDate value="${each.updatedDate}" pattern="yyyy-MM-dd HH:mm" />  
->>>>>>> develop
-								</span>
-								<a href="${each.writer.profileUrl}" class="author">${each.writer.userId}</a>
+								<c:choose>
+									<c:when test="${each.answerCount == 0}">
+										<i class="icon-new-article"></i>
+										<span class="type">새글</span>
+										<span class="time">
+											<fmt:formatDate value="${each.createdDate}" pattern="yyyy-MM-dd HH:mm" />
+										</span>
+										<a href="${each.writer.profileUrl}" class="author">${each.writer.userId}</a>
+									</c:when>
+									<c:otherwise>
+										<i class="icon-add-comment"></i>
+										<span class="type">응답</span>
+										<span class="time">
+											<fmt:formatDate value="${each.updatedDate}" pattern="yyyy-MM-dd HH:mm" />
+										</span>
+										<a href="${each.latestParticipant.profileUrl}" class="author">${each.latestParticipant.userId}</a>
+									</c:otherwise>
+								</c:choose>
 							</div>
 							<div class="reply" title="댓글">
 								<i class="icon-reply"></i>
-								<span class="point">${each.answerCount + 1}</span>
+								<span class="point">${each.answerCount}</span>
 							</div>
 						</div>
 					</div>
