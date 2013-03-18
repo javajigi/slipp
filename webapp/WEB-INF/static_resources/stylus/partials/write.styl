@@ -1,9 +1,22 @@
+.article-title
+	border-bottom: 1px solid #dadada;
 .form-write
 	margin: 1em 0;
 	.title-write
 		margin-bottom .5em;
 		font-weight: bold;
 		font-size: 1.2em;
+	.box-input-line
+		margin: 1em 0;
+		input[type='text']
+			width: 100%;
+			box-sizing: border-box;
+			border: 1px solid #dadada;
+			border-radius: 4px;
+			padding: .5em;
+	.inp-title
+		font-weight: bold;
+		font-size: 1.25em;
 	.box-write
 		border: 1px solid #dadada;
 		border-radius: 4px;
@@ -66,3 +79,47 @@
 		display: none;
 	.btn-fileupload
 		box-shadow: none;
+
+// jQuery auto-complete
+.ac_results
+	box-sizing: border-box;
+	padding: 0;
+	border-width: 0 1px 1px;
+	border-style: solid;
+	border-color: #aad2f7;
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+	border-radius: 0 0 4px 4px;
+	background-color: white;
+	overflow: hidden;
+	z-index: 99999;
+	ul
+		width: 100%;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	li
+		margin: 0px;
+		padding: .5em;
+		cursor: default;
+		display: block;
+		/*
+		if width will be 100% horizontal scrollbar will apear
+		when scroll mode will be used
+		*/
+		/*width: 100%;*/
+		// font-size: 12px;
+		font-size: .9em;
+		/*
+		it is very important, if line-height not setted or setted
+		in relative units scroll will be broken in firefox
+		*/
+		line-height: 1.2em;
+		overflow: hidden;
+.ac_loading
+	background: white url('/resources/images/indicator.gif') right center no-repeat;
+//.ac_even
+//.ac_odd
+.ac_over
+	background-color: lighten(#005580, 20);
+	color: white;
+

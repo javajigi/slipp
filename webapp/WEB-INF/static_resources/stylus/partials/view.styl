@@ -44,6 +44,13 @@
 		margin: 0;
 		border: 0;
 		background-color: transparent;
+		opacity: .5;
+		&:hover
+			opacity: 1;
+		&.fixed
+			position: fixed;
+			@media phone
+				position: absolute;
 		@media phone
 			top: 10px;
 			right: 0;
@@ -52,7 +59,7 @@
 			left: 0;
 			top: 0;
 			font-size: 3em;
-			color: #F1EA91;
+			color: darken(#F1EA91, 10);
 		.like-count
 			position: relative;
 			z-index: 1;

@@ -13,6 +13,7 @@ $(document).ready(function() {
 	});
 
 	var tagnames = '';
+
 	$('#plainTags').autocomplete('/tags/search', {
 		dataType: 'json',
 		cache: false,
@@ -31,7 +32,7 @@ $(document).ready(function() {
             return array;
 		},
 		matchSubset: false,
-		width: 320,
+		width: $('.box-input-line').width(),
 		max: 4,
 		highlight: false,
 		scroll: true,

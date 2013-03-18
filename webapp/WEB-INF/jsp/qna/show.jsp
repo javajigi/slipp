@@ -35,24 +35,24 @@
 						<legend class="title-write">의견 추가하기</legend>
 						<div class="box-write">
 							<div class="head-write">
-								<a href="javascript:;" class="btn-mode-write active">글작성</a>
-								<a href="javascript:;" class="btn-mode-preview">미리보기</a>
+								<a href="javascript:;" class="btn-mode-write active" tabindex="-1">글작성</a>
+								<a href="javascript:;" class="btn-mode-preview" tabindex="-1">미리보기</a>
 							</div>
 							<div class="body-write">
 								<form:textarea path="contents" cols="80" rows="5" cssClass="tf-write" />
 								<div class="preview-write" style="display: none;"></div>
 							</div>
 							<div class="foot-write">
-								<a href="http://daringfireball.net/projects/markdown/syntax" class="link-to-md" target="_blank">Markdown</a>을 사용합니다.
+								<a href="http://daringfireball.net/projects/markdown/syntax" class="link-to-md" target="_blank" tabindex="-1">Markdown</a>을 사용합니다.
 							</div>
 						</div>
 						<div class="submit-write">
 							<c:if test="${loginUser.facebookUser}">
 							<label class="msg-send-to-facebook">
-								<form:checkbox path="connected" /> 페이스북으로 답변전송
+								<form:checkbox path="connected" /> 페이스북으로 전송
 							</label>
 							</c:if>
-							<button type="submit" class="btn-submit"><i class="icon-submit"></i> 답변하기</button>
+							<button type="submit" class="btn-submit"><i class="icon-submit"></i> 작성완료</button>
 						</div>
 					</fieldset>
 				</form:form>

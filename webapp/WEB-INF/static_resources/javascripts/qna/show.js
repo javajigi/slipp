@@ -18,14 +18,16 @@ $(document).ready(function(){
 
 	setNicknamesLink();
 	setImgRealSizeLink();
+	setFloatingBtnLike();
 
 	function addAnswerTo() {
 		var orgUserId = $(this).data('answer-user-id');
-		var contents = arroundSpace( $('#contents').val(), orgUserId );
+		var $contents = $('#contents');
+		var contentsVal = arroundSpace( $contents.val(), orgUserId );
 
-		$('#contents').val('').focus().val(contents);
-		$('#contents').focus();
-		$('html, body').animate({scrollTop: $(document).height()}, 'slow');
+		$('body').animate({scrollTop: $contents.offset().top}, 'slow');
+		$contents.focus().val(contentsVal).focus(); // 텍스트 추가 후 포커스 주기위해 포커스 두번
+
 		return false;
 	}
 	function arroundSpace(contents, orgUserId){
@@ -53,9 +55,31 @@ $(document).ready(function(){
 		});
 	}
 	function setImgRealSizeLink() {
-		var images = $('.article-doc img');
-		var imageUrl = images.attr('src');
+		var $images = $('.article-doc img');
+		var imageUrl = $images.attr('src');
 
-		images.wrap('<a href="'+imageUrl+'" target="_blank"></a>');
+		$images.wrap('<a href="'+imageUrl+'" target="_blank"></a>');
+	}
+	function setFloatingBtnLike() {
+		var $window = $(window);
+		var $articles = $('.article');
+		var srollTop;
+
+		$window.scroll(function(event) {
+			scrollTop = $window.scrollTop();
+
+			$articles.each(function() {
+				var $btnLikeArticle = $(this).find('.btn-like-article');
+				var offsetTop = $(this).offset().top;
+				var height = $(this).height();
+				var isFloatingMode = scrollTop > offsetTop && scrollTop - offsetTop + 150 < height;
+
+				if (isFloatingMode) {
+					$btnLikeArticle.addClass('fixed');
+				} else {
+					$btnLikeArticle.removeClass('fixed');
+				}
+			});
+		});
 	}
 });
