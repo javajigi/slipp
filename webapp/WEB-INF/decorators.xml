@@ -3,6 +3,7 @@
 <decorators defaultdir="/WEB-INF/jsp/decorators">
 	<excludes>
 		<pattern>/popup/*</pattern>
+		<pattern>/blank</pattern>
 		<pattern>/attachments*</pattern>
 		<pattern>/rss*</pattern>
 		<pattern>/wikis/preview*</pattern>

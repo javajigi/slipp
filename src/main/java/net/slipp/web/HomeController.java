@@ -75,4 +75,9 @@ public class HomeController {
     public String logout() {
         return "fblogout";
     }
+    
+    @RequestMapping("/blank")
+    public String blank() {
+        return "blank";
+    }
 }
