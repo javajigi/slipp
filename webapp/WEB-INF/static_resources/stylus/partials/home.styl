@@ -1,0 +1,40 @@
+.home-content
+	clearfix();
+	width: 100%;
+	.link-more
+		@media not-desktop
+			margin:0 -1em;
+		a
+			display: block;
+			padding: .4em 1em;
+			text-align: right;
+			color: #333;
+			background-color: #eaeaea;
+			background-image: linear-gradient(#f5f5f5, #fafafa);
+	.mailing
+		.mailing-form
+			clearfix();
+			padding: 5px;
+			border-radius: 5px;
+			background-color: #eaeaea;
+		.inp-mail
+			float: left;
+			width: 80%;
+			padding: 10px;
+			box-sizing: border-box;
+			border: 1px solid #ddd;
+			border-radius: 0;
+			font-size: 1.2em;
+			&:focus
+				outline: none;
+				border-color: #AAD2F7;
+		.btn-submit
+			float: left;
+			box-sizing: border-box;
+			width: 20%;
+			padding: 0;
+			height: 41px;
+			border: 0;
+			font-size: 1.2em;
+			color: #eee;
+			background-color: #000;

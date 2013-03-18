@@ -1,11 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>SLiPP</title>
-</head>
-<body>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <section class="slipp-doc">
 <h2 id="about-here">SLiPP에 대하여</h2>
 <pre class="box">
@@ -23,11 +17,11 @@ SLiPP은 많은 부분을 미리 결정하지 않는다. SLiPP은 최소한의 �
 SLiPP은 사용자가 원하는 기능에 대한 의견을 받고, 각각의 의견 중에서 사용자에게 가장 큰 가치를 줄 것이라 판단되는 기능을 우선적으로 개발한다.
 
 SLiPP이 이 같은 방향을 가지는 이유는 사용자와 더불어 성장하는 서비스가 되기를 바라기 때문이다.
-같이 만들고, 성장할 때의 즐거움을 느껴보기 위함이다.   
+같이 만들고, 성장할 때의 즐거움을 느껴보기 위함이다.
 
 SLiPP은 의견을 제시하는 단계에서 머무르지 않고, 적극적으로 개발에 참여할 수 있다.
 자신이 만들고 싶은 기능이 있지만 서버 설정이나 기타 부가적인 이유 때문에 도전하지 못한다면 이 공간을 통해서 도전할 수 있다.
-</pre>	  
+</pre>
 
 <h2 id="develops">SLiPP 개발을 함께하는 사람들</h2>
 <div class="box">
@@ -37,7 +31,6 @@ SLiPP은 의견을 제시하는 단계에서 머무르지 않고, 적극적으�
 		<ul>
 			<li>2013/01 현 NHN NEXT 교수</li>
 			<li>Java, Maven</li>
-			<li>기타소개</li>
 		</ul>
 	</div>
 	<div class="person">
@@ -46,7 +39,6 @@ SLiPP은 의견을 제시하는 단계에서 머무르지 않고, 적극적으�
 		<ul>
 			<li>2013/01 현 XL GAMES 웹서비스팀 프로그래머</li>
 			<li>Java</li>
-			<li>기타소개</li>
 		</ul>
 	</div>
 	<div class="person">
@@ -76,8 +68,6 @@ SLiPP은 의견을 제시하는 단계에서 머무르지 않고, 적극적으�
 
 <h3>2011년 3월 24일 : 1차 서비스 오픈</h3>
 * 기술 기반은 google app engine + spring framework + objectify
-* 1차는 서비스적으로 접근하기보다는 google app engine에서 서비스가 가능한지를 검증하는 단계	
-</pre>   
+* 1차는 서비스적으로 접근하기보다는 google app engine에서 서비스가 가능한지를 검증하는 단계
+</pre>
 </section>
-</body>
-</html>

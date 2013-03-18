@@ -1,0 +1,36 @@
+.qna-tags
+	ul
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	li
+		display: inline;
+		list-style: none;
+		.list-content &,
+		.view-content &
+			display: block;
+			@media not-desktop
+				display: inline;
+	.tag
+		position: relative;
+		display: inline-block;
+		margin: .2em 0;
+		padding: 2px 8px;
+		border-radius: 3px;
+		color: #222;
+		background-color: #eaeaea;
+		&:hover
+			text-decoration: none;
+			background-color: darken(@background-color, 10);
+		.count
+			display: inline-block;
+			padding: 2px 3px;
+			margin-left: 3px;
+			margin-right: -2px;
+			border-radius: 3px;
+			font-family: verdana;
+			font-size: .8em;
+			line-height: 1.2em;
+			color: #666;
+			background-color: #fff;
+			vertical-align: middle;

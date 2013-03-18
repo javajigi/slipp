@@ -1,17 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/tags.jspf"%>
-<html>
-<head>
-</head>
-<body>
 
-<div class="section-qna">
-	<h1 class="hidden">QnA</h1>
-	<slipp:header type="1"/>
-	<div class="row-fluid">
-		<div class="span9 qna-list">
-		  	<a id="questionBtn" href="/questions/form" class="btn btn-primary btn-large btn-question">질문하기</a>
-			<h2 class="hidden">list</h2>
+<div class="list-content">
+	<div class="content-main">
+		<section class="qna-list">
+			<slipp:header />
 			<ul class="list">
 			<c:forEach items="${questions.content}" var="each">
 				<li>
@@ -20,44 +13,53 @@
 							<strong class="subject">
 								<a href="/questions/${each.questionId}">${sf:h(each.title)}</a>
 							</strong>
-							<div class="tags">
-								<ul>
-								<c:forEach items="${each.denormalizedTags}" var="tag">
-									<li>
-										<a href="/questions/tagged/${tag}" class="tag">${tag}</a>
-									</li>
-								</c:forEach>
-								</ul>
+							<c:if test="${each.denormalizedTags != ''}">
+								<div class="tags">
+									<i class="icon-tag" title="태그"></i>
+									<span class="tag-list">
+										<c:forEach items="${each.denormalizedTags}" var="tag">
+											<span class="tag">${tag}</span>
+										</c:forEach>
+									</span>
+								</div>
+							</c:if>
+							<div class="auth-info">
+								<c:choose>
+									<c:when test="${each.answerCount == 0}">
+										<i class="icon-new-article"></i>
+										<span class="type">새글</span>
+										<span class="time">
+											<fmt:formatDate value="${each.createdDate}" pattern="yyyy-MM-dd HH:mm" />
+										</span>
+										<a href="${each.writer.profileUrl}" class="author">${each.writer.userId}</a>
+									</c:when>
+									<c:otherwise>
+										<i class="icon-add-comment"></i>
+										<span class="type">응답</span>
+										<span class="time">
+											<fmt:formatDate value="${each.updatedDate}" pattern="yyyy-MM-dd HH:mm" />
+										</span>
+										<a href="${each.latestParticipant.profileUrl}" class="author">${each.latestParticipant.userId}</a>
+									</c:otherwise>
+								</c:choose>
 							</div>
-						</div>
-						<div class="sub">
-							<div class="reply">
-								<i class="symbol" title="댓글">R</i>
+							<div class="reply" title="댓글">
+								<i class="icon-reply"></i>
 								<span class="point">${each.answerCount}</span>
 							</div>
-							<div class="auth-info">
-								<a href="${each.writer.profileUrl}" class="author">${each.latestParticipant.userId}</a>
-								<span class="time">
-									<fmt:formatDate value="${each.updatedDate}" pattern="yyyy-MM-dd HH:mm" />  
-								</span>
-							</div>
 						</div>
-					</div>					
+					</div>
 				</li>
 			</c:forEach>
 			</ul>
-			<div class="pagination pagination-centered">
+			<nav class="pager">
 				<ul>
 					<sl:pager page="${questions}" prefixUri="/questions"/>
 				</ul>
-			</div>
-		</div>
-		<div class="span3 qna-side">
-			<a id="questionBtn" href="/questions/form" class="btn btn-primary btn-large btn-block btn-question">질문하기</a>
-			<slipp:side-tags tags="${tags}"/>
-		</div>
+			</nav>
+		</section>
+	</div>
+	<div class="content-sub">
+		<slipp:side-tags tags="${tags}"/>
 	</div>
 </div>
-
-</body>
-</html>

@@ -1,0 +1,63 @@
+.qna-list
+	.list
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		border-top: 1px solid #dadada;
+		font-size: 14px;
+		@media not-desktop
+			margin:0 -1em;
+		> li
+			position: relative;
+			padding: 1em;
+			padding-left: 4em;
+			border-bottom: 1px solid #eaeaea;
+		.main
+			.subject
+				display: block;
+				font-size: 1.2em;
+				line-height: 1.4em;
+				a
+					display: block;
+					color: #005580;
+		.tags
+				font-size: .9em;
+				color: #999;
+			.tag
+				&:before
+					content: ', ';
+				&:first-child
+					&:before
+						content: '';
+		.auth-info
+			margin-top: .8em;
+			color: #999;
+			.type
+				padding-right: .4em;
+				@media phone
+					display: none;
+			.time
+				font-size: .9em;
+			.author
+				// font-weight: bold;
+		.reply
+			position: absolute;
+			left: 0;
+			top: .8em;
+			width: 4em;
+			text-align:center;
+			.icon-reply
+				position: absolute;
+				left: 0;
+				top: 0;
+				font-size: 2em;
+				color: #eee;
+				@media not-desktop
+					left: .5em;
+			.point
+				position: relative;
+				z-index: 1;
+				color: #aaa;
+				font-size: 2em;
+				line-height: 2em;
+				letter-spacing: -.2em;
