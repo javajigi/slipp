@@ -47,7 +47,7 @@
 					</sec:authorize>
 					<sec:authorize access="hasRole('ROLE_USER')">
 					<li>
-						<a href="/questions/form"><i class="icon-write"></i> <span class="text">새글쓰기</span></a>
+						<a id="writeBtn" href="/questions/form"><i class="icon-write"></i> <span class="text">새글쓰기</span></a>
 					</li>
 					<li class="user-info">
 						<a href="/notifications" class="notification-button">
