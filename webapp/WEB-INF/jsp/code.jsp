@@ -1,11 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>SLiPP</title>
-</head>
-<body>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <section class="slipp-doc">
 <h2 id="license">라이센스</h2>
 <pre class="box">
@@ -40,7 +34,7 @@ git clone git://github.com/javajigi/slipp-v2-uploader.git
 <pre class="box">
 SLiPP 2버전은 slipp.net은 개발과 운영을 분리해서 운영하고 있다.
 현재 개발되고 있는 slipp.net은 <a href="http://dev-slifepp.appspot.com">http://dev-slifepp.appspot.com</a>에서 확인할 수 있다.
-<a href="http://dev-slifepp.appspot.com">http://dev-slifepp.appspot.com</a>은 개발 및 테스트를 위한 목적이기 때문에 부담을 가지지 않고 마음껏 테스트를 해도 된다.       
+<a href="http://dev-slifepp.appspot.com">http://dev-slifepp.appspot.com</a>은 개발 및 테스트를 위한 목적이기 때문에 부담을 가지지 않고 마음껏 테스트를 해도 된다.
 </pre>
 
 <h2 id="source-v1">SLiPP 1 버전 소스코드 다운로드</h2>
@@ -51,5 +45,3 @@ SLiPP 1 버전은 google app engine + spring framework + objectify framework로 
 git clone git://github.com/javajigi/slipp-v1.git
 </pre>
 </section>
-</body>
-</html>

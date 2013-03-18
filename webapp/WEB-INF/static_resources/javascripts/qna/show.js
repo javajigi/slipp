@@ -1,88 +1,85 @@
 $(document).ready(function(){
-	var nickNames = new Array();
-	
-	$('#contents').markItUp(mySettings);
-	
-	$("#answer").validate({
+	$('#answer').validate({
 		rules: {
-			contents: "required"
+			contents: 'required'
 		},
 		messages: {
-			contents: "내용을 입력하세요."
+			contents: '내용을 입력하세요.'
 		}
 	});
-	
-	$("#deleteQuestionBtn").click(function() {
-		if ( confirm('정말 삭제하시겠습니까?') ) {
-			$("#deleteQuestionForm").submit();
-		}
-		
-		return false;
-	});
-	
-	$deleteAnswerBtn = $(".deleteAnswerBtn");
-	$deleteAnswerForm = $("#deleteAnswerForm");
-	var deleteAnswerUrlPrefix = $deleteAnswerForm.attr("action");
-	$deleteAnswerBtn.click(function() {
-		var deleteAnswerUrl = deleteAnswerUrlPrefix + $(this).data("answerId");
 
-		if ( confirm('정말 삭제하시겠습니까?') ) {
-			$deleteAnswerForm.attr("action", deleteAnswerUrl);
-			$deleteAnswerForm.submit();
-		}
+	$('.link-answer-article').on('click', addAnswerTo);
 
-		return false;
+	$('.form-delete').on('submit', function() {
+		if ( !confirm('정말 삭제하시겠습니까?') ) {
+			return false;
+		}
 	});
 
-	$(".recommentAnswerBtn").on('click', function(){
+	setNicknamesLink();
+	setImgRealSizeLink();
+	setFloatingBtnLike();
+
+	function addAnswerTo() {
 		var orgUserId = $(this).data('answer-user-id');
-		var contents = arroundSpace( $('#contents').val(), orgUserId );
+		var $contents = $('#contents');
+		var contentsVal = arroundSpace( $contents.val(), orgUserId );
 
-		$('#contents').val('').focus().val(contents);
-		$('#contents').focus();
-		$('html, body').animate({scrollTop: $(document).height()}, 'slow');
+		$('body').animate({scrollTop: $contents.offset().top}, 'slow');
+		$contents.focus().val(contentsVal).focus(); // 텍스트 추가 후 포커스 주기위해 포커스 두번
+
 		return false;
-	});
-	
-	addNickNames();
-	
-	replaceNicknames();
-	
-	setShowRealSizeImg();
+	}
+	function arroundSpace(contents, orgUserId){
+		if ( $.trim(contents).length > 0) {
+			contents += ' ';
+		}
+		contents += orgUserId + ' ';
 
-	function replaceNicknames(){
-		$('div.doc div.text').each(function(){
+		return contents;
+	}
+	function setNicknamesLink(){
+		var nickNames = [];
+
+		$('.article-author-name').each(function() {
+			nickNames[$(this).text()] = $(this).attr('href');
+		});
+
+		$('.article-doc').each(function() {
 			var cont = $(this).html();
 			for (var key in nickNames) {
-				cont = cont.replace(new RegExp('@' + key, 'gi'), '<a href="'+nickNames[key]+'">'+key+'</a>');
+				cont = cont.replace(new RegExp('@' + key, 'gi'), '<a href="'+nickNames[key]+'"><b>@'+key+'</b></a>');
 			}
-			
+
 			$(this).html(cont);
 		});
 	}
-	function addNickNames(){
-		$('.author-name').each(function(){
-			nickNames[$(this).text()] = $(this).attr('href');
+	function setImgRealSizeLink() {
+		var $images = $('.article-doc img');
+		var imageUrl = $images.attr('src');
+
+		$images.wrap('<a href="'+imageUrl+'" target="_blank"></a>');
+	}
+	function setFloatingBtnLike() {
+		var $window = $(window);
+		var $articles = $('.article');
+		var srollTop;
+
+		$window.scroll(function(event) {
+			scrollTop = $window.scrollTop();
+
+			$articles.each(function() {
+				var $btnLikeArticle = $(this).find('.btn-like-article');
+				var offsetTop = $(this).offset().top;
+				var height = $(this).height();
+				var isFloatingMode = scrollTop > offsetTop && scrollTop - offsetTop + 150 < height;
+
+				if (isFloatingMode) {
+					$btnLikeArticle.addClass('fixed');
+				} else {
+					$btnLikeArticle.removeClass('fixed');
+				}
+			});
 		});
 	}
-	function arroundSpace(contents, orgUserId){
-		if( $.trim(contents).length > 0) {
-			contents = contents +" "+orgUserId +" ";
-		}else{
-			contents = contents + orgUserId;
-		}
-		return contents;
-	}
-	function setShowRealSizeImg() {
-		var images = $('div.doc div.text img');
-		var imageUrl = images.attr('src');
-
-		images.wrap('<a href="'+imageUrl+'" target="_blank"></a>');
-	}
-	$(".likeAnswerBtn").on("click", function(){
-		var answerId = $(this).data("answer-id");
-		var $form = $('#likeAnswerForm');
-		$form.attr("action", $form.attr("action")+"/"+answerId+"/like");
-		$('#likeAnswerForm').submit();
-	});
 });

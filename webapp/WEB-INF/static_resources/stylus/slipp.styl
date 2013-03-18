@@ -1,0 +1,59 @@
+@import "nib";
+@import "utils/normalize";
+@import "utils/default";
+@import "utils/units";
+@import "utils/mixins";
+@import "utils/icon";
+@import "partials/layout";
+@import "partials/list";
+@import "partials/view";
+@import "partials/write";
+@import "partials/tag";
+@import "partials/home";
+
+label.error
+	display: block;
+	color: #f88;
+	&:before
+		font-family: 'batch-icons';
+		speak: none;
+		font-style: normal;
+		font-weight: normal;
+		line-height: 1;
+		-webkit-font-smoothing: antialiased;
+		margin-right: .2em;
+		content:'\F15A';
+
+.slipp-doc
+	.box
+		margin: 0 0 18px
+		padding: 8.5px
+		border: 1px solid #ccc
+		border-radius: 4px
+		font-size: 1.2em
+		line-height: 1.8em
+		background-color: #f5f5f5
+		.person
+			position: relative
+			padding-left: 60px
+			margin-top: 20px
+			&:first-child
+				margin-top: 0
+			.thumb
+				position: absolute
+				left: 0
+				top: 0
+				border-radius: 3px
+			h3
+				border-bottom: 1px dashed #999
+			ul
+				list-style: none
+				padding: 0
+				margin: 10px 0 0 10px
+				li
+					text-indent: -10px
+					&:before
+						content: '-'
+						padding-right: 5px
+						font-size: .8em
+						color: #999

@@ -1,0 +1,59 @@
+@font-face {
+	font-family: 'batch-icons';
+	src:url('/resources/webfonts/batch-icons-webfont.eot');
+	src:url('/resources/webfonts/batch-icons-webfont.eot?#iefix') format('embedded-opentype'),
+		url('/resources/webfonts/batch-icons-webfont.woff') format('woff'),
+		url('/resources/webfonts/batch-icons-webfont.ttf') format('truetype'),
+		url('/resources/webfonts/batch-icons-webfont.svg#hi') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+// Use the following CSS code if you want to use data attributes for inserting your icons
+// [data-icon]:before
+// 	font-family: 'batch-icons';
+// 	content: attr(data-icon);
+// 	speak: none;
+// 	font-weight: normal;
+// 	line-height: 1;
+// 	-webkit-font-smoothing: antialiased;
+
+// Use the following CSS code if you want to have a class per icon
+
+// Instead of a list of all class selectors,
+// you can use the generic selector below, but it's slower:
+// [class*="icon-"]:before {
+
+[class*="icon-"]:before
+	font-family: 'batch-icons';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+.icon-users:before
+	content: '\F045';
+.icon-list:before
+	content: '\F0A9';
+.icon-write:before
+	content: '\F13E';
+.icon-search:before
+	content: '\F094';
+.icon-loginout:before
+	content: '\F069';
+.icon-reply:before
+	content: '\F009';
+.icon-tag:before
+	content: '\F0AD';
+.icon-new-article:before
+	content: '\F10B';
+.icon-add-comment:before
+	content: '\F003';
+.icon-star:before
+	content: '\F15D';
+.icon-link:before
+	content: '\F143';
+.icon-image:before
+	content: '\F040';
+.icon-submit:before
+	content: '\F13A';
