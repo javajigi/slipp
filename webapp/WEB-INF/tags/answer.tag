@@ -49,7 +49,7 @@ attribute name="isBest" required="true" rtexprvalue="true" type="java.lang.Boole
 			</c:if>
 			<sec:authorize access="hasRole('ROLE_USER')">
 			<li>
-				<button type="button" class="link-answer-article" data-answer-id="${each.answerId}" data-answer-user-id="@${each.writer.userId}">언급 &darr;</button>
+				<button type="button" class="link-answer-article" data-answer-id="${each.answerId}" data-answer-user-id="@${each.writer.userId}">언급&darr;</button>
 			</li>
 			</sec:authorize>
 		</ul>

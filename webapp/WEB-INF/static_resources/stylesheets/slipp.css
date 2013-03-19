@@ -89,7 +89,7 @@ img{max-width:100% !important}
 p,h2,h3{orphans:3;widows:3}
 h2,h3{page-break-after:avoid}
 }@font-face{font-family:'batch-icons';src:url("/resources/webfonts/batch-icons-webfont.eot");src:url("/resources/webfonts/batch-icons-webfont.eot?#iefix") format('embedded-opentype'),url("/resources/webfonts/batch-icons-webfont.woff") format('woff'),url("/resources/webfonts/batch-icons-webfont.ttf") format('truetype'),url("/resources/webfonts/batch-icons-webfont.svg#hi") format('svg');font-weight:normal;font-style:normal}
-[class*="icon-"]:before{font-family:'batch-icons';speak:none;font-style:normal;font-weight:normal;line-height:1;-webkit-font-smoothing:antialiased}
+[class*="icon-"]:before{font-family:'batch-icons';speak:none;font-style:normal;font-weight:normal;line-height:1em;-webkit-font-smoothing:antialiased}
 .icon-users:before{content:'\F045'}
 .icon-list:before{content:'\F0A9'}
 .icon-write:before{content:'\F13E'}
@@ -227,7 +227,7 @@ h2,h3{page-break-after:avoid}
 .view-content .article-util .list-util li{display:inline-block;}
 .view-content .article-util .list-util li:before{content:'•';margin:0 -.4em}
 .view-content .article-util .list-util li:first-child:before{display:none}
-.view-content .article-util .list-util a,.view-content .article-util .list-util button{color:#999;padding:.4em;-webkit-border-radius:3px;border-radius:3px;border:0;background-color:transparent;}
+.view-content .article-util .list-util a,.view-content .article-util .list-util button{color:#999;padding:.4em;-webkit-border-radius:3px;border-radius:3px;border:0;background-color:transparent;white-space:nowrap;}
 .view-content .article-util .list-util a:hover,.view-content .article-util .list-util button:hover{text-decoration:none;background-color:#dadada}
 .view-content .article-util form{display:inline-block}
 .view-content .floating > section{margin-bottom:2em;}
