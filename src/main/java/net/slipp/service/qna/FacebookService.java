@@ -52,7 +52,9 @@ public class FacebookService {
 		
 		String message = createFacebookMessage(question.getContents());
 		String postId = sendMessageToFacebook(loginUser.getAccessToken(), createLink(question.getQuestionId()), message);
-		question.connected(postId);
+		if (postId != null) {
+		    question.connected(postId);
+		}
 	}
 
     private Question retryFindQuestion(Long questionId) {
@@ -81,12 +83,17 @@ public class FacebookService {
     }
 
 	private String sendMessageToFacebook(String accessToken, String link, String message) {
-		FacebookClient facebookClient = new DefaultFacebookClient(accessToken);
-		FacebookType response = facebookClient.publish("me/feed", FacebookType.class, 
-		    Parameter.with("link", link),
-			Parameter.with("message", message));
-		String postId = response.getId();
-		log.info("connect post id : {}", postId);
+	    String postId = null;
+	    try {
+	        FacebookClient facebookClient = new DefaultFacebookClient(accessToken);
+    		FacebookType response = facebookClient.publish("me/feed", FacebookType.class, 
+    		    Parameter.with("link", link),
+    			Parameter.with("message", message));
+    		postId = response.getId();
+    		log.info("connect post id : {}", postId);
+	    } catch (Throwable e) {
+	        log.error("Facebook Connection Failed : {}", e.getMessage());
+	    }
 		return postId;
 	}
 	
@@ -108,7 +115,9 @@ public class FacebookService {
 		String message = createFacebookMessage(answer.getContents());
 		
 		String postId = sendMessageToFacebook(loginUser.getAccessToken(), createLink(question.getQuestionId()), message);
-		answer.connected(postId);
+		if (postId != null) {
+		    answer.connected(postId);
+		}
 	}
 
 	private Answer retryFindAnswer(Long answerId) {
