@@ -89,7 +89,8 @@ img{max-width:100% !important}
 p,h2,h3{orphans:3;widows:3}
 h2,h3{page-break-after:avoid}
 }@font-face{font-family:'batch-icons';src:url("/resources/webfonts/batch-icons-webfont.eot");src:url("/resources/webfonts/batch-icons-webfont.eot?#iefix") format('embedded-opentype'),url("/resources/webfonts/batch-icons-webfont.woff") format('woff'),url("/resources/webfonts/batch-icons-webfont.ttf") format('truetype'),url("/resources/webfonts/batch-icons-webfont.svg#hi") format('svg');font-weight:normal;font-style:normal}
-[class*="icon-"]:before{font-family:'batch-icons';speak:none;font-style:normal;font-weight:normal;line-height:1em;-webkit-font-smoothing:antialiased}
+[class*="icon-"]{line-height:1em}
+[class*="icon-"]:before{font-family:'batch-icons';speak:none;font-style:normal;font-weight:normal;line-height:1;-webkit-font-smoothing:antialiased}
 .icon-users:before{content:'\F045'}
 .icon-list:before{content:'\F0A9'}
 .icon-write:before{content:'\F13E'}
@@ -200,7 +201,7 @@ h2,h3{page-break-after:avoid}
 .qna-list .list .reply .icon-reply{position:absolute;left:0;top:0;font-size:2em;color:#eee;}
 @media (max-width: 979px){.qna-list .list .reply .icon-reply{left:.5em}
 }.qna-list .list .reply .point{position:relative;z-index:1;color:#aaa;font-size:2em;line-height:2em;letter-spacing:-.2em}
-.view-content .article-title{margin-bottom:0;border-bottom:1px solid #dadada}
+.view-content .article-title{margin-bottom:0;padding-bottom:.67em;border-bottom:1px solid #dadada}
 .view-content .article-count{margin-bottom:0;font-weight:bold;font-size:1.2em}
 .view-content .msg-to-login a{text-decoration:underline}
 .view-content .article{position:relative;padding:.8em 0;border-bottom:1px solid #dadada}
