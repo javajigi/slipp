@@ -66,7 +66,7 @@ public class FacebookService {
                 break;
             }
 
-            sleep(100);
+            sleep(500);
             question = questionRepository.findOne(questionId);
 
             i++;
@@ -85,6 +85,7 @@ public class FacebookService {
     private String sendMessageToFacebook(String accessToken, String link, String message) {
         String postId = null;
         try {
+            log.info("accessToken : {}, message : {}", accessToken, message);
             FacebookClient facebookClient = new DefaultFacebookClient(accessToken);
             int i = 0;
             do {
@@ -137,7 +138,7 @@ public class FacebookService {
                 break;
             }
 
-            sleep(100);
+            sleep(500);
             answer = answerRepository.findOne(answerId);
 
             i++;
