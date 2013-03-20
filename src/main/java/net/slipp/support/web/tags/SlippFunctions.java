@@ -166,6 +166,10 @@ public class SlippFunctions {
 	}
 
 	public static boolean isWriter(SocialUser writer, SocialUser loginUser) {
+	    if (writer == null) {
+	        return false;
+	    }
+	    
 		return writer.isSameUser(loginUser);
 	}
 
