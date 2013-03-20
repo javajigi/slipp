@@ -16,10 +16,10 @@
 	<div class="content-main">
 		<slipp:show question="${question}"/>
 		<div class="qna-comment">
-			<p class="article-count"><strong>${question.answerCount}</strong>개의 답변</p>
 			<c:if test="${!empty question.bestAnswer}">
 				<slipp:answer each="${question.bestAnswer}" isBest="true"/>
 			</c:if>
+			<p class="article-count"><strong>${question.answerCount}</strong>개의 의견</p>
 			<c:forEach items="${question.answers}" var="each">
 				<slipp:answer each="${each}" isBest="false"/>
 			</c:forEach>

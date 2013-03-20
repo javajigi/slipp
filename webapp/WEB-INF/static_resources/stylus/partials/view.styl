@@ -1,124 +1,135 @@
 .view-content
-	.article-title
-		margin-bottom: 0;
-		padding-bottom: .67em;
-		border-bottom: 1px solid #dadada;
-	.article-count
-		margin-bottom: 0;
-		font-weight: bold;
-		font-size: 1.2em;
-	.msg-to-login
-		a
-			text-decoration: underline;
-	.article
-		position: relative;
-		padding: .8em 0;
-		border-bottom: 1px solid #dadada;
-	.article-header
-		display: table;
-		width: 100%;
-	.article-header-text,
-	.article-header-thumb
-		display: table-cell;
-		vertical-align: middle;
-	.article-header-thumb
-		width: 48px;
-	.article-author-thumb
-		width: 40px;
-		height: 40px;
-		border-radius: 3px;
-	.article-author-name
-		font-weight: bold;
-		font-size: 1.2em;
-	.article-header-time
-		display: block;
-		color: #666;
-		&:hover
-			text-decoration: none;
-			.icon-link
-				color: #3aa;
-	.btn-like-article
-		position: absolute;
-		top: 54px;
-		width: 40px;
-		padding: 0;
-		margin: 0;
-		border: 0;
-		background-color: transparent;
-		opacity: .5;
-		&:hover
-			opacity: 1;
-		&.fixed
-			position: fixed;
-			@media phone
-				position: absolute;
-		@media phone
-			top: 10px;
-			right: 0;
-		.icon-star
-			position: absolute;
-			left: 0;
-			top: 0;
-			font-size: 3em;
-			color: darken(#F1EA91, 10);
-		.like-count
-			position: relative;
-			z-index: 1;
-			text-align: right;
-			padding-top: 1em;
-			display: block;
-			text-align: center;
-			text-shadow: 0 0px 3px white;
-			color: #666;
-		.txt
-			font-size: 0;
-	.article-doc,
-	.article-util
-		padding-left: 48px;
-		@media phone
-			padding-left: 0;
-	.article-doc
-		img
-			max-width: 100%;
-	.article-util
-		.list-util
-			margin: 0;
-			padding: 0;
-			list-style: none;
-			color: #999;
-			li
-				display: inline-block;
-				&:before
-					content: '•';
-					margin: 0 -.4em;
-				&:first-child
-					&:before
-						display: none;
-			a,
-			button
-				color: #999;
-				padding: .4em;
-				border-radius: 3px;
-				border: 0;
-				background-color: transparent;
-				white-space: nowrap;
-				&:hover
-					text-decoration: none;
-					background-color: #dadada;
-		form
-			display: inline-block;
-	.floating
-		> section
-			margin-bottom: 2em;
-			> h1
-				margin-bottom: 0;
-				font-size: 1.2em;
-			> div
-				margin: .5em 0;
-		.link-back-to-list
-			padding: .4em .8em;
-			border-radius: 4px;
-			&:hover
-				text-decoration: none;
-				color: #fff;
-				background-color: #005580;
+  .article-title
+    margin-bottom: 0;
+    padding-bottom: .67em;
+    border-bottom: 1px solid #dadada;
+  .article-count
+    margin-bottom: 0;
+    font-weight: bold;
+    font-size: 1.2em;
+  .msg-to-login
+    a
+      text-decoration: underline;
+  .best-article-label
+    margin-bottom: 1em;
+    strong
+      border-bottom: 1px solid #daa9a9;
+      font-size: 1.2em;
+  .article
+    position: relative;
+    padding: 1em 0 2em;
+    border-bottom: 1px solid #dadada;
+    &.best-article
+      border-bottom-width: 3px;
+      .btn-like-article
+        top: 108px;
+  .article-header
+    display: table;
+    width: 100%;
+    padding-bottom: 1em;
+    border-bottom: 2px dashed #eaeaea;
+  .article-header-text,
+  .article-header-thumb
+    display: table-cell;
+    vertical-align: middle;
+  .article-header-thumb
+    width: 48px;
+  .article-author-thumb
+    width: 40px;
+    height: 40px;
+    border-radius: 3px;
+  .article-author-name
+    font-weight: bold;
+    font-size: 1.2em;
+  .article-header-time
+    display: block;
+    color: #666;
+    &:hover
+      text-decoration: none;
+      .icon-link
+        color: #3aa;
+  .btn-like-article
+    position: absolute;
+    top: 70px;
+    width: 40px;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    background-color: transparent;
+    opacity: .5;
+    &:hover
+      opacity: 1;
+    &.fixed
+      position: fixed;
+      @media phone
+        position: absolute;
+    @media phone
+      top: 10px !important;
+      right: 0;
+    .icon-star
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-size: 3em;
+      color: darken(#F1EA91, 10);
+    .like-count
+      position: relative;
+      z-index: 1;
+      text-align: right;
+      padding-top: 1em;
+      display: block;
+      text-align: center;
+      text-shadow: 0 0px 3px white;
+      color: #666;
+    .txt
+      font-size: 0;
+  .article-doc,
+  .article-util
+    padding-left: 48px;
+    @media phone
+      padding-left: 0;
+  .article-doc
+    img
+      max-width: 100%;
+  .article-util
+    .list-util
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      color: #999;
+      li
+        display: inline-block;
+        &:before
+          content: '•';
+          margin: 0 -.4em;
+        &:first-child
+          &:before
+            display: none;
+      a,
+      button
+        color: #999;
+        padding: .4em;
+        border-radius: 3px;
+        border: 0;
+        background-color: transparent;
+        white-space: nowrap;
+        &:hover
+          text-decoration: none;
+          background-color: #dadada;
+    form
+      display: inline-block;
+  .floating
+    > section
+      margin-bottom: 2em;
+      > h1
+        margin-bottom: 0;
+        font-size: 1.2em;
+      > div
+        margin: .5em 0;
+    .link-back-to-list
+      padding: .4em .8em;
+      border-radius: 4px;
+      &:hover
+        text-decoration: none;
+        color: #fff;
+        background-color: #005580;
