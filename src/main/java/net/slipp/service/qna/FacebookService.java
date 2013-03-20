@@ -24,52 +24,54 @@ import com.restfb.types.FacebookType;
 @Service
 @Transactional
 public class FacebookService {
-	private static final Logger log = LoggerFactory.getLogger(FacebookService.class);
-	
-	private static final int DEFAULT_FACEBOOK_MESSAGE_LENGTH = 250;
-	
-	@Resource(name = "questionRepository")
-	private QuestionRepository questionRepository;
-	
-	@Resource(name = "answerRepository")
-	private AnswerRepository answerRepository;
-	
-	@Value("${application.url}")
-	private String applicationUrl;
-	
-	@Async
-	public void sendToQuestionMessage(SocialUser loginUser, Long questionId) {
-	    log.info("questionId : {}", questionId);
-		Question question = questionRepository.findOne(questionId);
-		if (question == null) {
-		    question = retryFindQuestion(questionId);
-		}
-		
-		if (question == null) {
-		    log.info("Question of {} is null", questionId);
-		    return;
-		}
-		
-		String message = createFacebookMessage(question.getContents());
-		String postId = sendMessageToFacebook(loginUser.getAccessToken(), createLink(question.getQuestionId()), message);
-		question.connected(postId);
-	}
+    private static final Logger log = LoggerFactory.getLogger(FacebookService.class);
+
+    private static final int DEFAULT_FACEBOOK_MESSAGE_LENGTH = 250;
+
+    @Resource(name = "questionRepository")
+    private QuestionRepository questionRepository;
+
+    @Resource(name = "answerRepository")
+    private AnswerRepository answerRepository;
+
+    @Value("${application.url}")
+    private String applicationUrl;
+
+    @Async
+    public void sendToQuestionMessage(SocialUser loginUser, Long questionId) {
+        log.info("questionId : {}", questionId);
+        Question question = questionRepository.findOne(questionId);
+        if (question == null) {
+            question = retryFindQuestion(questionId);
+        }
+
+        if (question == null) {
+            log.info("Question of {} is null", questionId);
+            return;
+        }
+
+        String message = createFacebookMessage(question.getContents());
+        String postId = sendMessageToFacebook(loginUser.getAccessToken(), createLink(question.getQuestionId()), message);
+        if (postId != null) {
+            question.connected(postId);
+        }
+    }
 
     private Question retryFindQuestion(Long questionId) {
         Question question = null;
-        
-        int i=0;
+
+        int i = 0;
         do {
-            if ( i > 2 ) {
+            if (i > 2) {
                 break;
             }
-            
-            sleep(100);
+
+            sleep(500);
             question = questionRepository.findOne(questionId);
-            
+
             i++;
         } while (question == null);
-        
+
         return question;
     }
 
@@ -80,63 +82,79 @@ public class FacebookService {
         }
     }
 
-	private String sendMessageToFacebook(String accessToken, String link, String message) {
-		FacebookClient facebookClient = new DefaultFacebookClient(accessToken);
-		FacebookType response = facebookClient.publish("me/feed", FacebookType.class, 
-		    Parameter.with("link", link),
-			Parameter.with("message", message));
-		String postId = response.getId();
-		log.info("connect post id : {}", postId);
-		return postId;
-	}
-	
-	@Async
-	public void sendToAnswerMessage(SocialUser loginUser, Long answerId) {
-	    log.info("answerId : {}", answerId);
-		Answer answer = answerRepository.findOne(answerId);
-		
-		if (answer == null) {
-		    answer = retryFindAnswer(answerId);
+    private String sendMessageToFacebook(String accessToken, String link, String message) {
+        String postId = null;
+        try {
+            log.info("accessToken : {}, message : {}", accessToken, message);
+            FacebookClient facebookClient = new DefaultFacebookClient(accessToken);
+            int i = 0;
+            do {
+                if (i > 2) {
+                    break;
+                }
+
+                FacebookType response = facebookClient.publish("me/feed", FacebookType.class,
+                        Parameter.with("link", link), Parameter.with("message", message));
+                postId = response.getId();
+
+                i++;
+            } while (postId == null);
+            log.info("connect post id : {}", postId);
+        } catch (Throwable e) {
+            log.error("Facebook Connection Failed : {}", e.getMessage());
         }
-        
+        return postId;
+    }
+
+    @Async
+    public void sendToAnswerMessage(SocialUser loginUser, Long answerId) {
+        log.info("answerId : {}", answerId);
+        Answer answer = answerRepository.findOne(answerId);
+
+        if (answer == null) {
+            answer = retryFindAnswer(answerId);
+        }
+
         if (answer == null) {
             log.info("Answer of {} is null", answerId);
             return;
         }
-		
-		Question question = answer.getQuestion();
-		String message = createFacebookMessage(answer.getContents());
-		
-		String postId = sendMessageToFacebook(loginUser.getAccessToken(), createLink(question.getQuestionId()), message);
-		answer.connected(postId);
-	}
 
-	private Answer retryFindAnswer(Long answerId) {
-	    Answer answer = null;
-        
-        int i=0;
+        Question question = answer.getQuestion();
+        String message = createFacebookMessage(answer.getContents());
+
+        String postId = sendMessageToFacebook(loginUser.getAccessToken(), createLink(question.getQuestionId()), message);
+        if (postId != null) {
+            answer.connected(postId);
+        }
+    }
+
+    private Answer retryFindAnswer(Long answerId) {
+        Answer answer = null;
+
+        int i = 0;
         do {
-            if ( i > 2 ) {
+            if (i > 2) {
                 break;
             }
-            
-            sleep(100);
+
+            sleep(500);
             answer = answerRepository.findOne(answerId);
-            
+
             i++;
         } while (answer == null);
-        
+
         return answer;
     }
 
     private String createLink(Long questionId) {
-	    String link = String.format("%s/questions/%d", applicationUrl, questionId);
-	    log.info("create link : {}", link);
+        String link = String.format("%s/questions/%d", applicationUrl, questionId);
+        log.info("create link : {}", link);
         return link;
     }
 
     private String createFacebookMessage(String contents) {
-		String wikiContents = SlippFunctions.wiki(contents);
-		return SlippFunctions.stripTagsAndCut(wikiContents, DEFAULT_FACEBOOK_MESSAGE_LENGTH, "...");
-	}
+        String wikiContents = SlippFunctions.wiki(contents);
+        return SlippFunctions.stripTagsAndCut(wikiContents, DEFAULT_FACEBOOK_MESSAGE_LENGTH, "...");
+    }
 }
