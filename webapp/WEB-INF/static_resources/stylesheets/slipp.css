@@ -104,6 +104,7 @@ h2,h3{page-break-after:avoid}
 .icon-link:before{content:'\F143'}
 .icon-image:before{content:'\F040'}
 .icon-submit:before{content:'\F13A'}
+body{overflow-y:scroll}
 .container{width:960px;margin:0 auto;*zoom:1;}
 .container:before,.container:after{content:'';display:table;line-height:0}
 .container:after{clear:both}
