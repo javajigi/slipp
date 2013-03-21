@@ -1,4 +1,4 @@
-[<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%><%@ taglib prefix="decorator" uri="http://www.opensymphony.com/sitemesh/decorator"
 %><%@include file="/WEB-INF/jsp/include/tags.jspf"%><!DOCTYPE html>
 <html lang="ko">
@@ -29,25 +29,11 @@
 					<li>
 						<a href="/questions"><i class="icon-list"></i> <span class="text">글목록</span></a>
 					</li>
+					<li class="site-search">
+						<a href="/"><i class="icon-search"></i></a>
+					</li>
 				</ul>
 			</nav>
-			
-			<div class="site-search">
-				<script>
-				  (function() {
-				    var cx = '010235842937876666941:4opvrjfw190';
-				    var gcse = document.createElement('script');
-				    gcse.type = 'text/javascript';
-				    gcse.async = true;
-				    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
-				        '//www.google.com/cse/cse.js?cx=' + cx;
-				    var s = document.getElementsByTagName('script')[0];
-				    s.parentNode.insertBefore(gcse, s);
-				  })();
-				</script>
-				<gcse:search></gcse:search>
-			</div>
-			
 			<nav class="user-menu">
 				<ul role="menu">
 					<sec:authorize access="!hasRole('ROLE_USER')">
@@ -82,9 +68,9 @@
 		</div>
 	</header>
 	<div class="content" role="main">
-		<gcse:searchresults></gcse:searchresults>
-		
 		<div class="container">
+			<gcse:search></gcse:search>
+			<gcse:searchresults></gcse:searchresults>
 			<decorator:body/>
 		</div>
 	</div>
@@ -111,9 +97,21 @@
 	</footer>
 </div>
 <script>
+(function() {
+	var cx = '010235842937876666941:4opvrjfw190';
+	var gcse = document.createElement('script');
+	gcse.type = 'text/javascript';
+	gcse.async = true;
+	gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//www.google.com/cse/cse.js?cx=' + cx;
+	var s = document.getElementsByTagName('script')[0];
+	s.parentNode.insertBefore(gcse, s);
+})();
+</script>
+<script>
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
 document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-
+</script>
+<script>
 try{
 	var pageTracker = _gat._getTracker("UA-22853131-1");
 	pageTracker._trackPageview();
