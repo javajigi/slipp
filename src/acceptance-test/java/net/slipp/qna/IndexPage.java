@@ -28,7 +28,7 @@ public class IndexPage {
 	public IndexPage loginToFacebook(LoginUser loginUser) {
 		log.debug("loginUser : {}", loginUser);
 		
-		driver.findElement(By.cssSelector(".loginBtn > a")).click();
+		driver.findElement(By.cssSelector("a.link-loginout")).click();
 		driver.findElement(By.cssSelector("input[value='페이스북 계정으로 로그인']")).click();
 		if (driver.getTitle().equals("SLiPP")) {
 			return new IndexPage(driver);
@@ -76,7 +76,7 @@ public class IndexPage {
 	}
 
 	public QuestionFormPage goQuestionForm() {
-		driver.findElement(By.id("questionBtn")).click();
+		driver.findElement(By.id("writeBtn")).click();
 		return new QuestionFormPage(driver);
 	}
 

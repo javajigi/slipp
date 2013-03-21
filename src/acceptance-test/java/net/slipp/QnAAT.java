@@ -1,11 +1,10 @@
 package net.slipp;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 import java.util.List;
 
-import net.slipp.qna.AdminTagPage;
 import net.slipp.qna.AnswerUpdateFormPage;
 import net.slipp.qna.IndexPage;
 import net.slipp.qna.QuestionFixture;
@@ -57,10 +56,10 @@ public class QnAAT extends AbstractATTest {
         QuestionFormPage qnaFormPage = indexPage.goQuestionForm();
         questionFixture.setPlainTags("java javascript newtag");
         qnaFormPage.question(questionFixture);
-        AdminTagPage adminTagPage = indexPage.goAdminTagPage();
-    	assertThat(adminTagPage.existNewTag("newtag"), is(true));
-    	adminTagPage = adminTagPage.moveToPoolTag();
-    	assertThat(adminTagPage.existNewTag("newtag"), is(false));
+//      AdminTagPage adminTagPage = indexPage.goAdminTagPage();
+//    	assertThat(adminTagPage.existNewTag("newtag"), is(true));
+//    	adminTagPage = adminTagPage.moveToPoolTag();
+//    	assertThat(adminTagPage.existNewTag("newtag"), is(false));
     	
     }
     

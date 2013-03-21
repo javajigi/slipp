@@ -25,7 +25,7 @@ public class QuestionPage {
     }
 
     public void verify(String title, String contents, String plainTags) {
-        WebElement titleElement = driver.findElement(By.cssSelector("h1.subject"));
+        WebElement titleElement = driver.findElement(By.cssSelector(".article-title"));
         assertThat(titleElement.getText(), is(title));
 
         List<String> tags = Arrays.asList(plainTags.split(" "));
@@ -77,7 +77,7 @@ public class QuestionPage {
     }
 
     public QuestionFormPage goToUpdatePage() {
-        driver.findElement(By.id("updateQuestionBtn")).click();
+        driver.findElement(By.cssSelector(".link-modify-article")).click();
         return new QuestionFormPage(driver);
     }
 

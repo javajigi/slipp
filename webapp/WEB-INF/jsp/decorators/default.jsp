@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+[<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%><%@ taglib prefix="decorator" uri="http://www.opensymphony.com/sitemesh/decorator"
 %><%@include file="/WEB-INF/jsp/include/tags.jspf"%><!DOCTYPE html>
 <html lang="ko">
@@ -31,12 +31,23 @@
 					</li>
 				</ul>
 			</nav>
-			<form class="site-search" action="/search">
-				<fieldset>
-					<i class="icon-search"></i>
-					<input type="search" class="inp-search" name="q" placeholder="search" />
-				</fieldset>
-			</form>
+			
+			<div class="site-search">
+				<script>
+				  (function() {
+				    var cx = '010235842937876666941:4opvrjfw190';
+				    var gcse = document.createElement('script');
+				    gcse.type = 'text/javascript';
+				    gcse.async = true;
+				    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+				        '//www.google.com/cse/cse.js?cx=' + cx;
+				    var s = document.getElementsByTagName('script')[0];
+				    s.parentNode.insertBefore(gcse, s);
+				  })();
+				</script>
+				<gcse:search></gcse:search>
+			</div>
+			
 			<nav class="user-menu">
 				<ul role="menu">
 					<sec:authorize access="!hasRole('ROLE_USER')">
@@ -47,12 +58,12 @@
 					</sec:authorize>
 					<sec:authorize access="hasRole('ROLE_USER')">
 					<li>
-						<a href="/questions/form" class="link-write"><i class="icon-write"></i> <span class="text">새글쓰기</span></a>
+						<a id="writeBtn" href="/questions/form" class="link-write"><i class="icon-write"></i> <span class="text">새글쓰기</span></a>
 					</li>
 					<li class="user-info">
 						<a href="/notifications" class="notification-button">
-							<img class="user-thumb" src="//graph.facebook.com/1701115026/picture" width="24" height="24" alt="" />
-							<span class="user-name">진우</span>
+							<img class="user-thumb" src="${sf:stripHttp(loginUser.imageUrl)}" width="24" height="24" alt="" />
+							<span class="user-name">${loginUser.userId}</span>
 							<c:if test="${countNotifications != 0}">
 								<span class="notification-count">${countNotifications}</span>
 							</c:if>
@@ -71,6 +82,8 @@
 		</div>
 	</header>
 	<div class="content" role="main">
+		<gcse:searchresults></gcse:searchresults>
+		
 		<div class="container">
 			<decorator:body/>
 		</div>
@@ -97,7 +110,6 @@
 		</div>
 	</footer>
 </div>
-
 <script>
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
 document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));

@@ -21,6 +21,9 @@ public class SlippFunctionsTest {
 	public void isNotWriter() throws Exception {
 		boolean actual = SlippFunctions.isWriter(new SocialUser(10), new SocialUser(11));
 		assertThat(actual, is(false));
+		
+		actual = SlippFunctions.isWriter(null, new SocialUser(11));
+        assertThat(actual, is(false));
 	}
 
 	@Test
