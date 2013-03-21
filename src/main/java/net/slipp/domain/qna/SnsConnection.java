@@ -13,7 +13,7 @@ public class SnsConnection {
 	@Column(name = "sns_type", nullable = true, columnDefinition = SnsType.COLUMN_DEFINITION)
 	private SnsType snsType;
 	
-	@Column(name = "post_id", length = 30, nullable = true)
+	@Column(name = "post_id", length = 100, nullable = true)
 	private String postId;
 
 	public SnsConnection() {
