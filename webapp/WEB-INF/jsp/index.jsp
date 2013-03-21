@@ -38,7 +38,7 @@
 									<span class="point">${each.answerCount}</span>
 								</div>
 								<div class="auth-info">
-									<a href="${each.writer.profileUrl}" class="author">${each.latestParticipant.userId}</a>
+									<a href="${each.latestParticipant.profileUrl}" class="author">${each.latestParticipant.userId}</a>
 									<span class="time">
 										<fmt:formatDate value="${each.updatedDate}" pattern="yyyy-MM-dd HH:mm" />  
 									</span>
