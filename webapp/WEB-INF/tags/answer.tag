@@ -8,9 +8,12 @@ taglib prefix="slipp" tagdir="/WEB-INF/tags" %><%@
 attribute name="each" required="true" rtexprvalue="true" type="net.slipp.domain.qna.Answer" description="답변"%><%@
 attribute name="isBest" required="true" rtexprvalue="true" type="java.lang.Boolean" description="" %>
 
-<article class="article<c:if test='${isBest}'> best-comment</c:if>" <c:if test="${not isBest}">id="answer-${each.answerId}"</c:if>>
+<article class="article<c:if test='${isBest}'> best-article</c:if>" <c:if test="${not isBest}">id="answer-${each.answerId}"</c:if>>
 	<c:if test="${isBest}">
-		<span class="answer-best">best</span>
+		<div class="best-article-label">
+			<strong>BEST 의견</strong>
+			<small><a href="#answer-${each.answerId}">원본위치로&darr;</a></small>
+		</div>
 	</c:if>
 	<div class="article-header">
 		<div class="article-header-thumb">
