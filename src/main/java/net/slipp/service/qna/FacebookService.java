@@ -34,7 +34,7 @@ public class FacebookService {
     @Resource(name = "answerRepository")
     private AnswerRepository answerRepository;
 
-    @Value("${application.url}")
+    @Value("${facebook.application.url}")
     private String applicationUrl;
 
     @Async
@@ -51,7 +51,7 @@ public class FacebookService {
         }
 
         String message = createFacebookMessage(question.getContents());
-        String postId = sendMessageToFacebook(loginUser.getAccessToken(), createLink(question.getQuestionId()), message);
+        String postId = sendMessageToFacebook(loginUser, createLink(question.getQuestionId()), message);
         if (postId != null) {
             question.connected(postId);
         }
@@ -82,11 +82,10 @@ public class FacebookService {
         }
     }
 
-    private String sendMessageToFacebook(String accessToken, String link, String message) {
+    private String sendMessageToFacebook(SocialUser loginUser, String link, String message) {
         String postId = null;
         try {
-            log.info("accessToken : {}, message : {}", accessToken, message);
-            FacebookClient facebookClient = new DefaultFacebookClient(accessToken);
+            FacebookClient facebookClient = new DefaultFacebookClient(loginUser.getAccessToken());
             int i = 0;
             do {
                 if (i > 2) {
@@ -123,7 +122,7 @@ public class FacebookService {
         Question question = answer.getQuestion();
         String message = createFacebookMessage(answer.getContents());
 
-        String postId = sendMessageToFacebook(loginUser.getAccessToken(), createLink(question.getQuestionId()), message);
+        String postId = sendMessageToFacebook(loginUser, createLink(question.getQuestionId()), message);
         if (postId != null) {
             answer.connected(postId);
         }

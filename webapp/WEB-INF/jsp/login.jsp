@@ -13,6 +13,7 @@
 			<div class="row-fluid">
 				<div class="span4">
 					<form action="/signin/facebook" method="POST">
+						<input type="hidden" name="scope" value="publish_stream" />
 						<input class="btn btn-primary btn-large" type="submit" value="페이스북 계정으로 로그인" />
 					</form>
 				</div>
