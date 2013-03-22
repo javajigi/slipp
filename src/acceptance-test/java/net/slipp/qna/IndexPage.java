@@ -10,6 +10,8 @@ import net.slipp.user.TwitterPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,12 +30,12 @@ public class IndexPage {
 	public IndexPage loginToFacebook(LoginUser loginUser) {
 		log.debug("loginUser : {}", loginUser);
 		
+		new WebDriverWait(driver, 1000).until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("a.link-loginout")));
 		driver.findElement(By.cssSelector("a.link-loginout")).click();
 		driver.findElement(By.cssSelector("input[value='페이스북 계정으로 로그인']")).click();
 		if (driver.getTitle().equals("SLiPP")) {
 			return new IndexPage(driver);
 		}
-
 		FacebookPage facebookPage = new FacebookPage(driver);
         return facebookPage.login(loginUser);
 	}
@@ -63,7 +65,7 @@ public class IndexPage {
 	public IndexPage logout() {
 	    FBLogoutPage logoutPage = new FBLogoutPage(driver);
         logoutPage.logout();
-	    List<WebElement> logoutLinks = driver.findElements(By.linkText("로그아웃"));
+	    List<WebElement> logoutLinks = driver.findElements(By.cssSelector("a.link-loginout"));
 	    if (!logoutLinks.isEmpty()) {
 	        logoutLinks.get(0).click();
 	    }
