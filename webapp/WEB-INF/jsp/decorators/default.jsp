@@ -29,14 +29,11 @@
 					<li>
 						<a href="/questions"><i class="icon-list"></i> <span class="text">글목록</span></a>
 					</li>
+					<li class="site-search">
+						<a href="/"><i class="icon-search"></i></a>
+					</li>
 				</ul>
 			</nav>
-			<form class="site-search" action="/search">
-				<fieldset>
-					<i class="icon-search"></i>
-					<input type="search" class="inp-search" name="q" placeholder="search" />
-				</fieldset>
-			</form>
 			<nav class="user-menu">
 				<ul role="menu">
 					<sec:authorize access="!hasRole('ROLE_USER')">
@@ -47,12 +44,12 @@
 					</sec:authorize>
 					<sec:authorize access="hasRole('ROLE_USER')">
 					<li>
-						<a href="/questions/form" class="link-write"><i class="icon-write"></i> <span class="text">새글쓰기</span></a>
+						<a id="writeBtn" href="/questions/form" class="link-write"><i class="icon-write"></i> <span class="text">새글쓰기</span></a>
 					</li>
 					<li class="user-info">
 						<a href="/notifications" class="notification-button">
-							<img class="user-thumb" src="//graph.facebook.com/1701115026/picture" width="24" height="24" alt="" />
-							<span class="user-name">진우</span>
+							<img class="user-thumb" src="${sf:stripHttp(loginUser.imageUrl)}" width="24" height="24" alt="" />
+							<span class="user-name">${loginUser.userId}</span>
 							<c:if test="${countNotifications != 0}">
 								<span class="notification-count">${countNotifications}</span>
 							</c:if>
@@ -72,6 +69,8 @@
 	</header>
 	<div class="content" role="main">
 		<div class="container">
+			<gcse:search></gcse:search>
+			<gcse:searchresults></gcse:searchresults>
 			<decorator:body/>
 		</div>
 	</div>
@@ -97,11 +96,22 @@
 		</div>
 	</footer>
 </div>
-
+<script>
+(function() {
+	var cx = '010235842937876666941:4opvrjfw190';
+	var gcse = document.createElement('script');
+	gcse.type = 'text/javascript';
+	gcse.async = true;
+	gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//www.google.com/cse/cse.js?cx=' + cx;
+	var s = document.getElementsByTagName('script')[0];
+	s.parentNode.insertBefore(gcse, s);
+})();
+</script>
 <script>
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
 document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-
+</script>
+<script>
 try{
 	var pageTracker = _gat._getTracker("UA-22853131-1");
 	pageTracker._trackPageview();

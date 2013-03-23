@@ -1,7 +1,8 @@
 package net.slipp.repository.notification;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
 
 import java.util.HashSet;
 import java.util.List;
@@ -71,9 +72,6 @@ public class NotificationRepositoryIT {
 		
 		notificationRepository.updateReaded(notifiee);
 		notifications = notificationRepository.findNotifications(notifiee, pageable);
-		assertThat(notifications.size(), is(0));
-		
-		count = notificationRepository.countByNotifiee(notifiee);
-        assertThat(count, is(nullValue()));
+		assertThat(notificationRepository.countByNotifiee(notifiee), is(nullValue()));
 	}
 }

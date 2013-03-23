@@ -17,7 +17,7 @@ public class QuestionFormPage {
 		driver.findElement(By.id("contents")).sendKeys(questionFixture.getContents());
 		driver.findElement(By.id("plainTags")).clear();
 		driver.findElement(By.id("plainTags")).sendKeys(questionFixture.getPlainTags());
-		driver.findElement(By.id("confirmBtn")).click();
+		driver.findElement(By.cssSelector(".btn-submit")).click();
 		return new QuestionPage(driver, questionFixture.getTitle());
 	}
 }
