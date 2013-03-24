@@ -82,23 +82,22 @@ body
 				display: inline-block;
 	.site-search
 		float: left;
-		margin-left: 1em;
 		line-height: 42px;
-		@media phone
-			float: none;
-			position: absolute;
-			right: 0;
-			bottom: -60px;
-		.inp-search
-			width: 10em;
-			padding: 0 .4em;
-			height: 1.8em;
-			margin-left: .4em;
-			border-radius: 2px;
-			border: 1px solid #ddd;
-			&:focus
-				outline: none;
-				border-color: #AAD2F7;
+		// @media phone
+		// 	float: none;
+		// 	position: absolute;
+		// 	right: 0;
+		// 	bottom: -60px;
+		// .inp-search
+		// 	width: 10em;
+		// 	padding: 0 .4em;
+		// 	height: 1.8em;
+		// 	margin-left: .4em;
+		// 	border-radius: 2px;
+		// 	border: 1px solid #ddd;
+		// 	&:focus
+		// 		outline: none;
+		// 		border-color: #AAD2F7;
 	.user-menu
 		float: right;
 		@media phone
@@ -108,6 +107,7 @@ body
 			box-shadow: 1px 0 0 #fff;
 	.link-write
 		background-color: rgba(0, 85, 128, 0.1);
+		transition: background-color .4s;
 		&:hover
 			background-color: rgba(0, 85, 128, 0.6);
 			color: #fff;
@@ -255,6 +255,8 @@ body
 		@media not-desktop
 			float: none;
 			width: auto;
+	.login-content &
+		width: 100%;
 .content-sub
 	float: right;
 	width: 22%;
@@ -311,7 +313,12 @@ body
 			cursor: default;
 
 // 구글검색
+.site-search-area
+	display: none;
+	&.active
+		display: block;
 .gsc-control-cse
+	padding: 0 !important;
 	input
 		box-shadow: none;
 	input:focus,

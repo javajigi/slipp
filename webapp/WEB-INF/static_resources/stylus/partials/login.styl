@@ -1,0 +1,40 @@
+.login-content
+	text-align: center;
+	.text-choose-login-path
+		border-top: 2px dashed #ddd;
+		margin-top: 2em;
+		padding-top: 2em;
+	form
+		display: inline;
+		@media phone
+			display: block;
+	.btn-login-facebook,
+	.btn-login-twitter,
+	.btn-login-google
+		width: 10em;
+		margin: 0 .4em;
+		padding: .4em 0;
+		border: 0;
+		border-radius: 3px;
+		text-align: center;
+		font-size: 1.2em;
+		background-color: transparent;
+		transition: background-color .4s;
+		@media phone
+			width: 100%;
+			margin: .5em 0;
+		&:hover
+			color: #fff;
+	.btn-login-facebook
+		&:hover
+			background-color: #3B5998;
+	.btn-login-twitter
+		&:hover
+			background-color: #2F96B4;
+	.btn-login-google
+		&:hover
+			background-color: #E94B35;
+	[class*='foundicon-']
+		position: relative;
+		top: 3px;
+		font-size: 1.2em;

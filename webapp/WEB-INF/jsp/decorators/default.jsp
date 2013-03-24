@@ -30,7 +30,7 @@
 						<a href="/questions"><i class="icon-list"></i> <span class="text">글목록</span></a>
 					</li>
 					<li class="site-search">
-						<a href="/"><i class="icon-search"></i></a>
+						<a href="#siteSearchArea" id="siteSearchButton" class="site-search-button"><i class="icon-search"></i></a>
 					</li>
 				</ul>
 			</nav>
@@ -47,14 +47,14 @@
 						<a id="writeBtn" href="/questions/form" class="link-write"><i class="icon-write"></i> <span class="text">새글쓰기</span></a>
 					</li>
 					<li class="user-info">
-						<a href="/notifications" class="notification-button">
+						<a href="/notifications" id="notificationButton" class="notification-button">
 							<img class="user-thumb" src="${sf:stripHttp(loginUser.imageUrl)}" width="24" height="24" alt="" />
 							<span class="user-name">${loginUser.userId}</span>
 							<c:if test="${countNotifications != 0}">
 								<span class="notification-count">${countNotifications}</span>
 							</c:if>
 						</a>
-						<div class="notification-layer">
+						<div id="notificationLayer" class="notification-layer">
 							<strong class="title">응답알림</strong>
 							<ul></ul>
 						</div>
@@ -69,8 +69,10 @@
 	</header>
 	<div class="content" role="main">
 		<div class="container">
-			<gcse:search></gcse:search>
-			<gcse:searchresults></gcse:searchresults>
+			<div id="siteSearchArea" class="site-search-area">
+				<gcse:search></gcse:search>
+				<gcse:searchresults></gcse:searchresults>
+			</div>
 			<decorator:body/>
 		</div>
 	</div>
@@ -85,10 +87,10 @@
 						<a href="/code">Code</a>
 					</li>
 					<li>
-						<a href="/wiki">Wiki</a>
+						<a href="https://github.com/javajigi/slipp/issues" target="_blank">Ideas&amp;Bugs</a>
 					</li>
 					<li>
-						<a href="https://github.com/javajigi/slipp/issues" target="_blank">Ideas&amp;Bugs</a>
+						<a href="/wiki">SLiPP-Wiki</a>
 					</li>
 				</ul>
 			</nav>
@@ -118,49 +120,58 @@ try{
 } catch(err) {}
 
 $(document).ready(function(){
+	var $notificationLayer = $('#notificationLayer');
+	var $notificationButton = $('#notificationButton');
+	var $siteSearchButton = $('#siteSearchButton');
+
 	getNotificationData();
+
 	$('body').on('click', function() {
-		closeNotificationLayer();
+		$notificationLayer.hide();
 	});
-	$('.notification-button').on('click', function(e){
+
+	$notificationButton.on('click', function(e){
 		e.stopPropagation();
 		e.preventDefault();
-		toggleNotificationLayer();
+		$notificationLayer.toggle();
 	});
+	$siteSearchButton.on('click', function(e) {
+		var $siteSearchArea = $('#siteSearchArea');
+		e.preventDefault();
+		$siteSearchArea.toggleClass('active');
+		if ($siteSearchArea.hasClass('active')) {
+			$siteSearchArea.find('input[type="text"]').focus();
+		}
+	})
+
+	function getNotificationData() {
+		var $btn = $notificationButton;
+		var $layer = $notificationLayer;
+
+		$.getJSON($btn.attr('href'), function(result){
+			var items = result;
+			var length = items.length;
+			var $ul = $('<ul></ul>');
+			var item;
+
+			for(var i=0; i < length; i++) {
+				item = items[i];
+
+				$("<li></li>")
+				.append(
+					$('<a></a>')
+					.attr('href', '/questions/' + item.questionId)
+					.text('"' + item.title + '" 글에 댓글이 달렸습니다.')
+				)
+				.appendTo($ul);
+			}
+			$btn.find('.notification-count').text('0');
+
+			$layer.find($('ul')).replaceWith($ul);
+		});
+	}
 });
 
-function toggleNotificationLayer() {
-	$('.notification-layer').toggle();
-}
-function closeNotificationLayer() {
-	$('.notification-layer').hide();
-}
-function getNotificationData() {
-	var $btn = $('.notification-button');
-	var $layer = $('.notification-layer');
-
-	$.getJSON($btn.attr('href'), function(result){
-		var items = result;
-		var length = items.length;
-		var $ul = $('<ul></ul>');
-		var item;
-
-		for(var i=0; i < length; i++) {
-			item = items[i];
-
-			$("<li></li>")
-			.append(
-				$('<a></a>')
-				.attr('href', '/questions/' + item.questionId)
-				.text('"' + item.title + '" 글에 댓글이 달렸습니다.')
-			)
-			.appendTo($ul);
-		}
-		$btn.find('.notification-count').text('0');
-
-		$layer.find($('ul')).replaceWith($ul);
-	});
-}
 </script>
 </body>
 </html>

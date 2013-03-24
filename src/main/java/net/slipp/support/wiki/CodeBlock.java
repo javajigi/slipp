@@ -19,7 +19,7 @@ import org.eclipse.mylyn.wikitext.core.parser.DocumentBuilder.BlockType;
  */
 public class CodeBlock extends AbstractConfluenceDelimitedBlock {
 	private static final String DEFAULT_LANGUAGE = "java";
-	
+
 	private String title;
 
 	private String language = DEFAULT_LANGUAGE;
@@ -35,10 +35,12 @@ public class CodeBlock extends AbstractConfluenceDelimitedBlock {
 			attributes.setTitle(title);
 			builder.beginBlock(BlockType.PANEL, attributes);
 		}
+		Attributes codeAttributes = new Attributes();
+		codeAttributes.setCssClass(language);
 		Attributes preAttributes = new Attributes();
-		preAttributes.setCssClass("brush: " + language + ";");
-		
+
 		builder.beginBlock(BlockType.PREFORMATTED, preAttributes);
+		builder.beginBlock(BlockType.CODE, codeAttributes);
 	}
 
 	@Override
@@ -50,9 +52,10 @@ public class CodeBlock extends AbstractConfluenceDelimitedBlock {
 	@Override
 	protected void endBlock() {
 		if (title != null) {
-			builder.endBlock(); // panel	
+			builder.endBlock(); // panel
 		}
 		builder.endBlock(); // pre
+		builder.endBlock(); // code
 	}
 
 	@Override

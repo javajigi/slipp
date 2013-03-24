@@ -100,6 +100,9 @@
 
 <script src="${url:resource('/javascripts/jquery.validate.min.js')}"></script>
 <script src="${url:resource('/javascripts/highlight.pack.js')}"></script>
+<script>
+hljs.initHighlightingOnLoad();
+</script>
 <script src="${url:resource('/javascripts/qna/image.upload.js')}"></script>
 <script src="${url:resource('/javascripts/qna/tagparser.js')}"></script>
 <script src="${url:resource('/javascripts/qna/show.js')}"></script>

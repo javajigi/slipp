@@ -38,3 +38,28 @@
 			font-size: 1.2em;
 			color: #eee;
 			background-color: #000;
+	.notice
+		h1
+			margin-bottom: 0;
+		.list
+			list-style: none;
+			margin: 0;
+			padding: 0;
+			border-top: 1px solid #eaeaea;
+			font-size: .9em;
+			@media not-desktop
+				margin:0 -1em;
+				font-size: 1em;
+			> li
+				position: relative;
+				padding: .5em 0;
+				border-bottom: 1px solid #eaeaea;
+				@media not-desktop
+					padding-left: 1em;
+					padding-right: 1em;
+			.title
+				font-size: 1.2em;
+			.time
+				color: #999;
+		.rss
+			margin-top: 1em;

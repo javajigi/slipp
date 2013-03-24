@@ -69,23 +69,34 @@
 				</fieldset>
 			</form>
 		</section>
-		<section class="span4">
+		<section class="notice">
 			<h1>SLiPP 소식</h1>
-			<div class="forumList">
-			<c:forEach items="${pages}" var="page">
-				<div class="nickArea">
-					<p class="regDate">${page.creationDate}</p>
-				</div>
-				<div class="cont">
-					<strong class="subject"><a href="/wiki/pages/viewpage.action?pageId=${page.pageId}">${page.title}</a></strong>
-					<div>${page.shortContents}</div>
-				</div>
-			</c:forEach>
-			</div>
-			<div class="forumTop">
-				<div class="rss">
-					<a href="http://feeds.feedburner.com/slipp"><img src="http://feeds.feedburner.com/~fc/slipp?bg=99CCFF&amp;fg=444444&amp;anim=0" height="26" width="88" style="border:0" alt="" /></a>
-				</div>
+			<ul class="list">
+				<li>
+					<strong class="title"><a href="#">테스트테스트테스트</a></strong>
+					<div class="time">2013-03-25</div>
+					<div class="cont">
+						여기엔 내용이 들어갑니다<br />
+						여러줄로 막 들어갑니다.
+					</div>
+				</li>
+				<li>
+					<strong class="title"><a href="#">테스트테스트테스트</a></strong>
+					<div class="time">2013-03-25</div>
+					<div class="cont">
+						여기엔 내용이 들어갑니다. 여러줄로 막 들어갑니다.
+					</div>
+				</li>
+				<c:forEach items="${pages}" var="page">
+					<li>
+						<strong class="title"><a href="/wiki/pages/viewpage.action?pageId=${page.pageId}">${page.title}</a></strong>
+						<div class="time">${page.creationDate}</div>
+						<div class="cont">${page.shortContents}</div>
+					</li>
+				</c:forEach>
+			</ul>
+			<div class="rss">
+				<a href="http://feeds.feedburner.com/slipp"><img src="http://feeds.feedburner.com/~fc/slipp?bg=99CCFF&amp;fg=444444&amp;anim=0" height="26" width="88" style="border:0" alt="" /></a>
 			</div>
 		</section>
 	</div>
