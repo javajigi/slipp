@@ -320,7 +320,7 @@ body{overflow-y:scroll}
 @media (max-width: 480px){.login-content .btn-login-facebook,.login-content .btn-login-twitter,.login-content .btn-login-google{width:100%;margin:.5em 0}
 }.login-content .btn-login-facebook:hover,.login-content .btn-login-twitter:hover,.login-content .btn-login-google:hover{color:#fff}
 .login-content .btn-login-facebook:hover{background-color:#3b5998}
-.login-content .btn-login-twitter:hover{background-color:#2f96b4}
+.login-content .btn-login-twitter:hover{background-color:#00a0d1}
 .login-content .btn-login-google:hover{background-color:#e94b35}
 .login-content [class*='foundicon-']{position:relative;top:3px;font-size:1.2em}
 label.error{display:block;color:#f88;}
