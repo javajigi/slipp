@@ -26,17 +26,6 @@
 				</div>
 				<div class="box-write">
 					<form:textarea path="contents"  cols="80" rows="5"/>
-					<div class="head-write">
-						<a href="javascript:;" class="btn-mode-write active" tabindex="-1">글작성</a>
-						<a href="javascript:;" class="btn-mode-preview" tabindex="-1">미리보기</a>
-					</div>
-					<div class="body-write">
-						<form:textarea path="contents" cols="80" rows="20" cssClass="tf-write" />
-						<div class="preview-write" style="display: none;"></div>
-					</div>
-					<div class="foot-write">
-						<a href="http://daringfireball.net/projects/markdown/syntax" class="link-to-md" target="_blank" tabindex="-1">Markdown</a>을 사용합니다.
-					</div>
 				</div>
 				<div class="box-input-line">
 					<form:input path="plainTags" cssClass="inp-tags" placeholder="태그 - 공백 또는 쉼표로 구분 ex) javajigi, slipp" />
@@ -50,11 +39,6 @@
 					<button type="submit" class="btn-submit"><i class="icon-submit"></i> 작성완료</button>
 				</div>
 			</fieldset>
-		</form:form>
-		<form:form modelAttribute="answerFileUpload" action="/attachments" method="POST" enctype="multipart/form-data" cssClass="form-fileupload">
-			<i class="icon-image"></i>
-			<span class="text">이미지첨부</span>
-			<input type="file" class="btn-fileupload" />
 		</form:form>
 	</div>
 	<div class="content-sub">
@@ -70,3 +54,6 @@
 <script src="${url:resource('/javascripts/jquery.autocomplete.min.js')}"></script>
 <script src="${url:resource('/javascripts/qna/form.js')}"></script>
 <script src="${url:resource('/javascripts/qna/write.js')}"></script>
+<script>
+$('#contents').markItUp(mySettings);
+</script>
