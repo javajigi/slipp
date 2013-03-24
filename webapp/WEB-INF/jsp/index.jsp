@@ -31,7 +31,7 @@
 										<span class="time">
 											<fmt:formatDate value="${each.createdDate}" pattern="yyyy-MM-dd HH:mm" />
 										</span>
-										<a href="${each.writer.profileUrl}" class="author">${each.writer.userId}</a>
+										<a href="${each.latestParticipant.profileUrl}" class="author">${each.latestParticipant.userId}</a>
 									</c:when>
 									<c:otherwise>
 										<i class="icon-add-comment"></i>

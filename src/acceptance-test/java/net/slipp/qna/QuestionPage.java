@@ -39,7 +39,7 @@ public class QuestionPage {
     public void answer(String answer) {
         driver.findElement(By.id("contents")).clear();
         driver.findElement(By.id("contents")).sendKeys(answer);
-        driver.findElement(By.id("answerBtn")).click();
+        driver.findElement(By.cssSelector(".btn-submit")).click();
     }
 
     public void verifyAnswer(String answer) {
@@ -51,7 +51,7 @@ public class QuestionPage {
         List<WebElement> comments = driver.findElements(By.cssSelector("ul.list"));
         List<String> commentTexts = Lists.newArrayList();
         for (WebElement comment : comments) {
-            commentTexts.add(comment.findElement(By.cssSelector("div.doc > div.text > p")).getText());
+            commentTexts.add(comment.findElement(By.xpath("//div[@class='qna-comment']//div[@class='article-doc']/p")).getText());
         }
         return commentTexts;
     }
