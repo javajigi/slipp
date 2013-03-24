@@ -11,8 +11,7 @@
   </c:when>
   <c:otherwise>
     <header>
-    	<h1><i class="icon-tag" title="태그"></i> ${currentTag.name}</h1>
-      <small>${currentTag.taggedCount}개의 글</small>
+    	<h1><i class="icon-tag" title="태그"></i> ${currentTag.name} <small>: ${currentTag.taggedCount}개의 글</small></h1>
     </header>
   </c:otherwise>
 </c:choose>

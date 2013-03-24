@@ -34,26 +34,26 @@ public class SlippWikiUtils {
 		if (contents == null) {
 			return null;
 		}
-		
+
 		return contents.replace("\t", "  ");
 	}
 
 	public static String replaceImages(String contents) {
 		Matcher matcher = IMAGE_WIKI_PATTERN.matcher(contents);
-		
+
 		Set<String> matchString = Sets.newHashSet();
 		while (matcher.find()) {
 			log.debug("match : {}", matcher.group(1));
 			matchString.add(matcher.group(1));
 		}
-		
+
 		for (String each : matchString) {
 			contents = contents.replace("!" + each + "!", createImageHtml(each));
 		}
-		
+
 		return contents;
 	}
-	
+
 	private static String createImageHtml(String attachmentId) {
 		String imageUrl = "/attachments/" + attachmentId;
 		return "<img src=\"" + imageUrl + "\"/>";

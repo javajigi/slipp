@@ -1,6 +1,7 @@
 .view-content
 	.article-title
 		margin-bottom: 0;
+		padding-bottom: .67em;
 		border-bottom: 1px solid #dadada;
 	.article-count
 		margin-bottom: 0;
@@ -9,13 +10,24 @@
 	.msg-to-login
 		a
 			text-decoration: underline;
+	.best-article-label
+		margin-bottom: 1em;
+		strong
+			border-bottom: 1px solid #daa9a9;
+			font-size: 1.2em;
 	.article
 		position: relative;
-		padding: .8em 0;
+		padding: 1em 0 2em;
 		border-bottom: 1px solid #dadada;
+		&.best-article
+			border-bottom-width: 3px;
+			.btn-like-article
+				top: 108px;
 	.article-header
 		display: table;
 		width: 100%;
+		padding-bottom: 1em;
+		border-bottom: 2px dashed #eaeaea;
 	.article-header-text,
 	.article-header-thumb
 		display: table-cell;
@@ -38,13 +50,14 @@
 				color: #3aa;
 	.btn-like-article
 		position: absolute;
-		top: 54px;
+		top: 80px;
 		width: 40px;
 		padding: 0;
 		margin: 0;
 		border: 0;
 		background-color: transparent;
-		opacity: .5;
+		opacity: .4;
+		transition: opacity .4s;
 		&:hover
 			opacity: 1;
 		&.fixed
@@ -52,7 +65,7 @@
 			@media phone
 				position: absolute;
 		@media phone
-			top: 10px;
+			top: 10px !important;
 			right: 0;
 		.icon-star
 			position: absolute;
@@ -68,7 +81,7 @@
 			display: block;
 			text-align: center;
 			text-shadow: 0 0px 3px white;
-			color: #666;
+			color: #000;
 		.txt
 			font-size: 0;
 	.article-doc,
@@ -100,6 +113,7 @@
 				border-radius: 3px;
 				border: 0;
 				background-color: transparent;
+				white-space: nowrap;
 				&:hover
 					text-decoration: none;
 					background-color: #dadada;
