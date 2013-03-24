@@ -37,7 +37,7 @@ SLiPP은 의견을 제시하는 단계에서 머무르지 않고, 적극적으�
 		<img src="//graph.facebook.com/100002682952388/picture" width="50" height="50" class="thumb" alt="" />
 		<h3>김현기 - Eclipse4j</h3>
 		<ul>
-			<li>2013/01 현 XL GAMES 웹서비스팀 프로그래머</li>
+			<li>2013/03 현 COUPANG 웹프로그래머</li>
 			<li>Java</li>
 		</ul>
 	</div>
@@ -45,7 +45,7 @@ SLiPP은 의견을 제시하는 단계에서 머무르지 않고, 적극적으�
 		<img src="//graph.facebook.com/1701115026/picture" class="thumb" alt="" />
 		<h3>오진우</h3>
 		<ul>
-			<li>2013/01 현 XL GAMES 웹서비스팀 프로그래머</li>
+			<li>2013/03 현 XLGAMES 웹서비스팀 프로그래머</li>
 			<li>HTML, CSS, Javascript</li>
 		</ul>
 	</div>
