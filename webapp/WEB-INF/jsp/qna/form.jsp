@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/tags.jspf"%>
 
+<head>
+<link href="${url:resource('/stylesheets/wiki-style.css')}" rel="stylesheet">
+<link href="${url:resource('/stylesheets/wiki-textile-style.css')}" rel="stylesheet">
+<link href="${url:resource('/stylesheets/wiki-imageupload-plugins.css')}" rel="stylesheet">
+</head>
+
 <section class="write-content">
 	<div class="content-main">
 		<h1 class="write-title">새 글 작성</h1>
@@ -19,6 +25,7 @@
 					<form:input path="title" cssClass="inp-title" placeholder="제목" />
 				</div>
 				<div class="box-write">
+					<form:textarea path="contents"  cols="80" rows="5"/>
 					<div class="head-write">
 						<a href="javascript:;" class="btn-mode-write active" tabindex="-1">글작성</a>
 						<a href="javascript:;" class="btn-mode-preview" tabindex="-1">미리보기</a>
@@ -56,7 +63,9 @@
 
 <script src="${url:resource('/javascripts/jquery.validate.min.js')}"></script>
 <script src="${url:resource('/javascripts/highlight.pack.js')}"></script>
+<script src="${url:resource('/javascripts/jquery.markitup.js')}"></script>
 <script src="${url:resource('/javascripts/qna/image.upload.js')}"></script>
+<script src="${url:resource('/javascripts/qna/qna-set.js')}"></script>
 <script src="${url:resource('/javascripts/qna/tagparser.js')}"></script>
 <script src="${url:resource('/javascripts/jquery.autocomplete.min.js')}"></script>
 <script src="${url:resource('/javascripts/qna/form.js')}"></script>
