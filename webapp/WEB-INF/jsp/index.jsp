@@ -59,6 +59,7 @@
 		<slipp:side-tags tags="${tags}"/>
 	</div>
 	<div class="content-sub">
+		<!-- 
 		<section class="mailing">
 			<h1>SLiPP Mailing</h1>
 			<p>메일주소를 등록하시면 SLiPP에 올라오는 흥미로운 이야기를 모아서 정기적으로 메일을 보내드립니다.</p>
@@ -69,30 +70,18 @@
 				</fieldset>
 			</form>
 		</section>
+		 -->
 		<section class="notice">
-			<h1>SLiPP 소식</h1>
+			<h1><a href="/wiki/display/slipp/Home">SLiPP 소식</a></h1>
 			<ul class="list">
-				<li>
-					<strong class="title"><a href="#">테스트테스트테스트</a></strong>
-					<div class="time">2013-03-25</div>
-					<div class="cont">
-						여기엔 내용이 들어갑니다<br />
-						여러줄로 막 들어갑니다.
-					</div>
-				</li>
-				<li>
-					<strong class="title"><a href="#">테스트테스트테스트</a></strong>
-					<div class="time">2013-03-25</div>
-					<div class="cont">
-						여기엔 내용이 들어갑니다. 여러줄로 막 들어갑니다.
-					</div>
-				</li>
 				<c:forEach items="${pages}" var="page">
-					<li>
-						<strong class="title"><a href="/wiki/pages/viewpage.action?pageId=${page.pageId}">${page.title}</a></strong>
-						<div class="time">${page.creationDate}</div>
-						<div class="cont">${page.shortContents}</div>
-					</li>
+				<li>
+					<strong class="title"><a href="/wiki/pages/viewpage.action?pageId=${page.pageId}">${page.title}</a></strong>
+					<div class="time">${page.creationDate}</div>
+					<div class="cont">
+						${page.shortContents}
+					</div>
+				</li>
 				</c:forEach>
 			</ul>
 			<div class="rss">

@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class HomeController {
 	private static final int DEFAULT_PAGE_NO = 1;
-	private static final int DEFAULT_PAGE_SIZE = 15;	
+	private static final int DEFAULT_PAGE_SIZE = 5;	
 	
 	@Value("#{applicationProperties['environment']}")
 	private String environment;

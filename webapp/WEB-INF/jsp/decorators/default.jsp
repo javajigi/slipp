@@ -29,6 +29,11 @@
 					<li>
 						<a href="/questions"><i class="icon-list"></i> <span class="text">글목록</span></a>
 					</li>
+					<sec:authorize access="hasRole('ROLE_ADMINISTRATOR')">
+					<li>
+						<a href="/admin/tags"><i class="icon-list"></i> <span class="text">태그관리</span></a>
+					</li>
+					</sec:authorize>
 					<li class="site-search">
 						<a href="#siteSearchArea" id="siteSearchButton" class="site-search-button"><i class="icon-search"></i></a>
 					</li>
@@ -124,8 +129,6 @@ $(document).ready(function(){
 	var $notificationButton = $('#notificationButton');
 	var $siteSearchButton = $('#siteSearchButton');
 
-	getNotificationData();
-
 	$('body').on('click', function() {
 		$notificationLayer.hide();
 	});
@@ -133,8 +136,10 @@ $(document).ready(function(){
 	$notificationButton.on('click', function(e){
 		e.stopPropagation();
 		e.preventDefault();
+		getNotificationData();
 		$notificationLayer.toggle();
 	});
+	
 	$siteSearchButton.on('click', function(e) {
 		var $siteSearchArea = $('#siteSearchArea');
 		e.preventDefault();
