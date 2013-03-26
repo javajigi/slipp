@@ -2,10 +2,8 @@
 	pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/tags.jspf"%>
 <head>
 	<title>태그관리 :: SLiPP</title>
-	<link href="${url:resource('/stylesheets/slipp.css')}" rel="stylesheet">
 </head>
 
-<slipp:header type="3" />
 <div class="span12">
 	<slipp:tags tags="${tags}" admin="true"/>
 
