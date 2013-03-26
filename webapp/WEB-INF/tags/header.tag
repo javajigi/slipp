@@ -15,6 +15,3 @@
     </header>
   </c:otherwise>
 </c:choose>
-<sec:authorize access="hasRole('ROLE_ADMINISTRATOR')">
-<a href="/admin/tags">태그관리</a>
-</sec:authorize>

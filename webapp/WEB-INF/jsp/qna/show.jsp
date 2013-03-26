@@ -7,7 +7,7 @@
 	<meta property="og:site_name" content="SLiPP" />
 	<meta property="og:url" content="${slippUrl}/questions/${question.questionId}" />
 	<meta property="og:image" content="${slippUrl}${url:resource('/images/logo_slipp.png')}" />
-	<link rel="stylesheet" href="${url:resource('/stylesheets/highlight/magula.css')}">
+	<link rel="stylesheet" href="${url:resource('/stylesheets/highlight/github.css')}">
 	<link rel="stylesheet" href="${url:resource('/stylesheets/wiki-style.css')}">
 	<link rel="stylesheet" href="${url:resource('/stylesheets/wiki-textile-style.css')}">
 </head>
