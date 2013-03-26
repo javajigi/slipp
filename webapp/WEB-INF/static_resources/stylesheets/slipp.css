@@ -52,7 +52,7 @@ textarea{overflow:auto;vertical-align:top;}
 table{border-collapse:collapse;border-spacing:0}
 html,button,input,select,textarea{color:#222}
 body{font-family:'맑은 고딕','Malgun Gothic',dotum,sans-serif;font-size:13px;line-height:1.5}
-a{color:#005580;text-decoration:none}
+a{color:#5f97be;text-decoration:none}
 a:hover{text-decoration:underline}
 input,button,select,textarea{font-family:'맑은 고딕','Malgun Gothic',dotum,Sans-serif}
 input,textarea{-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,0.075);box-shadow:inset 0 1px 1px rgba(0,0,0,0.075);-webkit-transition:border linear .2s, box-shadow linear .2s;-moz-transition:border linear .2s, box-shadow linear .2s;-o-transition:border linear .2s, box-shadow linear .2s;-ms-transition:border linear .2s, box-shadow linear .2s;transition:border linear .2s,box-shadow linear .2s}
@@ -207,7 +207,7 @@ body{overflow-y:scroll}
 @media (max-width: 979px){.qna-list .list{margin:0 -1em}
 }.qna-list .list > li{position:relative;padding:1em;padding-left:4em;border-bottom:1px solid #eaeaea}
 .qna-list .list .main .subject{display:block;font-size:1.2em;line-height:1.4em;}
-.qna-list .list .main .subject a{display:block;color:#005580}
+.qna-list .list .main .subject a{display:block;color:#000}
 .qna-list .list .tags{font-size:.9em;color:#999}
 .qna-list .list .tag:before{content:', '}
 .qna-list .list .tag:first-child:before{content:''}
@@ -286,6 +286,24 @@ body{overflow-y:scroll}
 .ac_results li{margin:0;padding:.5em;cursor:default;display:block;font-size:.9em;line-height:1.2em;overflow:hidden}
 .ac_loading{background:#fff url("/resources/images/indicator.gif") right center no-repeat}
 .ac_over{background-color:#0099e6;color:#fff}
+.box-write .markItUp{width:auto}
+.box-write .markItUpContainer{padding:0;border:1px solid #ddd;background:none}
+.box-write .markItUpHeader{*zoom:1;padding:4px;border-bottom:1px solid #ddd;background-color:#efefef;}
+.box-write .markItUpHeader:before,.box-write .markItUpHeader:after{content:'';display:table;line-height:0}
+.box-write .markItUpHeader:after{clear:both}
+.box-write .markItUpHeader ul a{border:1px solid transparent;-webkit-border-radius:3px;border-radius:3px;background-position:center;}
+.box-write .markItUpHeader ul a:hover{border-color:#999;background-color:#fff}
+.box-write .markItUpHeader ul .markItUpSeparator{margin:4px 4px 0}
+.box-write .markItUpEditor{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;width:100%;height:auto;border:0;}
+.box-write .markItUpEditor:focus{-webkit-box-shadow:none;box-shadow:none}
+.box-write .markItUpFooter{display:none}
+.box-write .markItUpPreviewFrame{margin:0;border-width:1px 0 0;border-style:solid;border-color:#ddd}
+.markItUpInlineUpload{position:absolute;margin:33px 0 0;border-width:0 1px 1px 0;border-style:solid;border-color:#ddd;-webkit-box-shadow:0 0 30px #ddd;box-shadow:0 0 30px #ddd;background-color:#fff;}
+.markItUpInlineUpload .inline_upload_form{padding:1em}
+.markItUpInlineUpload .inline_upload_close{position:absolute;right:5px;top:5px;width:16px;height:16px;margin-top:4px;background:url("/resources/images/markitup/close.png") 0 0 no-repeat;cursor:pointer}
+.markItUpInlineUpload .inline_upload_iframe{display:none}
+.markItUpInlineUpload .inline_upload_submit{display:block;width:100%;margin:.4em 0}
+.markItUpInlineUpload .text{margin:0}
 .qna-tags ul{list-style:none;margin:0;padding:0}
 .qna-tags li{display:inline;list-style:none;}
 .list-content .qna-tags li,.view-content .qna-tags li{display:block;}
@@ -293,6 +311,8 @@ body{overflow-y:scroll}
 }.qna-tags .tag{position:relative;display:inline-block;margin:.2em 0;padding:2px 8px;-webkit-border-radius:3px;border-radius:3px;color:#222;background-color:#eaeaea;}
 .qna-tags .tag:hover{text-decoration:none;background-color:#d1d1d1}
 .qna-tags .tag .count{display:inline-block;padding:2px 3px;margin-left:3px;margin-right:-2px;-webkit-border-radius:3px;border-radius:3px;font-family:verdana;font-size:.8em;line-height:1.2em;color:#666;background-color:#fff;vertical-align:middle}
+.taglist-content th,.taglist-content td{padding:.5em 1em;border:1px solid #ddd}
+.taglist-content .pager{text-align:left}
 .home-content{*zoom:1;width:100%;}
 .home-content:before,.home-content:after{content:'';display:table;line-height:0}
 .home-content:after{clear:both}
@@ -323,13 +343,16 @@ body{overflow-y:scroll}
 .login-content .btn-login-twitter:hover{background-color:#00a0d1}
 .login-content .btn-login-google:hover{background-color:#e94b35}
 .login-content [class*='foundicon-']{position:relative;top:3px;font-size:1.2em}
+.slipp-doc section{margin-top:2em;border-top:3px dashed #efefef;}
+.slipp-doc section:first-child{border-top:0;margin-top:0}
+.slipp-doc h1{font-size:1.5em;display:inline-block;background-color:#f7f7f7}
+.slipp-doc h2{font-size:1.2em}
+.slipp-doc .person{position:relative;padding-left:60px;margin-top:20px;}
+.slipp-doc .person:first-child{margin-top:0}
+.slipp-doc .person .thumb{position:absolute;left:0;top:0;-webkit-border-radius:3px;border-radius:3px}
+.slipp-doc .person .person-name{border-bottom:1px dashed #999}
+.slipp-doc .person ul{list-style:none;padding:0;margin:10px 0 0 10px;}
+.slipp-doc .person ul li{text-indent:-10px;}
+.slipp-doc .person ul li:before{content:'-';padding-right:5px;font-size:.8em;color:#999}
 label.error{display:block;color:#f88;}
 label.error:before{font-family:'batch-icons';speak:none;font-style:normal;font-weight:normal;line-height:1;-webkit-font-smoothing:antialiased;margin-right:.2em;content:'\F15A'}
-.slipp-doc .box{margin:0 0 18px;padding:8.5px;border:1px solid #ccc;-webkit-border-radius:4px;border-radius:4px;font-size:1.2em;line-height:1.8em;background-color:#f5f5f5;}
-.slipp-doc .box .person{position:relative;padding-left:60px;margin-top:20px;}
-.slipp-doc .box .person:first-child{margin-top:0}
-.slipp-doc .box .person .thumb{position:absolute;left:0;top:0;-webkit-border-radius:3px;border-radius:3px}
-.slipp-doc .box .person h3{border-bottom:1px dashed #999}
-.slipp-doc .box .person ul{list-style:none;padding:0;margin:10px 0 0 10px;}
-.slipp-doc .box .person ul li{text-indent:-10px;}
-.slipp-doc .box .person ul li:before{content:'-';padding-right:5px;font-size:.8em;color:#999}

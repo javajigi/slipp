@@ -2,12 +2,14 @@
 	pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/tags.jspf"%>
 <head>
 	<title>${sf:h(question.title)}</title>
-	<link rel="stylesheet" href="${url:resource('/stylesheets/highlight/default.css')}">
 	<meta property="og:type" content="article" />
 	<meta property="og:title" content="${sf:h(question.title)}" />
 	<meta property="og:site_name" content="SLiPP" />
 	<meta property="og:url" content="${slippUrl}/questions/${question.questionId}" />
 	<meta property="og:image" content="${slippUrl}${url:resource('/images/logo_slipp.png')}" />
+	<link rel="stylesheet" href="${url:resource('/stylesheets/highlight/magula.css')}">
+	<link rel="stylesheet" href="${url:resource('/stylesheets/wiki-style.css')}">
+	<link rel="stylesheet" href="${url:resource('/stylesheets/wiki-textile-style.css')}">
 </head>
 
 
@@ -26,7 +28,7 @@
 			</form>
 			<sec:authorize access="!hasRole('ROLE_USER')">
 				<p class="msg-to-login">
-					<a href="/login">로그인</a>하시고 의견을 공유해 주세요!
+					<b><a href="/login">로그인</a></b>해서 의견을 나누세요!
 				</p>
 			</sec:authorize>
 			<sec:authorize access="hasRole('ROLE_USER')">
@@ -34,17 +36,7 @@
 					<fieldset>
 						<legend class="title-write">의견 추가하기</legend>
 						<div class="box-write">
-							<div class="head-write">
-								<a href="javascript:;" class="btn-mode-write active" tabindex="-1">글작성</a>
-								<a href="javascript:;" class="btn-mode-preview" tabindex="-1">미리보기</a>
-							</div>
-							<div class="body-write">
-								<form:textarea path="contents" cols="80" rows="5" cssClass="tf-write" />
-								<div class="preview-write" style="display: none;"></div>
-							</div>
-							<div class="foot-write">
-								<a href="http://daringfireball.net/projects/markdown/syntax" class="link-to-md" target="_blank" tabindex="-1">Markdown</a>을 사용합니다.
-							</div>
+							<form:textarea path="contents"  cols="80" rows="5"/>
 						</div>
 						<div class="submit-write">
 							<c:if test="${loginUser.facebookUser}">
@@ -55,11 +47,6 @@
 							<button type="submit" class="btn-submit"><i class="icon-submit"></i> 작성완료</button>
 						</div>
 					</fieldset>
-				</form:form>
-				<form:form modelAttribute="answerFileUpload" action="/attachments" method="POST" enctype="multipart/form-data" cssClass="form-fileupload">
-					<i class="icon-image"></i>
-					<span class="text">이미지첨부</span>
-					<input type="file" class="btn-fileupload" />
 				</form:form>
 			</sec:authorize>
 		</div>
@@ -103,7 +90,13 @@
 <script>
 hljs.initHighlightingOnLoad();
 </script>
-<script src="${url:resource('/javascripts/qna/image.upload.js')}"></script>
 <script src="${url:resource('/javascripts/qna/tagparser.js')}"></script>
 <script src="${url:resource('/javascripts/qna/show.js')}"></script>
 <script src="${url:resource('/javascripts/qna/write.js')}"></script>
+<script src="${url:resource('/javascripts/qna/qna-set.js')}"></script>
+<script src="${url:resource('/javascripts/qna/image.upload.js')}"></script>
+<script src="${url:resource('/javascripts/jquery.markitup.js')}"></script>
+<script>
+$('#contents').markItUp(mySettings);
+</script>
+

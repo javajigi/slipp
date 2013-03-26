@@ -8,9 +8,9 @@ var InlineUpload = {
 		form_id: 'inline_upload_form',
 		action: '/attachments',
 		inputs: {
-			file: { label: '이미지', id: 'inline_upload_file1', name: 'inline_upload_file1' }
+			file: { label: '', id: 'inline_upload_file1', name: 'inline_upload_file1' }
 		},
-		submit: { id: 'inline_upload_submit', value: '이미지 첨부하기' },
+		submit: { id: 'inline_upload_submit', value: '첨부하기' },
 		close: 'inline_upload_close',
 		iframe: 'inline_upload_iframe'
 	},
@@ -31,16 +31,19 @@ var InlineUpload = {
 			 */
 			this.dialog = $([
 				'<div class="',	this.options.container_class,
-				'"><div><form id="', this.options.form_id,
+				'"><form class="inline_upload_form" id="', this.options.form_id,
 				'" action="', this.options.action,
 				'" target="', this.options.iframe,
 				'" method="post" enctype="multipart/form-data"><label for="', this.options.inputs.file.id,
 				'">', this.options.inputs.file.label,
 				'</label><input name="file" id="', this.options.inputs.file.id,
 				'" type="file" /><input id="', this.options.submit.id,
+				'" class="', this.options.submit.id,
 				'" type="button" value="', this.options.submit.value,
-				'" />&nbsp;&nbsp;용량 제한 : 2MB</form><div id="', this.options.close,
-				'"></div><iframe id="', this.options.iframe,
+				'" /><small class="text">용량 제한 : 2MB</small></form><div id="', this.options.close,
+				'" class="', this.options.close,
+				'"><iframe class="', this.options.iframe,
+				'" id="', this.options.iframe,
 				'" name="',	this.options.iframe,
 				'" src=""></iframe></div></div>',
 			].join(''))

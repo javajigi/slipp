@@ -123,3 +123,67 @@
 	background-color: lighten(#005580, 20);
 	color: white;
 
+// markItUp
+.box-write
+	.markItUp
+		width: auto;
+	.markItUpContainer
+		padding: 0;
+		border: 1px solid #ddd;
+		background: none;
+	.markItUpHeader
+		clearfix();
+		padding: 4px;
+		border-bottom: 1px solid #ddd;
+		background-color: #efefef;
+		ul
+			a
+				border: 1px solid transparent;
+				border-radius: 3px;
+				background-position: center;
+				&:hover
+					border-color: #999;
+					background-color: #fff;
+			.markItUpSeparator
+				margin: 4px 4px 0;
+	.markItUpEditor
+		box-sizing: border-box;
+		width: 100%;
+		height: auto;
+		border: 0;
+		&:focus
+			box-shadow: none;
+	.markItUpFooter
+		display: none;
+	.markItUpPreviewFrame
+		margin: 0;
+		border-width: 1px 0 0;
+		border-style: solid;
+		border-color: #ddd;
+.markItUpInlineUpload
+	position: absolute;
+	margin: 33px 0 0;
+	border-width: 0 1px 1px 0;
+	border-style: solid 
+	border-color: #ddd;
+	box-shadow: 0 0 30px #ddd;
+	background-color: #fff;
+	.inline_upload_form
+		padding: 1em;
+	.inline_upload_close
+		position: absolute;
+		right: 5px;
+		top: 5px;
+		width: 16px;
+		height: 16px;
+		margin-top: 4px;
+		background: url(/resources/images/markitup/close.png) 0 0 no-repeat;
+		cursor: pointer;
+	.inline_upload_iframe
+		display: none;
+	.inline_upload_submit
+		display: block;
+		width: 100%;
+		margin: .4em 0;
+	.text
+		margin: 0;
