@@ -35,11 +35,11 @@ public class CodeBlock extends AbstractConfluenceDelimitedBlock {
 			attributes.setTitle(title);
 			builder.beginBlock(BlockType.PANEL, attributes);
 		}
+		Attributes preAttributes = new Attributes();
+		builder.beginBlock(BlockType.PREFORMATTED, preAttributes);
+
 		Attributes codeAttributes = new Attributes();
 		codeAttributes.setCssClass(language);
-		Attributes preAttributes = new Attributes();
-
-		builder.beginBlock(BlockType.PREFORMATTED, preAttributes);
 		builder.beginBlock(BlockType.CODE, codeAttributes);
 	}
 

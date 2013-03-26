@@ -1,0 +1,37 @@
+.slipp-doc
+	section
+		margin-top: 2em;
+		border-top: 3px dashed #efefef;
+		&:first-child
+			border-top: 0;
+			margin-top: 0;
+	h1
+		font-size: 1.5em;
+		display: inline-block;
+		background-color: #f7f7f7;
+	h2
+		font-size: 1.2em;
+	.person
+		position: relative
+		padding-left: 60px
+		margin-top: 20px
+		&:first-child
+			margin-top: 0
+		.thumb
+			position: absolute
+			left: 0
+			top: 0
+			border-radius: 3px
+		.person-name
+			border-bottom: 1px dashed #999
+		ul
+			list-style: none
+			padding: 0
+			margin: 10px 0 0 10px
+			li
+				text-indent: -10px
+				&:before
+					content: '-'
+					padding-right: 5px
+					font-size: .8em
+					color: #999
