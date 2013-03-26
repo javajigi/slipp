@@ -2,9 +2,8 @@
 	pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/tags.jspf"%>
 
 <head>
-<link href="${url:resource('/stylesheets/wiki-style.css')}" rel="stylesheet">
-<link href="${url:resource('/stylesheets/wiki-textile-style.css')}" rel="stylesheet">
-<link href="${url:resource('/stylesheets/wiki-imageupload-plugins.css')}" rel="stylesheet">
+<link rel="stylesheet" href="${url:resource('/stylesheets/wiki-style.css')}">
+<link rel="stylesheet" href="${url:resource('/stylesheets/wiki-textile-style.css')}">
 </head>
 
 <section class="write-content">
@@ -25,7 +24,7 @@
 					<form:input path="title" cssClass="inp-title" placeholder="제목" />
 				</div>
 				<div class="box-write">
-					<form:textarea path="contents"  cols="80" rows="5"/>
+					<form:textarea path="contents"  cols="80" rows="15"/>
 				</div>
 				<div class="box-input-line">
 					<form:input path="plainTags" cssClass="inp-tags" placeholder="태그 - 공백 또는 쉼표로 구분 ex) javajigi, slipp" />
@@ -46,14 +45,14 @@
 </div>
 
 <script src="${url:resource('/javascripts/jquery.validate.min.js')}"></script>
-<script src="${url:resource('/javascripts/highlight.pack.js')}"></script>
-<script src="${url:resource('/javascripts/jquery.markitup.js')}"></script>
-<script src="${url:resource('/javascripts/qna/image.upload.js')}"></script>
-<script src="${url:resource('/javascripts/qna/qna-set.js')}"></script>
 <script src="${url:resource('/javascripts/qna/tagparser.js')}"></script>
 <script src="${url:resource('/javascripts/jquery.autocomplete.min.js')}"></script>
 <script src="${url:resource('/javascripts/qna/form.js')}"></script>
 <script src="${url:resource('/javascripts/qna/write.js')}"></script>
+<script src="${url:resource('/javascripts/highlight.pack.js')}"></script>
+<script src="${url:resource('/javascripts/qna/qna-set.js')}"></script>
+<script src="${url:resource('/javascripts/qna/image.upload.js')}"></script>
+<script src="${url:resource('/javascripts/jquery.markitup.js')}"></script>
 <script>
 $('#contents').markItUp(mySettings);
 </script>

@@ -4,12 +4,16 @@
 <title>태그관리 :: SLiPP</title>
 </head>
 
-<div class="section-qna">
-	<slipp:header type="2" />
-	<slipp:tags tags="${tags}" admin="false"/>
-	<div class="pagination pagination-centered">
-		<ul>
-			<sl:pager page="${tags}" prefixUri="/tags"/>
-		</ul>
+<section class="taglist-content">
+	<h1 class="article-title">태그 목록</h1>
+	<div class="content-main">
+		<slipp:tags tags="${tags}" admin="false"/>
+		<nav class="pager">
+			<ul>
+				<sl:pager page="${tags}" prefixUri="/tags"/>
+			</ul>
+		</nav>
 	</div>
-</div>
+	<div class="content-sub">
+	</div>
+</section>

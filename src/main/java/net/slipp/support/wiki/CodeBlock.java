@@ -36,9 +36,11 @@ public class CodeBlock extends AbstractConfluenceDelimitedBlock {
 			builder.beginBlock(BlockType.PANEL, attributes);
 		}
 		Attributes preAttributes = new Attributes();
-		preAttributes.setCssClass("brush: " + language + ";");
-
 		builder.beginBlock(BlockType.PREFORMATTED, preAttributes);
+
+		Attributes codeAttributes = new Attributes();
+		codeAttributes.setCssClass(language);
+		builder.beginBlock(BlockType.CODE, codeAttributes);
 	}
 
 	@Override
@@ -53,6 +55,7 @@ public class CodeBlock extends AbstractConfluenceDelimitedBlock {
 			builder.endBlock(); // panel
 		}
 		builder.endBlock(); // pre
+		builder.endBlock(); // code
 	}
 
 	@Override

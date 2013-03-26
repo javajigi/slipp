@@ -5,9 +5,9 @@ $(document).ready(function() {
 	var $tfAddComment = $boxAddcomment.find('.tf-write');
 	var $previewAddcomment = $boxAddcomment.find('.preview-write');
 	var $footAddcomment = $boxAddcomment.find('.foot-write');
-	var $formFileupload = $('.form-fileupload');
+	// var $formFileupload = $('.form-fileupload');
 
-	$formFileupload.offset($footAddcomment.offset());
+	// $formFileupload.offset($footAddcomment.offset());
 	// https://github.com/malsup/form
 
 	$boxAddcomment.focusin(function () {
@@ -15,17 +15,17 @@ $(document).ready(function() {
 	}).focusout(function() {
 		$(this).removeClass('focused');
 	});
-	$btnModeWrite.on('click', function () {
-		$(this).addClass('active');
-		$btnModePreview.removeClass('active');
-		$tfAddComment.show();
-		$previewAddcomment.hide();
-	});
-	$btnModePreview.on('click', function () {
-		$(this).addClass('active');
-		$btnModeWrite.removeClass('active');
-		$previewAddcomment.show();
-		$tfAddComment.hide();
-		// 여기에 ajax처리
-	});
+	// $btnModeWrite.on('click', function () {
+	// 	$(this).addClass('active');
+	// 	$btnModePreview.removeClass('active');
+	// 	$tfAddComment.show();
+	// 	$previewAddcomment.hide();
+	// });
+	// $btnModePreview.on('click', function () {
+	// 	$(this).addClass('active');
+	// 	$btnModeWrite.removeClass('active');
+	// 	$previewAddcomment.show();
+	// 	$tfAddComment.hide();
+	// 	// 여기에 ajax처리
+	// });
 });
