@@ -4,12 +4,11 @@
 	<title>로그인 :: SLiPP</title>
 </head>
 
-<div class="jumbotron">
-	<div class="container">
-		<h2>Sustainable Life, Programming, Programmer</h2>
+<section class="login-content">
+	<div class="content-main">
+		<h1>Sustainable Life, Programming, Programmer</h1>
 		<p>삶과 일의 균형을 맞추면서 행복하게 살 수 있는 세상을 꿈꿉니다.</p>
-
-		<div class="span6 offset2">
+		<p class="text-choose-login-path">로그인 방식을 선택해주세요.</p>
 			<form:form action="" method="post" modelAttribute="signUpForm" cssClass="form-horizontal">
 				<fieldset>
 					<div class="control-group">
@@ -21,8 +20,10 @@
 					</div>
 				</fieldset>
 			</form:form>
-		</div>
 	</div>
-</div>
-<script src="http://ajax.microsoft.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>
-<script type="text/javascript"	src="${url:resource('/javascripts/user/form.js')}"></script>
+	<div class="content-sub">
+	</div>
+</sction>
+
+<script src="${url:resource('/javascripts/jquery.validate.min.js')}"></script>
+<script src="${url:resource('/javascripts/user/form.js')}"></script>

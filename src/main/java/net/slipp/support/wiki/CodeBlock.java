@@ -18,7 +18,7 @@ import org.eclipse.mylyn.wikitext.core.parser.DocumentBuilder.BlockType;
  * @author David Green
  */
 public class CodeBlock extends AbstractConfluenceDelimitedBlock {
-	private static final String DEFAULT_LANGUAGE = "java";
+	private static final String DEFAULT_LANGUAGE = "";
 
 	private String title;
 
