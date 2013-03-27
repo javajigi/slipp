@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Resource;
-import javax.persistence.NonUniqueResultException;
 
 import net.slipp.domain.notification.Notification;
 import net.slipp.domain.qna.Question;
@@ -78,7 +77,7 @@ public class NotificationService {
 		        return 0L;
 		    }
 		    return count;
-		} catch (NonUniqueResultException e) {
+		} catch (Exception e) {
 			return 0L;
 		}
 	}
