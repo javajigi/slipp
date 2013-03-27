@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Resource;
+import javax.persistence.NonUniqueResultException;
 
 import net.slipp.domain.notification.Notification;
 import net.slipp.domain.qna.Question;
@@ -70,11 +71,16 @@ public class NotificationService {
 	}
 	
 	public long countByNotifiee(SocialUser notifiee) {
-	    Long count = notificationRepository.countByNotifiee(notifiee);
-	    if (count == null) {
-	        return 0L;
-	    }
-	    return count;	    
+		Long count = 0L;
+		try {
+			count = notificationRepository.countByNotifiee(notifiee);
+			if (count == null) {
+		        return 0L;
+		    }
+		    return count;
+		} catch (NonUniqueResultException e) {
+			return 0L;
+		}
 	}
 	
 	public List<Notification> findNotificationsAndReaded(SocialUser notifiee, Pageable pageable) {
