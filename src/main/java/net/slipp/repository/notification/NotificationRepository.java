@@ -19,6 +19,6 @@ public interface NotificationRepository extends SlippCommonRepository<Notificati
 	@Query("UPDATE Notification n set n.readed = true where n.notifiee = :notifiee and n.readed = false")
 	void updateReaded(@Param("notifiee") SocialUser notifiee);
 
-	@Query("SELECT count(n) from Notification n where n.notifiee = :notifiee and n.readed = false group by n.question")
+	@Query("SELECT count(distinct n.question) from Notification n where n.notifiee = :notifiee and n.readed = false")
     Long countByNotifiee(@Param("notifiee") SocialUser notifiee);
 }
