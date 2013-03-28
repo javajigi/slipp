@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.annotation.Resource;
 
 import net.slipp.domain.notification.Notification;
+import net.slipp.domain.qna.Answer;
 import net.slipp.domain.qna.Question;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.repository.notification.NotificationRepository;
@@ -31,7 +32,7 @@ public class NotificationService {
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Async
-    public void notifyToFacebook(SocialUser loginUser, Question question, Set<SocialUser> notifieeUsers) {
+    public void notifyToFacebook(SocialUser loginUser, Question question, Answer answer, Set<SocialUser> notifieeUsers) {
         if (notifieeUsers.isEmpty()) {
             return;
         }
@@ -47,7 +48,8 @@ public class NotificationService {
             invocation.addParameter("access_token", accessToken);
             invocation.addParameter("template",
                     String.format("%s님이 \"%s\" 글에 답변을 달았습니다.", loginUser.getUserId(), question.getTitle()));
-            invocation.addParameter("href", String.format("/questions/%d", question.getQuestionId()));
+            invocation.addParameter("href",
+                    String.format("/questions/%d#answer-%d", question.getQuestionId(), answer.getAnswerId()));
 
             HttpClientManager manager = new HttpClientManager();
             manager.post("https://graph.facebook.com", invocation);

@@ -32,7 +32,7 @@ public class IndexPage {
 		
 		new WebDriverWait(driver, 1000).until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("a.link-loginout")));
 		driver.findElement(By.cssSelector("a.link-loginout")).click();
-		driver.findElement(By.cssSelector("input[value='페이스북 계정으로 로그인']")).click();
+		driver.findElement(By.cssSelector(".btn-login-facebook")).click();
 		if (driver.getTitle().equals("SLiPP")) {
 			return new IndexPage(driver);
 		}
@@ -42,7 +42,7 @@ public class IndexPage {
 	
 	public IndexPage loginToGoogle(String username, String password) {
 		driver.findElement(By.cssSelector(".loginBtn > a")).click();
-		driver.findElement(By.cssSelector("input[value='구글 계정으로 로그인']")).click();
+		driver.findElement(By.cssSelector(".btn-login-google")).click();
 		if (driver.getTitle().equals("SLiPP")) {
 			return new IndexPage(driver);
 		}

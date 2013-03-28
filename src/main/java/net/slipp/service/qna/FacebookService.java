@@ -122,7 +122,7 @@ public class FacebookService {
         Question question = answer.getQuestion();
         String message = createFacebookMessage(answer.getContents());
 
-        String postId = sendMessageToFacebook(loginUser, createLink(question.getQuestionId()), message);
+        String postId = sendMessageToFacebook(loginUser, createLink(question.getQuestionId(), answerId), message);
         if (postId != null) {
             answer.connected(postId);
         }
@@ -146,10 +146,18 @@ public class FacebookService {
         return answer;
     }
 
-    private String createLink(Long questionId) {
-        String link = String.format("%s/questions/%d", applicationUrl, questionId);
-        log.info("create link : {}", link);
+    String createLink(Long questionId) {
+        String link = String.format("%s/questions/%d", createApplicationUrl(), questionId);
         return link;
+    }
+
+    String createLink(Long questionId, Long answerId) {
+        String link = String.format("%s/questions/%d#answer-%d", createApplicationUrl(), questionId, answerId);
+        return link;
+    }
+    
+    protected String createApplicationUrl() {
+        return applicationUrl;
     }
 
     private String createFacebookMessage(String contents) {
