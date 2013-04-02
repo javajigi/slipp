@@ -10,8 +10,7 @@ import net.slipp.domain.qna.Answer;
 import net.slipp.domain.qna.Question;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.repository.notification.NotificationRepository;
-import net.slipp.support.http.HttpClientManager;
-import net.slipp.support.http.HttpInvocationSupport;
+import net.slipp.repository.qna.AnswerRepository;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
@@ -20,47 +19,56 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import com.restfb.DefaultFacebookClient;
+import com.restfb.FacebookClient;
+import com.restfb.Parameter;
+import com.restfb.types.FacebookType;
+
 @Service
 @Transactional
 public class NotificationService {
-
     @Value("#{applicationProperties['facebook.accessToken']}")
     private String accessToken;
+
+    @Resource(name = "answerRepository")
+    private AnswerRepository answerRepository;
 
     @Resource(name = "notificationRepository")
     private NotificationRepository notificationRepository;
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Async
-    public void notifyToFacebook(SocialUser loginUser, Question question, Answer answer, Set<SocialUser> notifieeUsers) {
+    public void notifyToFacebook(SocialUser loginUser, Long answerId) {
+        Assert.notNull(answerId, "answerId should be not null!");
+        
+        Answer answer = answerRepository.findOne(answerId);
+        Assert.notNull(answer, "Answer should be not null!");
+        
+        Question question = answer.getQuestion();
+        Set<SocialUser> notifieeUsers = question.findNotificationUser(loginUser);
+
         if (notifieeUsers.isEmpty()) {
             return;
         }
 
+        FacebookClient facebookClient = new DefaultFacebookClient(accessToken);
         for (SocialUser notifiee : notifieeUsers) {
             String uri = String.format("/%s/notifications", notifiee.getProviderUserId());
-            HttpInvocationSupport invocation = new HttpInvocationSupport(uri) {
-                @Override
-                protected Object parseResponseBody(String body) throws Exception {
-                    return null;
-                }
-            };
-            invocation.addParameter("access_token", accessToken);
-            invocation.addParameter("template",
-                    String.format("%s님이 \"%s\" 글에 답변을 달았습니다.", loginUser.getUserId(), question.getTitle()));
-            invocation.addParameter("href",
-                    String.format("/questions/%d#answer-%d", question.getQuestionId(), answer.getAnswerId()));
+            String template = String.format("%s님이 \"%s\" 글에 답변을 달았습니다.", loginUser.getUserId(), question.getTitle());
+            String href = String.format("/questions/%d#answer-%d", question.getQuestionId(), answer.getAnswerId());
 
-            HttpClientManager manager = new HttpClientManager();
-            manager.post("https://graph.facebook.com", invocation);
+            facebookClient.publish(uri, FacebookType.class, Parameter.with("template", template),
+                    Parameter.with("href", href));
         }
     }
 
     @Async
-    public void notifyToSlipp(SocialUser notifier, Question question, Set<SocialUser> notifieeUsers) {
-        Assert.notNull(notifier, "LoginUser should be not null!");
-        Assert.notNull(question, "Question should be not null!");
+    public void notifyToSlipp(SocialUser notifier, Long answerId) {
+        Assert.notNull(answerId, "answerId should be not null!");
 
+        Answer answer = answerRepository.findOne(answerId);
+        Assert.notNull(answer, "Answer should be not null!");
+        Question question = answer.getQuestion();
+        Set<SocialUser> notifieeUsers = question.findNotificationUser(notifier);
         if (notifieeUsers.isEmpty()) {
             return;
         }

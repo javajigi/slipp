@@ -15,20 +15,18 @@ import net.slipp.repository.qna.QuestionRepository;
 import net.slipp.service.rank.ScoreLikeService;
 import net.slipp.service.tag.TagService;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionSynchronizationAdapter;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.springframework.util.Assert;
 
 @Service("qnaService")
 @Transactional
 public class QnaService {
-    private static Logger log = LoggerFactory.getLogger(QnaService.class);
-    
     @Resource(name = "questionRepository")
     private QuestionRepository questionRepository;
 
@@ -40,25 +38,28 @@ public class QnaService {
 
     @Resource(name = "notificationService")
     private NotificationService notificationService;
-    
+
     @Resource(name = "scoreLikeService")
     private ScoreLikeService scoreLikeService;
-    
+
     @Resource(name = "facebookService")
     private FacebookService facebookService;
 
-    public Question createQuestion(SocialUser loginUser, QuestionDto questionDto) {
+    public Question createQuestion(final SocialUser loginUser, QuestionDto questionDto) {
         Assert.notNull(loginUser, "loginUser should be not null!");
         Assert.notNull(questionDto, "question should be not null!");
 
         Set<Tag> tags = tagService.processTags(questionDto.getPlainTags());
 
         Question newQuestion = new Question(loginUser, questionDto.getTitle(), questionDto.getContents(), tags);
-        Question savedQuestion = questionRepository.saveAndFlush(newQuestion);
+        final Question savedQuestion = questionRepository.saveAndFlush(newQuestion);
 
         if (questionDto.isConnected()) {
-            log.info("firing sendMessageToFacebook!");
-            facebookService.sendToQuestionMessage(loginUser, savedQuestion.getQuestionId());
+            TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
+                public void afterCommit() {
+                    facebookService.sendToQuestionMessage(loginUser, savedQuestion.getQuestionId());
+                }
+            });
         }
         return savedQuestion;
     }
@@ -83,7 +84,7 @@ public class QnaService {
     }
 
     public Question showQuestion(Long id) {
-    	questionRepository.updateShowCount(id);
+        questionRepository.updateShowCount(id);
         return questionRepository.findOne(id);
     }
 
@@ -103,17 +104,21 @@ public class QnaService {
         return answerRepository.findOne(answerId);
     }
 
-    public void createAnswer(SocialUser loginUser, Long questionId, Answer answer) {
-        Question question = questionRepository.findOne(questionId);
+    public void createAnswer(final SocialUser loginUser, Long questionId, final Answer answer) {
+        final Question question = questionRepository.findOne(questionId);
         answer.writedBy(loginUser);
         answer.answerTo(question);
-        Answer savedAnswer = answerRepository.saveAndFlush(answer);
-        notificationService.notifyToSlipp(loginUser, question, question.findNotificationUser(loginUser));
-        notificationService.notifyToFacebook(loginUser, question, savedAnswer, question.findNotificationUser(loginUser));
-        if (answer.isConnected()) {
-            log.info("firing sendAnswerMessageToFacebook!");
-        	facebookService.sendToAnswerMessage(loginUser, savedAnswer.getAnswerId());
-        }
+        final Answer savedAnswer = answerRepository.saveAndFlush(answer);
+
+        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
+            public void afterCommit() {
+                notificationService.notifyToSlipp(loginUser, savedAnswer.getAnswerId());
+                notificationService.notifyToFacebook(loginUser, savedAnswer.getAnswerId());
+                if (answer.isConnected()) {
+                    facebookService.sendToAnswerMessage(loginUser, savedAnswer.getAnswerId());
+                }
+            }
+        });
     }
 
     public void updateAnswer(SocialUser loginUser, Answer answerDto) {
@@ -146,5 +151,5 @@ public class QnaService {
             answerRepository.save(answer);
         }
     }
-    
+
 }

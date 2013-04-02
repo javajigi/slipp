@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
@@ -41,44 +42,12 @@ public class FacebookService {
     public void sendToQuestionMessage(SocialUser loginUser, Long questionId) {
         log.info("questionId : {}", questionId);
         Question question = questionRepository.findOne(questionId);
-        if (question == null) {
-            question = retryFindQuestion(questionId);
-        }
-
-        if (question == null) {
-            log.info("Question of {} is null", questionId);
-            return;
-        }
-
+        Assert.notNull(question, "Question should be not null!");
+        
         String message = createFacebookMessage(question.getContents());
         String postId = sendMessageToFacebook(loginUser, createLink(question.getQuestionId()), message);
         if (postId != null) {
             question.connected(postId);
-        }
-    }
-
-    private Question retryFindQuestion(Long questionId) {
-        Question question = null;
-
-        int i = 0;
-        do {
-            if (i > 2) {
-                break;
-            }
-
-            sleep(500);
-            question = questionRepository.findOne(questionId);
-
-            i++;
-        } while (question == null);
-
-        return question;
-    }
-
-    private void sleep(long millis) {
-        try {
-            Thread.sleep(millis);
-        } catch (InterruptedException e) {
         }
     }
 
@@ -109,15 +78,7 @@ public class FacebookService {
     public void sendToAnswerMessage(SocialUser loginUser, Long answerId) {
         log.info("answerId : {}", answerId);
         Answer answer = answerRepository.findOne(answerId);
-
-        if (answer == null) {
-            answer = retryFindAnswer(answerId);
-        }
-
-        if (answer == null) {
-            log.info("Answer of {} is null", answerId);
-            return;
-        }
+        Assert.notNull(answer, "Answer should be not null!");
 
         Question question = answer.getQuestion();
         String message = createFacebookMessage(answer.getContents());
@@ -126,24 +87,6 @@ public class FacebookService {
         if (postId != null) {
             answer.connected(postId);
         }
-    }
-
-    private Answer retryFindAnswer(Long answerId) {
-        Answer answer = null;
-
-        int i = 0;
-        do {
-            if (i > 2) {
-                break;
-            }
-
-            sleep(500);
-            answer = answerRepository.findOne(answerId);
-
-            i++;
-        } while (answer == null);
-
-        return answer;
     }
 
     String createLink(Long questionId) {
