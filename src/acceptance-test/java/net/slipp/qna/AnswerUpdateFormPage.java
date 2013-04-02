@@ -11,9 +11,9 @@ public class AnswerUpdateFormPage {
 	}
 
 	public QuestionPage updateAnswer(String answer) {
-		driver.findElement(By.id("contents")).clear();
-		driver.findElement(By.id("contents")).sendKeys(answer);
-		driver.findElement(By.id("answerBtn")).click();
+        driver.findElement(By.id("contents")).clear();
+        driver.findElement(By.id("contents")).sendKeys(answer);
+        driver.findElement(By.cssSelector(".btn-submit")).click();
 		return new QuestionPage(driver);
 	}
 }

@@ -69,24 +69,22 @@ public class QnAAT extends AbstractATTest {
     	createQuestion(questionFixture);
     	loginToAnotherUser(2);
     	answerToQuestion();
-    	assertThat(countNotifications(), is(0));
-    	loginToAnotherUser(1);
-    	assertThat(countNotifications() > 0, is(true));
-    	clickNotificationBtn();
-    	assertThat(countNotifications(), is(0));
+        loginToAnotherUser(1);
+        assertThat(countNotifications() > 0, is(true));
+        clickNotificationBtn();
 	}
     
     private void clickNotificationBtn() {
-        driver.findElement(By.cssSelector("a.notificationBtn")).click();
+        driver.findElement(By.cssSelector("li.user-info > a > span.user-name")).click();
         new WebDriverWait(driver, 1000).until
-            (ExpectedConditions.presenceOfElementLocated(By.cssSelector("#notificationArea > ul > li")));
-        List<WebElement> elements = driver.findElements(By.cssSelector("#notificationArea > ul > li"));
+            (ExpectedConditions.presenceOfElementLocated(By.cssSelector("#notificationLayer > ul > li")));
+        List<WebElement> elements = driver.findElements(By.cssSelector("#notificationLayer > ul > li"));
         assertThat(elements.size() > 0, is(true));
         assertThat(countNotifications(), is(0));
     }
     
     private int countNotifications() {
-        String value = driver.findElement(By.cssSelector("a.notificationBtn")).getText();
+        String value = driver.findElement(By.cssSelector("span.notification-count")).getText();
         return Integer.parseInt(value);
     }
     

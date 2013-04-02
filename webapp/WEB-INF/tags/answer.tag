@@ -34,7 +34,7 @@ attribute name="isBest" required="true" rtexprvalue="true" type="java.lang.Boole
 			<span class="txt">공감</span>
 		</button>
 	</form>
-	<div class="article-doc">
+	<div class="article-doc comment-doc">
 		${sf:wiki(each.contents)}
 	</div>
 	<div class="article-util">

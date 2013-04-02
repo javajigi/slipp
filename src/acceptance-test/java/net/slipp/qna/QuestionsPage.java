@@ -24,7 +24,7 @@ public class QuestionsPage {
 	
 	public void verifyFirstNickName(String nickName) {
 		WebElement firstQuestion = findQuestion(0);
-		String actual = firstQuestion.findElement(By.cssSelector("a.author")).getText();
+		String actual = firstQuestion.findElement(By.cssSelector("div.auth-info > a.author")).getText();
 		assertThat(actual, is(nickName));
 	}
 	
@@ -39,6 +39,6 @@ public class QuestionsPage {
 	}
 	
 	private List<WebElement> findQuestions() {
-		return driver.findElements(By.cssSelector("div.qna-list > ul.list > li"));
+		return driver.findElements(By.cssSelector("ul.list > li"));
 	}
 }

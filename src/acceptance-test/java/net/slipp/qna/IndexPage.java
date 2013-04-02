@@ -73,7 +73,7 @@ public class IndexPage {
 	}
 	
 	public AdminTagPage goAdminTagPage() {
-		driver.findElement(By.cssSelector("#tagManagement > a")).click();
+		driver.findElement(By.cssSelector("#tagManagement")).click();
 		return new AdminTagPage(driver);
 	}
 
@@ -88,13 +88,13 @@ public class IndexPage {
 	}
 	
 	public IndexPage goIndexPage() {
-		driver.findElement(By.cssSelector("a.brand")).click();
+		driver.findElement(By.cssSelector("h1.logo")).click();
 		return new IndexPage(driver);
 	}
 	
 	public QuestionPage goToQuestion(int index) {
-		List<WebElement> questions = driver.findElements(By.cssSelector("div.main > strong.subject > a"));
-		questions.get(index).click();
+		List<WebElement> questions = driver.findElements(By.cssSelector("section.qna-list > ul > li"));
+		questions.get(index).findElement(By.cssSelector("strong.subject > a")).click();
 		return new QuestionPage(driver);
 	}
 }

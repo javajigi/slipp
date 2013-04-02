@@ -31,7 +31,7 @@
 					</li>
 					<sec:authorize access="hasRole('ROLE_ADMINISTRATOR')">
 					<li>
-						<a href="/admin/tags"><i class="icon-list"></i> <span class="text">태그관리</span></a>
+						<a href="/admin/tags" id="tagManagement"><i class="icon-list"></i> <span class="text">태그관리</span></a>
 					</li>
 					</sec:authorize>
 					<li class="site-search">

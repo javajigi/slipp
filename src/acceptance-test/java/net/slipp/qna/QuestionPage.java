@@ -1,7 +1,7 @@
 package net.slipp.qna;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 import java.util.Arrays;
 import java.util.List;
@@ -48,46 +48,46 @@ public class QuestionPage {
     }
 
     private List<String> findCommentTexts() {
-        List<WebElement> comments = driver.findElements(By.cssSelector("ul.list"));
+        List<WebElement> comments = driver.findElements(By.cssSelector("div.comment-doc"));
         List<String> commentTexts = Lists.newArrayList();
         for (WebElement comment : comments) {
-            commentTexts.add(comment.findElement(By.xpath("//div[@class='qna-comment']//div[@class='article-doc']/p")).getText());
+            commentTexts.add(comment.findElement(By.cssSelector("p")).getText());
         }
         return commentTexts;
     }
 
     public void verifyAnswerCount(String answerCount) {
-        String actual = driver.findElement(By.cssSelector("p.count > strong")).getText();
+        String actual = driver.findElement(By.cssSelector("div.qna-comment > p.article-count > strong")).getText();
         assertThat(actual, is(answerCount));
     }
 
     public QuestionPage likeAnswer() {
-        driver.findElement(By.cssSelector("a.likeAnswerBtn")).click();
+        driver.findElement(By.cssSelector("button.btn-like-article > strong.like-count")).click();
         return new QuestionPage(driver);
     }
 
     public void verifyLikeCount(int likeCount) {
-        String actual = driver.findElement(By.cssSelector("strong.like-count")).getText();
+        String actual = driver.findElement(By.cssSelector("button.btn-like-article > strong.like-count")).getText();
         assertThat(actual, is(likeCount + ""));
     }
 
     public AnswerUpdateFormPage goToUpdateAnswerPage() {
-        driver.findElement(By.cssSelector("a.updateAnswerBtn")).click();
+        driver.findElement(By.cssSelector("a.link-modify-article")).click();
         return new AnswerUpdateFormPage(driver);
     }
 
     public QuestionFormPage goToUpdatePage() {
-        driver.findElement(By.cssSelector(".link-modify-article")).click();
+        driver.findElement(By.cssSelector("a.link-modify-article")).click();
         return new QuestionFormPage(driver);
     }
 
     public void verifyBestAnswer() {
-        String answerBest = driver.findElement(By.cssSelector("span.answer-best")).getText();
-        assertThat(answerBest, is("best"));
+        String answerBest = driver.findElement(By.cssSelector("div.best-article-label > strong")).getText();
+        assertThat(answerBest, is("BEST 의견"));
     }
 
 	public QuestionsPage goToQuestionsPage() {
-		driver.findElement(By.linkText("목록으로")).click();
+		driver.findElement(By.cssSelector("nav.site-nav > ul > li")).click();
 		return new QuestionsPage(driver);
 	}
 }
