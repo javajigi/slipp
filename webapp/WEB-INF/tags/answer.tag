@@ -27,13 +27,13 @@ attribute name="isBest" required="true" rtexprvalue="true" type="java.lang.Boole
 			</a>
 		</div>
 	</div>
-	<form class="form-like" action="/questions/${question.questionId}/answers/${each.answerId}/like" method="POST">
+	<a class="form-like" id="likeAnswerButton" href="/questions/${question.questionId}/answers/${each.answerId}/like">
 		<button type="submit" class="btn-like-article" title="공감하기">
 			<i class="icon-star"></i>
 			<strong class="like-count">${each.sumLike}</strong>
 			<span class="txt">공감</span>
 		</button>
-	</form>
+	</a>
 	<div class="article-doc comment-doc">
 		${sf:wiki(each.contents)}
 	</div>

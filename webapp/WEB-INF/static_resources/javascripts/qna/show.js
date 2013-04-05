@@ -10,6 +10,8 @@ $(document).ready(function(){
 
 	$('.link-answer-article').on('click', addAnswerTo);
 
+	$('.btn-like-article').on('click', likeAnswerTo);
+
 	$('.form-delete').on('submit', function() {
 		if ( !confirm('정말 삭제하시겠습니까?') ) {
 			return false;
@@ -30,6 +32,16 @@ $(document).ready(function(){
 
 		return false;
 	}
+	function likeAnswerTo() {
+		$likeAnswerBtn = $('#likeAnswerButton');
+		$.post($likeAnswerBtn.attr('href'), {},
+			function(result) {
+				$likeAnswerBtn.find('.like-count').html(result);
+			}, 'json'
+		);
+		return false;
+	}
+	
 	function arroundSpace(contents, orgUserId){
 		if ( $.trim(contents).length > 0) {
 			contents += ' ';
@@ -82,4 +94,5 @@ $(document).ready(function(){
 			});
 		});
 	}
+	
 });
