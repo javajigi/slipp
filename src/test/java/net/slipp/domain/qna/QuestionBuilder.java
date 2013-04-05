@@ -46,10 +46,15 @@ public class QuestionBuilder {
 	}
 	
 	public Question build() {
-		return new Question(writer, title, contents, tags) {
+		Question question = new Question(writer, title, contents, tags) {
 			public List<Answer> getAnswers() {
 				return answers;
 			}
 		};
+		for (Answer answer : answers) {
+			question.newAnswered(answer);
+		}
+		
+		return question;
 	}
 }

@@ -121,6 +121,25 @@ public class QuestionTest {
 	}
 	
 	@Test
+	public void delete_answer() throws Exception {
+		SocialUser writer2 = new SocialUser(11);
+		Answer answer1 = anAnswer().with(writer2).build();
+		SocialUser writer3 = new SocialUser(12);
+		Answer answer2 = anAnswer().with(writer3).build();
+		
+		SocialUser writer1 = new SocialUser(10);
+		Question dut = aQuestion()
+				.withWriter(writer1)
+				.withAnswer(answer1)
+				.withAnswer(answer2)
+				.build();
+		assertThat(dut.getAnswerCount(), is(2));
+		
+		dut.deAnswered(answer2);
+		// assertThat(dut.getLatestParticipant(), is(writer2));
+	}
+	
+	@Test
 	public void 질문을_삭제한다() throws Exception {
 		Tag java = aTag().withName("java").build();
 		SocialUser writer = new SocialUser();
