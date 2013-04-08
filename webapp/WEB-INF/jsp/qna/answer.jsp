@@ -17,7 +17,7 @@
 					<fieldset>
 						<legend class="title-write">의견 추가하기</legend>
 						<div class="box-write">
-							<form:textarea path="contents"  cols="80" rows="5"/>
+							<form:textarea path="contents"  cols="80" rows="15"/>
 						</div>
 						<div class="submit-write">
 							<button type="submit" class="btn-submit"><i class="icon-submit"></i> 작성완료</button>

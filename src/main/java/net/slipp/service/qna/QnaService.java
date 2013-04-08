@@ -52,7 +52,7 @@ public class QnaService {
         Set<Tag> tags = tagService.processTags(questionDto.getPlainTags());
 
         Question newQuestion = new Question(loginUser, questionDto.getTitle(), questionDto.getContents(), tags);
-        final Question savedQuestion = questionRepository.saveAndFlush(newQuestion);
+        final Question savedQuestion = questionRepository.save(newQuestion);
 
         if (questionDto.isConnected()) {
             TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
@@ -108,7 +108,7 @@ public class QnaService {
         final Question question = questionRepository.findOne(questionId);
         answer.writedBy(loginUser);
         answer.answerTo(question);
-        final Answer savedAnswer = answerRepository.saveAndFlush(answer);
+        final Answer savedAnswer = answerRepository.save(answer);
 
         TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
             public void afterCommit() {
@@ -140,7 +140,7 @@ public class QnaService {
         }
         answerRepository.delete(answer);
         Question question = questionRepository.findOne(questionId);
-        question.deAnswered();
+        question.deAnswered(answer);
     }
 
     public void likeAnswer(SocialUser loginUser, Long answerId) {
