@@ -1,0 +1,103 @@
+final List PROFILES = ['development', 'production']
+
+ext {
+    javaVersion = '1.6'
+    fileEncoding = 'UTF-8'
+    springVersion = '3.1.2.RELEASE'
+    hibernateEntityManagerVersion = '4.1.10.Final'
+    hibernateCommonsAnnotationsVersion = '3.2.0.Final'    
+    hibernateModelgenVersion = '1.2.0.Final'
+    jpaVersion = '2.0.0'
+    springSecurityVersion = '3.1.0.RELEASE'
+    springSocialVersion = '1.0.1.RELEASE'
+    slf4jVersion = '1.6.4'
+    jettyVersion = '6.1.22'
+}
+
+buildDir = 'target'
+
+if (!hasProperty('profile')) {
+    // -Pprofile=프로필
+    ext.profile = PROFILES[0]
+}
+
+if (!PROFILES.contains(profile)) {
+    throw RuntimeException('You need to specify profile property properly : -Pprofile=developemnt|production')
+}
+
+task hello {
+    description = 'check profile'
+    doLast {
+        println "Profile : $profile"
+    }
+}
+
+configurations {
+    compile
+    runtime
+}
+
+dependencies {
+    compile (
+        "commons-httpclient:commons-httpclient:3.1",
+        )
+/*
+    compile (
+        "commons-httpclient:commons-httpclient:3.1",
+        "commons-io:commons-io:1.4",
+        "commons-lang:commons-lang:2.5",
+        "commons-dbcp:commons-dbcp:1.4",
+        "asm:asm:3.2",
+        "junit:junit-dep:4.10",
+        "org.hamcrest:hamcrest-all:1.1",
+        "org.springframework:spring-test:$springVersion",
+        "org.mockito:mockito-all:1.9.0"
+        )
+    compile("org.springframework:spring-context:$springVersion") {
+        exclude group: "commons-logging", module: "commons-logging" // use SLF4j
+    }
+    compile (
+        "org.springframework:spring-core:$springVersion",
+        "org.springframework:spring-beans:$springVersion",
+        "org.springframework:spring-aspects:$springVersion",
+        "org.springframework:spring-orm:$springVersion",
+        "org.springframework:spring-oxm:$springVersion",
+        "org.springframework:spring-tx:$springVersion",
+        "org.springframework:spring-webmvc:$springVersion",
+        "org.springframework:spring-beans:$springVersion"
+        )
+    compile (
+    	"org.springframework.data:spring-data-jpa:1.1.0.RELEASE"
+    	)
+    compile (
+    	"org.springframework.social:spring-social-twitter:$springSocialVersion",
+    	"org.springframework.social:spring-social-facebook:$springSocialVersion",
+    	"org.springframework.social:spring-social-core:$springSocialVersion",
+    	"org.springframework.social:spring-social-web:$springSocialVersion"
+    	)
+    compile (
+        "org.hibernate:hibernate-entitymanager:$hibernateEntityManagerVersion",
+        "org.hibernate.java-persistence:jpa-api:2.0-cr-1"
+        )
+    compile("org.hibernate:hibernate-commons-annotations:$hibernateCommonsAnnotationsVersion") {
+        exclude group: "org.hibernate", module: "hibernate"
+        exclude group: "javax.persistence", module: "persistence-api"
+    }
+    compile (
+        "mysql:mysql-connector-java:5.1.12",
+        )
+
+    compile (
+        "com.google.code.gson:gson:1.4",
+        "org.aspectj:aspectjrt:1.6.8",
+        "org.xerial:sqlite-jdbc:3.7.2",
+        "org.slf4j:slf4j-api:$slf4jVersion",
+        "org.slf4j:slf4j-log4j12:$slf4jVersion",
+        "org.slf4j:jcl-over-slf4j:$slf4jVersion",
+        )
+*/
+}
+
+repositories {
+    mavenCentral()
+}
