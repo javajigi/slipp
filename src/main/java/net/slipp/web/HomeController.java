@@ -80,4 +80,9 @@ public class HomeController {
     public String blank() {
         return "blank";
     }
+ 
+    @RequestMapping("/google528d99e4fd7e1630.html")
+    public String googleVerification() {
+        return "verification";
+    }
 }
