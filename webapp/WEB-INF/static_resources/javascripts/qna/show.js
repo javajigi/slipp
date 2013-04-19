@@ -32,8 +32,9 @@ $(document).ready(function(){
 
 		return false;
 	}
+	
 	function likeAnswerTo() {
-		$likeAnswerBtn = $('#likeAnswerButton');
+		$likeAnswerBtn = $(this).parent();
 		$.post($likeAnswerBtn.attr('href'), {},
 			function(result) {
 				$likeAnswerBtn.find('.like-count').html(result);

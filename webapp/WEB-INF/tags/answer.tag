@@ -27,7 +27,7 @@ attribute name="isBest" required="true" rtexprvalue="true" type="java.lang.Boole
 			</a>
 		</div>
 	</div>
-	<a class="form-like" id="likeAnswerButton" href="/questions/${question.questionId}/answers/${each.answerId}/like">
+	<a class="form-like likeAnswerBtn" href="/questions/${question.questionId}/answers/${each.answerId}/like">
 		<button type="submit" class="btn-like-article" title="공감하기">
 			<i class="icon-star"></i>
 			<strong class="like-count">${each.sumLike}</strong>
