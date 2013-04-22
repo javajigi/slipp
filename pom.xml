@@ -435,7 +435,6 @@
 					<url>${database.url}</url>
 					<username>${database.username}</username>
 					<password>${database.password}</password>
-					<password>${database.password}</password>
 					<createSql>CREATE DATABASE slipp DEFAULT CHARACTER SET utf8 COLLATE
 						utf8_general_ci</createSql>
 				</configuration>
