@@ -141,6 +141,12 @@
 			<version>${hibernate.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.7</version>
+		</dependency>
+
 		<!-- Log - slf4j -->
 		<dependency>
 			<groupId>org.slf4j</groupId>

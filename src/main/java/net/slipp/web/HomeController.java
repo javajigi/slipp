@@ -66,16 +66,6 @@ public class HomeController {
 		return "about";
 	}
 
-    @RequestMapping("/login")
-    public String login() {
-        return "login";
-    }
-    
-    @RequestMapping("/fblogout")
-    public String logout() {
-        return "fblogout";
-    }
-    
     @RequestMapping("/blank")
     public String blank() {
         return "blank";

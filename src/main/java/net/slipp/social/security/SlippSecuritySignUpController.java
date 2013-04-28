@@ -38,7 +38,7 @@ public class SlippSecuritySignUpController {
 		ConnectionData connectionData = connection.createData();
 		SignUpForm signUpForm = new SignUpForm(connectionData.getDisplayName());
 		model.addAttribute("signUpForm", signUpForm);
-		return "signUpForm";
+		return "users/signUpForm";
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
@@ -52,7 +52,7 @@ public class SlippSecuritySignUpController {
 		} catch (ExistedUserException e) {
 			result.addError(new FieldError("signUpForm", "username", signUpForm.getUsername()
 					+ "은 이미 존재하는 아이디입니다. 다른 아이디를 선택해주세요."));
-			return "signUpForm";
+			return "users/signUpForm";
 		}
 	}
 }

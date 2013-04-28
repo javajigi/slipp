@@ -44,7 +44,7 @@
 					<sec:authorize access="!hasRole('ROLE_USER')">
 					<li class="msg-for-login">로그인해서 의견을 나누세요!</li>
 					<li class="loginout">
-						<a href="/login" class="link-loginout"><span class="text">LogIn</span> <i class="icon-loginout"></i></a>
+						<a href="/users/login" class="link-loginout"><span class="text">LogIn</span> <i class="icon-loginout"></i></a>
 					</li>
 					</sec:authorize>
 					<sec:authorize access="hasRole('ROLE_USER')">
@@ -65,7 +65,7 @@
 						</div>
 					</li>
 					<li class="loginout">
-						<a href="/logout" class="link-loginout"><span class="text">LogOut</span> <i class="icon-loginout"></i></a>
+						<a href="/users/logout" class="link-loginout"><span class="text">LogOut</span> <i class="icon-loginout"></i></a>
 					</li>
 					</sec:authorize>
 				</ul>
