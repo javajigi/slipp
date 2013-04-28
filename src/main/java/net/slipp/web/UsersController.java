@@ -2,7 +2,8 @@ package net.slipp.web;
 
 import javax.annotation.Resource;
 
-import org.springframework.mail.MailSender;
+import net.slipp.service.MailService;
+
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping("/users")
 public class UsersController {
-	@Resource(name = "mailSender")
-	private MailSender mailSender;
+	@Resource(name = "mailService")
+	private MailService mailService;
 	
     @RequestMapping("/login")
     public String login() {
@@ -33,7 +34,7 @@ public class UsersController {
 		message.setTo(user.getEmail());
 		message.setSubject("SLiPP 회원가입 감사합니다.");
 		message.setText("비밀번호는 aaaa입니다. 빨리 와서 변경해 주세요.");
-		mailSender.send(message);
+		mailService.send(message);
         return "redirect:/";
     }    
     
