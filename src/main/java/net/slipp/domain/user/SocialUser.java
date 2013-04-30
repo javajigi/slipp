@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.Cache;
@@ -33,6 +34,9 @@ public class SocialUser {
     private String userId;
 
     private String password;
+    
+    @Transient
+    private String rawPassword;
 
     private String email;
 
@@ -90,6 +94,14 @@ public class SocialUser {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+    
+    public String getRawPassword() {
+        return rawPassword;
+    }
+
+    public void setRawPassword(String rawPassword) {
+        this.rawPassword = rawPassword;
     }
 
     public String getEmail() {

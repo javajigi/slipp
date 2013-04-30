@@ -120,7 +120,9 @@
 
 	<bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder">
 	    <constructor-arg index="0" value="256"/>
-	</bean>	
+	</bean>
+	
+	<bean id="autoLoginAuthenticator" class="net.slipp.social.security.AutoLoginAuthenticator" />
 	
 	<task:annotation-driven executor="slippExecutor"/>
 	

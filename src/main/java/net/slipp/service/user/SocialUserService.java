@@ -9,14 +9,19 @@ import net.slipp.domain.user.ExistedUserException;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.repository.user.SocialUserRepository;
 
+import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionKey;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.connect.UsersConnectionRepository;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+@Transactional
 public class SocialUserService {
+    private static final int DEFAULT_RANDOM_PASSWORD_LENGTH = 12;
+    
 	@Resource(name = "usersConnectionRepository")
 	private UsersConnectionRepository usersConnectionRepository;
 
@@ -68,7 +73,8 @@ public class SocialUserService {
 		return socialUser;
 	}
 
-    public void createUser(String userId, String userName, String email) {
+    public SocialUser createUser(String userId, String userName, String email) {
+        String rawPassword = createRawPassword();
         String uuid = UUID.randomUUID().toString();
         SocialUser socialUser = new SocialUser();
         socialUser.setUserId(userId);
@@ -78,10 +84,16 @@ public class SocialUserService {
         socialUser.setRank(1);
         socialUser.setDisplayName(userName);
         socialUser.setAccessToken(uuid);
-        socialUser.setPassword(encodePassword("test1234"));
+        socialUser.setRawPassword(rawPassword);
+        socialUser.setPassword(encodePassword(rawPassword));
         socialUserRepository.save(socialUser);
+        return socialUser;
     }
     
+    private String createRawPassword() {
+        return RandomStringUtils.randomAlphanumeric(DEFAULT_RANDOM_PASSWORD_LENGTH);
+    }
+
     private String encodePassword(String rawPass) {
         return passwordEncoder.encodePassword(rawPass, null);
     }

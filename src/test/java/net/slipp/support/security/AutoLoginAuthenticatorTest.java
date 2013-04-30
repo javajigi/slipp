@@ -33,7 +33,7 @@ public class AutoLoginAuthenticatorTest {
 		request.addParameter("userId", "javajigi");
 		request.addParameter("password", "test1234");
 		
-		dut.login(request, response);
+		dut.login(request, response, null);
 	}
 
 }
