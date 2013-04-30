@@ -31,6 +31,8 @@ public class SocialUser {
 	 * A local identifier for the user, in our case the username.
 	 */
 	private String userId;
+	
+	private String email;
 
 	@Column(nullable = false)
 	private String providerId;
@@ -79,8 +81,16 @@ public class SocialUser {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
+	
+	public String getEmail() {
+        return email;
+    }
 
-	public String getProviderId() {
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getProviderId() {
 		return providerId;
 	}
 

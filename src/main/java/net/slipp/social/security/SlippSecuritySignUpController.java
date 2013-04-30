@@ -44,7 +44,6 @@ public class SlippSecuritySignUpController {
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	public String signUpSubmit(ServletWebRequest request, SignUpForm signUpForm, BindingResult result) {
 		Connection<?> connection = ProviderSignInUtils.getConnection(request);
-
 		try {
 			socialUserService.createNewSocialUser(signUpForm.getUsername(), connection);
 			signInAdapter.signIn(signUpForm.getUsername(), connection, request);

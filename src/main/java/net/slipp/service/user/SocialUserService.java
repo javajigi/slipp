@@ -37,6 +37,11 @@ public class SocialUserService {
 		List<SocialUser> socialUsers = socialUserRepository.findsByUserId(userId);
 		return socialUsers.isEmpty();
 	}
+	
+	public SocialUser findById(Long id) {
+	    Assert.notNull(id, "id can't be null!");
+	    return socialUserRepository.findOne(id);
+	}
 
 	public SocialUser findByUserId(String userId) {
 		Assert.notNull(userId, "userId can't be null!");
