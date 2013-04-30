@@ -17,7 +17,6 @@ import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.connect.DuplicateConnectionException;
 import org.springframework.social.connect.NoSuchConnectionException;
 import org.springframework.social.connect.NotConnectedException;
-import org.springframework.social.connect.UserProfile;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
@@ -138,11 +137,9 @@ public class JpaConnectionRepository implements ConnectionRepository {
 	public void addConnection(Connection<?> connection) {
 		try {
 			ConnectionData data = connection.createData();
-			UserProfile profile = connection.fetchUserProfile();
 			int rank = getRank(data.getProviderId()) ;
 			SocialUser socialUser = new SocialUser();
 			socialUser.setUserId(userId);
-			socialUser.setEmail(profile.getEmail());
 			socialUser.setProviderId(data.getProviderId());
 			socialUser.setProviderUserId(data.getProviderUserId());
 			socialUser.setRank(rank);

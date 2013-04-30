@@ -1,6 +1,7 @@
 package net.slipp.service.user;
 
 import java.util.List;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 
@@ -8,6 +9,7 @@ import net.slipp.domain.user.ExistedUserException;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.repository.user.SocialUserRepository;
 
+import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionKey;
 import org.springframework.social.connect.ConnectionRepository;
@@ -20,6 +22,9 @@ public class SocialUserService {
 
 	@Resource(name = "socialUserRepository")
 	private SocialUserRepository socialUserRepository;
+	
+	@Resource(name = "passwordEncoder")
+	private PasswordEncoder passwordEncoder;
 
 	public void createNewSocialUser(String userId, Connection<?> connection) throws ExistedUserException {
 		Assert.notNull(userId, "userId can't be null!");
@@ -62,4 +67,22 @@ public class SocialUserService {
 				connectionKey.getProviderId(), connectionKey.getProviderUserId());
 		return socialUser;
 	}
+
+    public void createUser(String userId, String userName, String email) {
+        String uuid = UUID.randomUUID().toString();
+        SocialUser socialUser = new SocialUser();
+        socialUser.setUserId(userId);
+        socialUser.setEmail(email);
+        socialUser.setProviderId(SocialUser.DEFAULT_SLIPP_PROVIDER_ID);
+        socialUser.setProviderUserId(userId);
+        socialUser.setRank(1);
+        socialUser.setDisplayName(userName);
+        socialUser.setAccessToken(uuid);
+        socialUser.setPassword(encodePassword("test1234"));
+        socialUserRepository.save(socialUser);
+    }
+    
+    private String encodePassword(String rawPass) {
+        return passwordEncoder.encodePassword(rawPass, null);
+    }
 }

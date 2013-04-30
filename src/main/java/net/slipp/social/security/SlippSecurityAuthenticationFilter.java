@@ -38,7 +38,6 @@ public class SlippSecurityAuthenticationFilter extends AbstractAuthenticationPro
 	}
 
 	@Override
-	@Autowired(required = false)
 	public void setRememberMeServices(RememberMeServices rememberMeServices) {
 		super.setRememberMeServices(rememberMeServices);
 	}

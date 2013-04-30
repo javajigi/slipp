@@ -26,11 +26,6 @@
 		</constructor-arg>
 	</bean>
     
-	<!-- Start Spring Social Security -->
-	<bean id="springSocialSecurityEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
-		<constructor-arg value="/login" />
-	</bean>	
-
 	<context:component-scan	base-package="net.slipp.service">
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
@@ -47,17 +42,35 @@
 
 
 	<security:authentication-manager alias="authenticationManager">
-		<security:authentication-provider ref="authenticationProvider" />	
+		<security:authentication-provider ref="rememberMeAuthenticationProvider" />
+		<security:authentication-provider ref="daoAuthenticationProvider" />
 	</security:authentication-manager>
 	
 	<bean id="slippSecurityAuthenticationFilter" 
-		class="net.slipp.social.security.SlippSecurityAuthenticationFilter" />
+		class="net.slipp.social.security.SlippSecurityAuthenticationFilter"
+		p:rememberMeServices-ref="springSocialSecurityRememberMeServices" 
+	/>
 		
+	<bean id="slippRememberMeServices"
+		class="org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices">
+		<property name="userDetailsService" ref="slippUserDetailsService" />
+		<property name="key" value="${slipp.remember.token.key}" />
+		<property name="tokenValiditySeconds" value="1209600" />
+	</bean>
+	
+	<bean id="springSocialSecurityRememberMeServices" parent="slippRememberMeServices">
+		<property name="alwaysRemember" value="true" />
+	</bean>	
 
-	<bean id="authenticationProvider"
+	<bean id="rememberMeAuthenticationProvider"
 		class="org.springframework.security.authentication.RememberMeAuthenticationProvider">
 		<constructor-arg value="${slipp.remember.token.key}" />
 	</bean>
+	
+	<bean id="daoAuthenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider"
+		p:userDetailsService-ref="slippUserDetailsService"
+		p:passwordEncoder-ref="passwordEncoder"
+	/>	
 
 	<bean id="accessDecisionManager" class="org.springframework.security.access.vote.UnanimousBased"
 		xmlns="http://www.springframework.org/schema/beans">
@@ -68,6 +81,11 @@
 			</list>
 		</constructor-arg>
 	</bean>
+	
+	<!-- Start Spring Social Security -->
+	<bean id="springSocialSecurityEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+		<constructor-arg value="/users/login" />
+	</bean>	
 
 	<security:http use-expressions="true"
 		entry-point-ref="springSocialSecurityEntryPoint" xmlns="http://www.springframework.org/schema/security">
@@ -83,23 +101,26 @@
 		<intercept-url pattern="/migrations/**" access="hasRole('ROLE_ADMINISTRATOR')" />
 		<intercept-url pattern="/mails/**" access="hasRole('ROLE_ADMINISTRATOR')" />
 
+	    <form-login login-page="/users/login" 
+	            default-target-url='/'
+	            always-use-default-target='true'
+	            login-processing-url="/users/authenticate"
+	            username-parameter="userId"
+	            password-parameter="password"
+	    />
+
 		<security:logout logout-url="/logout" />
 
 		<anonymous />
-		<security:custom-filter position="FORM_LOGIN_FILTER"
-			ref="slippSecurityAuthenticationFilter" />
 
-		<remember-me services-ref="springSocialSecurityRememberMeServices" />
+		<security:custom-filter before="BASIC_AUTH_FILTER" ref="slippSecurityAuthenticationFilter" />
+
+		<remember-me services-ref="slippRememberMeServices" />
 	</security:http>
 
-
-	<bean id="springSocialSecurityRememberMeServices"
-		class="org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices">
-		<property name="userDetailsService" ref="slippUserDetailsService" />
-		<property name="key" value="${slipp.remember.token.key}" />
-		<property name="alwaysRemember" value="true" />
-		<property name="tokenValiditySeconds" value="1209600" />
-	</bean>
+	<bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder">
+	    <constructor-arg index="0" value="256"/>
+	</bean>	
 	
 	<task:annotation-driven executor="slippExecutor"/>
 	

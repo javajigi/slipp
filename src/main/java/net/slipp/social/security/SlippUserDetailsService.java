@@ -35,9 +35,13 @@ public class SlippUserDetailsService implements UserDetailsService {
 		SocialUser socialUser = socialUserService.findByUserId(username);
 		if (socialUser == null) {
 			throw new UsernameNotFoundException(String.format("%s not found!", username));
-		} else {
-			return new User(username, socialUser.getAccessToken(), true, true, true, true, createGrantedAuthorities(username));
 		}
+		
+		if (socialUser.isSLiPPUser()) {
+		    return new User(username, socialUser.getPassword(), true, true, true, true, createGrantedAuthorities(username));    
+		}
+
+		return new User(username, socialUser.getAccessToken(), true, true, true, true, createGrantedAuthorities(username));
 	}
 
 	private List<GrantedAuthority> createGrantedAuthorities(String username) {
