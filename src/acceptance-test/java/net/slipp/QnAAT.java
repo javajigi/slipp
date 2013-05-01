@@ -124,7 +124,7 @@ public class QnAAT extends AbstractATTest {
 	}
 
     @Test
-	public void 로그인과_로그아웃_답변에_대한_공감() throws Exception {
+	public void answer_best() throws Exception {
     	loginToFacebook(1);
     	createQuestion(questionFixture);
         loginToAnotherUser(2);
@@ -156,7 +156,7 @@ public class QnAAT extends AbstractATTest {
         
         questionPage.verifyBestAnswer();
     }
-
+    
     private QuestionPage likeAnswer(int userNo, int likeCount) {
         loginToAnotherUser(userNo);
         QuestionPage questionPage = indexPage.goToQuestion(0);

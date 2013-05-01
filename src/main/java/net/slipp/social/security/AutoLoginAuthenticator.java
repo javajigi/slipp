@@ -1,16 +1,13 @@
 package net.slipp.social.security;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import net.slipp.domain.user.SocialUser;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.RememberMeServices;
+import org.springframework.util.Assert;
 
 public class AutoLoginAuthenticator {
     @Resource(name = "authenticationManager")
@@ -19,9 +16,11 @@ public class AutoLoginAuthenticator {
     @Resource(name = "slippRememberMeServices")
     private RememberMeServices rememberMeServices;
 
-    public void login(HttpServletRequest request, HttpServletResponse response, SocialUser socialUser) {
-        UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(
-                socialUser.getUserId(), socialUser.getRawPassword());
+    public void login(String userId, String password) {
+        Assert.notNull(userId, "UserId cannot be null!");
+        Assert.notNull(password, "Password cannot be null!");
+        
+        UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(userId, password);
         Authentication successfulAuthentication = authenticationManager.authenticate(authRequest);
         SecurityContextHolder.getContext().setAuthentication(successfulAuthentication);
     }

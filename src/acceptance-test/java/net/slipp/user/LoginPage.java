@@ -30,4 +30,16 @@ public class LoginPage {
 		driver.findElement(By.cssSelector(".btn-success")).click();
 		return new IndexPage(driver);
 	}
+
+    public IndexPage join(String userId, String nickName, String email) {
+        driver.findElement(By.id("userId")).clear();
+        driver.findElement(By.id("userId")).sendKeys(userId); 
+        driver.findElement(By.id("userName")).clear();
+        driver.findElement(By.id("userName")).sendKeys(nickName);
+        driver.findElement(By.id("email")).clear();
+        driver.findElement(By.id("email")).sendKeys(email);
+        driver.findElement(By.cssSelector(".btn-submit")).click();
+        return new IndexPage(driver);
+        
+    }
 }

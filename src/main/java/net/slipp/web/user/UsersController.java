@@ -43,7 +43,7 @@ public class UsersController {
 //        message.setText("비밀번호는 aaaa입니다. 빨리 와서 변경해 주세요.");
 //        mailService.send(message);
         SocialUser socialUser = userService.createUser(user.getUserId(), user.getUserName(), user.getEmail());
-        autoLoginAuthenticator.login(request, response, socialUser);
+        autoLoginAuthenticator.login(socialUser.getUserId(), socialUser.getRawPassword());
         return "redirect:/";
     }
 

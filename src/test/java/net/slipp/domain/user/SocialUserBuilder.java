@@ -1,5 +1,8 @@
 package net.slipp.domain.user;
 
+import org.springframework.security.authentication.encoding.PasswordEncoder;
+import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
+
 import net.slipp.domain.user.SocialUser;
 
 public class SocialUserBuilder {
@@ -19,12 +22,23 @@ public class SocialUserBuilder {
 
     private String imageUrl;
     
+    private String rawPassword;
+
+    private String password;
+    
     public static SocialUserBuilder aSocialUser() {
     	return new SocialUserBuilder();
     }
 
     public SocialUserBuilder withUserId(String userId) {
         this.userId = userId;
+        return this;
+    }
+    
+    public SocialUserBuilder withRawPassword(String rawPassword) {
+        PasswordEncoder encoder = new ShaPasswordEncoder(256);
+        this.rawPassword = rawPassword;
+        this.password = encoder.encodePassword(rawPassword, null);
         return this;
     }
     
@@ -65,6 +79,8 @@ public class SocialUserBuilder {
         socialUser.setDisplayName(displayName);
         socialUser.setProfileUrl(profileUrl);
         socialUser.setImageUrl(imageUrl);
+        socialUser.setPassword(password);
+        socialUser.setRawPassword(rawPassword);
         return socialUser;
     }
 }
