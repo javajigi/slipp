@@ -7,12 +7,13 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.restfb.Connection;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.Parameter;
+import com.restfb.types.Comment;
 import com.restfb.types.FacebookType;
 import com.restfb.types.Post;
+import com.restfb.types.Post.Comments;
 
 public class RestFBTest {
     private static Logger logger = LoggerFactory.getLogger(RestFBTest.class);
@@ -45,11 +46,12 @@ public class RestFBTest {
 
     @Test
     public void fetchPost() throws Exception {
-        Connection<Post> myFeed = dut.fetchConnection("me/posts", Post.class);
-        for (List<Post> myFeedConnectionPage : myFeed) {
-            for (Post post : myFeedConnectionPage) {
-                logger.debug("Post: " + post.getMessage());
-            }
+        Post post = dut.fetchObject("1324855987_390710267709840", Post.class);
+        logger.debug("Post: " + post.getId() + " : " + post.getMessage());
+        Comments comments = post.getComments();
+        List<Comment> commentData = comments.getData();
+        for (Comment comment : commentData) {
+            logger.debug("Comment: " + comment.getId() + " : " + comment.getMessage());
         }
     }
 }
