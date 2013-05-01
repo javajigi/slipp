@@ -6,6 +6,7 @@ import net.slipp.LoginUser;
 import net.slipp.user.FacebookPage;
 import net.slipp.user.GooglePage;
 import net.slipp.user.LoginPage;
+import net.slipp.user.ProfilePage;
 import net.slipp.user.TwitterPage;
 
 import org.openqa.selenium.By;
@@ -107,5 +108,10 @@ public class IndexPage {
     public boolean isLoginStatus() {
         List<WebElement> logouts = driver.findElements(By.linkText("LogOut"));
         return logouts.size() == 1;
+    }
+
+    public ProfilePage goProfilePage() {
+        driver.findElement(By.cssSelector("li.user-info > a > img.user-thumb")).click();
+        return new ProfilePage(driver);
     }
 }

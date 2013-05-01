@@ -6,6 +6,7 @@ import java.util.UUID;
 import javax.annotation.Resource;
 
 import net.slipp.domain.user.ExistedUserException;
+import net.slipp.domain.user.PasswordDto;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.repository.user.SocialUserRepository;
 
@@ -29,7 +30,7 @@ public class SocialUserService {
 	private SocialUserRepository socialUserRepository;
 	
 	@Resource(name = "passwordEncoder")
-	private PasswordEncoder passwordEncoder;
+	PasswordEncoder passwordEncoder;
 
 	public void createNewSocialUser(String userId, Connection<?> connection) throws ExistedUserException {
 		Assert.notNull(userId, "userId can't be null!");
@@ -96,5 +97,17 @@ public class SocialUserService {
 
     private String encodePassword(String rawPass) {
         return passwordEncoder.encodePassword(rawPass, null);
+    }
+
+    public SocialUser changePassword(SocialUser loginUser, PasswordDto password) {
+        SocialUser user = socialUserRepository.findOne(password.getId());
+        if (user == null) {
+            return null;
+        }
+
+        String oldEncodedPassword = encodePassword(password.getOldPassword());
+        String encodedPassword = encodePassword(password.getNewPassword());
+        
+        return user;
     }
 }

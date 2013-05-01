@@ -13,6 +13,8 @@ import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.encoding.PasswordEncoder;
 
 @Entity
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "userId", "providerId", "providerUserId" }),
@@ -218,6 +220,15 @@ public class SocialUser {
 
     public boolean isSLiPPUser() {
         return DEFAULT_SLIPP_PROVIDER_ID.equals(getProviderId());
+    }
+    
+    public void changePassword(PasswordEncoder encoder, String oldPassword, String newPassword) {
+        String oldEncodedPassword = encoder.encodePassword(oldPassword, null);
+        if (!password.equals(oldEncodedPassword)) {
+            throw new BadCredentialsException("이전 비밀번호가 다르다");
+        }
+        
+        this.password = encoder.encodePassword(newPassword, null);
     }
 
     static class GuestSocialUser extends SocialUser {
