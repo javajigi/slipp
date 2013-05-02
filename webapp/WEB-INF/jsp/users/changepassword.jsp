@@ -10,21 +10,22 @@ display name : ${socialUser.displayName}
 
 <section class="login-content">
 	<div class="content-main">
-		<form action="/users/changepassword/${socialUser.id}" class="form-write" method="POST">
+		<form:form modelAttribute="password" cssClass="form-write" action="/users/changepassword/${socialUser.id}" method="post">
+			<form:hidden path="id"/>
 			<fieldset>
 				<div class="box-input-line">
-					이전 비밀번호 : <input id="oldPassword" name="oldPassword" class="inp-title" placeholder="이전 비밀번호" type="password" value=""/>
+					이전 비밀번호 : <form:input path="oldPassword" cssClass="inp-title" placeholder="이전 비밀번호" />
 				</div>
 				<div class="box-input-line">
-					신규 비밀번호 : <input id="newPassword" name="newPassword" class="inp-title" placeholder="신규 비밀번호" type="password" value=""/>
+					신규 비밀번호 : <form:input path="newPassword" cssClass="inp-title" placeholder="신규 비밀번호" />
 				</div>
 				<div class="box-input-line">
-					신규 비밀번호 확인 : <input id="newPasswordConfirm" name="newPasswordConfirm" class="inp-title" placeholder="신규 비밀번호 확인" type="password" value=""/>
+					신규 비밀번호 확인 : <form:input path="newPasswordConfirm" cssClass="inp-title" placeholder="신규 비밀번호 확인" />
 				</div>				
 				<div class="submit-write">
 					<button type="submit" class="btn-submit"><i class="icon-submit"></i> 비밀번호 변경</button>
 				</div>
 			</fieldset>		
-		</form>	
+		</form:form>	
 	</div>
 </section>

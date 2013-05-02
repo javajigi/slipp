@@ -1,9 +1,10 @@
 package net.slipp;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 import net.slipp.qna.FBLogoutPage;
 import net.slipp.qna.IndexPage;
+import net.slipp.service.user.FixedPasswordGenerator;
 import net.slipp.support.AbstractATTest;
 import net.slipp.user.ChangePasswordPage;
 import net.slipp.user.LoginPage;
@@ -12,8 +13,12 @@ import net.slipp.user.ProfilePage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class AuthenticationAT extends AbstractATTest {
+    private static Logger log = LoggerFactory.getLogger(AuthenticationAT.class);
+    
     private IndexPage indexPage;
     
     @Before
@@ -54,7 +59,15 @@ public class AuthenticationAT extends AbstractATTest {
         assertThat(indexPage.isLoginStatus(), is(true));
         ProfilePage profilePage = indexPage.goProfilePage();
         profilePage.verifyPageTitle(nickName);
-        ChangePasswordPage changePassword = profilePage.goChangePasswordPage();
+        ChangePasswordPage changePasswordPage = profilePage.goChangePasswordPage();
+        
+        String oldPassword = FixedPasswordGenerator.DEFAULT_FIXED_PASSWORD;
+        String newPassword = "newPassword";
+        changePasswordPage.changePassword(oldPassword, newPassword);
+        indexPage = indexPage.logout();
+        loginPage = indexPage.goLoginPage();
+        loginPage.loginToSlipp(userId, newPassword);
+        assertThat(indexPage.isLoginStatus(), is(true));
     }
     
     @After

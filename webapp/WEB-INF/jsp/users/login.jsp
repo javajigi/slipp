@@ -39,16 +39,16 @@
 		<form action="/users/authenticate" class="form-write" method="POST">
 			<fieldset>
 				<div class="box-input-line">
-					아이디 : <input id="userId" name="userId" class="inp-title" placeholder="아이디" type="text" value=""/>
+					아이디 : <input id="login-userId" name="userId" class="inp-title" placeholder="아이디" type="text" value=""/>
 				</div>
 				<div class="box-input-line">
-					비밀번호 : <input id="password" name="password" class="inp-title" placeholder="비밀번호" type="text" value=""/>
+					비밀번호 : <input id="login-password"  name="password" class="inp-title" placeholder="비밀번호" type="text" value=""/>
 				</div>
 				<div class="box-input-line">
 					자동 로그인 : <input name="_spring_security_remember_me" class="inp-title" type="checkbox" value="true"/>
 				</div>				
 				<div class="submit-write">
-					<button type="submit" class="btn-submit"><i class="icon-submit"></i> 로그인</button>
+					<button id="loginSubmitBtn" type="submit" class="btn-submit"><i class="icon-submit"></i> 로그인</button>
 				</div>
 			</fieldset>		
 		</form>	

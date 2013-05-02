@@ -1,7 +1,7 @@
 package net.slipp.service.user;
 
 public class FixedPasswordGenerator implements PasswordGenerator {
-    private static final String DEFAULT_FIXED_PASSWORD = "password";
+    public static final String DEFAULT_FIXED_PASSWORD = "password";
     
     private String password;
     

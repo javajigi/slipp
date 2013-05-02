@@ -4,6 +4,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.slipp.domain.user.PasswordDto;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.service.MailService;
 import net.slipp.service.user.SocialUserService;
@@ -71,6 +72,7 @@ public class UsersController {
         SocialUser socialUser = userService.findById(id);
         if (loginUser.isSameUser(socialUser)) {
             model.addAttribute("socialUser", socialUser);
+            model.addAttribute("password", new PasswordDto(id));
             return "users/changepassword";
         }
 
@@ -78,9 +80,10 @@ public class UsersController {
     }
 
     @RequestMapping(value = "/changepassword/{id}", method = RequestMethod.POST)
-    public String changePassword(@LoginUser SocialUser loginUser, @PathVariable Long id) throws Exception {
+    public String changePassword(@LoginUser SocialUser loginUser, @PathVariable Long id, PasswordDto password) throws Exception {
         SocialUser socialUser = userService.findById(id);
         if (loginUser.isSameUser(socialUser)) {
+            userService.changePassword(loginUser, password);
             return String.format("redirect:/users/%d/%s", id, socialUser.getUserId());
         }
 
