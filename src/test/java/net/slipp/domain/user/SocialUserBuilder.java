@@ -1,9 +1,6 @@
 package net.slipp.domain.user;
 
-import org.springframework.security.authentication.encoding.PasswordEncoder;
-import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
-
-import net.slipp.domain.user.SocialUser;
+import net.slipp.user.MockPasswordEncoder;
 
 public class SocialUserBuilder {
     private String userId;
@@ -36,9 +33,9 @@ public class SocialUserBuilder {
     }
     
     public SocialUserBuilder withRawPassword(String rawPassword) {
-        PasswordEncoder encoder = new ShaPasswordEncoder(256);
+        MockPasswordEncoder encoder = new MockPasswordEncoder();
         this.rawPassword = rawPassword;
-        this.password = encoder.encodePassword(rawPassword, null);
+        this.password = encoder.encodePassword(rawPassword);
         return this;
     }
     

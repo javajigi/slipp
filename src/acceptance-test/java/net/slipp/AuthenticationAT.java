@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import net.slipp.qna.FBLogoutPage;
 import net.slipp.qna.IndexPage;
 import net.slipp.support.AbstractATTest;
+import net.slipp.user.ChangePasswordPage;
 import net.slipp.user.LoginPage;
 import net.slipp.user.ProfilePage;
 
@@ -53,6 +54,7 @@ public class AuthenticationAT extends AbstractATTest {
         assertThat(indexPage.isLoginStatus(), is(true));
         ProfilePage profilePage = indexPage.goProfilePage();
         profilePage.verifyPageTitle(nickName);
+        ChangePasswordPage changePassword = profilePage.goChangePasswordPage();
     }
     
     @After

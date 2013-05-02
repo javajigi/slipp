@@ -20,6 +20,8 @@
         
 	<import resource="applicationContext-social.xml" />
 	
+	<import resource="applicationContext-profile.xml" />
+	
 	<bean id="applicationProperties" class="net.slipp.support.utils.ConvenientProperties">
 		<constructor-arg index="0">
 			<util:properties location="classpath:application-properties.xml" />

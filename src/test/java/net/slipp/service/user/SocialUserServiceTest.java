@@ -7,7 +7,9 @@ import static org.mockito.Mockito.when;
 import net.slipp.domain.user.ExistedUserException;
 import net.slipp.domain.user.PasswordDto;
 import net.slipp.domain.user.SocialUser;
+import net.slipp.domain.user.SocialUserBuilder;
 import net.slipp.repository.user.SocialUserRepository;
+import net.slipp.user.MockPasswordEncoder;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -16,8 +18,6 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.security.authentication.encoding.PasswordEncoder;
-import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.connect.UsersConnectionRepository;
@@ -35,7 +35,7 @@ public class SocialUserServiceTest {
 	@Mock
 	private SocialUserRepository socialUserRepository;
 	
-	private PasswordEncoder encoder = new ShaPasswordEncoder(256);
+	private MockPasswordEncoder encoder;
 	
 	@Mock
 	private Connection<?> connection;
@@ -45,6 +45,7 @@ public class SocialUserServiceTest {
 	
 	@Before
 	public void setup() {
+	    encoder = new MockPasswordEncoder();
 	    dut.passwordEncoder = encoder;
 	}
 	
@@ -73,11 +74,14 @@ public class SocialUserServiceTest {
 	
 	@Test
     public void changePassword() throws Exception {
-	    SocialUser loginUser = new SocialUser(1L);
-	    PasswordDto password = new PasswordDto(loginUser.getId(), "oldPassword", "newPassword", "newPassword");
-	    when(socialUserRepository.findOne(loginUser.getId())).thenReturn(loginUser);
+	    String oldPassword = "oldPassword";
+	    String newPassword = "newPassword";
 	    
-        SocialUser changedUser = dut.changePassword(loginUser, password);
-        assertThat(changedUser.getPassword(), is(encoder.encodePassword("newPassword", null)));
+	    SocialUser socialUser = new SocialUserBuilder().withRawPassword(oldPassword).build();
+        PasswordDto password = new PasswordDto(socialUser.getId(), oldPassword, newPassword, newPassword);
+	    when(socialUserRepository.findOne(socialUser.getId())).thenReturn(socialUser);
+	    
+        SocialUser changedUser = dut.changePassword(socialUser, password);
+        assertThat(changedUser.getPassword(), is(encoder.encodePassword(newPassword, null)));
     }
 }

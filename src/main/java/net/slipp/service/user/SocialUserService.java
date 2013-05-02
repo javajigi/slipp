@@ -10,7 +10,6 @@ import net.slipp.domain.user.PasswordDto;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.repository.user.SocialUserRepository;
 
-import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionKey;
@@ -21,8 +20,6 @@ import org.springframework.util.Assert;
 
 @Transactional
 public class SocialUserService {
-    private static final int DEFAULT_RANDOM_PASSWORD_LENGTH = 12;
-    
 	@Resource(name = "usersConnectionRepository")
 	private UsersConnectionRepository usersConnectionRepository;
 
@@ -31,6 +28,9 @@ public class SocialUserService {
 	
 	@Resource(name = "passwordEncoder")
 	PasswordEncoder passwordEncoder;
+	
+    @Resource(name = "passwordGenerator")
+    private PasswordGenerator passwordGenerator;
 
 	public void createNewSocialUser(String userId, Connection<?> connection) throws ExistedUserException {
 		Assert.notNull(userId, "userId can't be null!");
@@ -75,7 +75,7 @@ public class SocialUserService {
 	}
 
     public SocialUser createUser(String userId, String userName, String email) {
-        String rawPassword = createRawPassword();
+        String rawPassword = passwordGenerator.generate();
         String uuid = UUID.randomUUID().toString();
         SocialUser socialUser = new SocialUser();
         socialUser.setUserId(userId);
@@ -91,10 +91,6 @@ public class SocialUserService {
         return socialUser;
     }
     
-    private String createRawPassword() {
-        return RandomStringUtils.randomAlphanumeric(DEFAULT_RANDOM_PASSWORD_LENGTH);
-    }
-
     private String encodePassword(String rawPass) {
         return passwordEncoder.encodePassword(rawPass, null);
     }
@@ -105,8 +101,7 @@ public class SocialUserService {
             return null;
         }
 
-        String oldEncodedPassword = encodePassword(password.getOldPassword());
-        String encodedPassword = encodePassword(password.getNewPassword());
+        user.changePassword(passwordEncoder, password.getOldPassword(), password.getNewPassword());
         
         return user;
     }
