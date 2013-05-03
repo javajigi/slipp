@@ -9,16 +9,13 @@ import net.slipp.support.AbstractATTest;
 import net.slipp.user.ChangePasswordPage;
 import net.slipp.user.LoginPage;
 import net.slipp.user.ProfilePage;
+import net.slipp.web.UserForm;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class AuthenticationAT extends AbstractATTest {
-    private static Logger log = LoggerFactory.getLogger(AuthenticationAT.class);
-    
     private IndexPage indexPage;
     
     @Before
@@ -50,23 +47,33 @@ public class AuthenticationAT extends AbstractATTest {
     }
     
     @Test
-    public void join_change_password_login() throws Exception {
+    public void join() throws Exception {
+        join_to_slipp();  
+    }
+    
+    private UserForm join_to_slipp() throws Exception {
         String userId = environment.getProperty("slipp.userId1") + System.currentTimeMillis();
         String nickName = environment.getProperty("slipp.nickName1");
         String email = environment.getProperty("slipp.email1");
         LoginPage loginPage = indexPage.goLoginPage();
         indexPage = loginPage.join(userId, nickName, email);
         assertThat(indexPage.isLoginStatus(), is(true));
+        return new UserForm(userId, nickName, email);
+    }
+    
+    @Test
+    public void join_change_password_login() throws Exception {
+        UserForm userForm = join_to_slipp();
         ProfilePage profilePage = indexPage.goProfilePage();
-        profilePage.verifyPageTitle(nickName);
+        profilePage.verifyPageTitle(userForm.getNickName());
         ChangePasswordPage changePasswordPage = profilePage.goChangePasswordPage();
         
         String oldPassword = FixedPasswordGenerator.DEFAULT_FIXED_PASSWORD;
         String newPassword = "newPassword";
         changePasswordPage.changePassword(oldPassword, newPassword);
         indexPage = indexPage.logout();
-        loginPage = indexPage.goLoginPage();
-        loginPage.loginToSlipp(userId, newPassword);
+        LoginPage loginPage = indexPage.goLoginPage();
+        loginPage.loginToSlipp(userForm.getUserId(), newPassword);
         assertThat(indexPage.isLoginStatus(), is(true));
     }
     

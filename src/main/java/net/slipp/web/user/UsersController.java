@@ -44,7 +44,7 @@ public class UsersController {
         // message.setSubject("SLiPP 회원가입 감사합니다.");
         // message.setText("비밀번호는 aaaa입니다. 빨리 와서 변경해 주세요.");
         // mailService.send(message);
-        SocialUser socialUser = userService.createUser(user.getUserId(), user.getUserName(), user.getEmail());
+        SocialUser socialUser = userService.createUser(user.getUserId(), user.getNickName(), user.getEmail());
         autoLoginAuthenticator.login(socialUser.getUserId(), socialUser.getRawPassword());
         return "redirect:/";
     }

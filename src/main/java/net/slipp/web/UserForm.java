@@ -2,8 +2,17 @@ package net.slipp.web;
 
 public class UserForm {
     private String userId;
-    private String userName;
+    private String nickName;
 	private String email;
+	
+	public UserForm() {
+    }
+	
+    public UserForm(String userId, String nickName, String email) {
+        this.userId = userId;
+        this.nickName = nickName;
+        this.email = email;
+    }
 
 	public String getEmail() {
 		return email;
@@ -21,16 +30,16 @@ public class UserForm {
         this.userId = userId;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getNickName() {
+        return nickName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 
     @Override
     public String toString() {
-        return "UserForm [userId=" + userId + ", userName=" + userName + ", email=" + email + "]";
+        return "UserForm [userId=" + userId + ", nickName=" + nickName + ", email=" + email + "]";
     }
 }

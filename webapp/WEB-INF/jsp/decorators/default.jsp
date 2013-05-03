@@ -14,6 +14,8 @@
 	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="${url:resource('/javascripts/slipp.js')}"></script>
+<script src="${url:resource('/javascripts/localization/message.kr.js')}"></script>
 <decorator:head />
 </head>
 

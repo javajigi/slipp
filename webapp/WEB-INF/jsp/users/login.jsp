@@ -26,7 +26,7 @@
 					아이디 : <form:input path="userId" cssClass="inp-title" placeholder="아이디" />
 				</div>			
 				<div class="box-input-line">
-					닉네임 : <form:input path="userName" cssClass="inp-title" placeholder="닉네임" />
+					닉네임 : <form:input path="nickName" cssClass="inp-title" placeholder="닉네임" />
 				</div>
 				<div class="box-input-line">
 					이메일 주소 : <form:input path="email" cssClass="inp-title" placeholder="이메일 주소" />
@@ -56,3 +56,6 @@
 	<div class="content-sub">
 	</div>
 </sction>
+
+<script src="${url:resource('/javascripts/jquery.validate.min.js')}"></script>
+<script src="${url:resource('/javascripts/user/login.js')}"></script>
