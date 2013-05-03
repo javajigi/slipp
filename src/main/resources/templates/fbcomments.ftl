@@ -13,7 +13,7 @@
 		</div>
 	</div>
 	<div class="article-doc comment-doc">
-		<p>${comment.message}</p>
+		<p>${comment.message?html}</p>
 	</div>
 </article>
 </#list>

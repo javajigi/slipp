@@ -25,6 +25,7 @@ import com.google.common.collect.Lists;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.Parameter;
+import com.restfb.exception.FacebookGraphException;
 import com.restfb.types.Comment;
 import com.restfb.types.FacebookType;
 import com.restfb.types.Post;
@@ -51,7 +52,7 @@ public class FacebookService {
         log.info("questionId : {}", questionId);
         Question question = questionRepository.findOne(questionId);
         Assert.notNull(question, "Question should be not null!");
-        
+
         String message = createFacebookMessage(question.getContents());
         String postId = sendMessageToFacebook(loginUser, createLink(question.getQuestionId()), message);
         if (postId != null) {
@@ -96,27 +97,39 @@ public class FacebookService {
             answer.connected(postId);
         }
     }
-    
+
     public List<FacebookComment> findFacebookComments(Long questionId) {
         Question question = questionRepository.findOne(questionId);
         SnsConnection snsConnection = question.getSnsConnection();
         if (!snsConnection.isConnected()) {
             throw new IllegalStateException(question.getQuestionId() + " is not connected!");
         }
-        
+
         SocialUser socialUser = question.getWriter();
         FacebookClient facebookClient = new DefaultFacebookClient(socialUser.getAccessToken());
         log.debug("postId : {}", snsConnection.getPostId());
-        Post post = facebookClient.fetchObject(snsConnection.getPostId(), Post.class);
-        
-        Comments comments = post.getComments();
-        List<Comment> commentData = comments.getData();
         
         List<FacebookComment> fbComments = Lists.newArrayList();
+        Post post = findPost(facebookClient, snsConnection.getPostId());
+        if (post == null) {
+            return fbComments;
+        }
+
+        Comments comments = post.getComments();
+        List<Comment> commentData = comments.getData();
         for (Comment comment : commentData) {
             fbComments.add(FacebookComment.create(comment));
         }
         return fbComments;
+    }
+
+    private Post findPost(FacebookClient facebookClient, String postId) {
+        try {
+            return facebookClient.fetchObject(postId, Post.class);
+        } catch (FacebookGraphException e) {
+            log.error("{} postId, errorMessage : {}", postId, e.getMessage());
+            return null;
+        }
     }
 
     String createLink(Long questionId) {
@@ -128,7 +141,7 @@ public class FacebookService {
         String link = String.format("%s/questions/%d#answer-%d", createApplicationUrl(), questionId, answerId);
         return link;
     }
-    
+
     protected String createApplicationUrl() {
         return applicationUrl;
     }

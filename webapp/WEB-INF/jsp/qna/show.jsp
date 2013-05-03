@@ -107,7 +107,6 @@ $(document).ready(function(){
 		var url = '/api/facebooks/' + questionId + '/comments';
 		$.get(url,
 			function(response) {
-				console.log(response);
 				$('.qna-facebook-comment').html(response);
 				return false;
 			}, 'html'
