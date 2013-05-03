@@ -298,6 +298,10 @@ public class Question implements HasCreatedDate {
 		this.snsConnection = new SnsConnection(SnsType.valueOf(writer.getProviderId()), postId);
 		return this.snsConnection;
 	}
+	
+	public SnsConnection getSnsConnection() {
+        return snsConnection;
+    }
 
 	/**
 	 * 베스트 댓글 하나를 반환한다.

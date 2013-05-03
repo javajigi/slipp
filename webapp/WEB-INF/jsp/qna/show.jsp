@@ -26,6 +26,11 @@
 				<slipp:answer each="${each}" isBest="false"/>
 			</c:forEach>
 			</form>
+			
+			페이스북 댓글
+			<div class="qna-facebook-comment">
+			</div>
+			
 			<sec:authorize access="!hasRole('ROLE_USER')">
 				<p class="msg-to-login">
 					<b><a href="/login">로그인</a></b>해서 의견을 나누세요!
@@ -97,6 +102,20 @@ hljs.initHighlightingOnLoad();
 <script src="${url:resource('/javascripts/qna/image.upload.js')}"></script>
 <script src="${url:resource('/javascripts/jquery.markitup.js')}"></script>
 <script>
+$(document).ready(function(){
+	function showFacebookComments(questionId) {
+		var url = '/api/facebooks/' + questionId + '/comments';
+		$.get(url,
+			function(response) {
+				console.log(response);
+				$('.qna-facebook-comment').html(response);
+				return false;
+			}, 'html'
+		);
+	}	
+	
+	showFacebookComments(${question.questionId});
+});
 $('#contents').markItUp(mySettings);
 </script>
 

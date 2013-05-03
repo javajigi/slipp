@@ -1,9 +1,13 @@
 package net.slipp.service.qna;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import net.slipp.domain.qna.Answer;
+import net.slipp.domain.qna.FacebookComment;
 import net.slipp.domain.qna.Question;
+import net.slipp.domain.qna.SnsConnection;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.repository.qna.AnswerRepository;
 import net.slipp.repository.qna.QuestionRepository;
@@ -17,10 +21,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import com.google.common.collect.Lists;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.Parameter;
+import com.restfb.types.Comment;
 import com.restfb.types.FacebookType;
+import com.restfb.types.Post;
+import com.restfb.types.Post.Comments;
 
 @Service
 @Transactional
@@ -87,6 +95,28 @@ public class FacebookService {
         if (postId != null) {
             answer.connected(postId);
         }
+    }
+    
+    public List<FacebookComment> findFacebookComments(Long questionId) {
+        Question question = questionRepository.findOne(questionId);
+        SnsConnection snsConnection = question.getSnsConnection();
+        if (!snsConnection.isConnected()) {
+            throw new IllegalStateException(question.getQuestionId() + " is not connected!");
+        }
+        
+        SocialUser socialUser = question.getWriter();
+        FacebookClient facebookClient = new DefaultFacebookClient(socialUser.getAccessToken());
+        log.debug("postId : {}", snsConnection.getPostId());
+        Post post = facebookClient.fetchObject(snsConnection.getPostId(), Post.class);
+        
+        Comments comments = post.getComments();
+        List<Comment> commentData = comments.getData();
+        
+        List<FacebookComment> fbComments = Lists.newArrayList();
+        for (Comment comment : commentData) {
+            fbComments.add(FacebookComment.create(comment));
+        }
+        return fbComments;
     }
 
     String createLink(Long questionId) {

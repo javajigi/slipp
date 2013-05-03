@@ -21,7 +21,7 @@ $(document).ready(function(){
 	setNicknamesLink();
 	setImgRealSizeLink();
 	setFloatingBtnLike();
-
+	
 	function addAnswerTo() {
 		var orgUserId = $(this).data('answer-user-id');
 		var $contents = $('#contents');
@@ -51,6 +51,7 @@ $(document).ready(function(){
 
 		return contents;
 	}
+	
 	function setNicknamesLink(){
 		var nickNames = [];
 
@@ -67,12 +68,14 @@ $(document).ready(function(){
 			$(this).html(cont);
 		});
 	}
+	
 	function setImgRealSizeLink() {
 		var $images = $('.article-doc img');
 		var imageUrl = $images.attr('src');
 
 		$images.wrap('<a href="'+imageUrl+'" target="_blank"></a>');
 	}
+	
 	function setFloatingBtnLike() {
 		var $window = $(window);
 		var $articles = $('.article');

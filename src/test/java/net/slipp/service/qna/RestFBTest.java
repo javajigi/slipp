@@ -2,6 +2,8 @@ package net.slipp.service.qna;
 
 import java.util.List;
 
+import net.slipp.domain.qna.FacebookComment;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -22,7 +24,7 @@ public class RestFBTest {
 
     @Before
     public void setup() {
-        String accessToken = "";
+        String accessToken = "AAACm7YIxcxcBAK5umCPnYRC90q3POoFxKeyOTqQoXJdPDOm0X3gGSH4ZC5ZCuNSScn9pjwCfKT4pS1yrt4ZClp2I7bq3bjEd5PkNaVTHgZDZD";
         dut = new DefaultFacebookClient(accessToken);
     }
 
@@ -51,7 +53,8 @@ public class RestFBTest {
         Comments comments = post.getComments();
         List<Comment> commentData = comments.getData();
         for (Comment comment : commentData) {
-            logger.debug("Comment: " + comment.getId() + " : " + comment.getMessage());
+            FacebookComment fbComment = FacebookComment.create(comment);
+            logger.debug("fbComment: " + fbComment);
         }
     }
 }

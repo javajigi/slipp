@@ -1,34 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:util="http://www.springframework.org/schema/util"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 	<context:property-placeholder location="classpath*:application-properties.xml" />
-	
+
 	<mvc:annotation-driven>
 		<mvc:argument-resolvers>
-			<bean class="net.slipp.support.web.argumentresolver.LoginUserHandlerMethodArgumentResolver"
+			<bean
+				class="net.slipp.support.web.argumentresolver.LoginUserHandlerMethodArgumentResolver"
 				p:sessionService-ref="sessionService" />
 		</mvc:argument-resolvers>
 	</mvc:annotation-driven>
-	
+
 	<mvc:interceptors>
 		<bean class="net.slipp.support.web.GlobalRequestAttributesInterceptor" />
 	</mvc:interceptors>
-	
+
 	<context:component-scan base-package="net.slipp.web">
-		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
-	
-	<mvc:resources
-		mapping="/resources/**"
-		location="/WEB-INF/static_resources/" cache-period="#{applicationProperties['resources.cache.seconds']}" />	
+
+	<mvc:resources mapping="/resources/**" location="/WEB-INF/static_resources/"
+		cache-period="#{applicationProperties['resources.cache.seconds']}" />
 
 	<bean id="applicationProperties" class="net.slipp.support.utils.ConvenientProperties">
 		<description>개발/운영 환경에 따라 다르게 되는 프라퍼티</description>
@@ -36,17 +35,17 @@
 			<util:properties location="classpath:application-properties.xml" />
 		</constructor-arg>
 	</bean>
-	
+
 	<bean id="aplicationContextAttributeSetter"
 		class="net.slipp.support.web.servletcontext.interceptor.GlobalServletApplicationContextAttributeSetter"
 		lazy-init="false">
 		<property name="applicationProperties" ref="applicationProperties" />
-	</bean>	
-	
+	</bean>
+
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<property name="maxUploadSize" value="2000000" />
-	</bean>	
+	</bean>
 
 	<bean id="jspViewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -56,15 +55,15 @@
 		<property name="suffix" value=".jsp" />
 		<property name="order" value="2" />
 	</bean>
-	
+
 	<bean id="servletDownloadManager" class="net.slipp.support.web.ServletDownloadManager" />
-	
+
 	<bean class="org.springframework.social.connect.web.ProviderSignInController">
 		<constructor-arg value="${application.url}" />
 		<property name="signUpUrl" value="/signup" />
 		<property name="applicationUrl" value="${application.url}" />
 		<property name="postSignInUrl" value="/authenticate" />
 	</bean>
-	
+
 	<bean class="net.slipp.social.security.SlippSecuritySignUpController" />
 </beans>
