@@ -21,6 +21,6 @@
 	<entry key="facebook.password5">test1234</entry>
 	
 	<entry key="slipp.userId1">slipp</entry>
-	<entry key="slipp.nickName1">슬립</entry>
+	<entry key="slipp.nickName1">slipper</entry>
 	<entry key="slipp.email1">slipp@slipp.net</entry>	
 </properties>

@@ -22,6 +22,8 @@ public class SocialUserBuilder {
     private String rawPassword;
 
     private String password;
+
+    private String email;
     
     public static SocialUserBuilder aSocialUser() {
     	return new SocialUserBuilder();
@@ -59,6 +61,11 @@ public class SocialUserBuilder {
     	return this;
     }
     
+    public SocialUserBuilder withEmail(String email) {
+        this.email = email;
+        return this;
+    }
+    
     public SocialUser createTestUser(String userId) {
 		withUserId(userId);
 		withAccessToken("1234-5678" + userId);
@@ -78,6 +85,7 @@ public class SocialUserBuilder {
         socialUser.setImageUrl(imageUrl);
         socialUser.setPassword(password);
         socialUser.setRawPassword(rawPassword);
+        socialUser.setEmail(email);
         return socialUser;
     }
 }

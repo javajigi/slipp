@@ -42,4 +42,8 @@
 			</props>
 		</property>
 	</bean>
+	
+	<bean id="freemarkerConfiguration"
+		class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean"
+		p:templateLoaderPath="classpath:templates" p:defaultEncoding="utf-8" />		
 </beans>

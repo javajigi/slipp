@@ -9,6 +9,7 @@ import net.slipp.domain.user.ExistedUserException;
 import net.slipp.domain.user.PasswordDto;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.repository.user.SocialUserRepository;
+import net.slipp.service.MailService;
 
 import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.social.connect.Connection;
@@ -31,6 +32,9 @@ public class SocialUserService {
 	
     @Resource(name = "passwordGenerator")
     private PasswordGenerator passwordGenerator;
+    
+    @Resource(name = "mailService")
+    private MailService mailService;
 
 	public void createNewSocialUser(String userId, Connection<?> connection) throws ExistedUserException {
 		Assert.notNull(userId, "userId can't be null!");
@@ -88,6 +92,7 @@ public class SocialUserService {
         socialUser.setRawPassword(rawPassword);
         socialUser.setPassword(encodePassword(rawPassword));
         socialUserRepository.save(socialUser);
+        mailService.sendPasswordInformation(socialUser);
         return socialUser;
     }
     

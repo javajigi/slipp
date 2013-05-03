@@ -38,10 +38,10 @@ public class LoginPage {
     public IndexPage loginToSlipp(final String userId, final String password) {
         log.debug("userId : {}, password : {}", userId, password);
         
-        driver.findElement(By.id("login-userId")).clear();
-        driver.findElement(By.id("login-userId")).sendKeys(userId);
-        driver.findElement(By.id("login-password")).clear();
-        driver.findElement(By.id("login-password")).sendKeys(password);
+        driver.findElement(By.id("authenticationId")).clear();
+        driver.findElement(By.id("authenticationId")).sendKeys(userId);
+        driver.findElement(By.id("authenticationPassword")).clear();
+        driver.findElement(By.id("authenticationPassword")).sendKeys(password);
         driver.findElement(By.id("loginSubmitBtn")).click();
         return new IndexPage(driver);
     }

@@ -36,17 +36,20 @@
 				</div>
 			</fieldset>
 		</form:form>
-		<form action="/users/authenticate" class="form-write" method="POST">
+		<form id="authentication" action="/users/authenticate" class="form-write" method="POST">
 			<fieldset>
 				<div class="box-input-line">
-					아이디 : <input id="login-userId" name="userId" class="inp-title" placeholder="아이디" type="text" value=""/>
+					아이디 : <input id="authenticationId" name="authenticationId" class="inp-title" placeholder="아이디" type="text" value=""/>
 				</div>
 				<div class="box-input-line">
-					비밀번호 : <input id="login-password"  name="password" class="inp-title" placeholder="비밀번호" type="text" value=""/>
+					비밀번호 : <input id="authenticationPassword"  name="authenticationPassword" class="inp-title" placeholder="비밀번호" type="text" value=""/>
 				</div>
 				<div class="box-input-line">
 					자동 로그인 : <input name="_spring_security_remember_me" class="inp-title" type="checkbox" value="true"/>
-				</div>				
+				</div>
+				<c:if test="${not empty param.login_error}">
+				<label class="error" style="">아이디와 비밀번호 정보가 정확하지 않습니다.</label>	
+				</c:if>
 				<div class="submit-write">
 					<button id="loginSubmitBtn" type="submit" class="btn-submit"><i class="icon-submit"></i> 로그인</button>
 				</div>

@@ -106,9 +106,10 @@
 	    <form-login login-page="/users/login" 
 	            default-target-url='/'
 	            always-use-default-target='true'
+	            authentication-failure-url = "/users/login?login_error=1"
 	            login-processing-url="/users/authenticate"
-	            username-parameter="userId"
-	            password-parameter="password"
+	            username-parameter="authenticationId"
+	            password-parameter="authenticationPassword"
 	    />
 
 		<security:logout logout-url="/logout" />

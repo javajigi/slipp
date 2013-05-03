@@ -52,13 +52,27 @@ public class AuthenticationAT extends AbstractATTest {
     }
     
     private UserForm join_to_slipp() throws Exception {
-        String userId = environment.getProperty("slipp.userId1") + System.currentTimeMillis();
+        String userId = createUserId();
         String nickName = environment.getProperty("slipp.nickName1");
         String email = environment.getProperty("slipp.email1");
         LoginPage loginPage = indexPage.goLoginPage();
         indexPage = loginPage.join(userId, nickName, email);
         assertThat(indexPage.isLoginStatus(), is(true));
         return new UserForm(userId, nickName, email);
+    }
+
+    private String createUserId() {
+        String userId = environment.getProperty("slipp.userId1") + System.currentTimeMillis();
+        return userId.substring(0, 10);
+    }
+    
+    @Test
+    public void join_relogin() throws Exception {
+        UserForm userForm = join_to_slipp();
+        indexPage = indexPage.logout();
+        LoginPage loginPage = indexPage.goLoginPage();
+        loginPage.loginToSlipp(userForm.getUserId(), FixedPasswordGenerator.DEFAULT_FIXED_PASSWORD);
+        assertThat(indexPage.isLoginStatus(), is(true));
     }
     
     @Test

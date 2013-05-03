@@ -69,4 +69,23 @@ $(document).ready(function() {
 			}
 		}
 	});
+	
+	$("#authentication").validate({
+		rules: {
+			authenticationId: {
+				required: true
+			},
+			authenticationPassword:  {
+				required: true
+			}
+		},
+		messages: {
+			authenticationId: {
+				required: AL10N.User.requiredUserId()
+			},
+			authenticationPassword:  {
+				required: AL10N.User.requiredPassword()
+			}
+		}
+	});	
 });
