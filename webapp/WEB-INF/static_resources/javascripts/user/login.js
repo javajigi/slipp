@@ -43,7 +43,7 @@ $(document).ready(function() {
 			},
 			nickName:  {
 				required: true,
-				minlength: 3,
+				minlength: 2,
 				maxlength: 12
 			},
 			email: {
@@ -60,7 +60,7 @@ $(document).ready(function() {
 			},
 			nickName:  {
 				required: AL10N.User.requiredNickName(),
-				minlength: AL10N.User.minLenNickName(3),
+				minlength: AL10N.User.minLenNickName(2),
 				maxlength: AL10N.User.maxLenNickName(12)
 			},
 			email: {

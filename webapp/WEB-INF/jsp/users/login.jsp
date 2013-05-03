@@ -42,7 +42,7 @@
 					아이디 : <input id="authenticationId" name="authenticationId" class="inp-title" placeholder="아이디" type="text" value=""/>
 				</div>
 				<div class="box-input-line">
-					비밀번호 : <input id="authenticationPassword"  name="authenticationPassword" class="inp-title" placeholder="비밀번호" type="text" value=""/>
+					비밀번호 : <input id="authenticationPassword"  name="authenticationPassword" class="inp-title" placeholder="비밀번호" type="password" value=""/>
 				</div>
 				<div class="box-input-line">
 					자동 로그인 : <input name="_spring_security_remember_me" class="inp-title" type="checkbox" value="true"/>

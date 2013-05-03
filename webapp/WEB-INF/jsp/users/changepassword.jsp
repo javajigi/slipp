@@ -14,14 +14,17 @@ display name : ${socialUser.displayName}
 			<form:hidden path="id"/>
 			<fieldset>
 				<div class="box-input-line">
-					이전 비밀번호 : <form:input path="oldPassword" cssClass="inp-title" placeholder="이전 비밀번호" />
+					현재 비밀번호 : <form:password path="oldPassword" cssClass="inp-title" placeholder="현재 비밀번호" />
 				</div>
 				<div class="box-input-line">
-					신규 비밀번호 : <form:input path="newPassword" cssClass="inp-title" placeholder="신규 비밀번호" />
+					신규 비밀번호 : <form:password path="newPassword" cssClass="inp-title" placeholder="신규 비밀번호" />
 				</div>
 				<div class="box-input-line">
-					신규 비밀번호 확인 : <form:input path="newPasswordConfirm" cssClass="inp-title" placeholder="신규 비밀번호 확인" />
-				</div>				
+					신규 비밀번호 확인 : <form:password path="newPasswordConfirm" cssClass="inp-title" placeholder="신규 비밀번호 확인" />
+				</div>	
+				<c:if test="${not empty errorMessage}">
+				<label class="error" style="">${errorMessage}</label>	
+				</c:if>
 				<div class="submit-write">
 					<button type="submit" class="btn-submit"><i class="icon-submit"></i> 비밀번호 변경</button>
 				</div>
@@ -29,3 +32,6 @@ display name : ${socialUser.displayName}
 		</form:form>	
 	</div>
 </section>
+
+<script src="${url:resource('/javascripts/jquery.validate.min.js')}"></script>
+<script src="${url:resource('/javascripts/user/changepassword.js')}"></script>

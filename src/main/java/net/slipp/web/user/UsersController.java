@@ -11,6 +11,7 @@ import net.slipp.social.security.AutoLoginAuthenticator;
 import net.slipp.support.web.argumentresolver.LoginUser;
 import net.slipp.web.UserForm;
 
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -60,23 +61,31 @@ public class UsersController {
     public String changePasswordForm(@LoginUser SocialUser loginUser, @PathVariable Long id, Model model)
             throws Exception {
         SocialUser socialUser = userService.findById(id);
-        if (loginUser.isSameUser(socialUser)) {
-            model.addAttribute("socialUser", socialUser);
-            model.addAttribute("password", new PasswordDto(id));
-            return "users/changepassword";
+        if (!loginUser.isSameUser(socialUser)) {
+            throw new IllegalArgumentException("You cann't change another user!");
         }
-
-        throw new IllegalArgumentException("You cann't change another user!");
+        
+        model.addAttribute("socialUser", socialUser);
+        model.addAttribute("password", new PasswordDto(id));
+        return "users/changepassword";
     }
 
     @RequestMapping(value = "/changepassword/{id}", method = RequestMethod.POST)
-    public String changePassword(@LoginUser SocialUser loginUser, @PathVariable Long id, PasswordDto password) throws Exception {
+    public String changePassword(@LoginUser SocialUser loginUser, @PathVariable Long id, PasswordDto password, Model model) throws Exception {
         SocialUser socialUser = userService.findById(id);
-        if (loginUser.isSameUser(socialUser)) {
-            userService.changePassword(loginUser, password);
-            return String.format("redirect:/users/%d/%s", id, socialUser.getUserId());
+        
+        if (!loginUser.isSameUser(socialUser)) {
+            throw new IllegalArgumentException("You cann't change another user!");
         }
-
-        throw new IllegalArgumentException("You cann't change another user!");
+            
+        try {
+            userService.changePassword(loginUser, password);
+            return "redirect:/users/logout";
+        } catch (BadCredentialsException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            model.addAttribute("socialUser", socialUser);
+            model.addAttribute("password", new PasswordDto(id));
+            return "users/changepassword";            
+        }
     }
 }

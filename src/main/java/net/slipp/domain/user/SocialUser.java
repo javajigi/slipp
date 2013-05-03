@@ -225,7 +225,7 @@ public class SocialUser {
     public void changePassword(PasswordEncoder encoder, String oldPassword, String newPassword) {
         String oldEncodedPassword = encoder.encodePassword(oldPassword, null);
         if (!password.equals(oldEncodedPassword)) {
-            throw new BadCredentialsException("이전 비밀번호가 다르다");
+            throw new BadCredentialsException("현재 비밀번호가 다릅니다.");
         }
         
         this.password = encoder.encodePassword(newPassword, null);

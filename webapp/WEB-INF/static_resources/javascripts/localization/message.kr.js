@@ -17,5 +17,9 @@
 		requiredEmail: m("이메일 주소를 입력해 주세요."),
 		invalidEmailFormat: m("정확한 이메일을 입력해 주세요."),
 		requiredPassword: m("비밀번호를 입력해 주세요."),
+		requiredOldPassword: m("현재 비밀번호를 입력해 주세요."),
+		requiredNewPassword: m("신규 비밀번호를 입력해 주세요."),
+		requiredNewPasswordConfirm: m("신규 비밀번호를 한번 더 입력해 주세요."),
+		confirmPassword: m("입력한 비밀번호와 다릅니다.")
 	};
 }(SLiPP.Localization.message));
