@@ -166,6 +166,20 @@ body
 			width: 100%;
 			right: 0;
 			box-shadow: 0 3px 10px rgba(0, 0, 0, .1);
+		.link-to-personalize
+			display: block;
+			padding: .5em;
+			font-weight: bold;
+			font-size: 1.2em;
+			border-bottom: 1px solid #ddd;
+			color: #222;
+			@media phone
+				text-align:right;
+			.icon-person
+				color: #E64E4E;
+			&:hover
+				text-decoration: none;
+				background-color: #eaeaea;
 		.title
 			display: block;
 			padding: .5em;
@@ -186,14 +200,14 @@ body
 				border-top: 1px solid #eee;
 				&:first-child
 					border-top: 0;
-		a
-			display: block;
-			padding: .8em .5em;
-			color: #999;
-			&:hover
-				color: #222;
-				text-decoration: none;
-				background-color: #eaeaea;
+			a
+				display: block;
+				padding: .8em .5em;
+				color: #999;
+				&:hover
+					color: #222;
+					text-decoration: none;
+					background-color: #eaeaea;
 	.loginout
 		@media phone
 			float: right;
@@ -268,6 +282,9 @@ body
 			width: 100%;
 	.floating
 		position: fixed;
+		margin-left: 2em;
+		padding-left: 1em;
+		padding-bottom: 1em;
 		@media not-desktop
 			position: static;
 
