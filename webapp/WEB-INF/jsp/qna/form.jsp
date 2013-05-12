@@ -32,7 +32,7 @@
 				<div class="submit-write">
 					<c:if test="${loginUser.facebookUser and empty question.questionId}">
 					<label class="msg-send-to-facebook">
-						<form:checkbox path="connected" />요 페이스북으로 전송하려면 체크하세요
+						<form:checkbox path="connected" checked="checked" /> 페이스북으로 전송하려면 체크하세요
 					</label>
 					</c:if>
 					<button type="submit" class="btn-submit"><i class="icon-submit"></i> 작성완료</button>

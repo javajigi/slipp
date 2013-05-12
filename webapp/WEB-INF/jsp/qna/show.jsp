@@ -33,7 +33,7 @@
 
 			<sec:authorize access="!hasRole('ROLE_USER')">
 				<p class="msg-to-login">
-					<b><a href="/login">로그인</a></b>해서 의견을 나누세요!
+					<b><a href="/login">SLiPP계정</a></b>으로 의견을 나누세요!
 				</p>
 			</sec:authorize>
 			<sec:authorize access="hasRole('ROLE_USER')">
@@ -46,7 +46,7 @@
 						<div class="submit-write">
 							<c:if test="${loginUser.facebookUser}">
 							<label class="msg-send-to-facebook">
-								<form:checkbox path="connected" /> 페이스북으로 전송하려면 체크하세요
+								<form:checkbox path="connected" checked="checked" /> 페이스북으로 전송하려면 체크하세요
 							</label>
 							</c:if>
 							<button type="submit" class="btn-submit"><i class="icon-submit"></i> 작성완료</button>
