@@ -1,6 +1,6 @@
 <#ftl encoding='UTF-8'>
 <#list comments as comment>
-<article class="article" id="answer-680">
+<article class="article">
 	<div class="article-header">
 		<div class="article-header-thumb">
 			<img src='//graph.facebook.com/${comment.userId}/picture' class="article-author-thumb" alt="" />

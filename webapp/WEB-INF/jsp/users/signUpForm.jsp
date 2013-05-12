@@ -12,7 +12,7 @@
 				<fieldset>
 					<div class="control-group">
 						<div class="controls">
-							SLiPP에서 활동할 계정 : <form:input path="username" cssClass="input-xlarge focused span2"/>
+							닉네임 : <form:input path="username" cssClass="input-xlarge focused span2"/>
 							<form:errors path="*" />
 							<input class="btn btn-success" type="submit" value="로그인" />
 						</div>

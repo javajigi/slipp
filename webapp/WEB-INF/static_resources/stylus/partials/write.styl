@@ -9,11 +9,8 @@
 	.box-input-line
 		margin: 1em 0;
 		input[type='text']
+			normalinput();
 			width: 100%;
-			box-sizing: border-box;
-			border: 1px solid #dadada;
-			border-radius: 4px;
-			padding: .5em;
 	.inp-title
 		font-weight: bold;
 		font-size: 1.25em;
@@ -65,13 +62,7 @@
 				display: block;
 				margin-right: 0;
 		.btn-submit
-			padding: .4em .8em;
-			border: 0 none;
-			border-radius: 4px;
-			color: #fff;
-			background-color: #005580;
-			&:hover
-				background-color: lighten(@background-color, 10);
+			submitbtn();
 .form-fileupload
 	display: inline-block;
 	padding: .5em;
@@ -164,7 +155,7 @@
 	position: absolute;
 	margin: 33px 0 0;
 	border-width: 0 1px 1px 0;
-	border-style: solid 
+	border-style: solid
 	border-color: #ddd;
 	box-shadow: 0 0 30px #ddd;
 	background-color: #fff;
