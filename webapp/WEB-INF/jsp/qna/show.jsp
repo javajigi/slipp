@@ -33,7 +33,7 @@
 
 			<sec:authorize access="!hasRole('ROLE_USER')">
 				<p class="msg-to-login">
-					<b><a href="/login">SLiPP계정</a></b>으로 의견을 나누세요!
+					<b><a href="/users/login">SLiPP계정</a></b>으로 의견을 나누세요!
 				</p>
 			</sec:authorize>
 			<sec:authorize access="hasRole('ROLE_USER')">

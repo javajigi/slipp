@@ -300,6 +300,9 @@ public class Question implements HasCreatedDate {
 	}
 	
 	public SnsConnection getSnsConnection() {
+		if (snsConnection == null) {
+			return new SnsConnection();
+		}
         return snsConnection;
     }
 
