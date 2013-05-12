@@ -44,9 +44,9 @@
 			<nav class="user-menu">
 				<ul role="menu">
 					<sec:authorize access="!hasRole('ROLE_USER')">
-					<li class="msg-for-login">로그인해서 의견을 나누세요!</li>
+					<li class="msg-for-login">SLiPP 계정으로 의견을 나누세요! &rarr;</li>
 					<li class="loginout">
-						<a href="/users/login" class="link-loginout"><span class="text">LogIn</span> <i class="icon-loginout"></i></a>
+						<a href="/users/login" class="link-loginout" title="SLiPP 계정연결"><i class="icon-loginout"></i></a>
 					</li>
 					</sec:authorize>
 					<sec:authorize access="hasRole('ROLE_USER')">
@@ -68,7 +68,7 @@
 						</div>
 					</li>
 					<li class="loginout">
-						<a href="/users/logout" class="link-loginout"><span class="text">LogOut</span> <i class="icon-loginout"></i></a>
+						<a href="/users/logout" class="link-loginout" title="로그아웃"><i class="icon-loginout"></i></a>
 					</li>
 					</sec:authorize>
 				</ul>
