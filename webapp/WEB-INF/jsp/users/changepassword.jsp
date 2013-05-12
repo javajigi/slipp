@@ -4,33 +4,37 @@
 	<title>${socialUser.displayName}의 개인공간 :: SLiPP</title>
 </head>
 
-<img class="user-thumb" src="${sf:stripHttp(socialUser.imageUrl)}" width="80" height="80" alt="" />
-
-display name : ${socialUser.displayName}
-
-<section class="login-content">
-	<div class="content-main">
-		<form:form modelAttribute="password" cssClass="form-write" action="/users/changepassword/${socialUser.id}" method="post">
+<section class="person-content">
+	<div class="person-info">
+		<img class="person-info-thumb" src="${sf:stripHttp(socialUser.imageUrl)}" width="80" height="80" alt="" />
+		<div class="person-info-text">
+			<h1 class="person-info-name">${socialUser.displayName}</h1>
+			<a href="/users/changepassword/${socialUser.id}" class="person-info-link-to-change-pw">비밀번호 변경하기</a> <strong>가입일:</strong> yyyy/mm/dd
+		</div>
+	</div>
+	<section class="person-change-pw">
+		<form:form modelAttribute="password" cssClass="person-change-pw-form" action="/users/changepassword/${socialUser.id}" method="post">
+			<h1>비밀번호 변경</h1>
 			<form:hidden path="id"/>
-			<fieldset>
 				<div class="box-input-line">
-					현재 비밀번호 : <form:password path="oldPassword" cssClass="inp-title" placeholder="현재 비밀번호" />
+					<p class="person-change-pw-label">현재 비밀번호</p>
+					<form:password path="oldPassword" cssClass="inp-title" />
 				</div>
 				<div class="box-input-line">
-					신규 비밀번호 : <form:password path="newPassword" cssClass="inp-title" placeholder="신규 비밀번호" />
+					<p class="person-change-pw-label">신규 비밀번호</p>
+					<form:password path="newPassword" cssClass="inp-title" />
 				</div>
 				<div class="box-input-line">
-					신규 비밀번호 확인 : <form:password path="newPasswordConfirm" cssClass="inp-title" placeholder="신규 비밀번호 확인" />
+					<p class="person-change-pw-label">신규 비밀번호 확인</p>
+					<form:password path="newPasswordConfirm" cssClass="inp-title" />
 				</div>
 				<c:if test="${not empty errorMessage}">
 				<label class="error" style="">${errorMessage}</label>
 				</c:if>
-				<div class="submit-write">
-					<button type="submit" class="btn-submit"><i class="icon-submit"></i> 비밀번호 변경</button>
-				</div>
+				<button type="submit" class="person-change-pw-submit"><i class="icon-key"></i> 비밀번호 변경</button>
 			</fieldset>
 		</form:form>
-	</div>
+	</section>
 </section>
 
 <script src="${url:resource('/javascripts/jquery.validate.min.js')}"></script>

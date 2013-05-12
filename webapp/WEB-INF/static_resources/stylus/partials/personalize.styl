@@ -1,5 +1,9 @@
 .person-content
 	padding-top: 2em;
+	input[type='text'],
+	input[type='password']
+		normalinput();
+		margin: .5em 0;
 .person-info
 	clearfix();
 .person-info-thumb
@@ -30,3 +34,17 @@
 	@media not-desktop
 		float: none;
 		width: 100%;
+.person-change-pw
+	h1
+		font-size: 1.4em;
+.person-change-pw-form
+	padding-top: 1em;
+.person-change-pw-label
+	margin-top: 1em;
+	margin-bottom: 0;
+.person-change-pw-submit
+	submitbtn();
+	margin-top: 1em;
+	background-color: #801A00;
+	&:hover
+		background-color: lighten(#801A00, 10);

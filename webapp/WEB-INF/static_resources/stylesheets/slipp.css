@@ -557,6 +557,9 @@ textarea {
 .icon-person:before {
   content: '\F046';
 }
+.icon-key:before {
+  content: '\F0C0';
+}
 [class*='foundicon-'] {
   display: inline;
   width: auto;
@@ -1888,9 +1891,13 @@ body {
   color: #fff;
   background-color: #005580;
   margin-left: 0.5em;
+  background-color: #94a7b1;
 }
 .login-with-slipp-submit-btn:hover {
   background-color: #0077b3;
+}
+.login-with-slipp-submit-btn:hover {
+  background-color: #778f9b;
 }
 .sign-in-to-slipp {
   float: right;
@@ -1912,9 +1919,13 @@ body {
   color: #fff;
   background-color: #005580;
   width: 100%;
+  background-color: #2bb45d;
 }
 .sign-in-to-slipp-btn:hover {
   background-color: #0077b3;
+}
+.sign-in-to-slipp-btn:hover {
+  background-color: #41d175;
 }
 .login-with-sns {
   text-align: center;
@@ -2005,6 +2016,17 @@ body {
 .person-content {
   padding-top: 2em;
 }
+.person-content input[type='text'],
+.person-content input[type='password'] {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: 1px solid #dadada;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  padding: 0.5em;
+  margin: 0.5em 0;
+}
 .person-info {
   *zoom: 1;
 }
@@ -2068,6 +2090,32 @@ body {
     float: none;
     width: 100%;
   }
+}
+.person-change-pw h1 {
+  font-size: 1.4em;
+}
+.person-change-pw-form {
+  padding-top: 1em;
+}
+.person-change-pw-label {
+  margin-top: 1em;
+  margin-bottom: 0;
+}
+.person-change-pw-submit {
+  padding: 0.5em 0.8em;
+  border: 0 none;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  color: #fff;
+  background-color: #005580;
+  margin-top: 1em;
+  background-color: #801a00;
+}
+.person-change-pw-submit:hover {
+  background-color: #0077b3;
+}
+.person-change-pw-submit:hover {
+  background-color: #b32400;
 }
 label.error {
   display: block;
