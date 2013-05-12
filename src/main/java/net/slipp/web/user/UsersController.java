@@ -1,11 +1,15 @@
 package net.slipp.web.user;
 
+import static net.slipp.web.QnAPageableHelper.*;
+
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.slipp.domain.user.PasswordDto;
 import net.slipp.domain.user.SocialUser;
+import net.slipp.service.qna.QnaService;
 import net.slipp.service.user.SocialUserService;
 import net.slipp.social.security.AutoLoginAuthenticator;
 import net.slipp.support.web.argumentresolver.LoginUser;
@@ -21,11 +25,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping("/users")
 public class UsersController {
+	private static final int DEFAULT_SUMMARY_PAGE_SIZE = 5;
+	private static final int DEFAULT_PAGE_SIZE = 15;
+	
     @Resource(name = "socialUserService")
     private SocialUserService userService;
 
     @Resource(name = "autoLoginAuthenticator")
     private AutoLoginAuthenticator autoLoginAuthenticator;
+    
+    @Resource(name = "qnaService")
+    private QnaService qnaService;
 
     @RequestMapping("/login")
     public String login(Model model) {
@@ -44,19 +54,37 @@ public class UsersController {
     public String logout() {
         return "users/fblogout";
     }
-
+    
     @RequestMapping("/{id}")
     public String profileById(@PathVariable Long id) throws Exception {
         SocialUser socialUser = userService.findById(id);
         return String.format("redirect:/users/%d/%s", id, socialUser.getUserId());
     }
-
+    
     @RequestMapping("/{id}/{userId}")
     public String profile(@PathVariable Long id, @PathVariable String userId, Model model) throws Exception {
+    	model.addAttribute("questions", qnaService.findsQuestionByWriter(id, createPageableByQuestionUpdatedDate(DEFAULT_PAGE_NO, DEFAULT_SUMMARY_PAGE_SIZE)));
+    	model.addAttribute("answers", qnaService.findsAnswerByWriter(id, createPageableByAnswerCreatedDate(DEFAULT_PAGE_NO, DEFAULT_SUMMARY_PAGE_SIZE)));
         model.addAttribute("socialUser", userService.findById(id));
         return "users/profile";
     }
+    
+    @RequestMapping("/{id}/{userId}/questions")
+    public String questions(@PathVariable Long id, Integer page, Model model) throws Exception {
+    	page = revisedPage(page);
+    	model.addAttribute("questions", qnaService.findsQuestionByWriter(id, createPageableByQuestionUpdatedDate(page, DEFAULT_PAGE_SIZE)));
+        model.addAttribute("socialUser", userService.findById(id));
+        return "users/questions";
+    }
 
+    @RequestMapping("/{id}/{userId}/answers")
+    public String answers(@PathVariable Long id, Integer page, Model model) throws Exception {
+    	page = revisedPage(page);
+    	model.addAttribute("answers", qnaService.findsAnswerByWriter(id, createPageableByAnswerCreatedDate(page, DEFAULT_PAGE_SIZE)));
+        model.addAttribute("socialUser", userService.findById(id));
+        return "users/answers";
+    }
+    
     @RequestMapping("/changepassword/{id}")
     public String changePasswordForm(@LoginUser SocialUser loginUser, @PathVariable Long id, Model model)
             throws Exception {

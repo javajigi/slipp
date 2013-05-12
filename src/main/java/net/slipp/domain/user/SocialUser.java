@@ -237,6 +237,10 @@ public class SocialUser {
             return true;
         }
     }
+    
+    public String getUrl() {
+    	return String.format("/users/%d/%s", id, userId);
+    }
 
     @Override
     public String toString() {

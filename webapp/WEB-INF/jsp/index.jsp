@@ -31,7 +31,7 @@
 										<span class="time">
 											<fmt:formatDate value="${each.createdDate}" pattern="yyyy-MM-dd HH:mm" />
 										</span>
-										<a href="${each.latestParticipant.profileUrl}" class="author">${each.latestParticipant.userId}</a>
+										<a href="${each.latestParticipant.url}" class="author">${each.latestParticipant.displayName}</a>
 									</c:when>
 									<c:otherwise>
 										<i class="icon-add-comment"></i>
@@ -39,7 +39,7 @@
 										<span class="time">
 											<fmt:formatDate value="${each.updatedDate}" pattern="yyyy-MM-dd HH:mm" />
 										</span>
-										<a href="${each.latestParticipant.profileUrl}" class="author">${each.latestParticipant.userId}</a>
+										<a href="${each.latestParticipant.url}" class="author">${each.latestParticipant.displayName}</a>
 									</c:otherwise>
 								</c:choose>
 							</div>

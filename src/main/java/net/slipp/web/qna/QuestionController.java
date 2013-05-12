@@ -1,6 +1,6 @@
 package net.slipp.web.qna;
 
-import static net.slipp.web.QuestionPageableHelper.*;
+import static net.slipp.web.QnAPageableHelper.*;
 
 import javax.annotation.Resource;
 
@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class QuestionController {
 	private static final Logger logger = LoggerFactory.getLogger(QuestionController.class);
 
-	private static final int DEFAULT_PAGE_NO = 1;
 	private static final int DEFAULT_PAGE_SIZE = 15;
 
 	@Resource(name = "qnaService")
@@ -39,7 +38,7 @@ public class QuestionController {
 	public String index(Integer page, Model model) {
 		page = revisedPage(page);
 		logger.debug("currentPage : {}", page);
-		model.addAttribute("questions", qnaService.findsQuestion(createPageable(page, DEFAULT_PAGE_SIZE)));
+		model.addAttribute("questions", qnaService.findsQuestion(createPageableByQuestionUpdatedDate(page, DEFAULT_PAGE_SIZE)));
 		model.addAttribute("tags", tagService.findPooledTags());
 		return "qna/list";
 	}
@@ -96,15 +95,8 @@ public class QuestionController {
 	public String listByTagged(@PathVariable String name, Integer page, Model model) {
 		page = revisedPage(page);
 		model.addAttribute("currentTag", tagService.findTagByName(name));
-		model.addAttribute("questions", qnaService.findsByTag(name, createPageable(page, DEFAULT_PAGE_SIZE)));
+		model.addAttribute("questions", qnaService.findsByTag(name, createPageableByQuestionUpdatedDate(page, DEFAULT_PAGE_SIZE)));
 		model.addAttribute("tags", tagService.findPooledTags());
 		return "qna/list";
-	}
-
-	private Integer revisedPage(Integer page) {
-		if (page == null) {
-			page = DEFAULT_PAGE_NO;
-		}
-		return page;
 	}
 }

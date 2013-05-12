@@ -45,11 +45,11 @@ public class SlippSecuritySignUpController {
 	public String signUpSubmit(ServletWebRequest request, SignUpForm signUpForm, BindingResult result) {
 		Connection<?> connection = ProviderSignInUtils.getConnection(request);
 		try {
-			socialUserService.createNewSocialUser(signUpForm.getUsername(), connection);
-			signInAdapter.signIn(signUpForm.getUsername(), connection, request);
+			socialUserService.createNewSocialUser(signUpForm.getUserId(), signUpForm.getNickName(), connection);
+			signInAdapter.signIn(signUpForm.getUserId(), connection, request);
 			return "redirect:" + authenticateUrl;
 		} catch (ExistedUserException e) {
-			result.addError(new FieldError("signUpForm", "username", signUpForm.getUsername()
+			result.addError(new FieldError("signUpForm", "userId", signUpForm.getUserId()
 					+ "은 이미 존재하는 아이디입니다. 다른 아이디를 선택해주세요."));
 			return "users/signUpForm";
 		}

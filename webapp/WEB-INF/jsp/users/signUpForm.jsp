@@ -12,7 +12,8 @@
 				<fieldset>
 					<div class="control-group">
 						<div class="controls">
-							닉네임 : <form:input path="username" cssClass="input-xlarge focused span2"/>
+							사용자 아이디 : <form:input path="userId" cssClass="focused span2"/><br/>
+							닉네임 : <form:input path="nickName" cssClass="focused span2"/><br/>
 							<form:errors path="*" />
 							<input class="btn btn-success" type="submit" value="로그인" />
 						</div>

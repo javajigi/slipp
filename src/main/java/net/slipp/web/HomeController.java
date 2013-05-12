@@ -1,6 +1,6 @@
 package net.slipp.web;
 
-import static net.slipp.web.QuestionPageableHelper.*;
+import static net.slipp.web.QnAPageableHelper.*;
 
 import java.util.Date;
 import java.util.List;
@@ -39,7 +39,7 @@ public class HomeController {
 		if (isProductionMode()) {
 			model.addAttribute("pages", wikiService.findWikiPages());			
 		}
-		model.addAttribute("questions", qnaService.findsQuestion(createPageable(DEFAULT_PAGE_NO, DEFAULT_PAGE_SIZE)));
+		model.addAttribute("questions", qnaService.findsQuestion(createPageableByQuestionUpdatedDate(DEFAULT_PAGE_NO, DEFAULT_PAGE_SIZE)));
 		model.addAttribute("tags", tagService.findPooledTags());		
 		return "index";
 	}

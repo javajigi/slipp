@@ -10,7 +10,7 @@ attribute name="question" required="true" rtexprvalue="true" type="net.slipp.dom
 			<img src='${sf:stripHttp(question.writer.imageUrl)}' class="article-author-thumb" alt="" />
 		</div>
 		<div class="article-header-text">
-			<a href="${sf:stripHttp(question.writer.profileUrl)}" class="article-author-name">${question.writer.userId}</a>
+			<a href="${sf:stripHttp(question.writer.url)}" class="article-author-name">${question.writer.displayName}</a>
 			<a href="/questions/${question.questionId}" class="article-header-time" title="퍼머링크">
 				<fmt:formatDate value="${question.createdDate}" pattern="yyyy-MM-dd HH:mm" />
 				<i class="icon-link"></i>
