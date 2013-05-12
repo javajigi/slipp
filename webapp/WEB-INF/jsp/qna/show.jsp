@@ -26,11 +26,11 @@
 				<slipp:answer each="${each}" isBest="false"/>
 			</c:forEach>
 			</form>
-			
-			페이스북 댓글
+
+			<p class="article-count">페이스북으로 공유된 글에 달린 의견</p>
 			<div class="qna-facebook-comment">
 			</div>
-			
+
 			<sec:authorize access="!hasRole('ROLE_USER')">
 				<p class="msg-to-login">
 					<b><a href="/login">로그인</a></b>해서 의견을 나누세요!
@@ -111,8 +111,8 @@ $(document).ready(function(){
 				return false;
 			}, 'html'
 		);
-	}	
-	
+	}
+
 	showFacebookComments(${question.questionId});
 });
 $('#contents').markItUp(mySettings);
