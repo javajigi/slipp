@@ -8,7 +8,7 @@
 	<slipp:profile-header socialUser="${socialUser}"/>
 	<div class="person-articles">
 		<section class="qna-list">
-			<h1>질문한 글목록</h1>
+			<h3><a href="${socialUser.url}/questions">질문한 글목록</a> &nbsp;&nbsp; <a href="${socialUser.url}/answers">답변 글목록</a></h3>
 			<ul class="list">
 			<c:forEach items="${questions.content}" end="4" var="each">
 				<slipp:list each="${each}"/>

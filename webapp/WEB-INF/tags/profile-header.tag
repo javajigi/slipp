@@ -10,6 +10,8 @@
 			<h1 class="person-info-name">${socialUser.displayName}</h1>
 			<c:if test="${sf:isWriter(socialUser, loginUser)}">
 			<a href="/users/changepassword/${socialUser.id}" class="person-info-link-to-change-pw">비밀번호 변경하기</a> 
+			&nbsp;
+			<a href="/users/changenickname/${socialUser.id}">닉네임 변경하기</a>
 			</c:if>
 			<strong>가입일:</strong> <fmt:formatDate value="${socialUser.createDate}" pattern="yyyy-MM-dd HH:mm" />
 		</div>
