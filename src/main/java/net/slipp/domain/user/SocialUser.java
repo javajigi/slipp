@@ -241,7 +241,7 @@ public class SocialUser {
     public String getUrl() {
     	return String.format("/users/%d/%s", id, userId);
     }
-
+    
     @Override
     public String toString() {
         return "SocialUser [id=" + id + ", userId=" + userId + ", providerId=" + providerId + ", providerUserId="

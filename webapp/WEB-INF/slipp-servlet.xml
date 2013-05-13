@@ -19,6 +19,11 @@
 
 	<mvc:interceptors>
 		<bean class="net.slipp.support.web.GlobalRequestAttributesInterceptor" />
+		
+		<mvc:interceptor>
+		    <mvc:mapping path="/"/>
+		    <bean class="net.slipp.support.web.UserValidateInterceptor" />
+		</mvc:interceptor>		
 	</mvc:interceptors>
 
 	<context:component-scan base-package="net.slipp.web">
