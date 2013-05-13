@@ -8,10 +8,12 @@
 		<img class="person-info-thumb" src="${sf:stripHttp(socialUser.imageUrl)}" width="80" height="80" alt="" />
 		<div class="person-info-text">
 			<h1 class="person-info-name">${socialUser.displayName}</h1>
-			<c:if test="${sf:isWriter(socialUser, loginUser)}">
-			<a href="/users/changepassword/${socialUser.id}" class="person-info-link-to-change-pw">비밀번호 변경하기</a> 
+			<c:if test="${sf:isWriter(socialUser, loginUser) && loginUser.SLiPPUser}">
+			<a href="/users/${socialUser.id}/changepassword" class="person-info-link-to-change-pw">비밀번호 변경하기</a> 
 			&nbsp;
-			<a href="/users/changenickname/${socialUser.id}">닉네임 변경하기</a>
+			</c:if>
+			<c:if test="${sf:isWriter(socialUser, loginUser)}">
+			<a href="/users/${socialUser.id}/form">개인정보 변경하기</a>
 			</c:if>
 			<strong>가입일:</strong> <fmt:formatDate value="${socialUser.createDate}" pattern="yyyy-MM-dd HH:mm" />
 		</div>
