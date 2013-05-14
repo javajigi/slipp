@@ -186,7 +186,10 @@ $(document).ready(function(){
 		});
 	}
 });
-
+</script>
+<script src="${url:resource('/javascripts/jquery.placeholder.min.js')}"></script>
+<script>
+$('input, textarea').placeholder();
 </script>
 </body>
 </html>
