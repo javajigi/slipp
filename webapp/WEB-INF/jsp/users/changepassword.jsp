@@ -7,7 +7,7 @@
 <section class="person-content">
 	<slipp:profile-header socialUser="${socialUser}"/>
 	<section class="person-change-pw">
-		<form:form modelAttribute="password" cssClass="person-change-pw-form" action="/users/changepassword/${socialUser.id}" method="post">
+		<form:form modelAttribute="password" cssClass="person-change-pw-form" action="/users/${socialUser.id}/changepassword" method="post">
 			<h1>비밀번호 변경</h1>
 			<form:hidden path="id"/>
 				<div class="box-input-line">

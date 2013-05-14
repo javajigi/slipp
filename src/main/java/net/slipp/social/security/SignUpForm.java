@@ -2,38 +2,43 @@ package net.slipp.social.security;
 
 /**
  * @author javajigi
- *
+ * 
  */
 public class SignUpForm {
-	private String userId;
-	
-	private String nickName;
-	
-	public SignUpForm() {
-	}
+    private String userId;
 
-	public SignUpForm(String nickname) {
-		this.nickName = nickname;
-	}
+    private String nickName;
 
-	public String getUserId() {
-		return userId;
-	}
+    public SignUpForm() {
+    }
 
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
+    public SignUpForm(String nickName) {
+        this(null, nickName);
+    }
 
-	public String getNickName() {
-		return nickName;
-	}
+    public SignUpForm(String userId, String nickName) {
+        this.userId = userId;
+        this.nickName = nickName;
+    }
 
-	public void setNickName(String nickname) {
-		this.nickName = nickname;
-	}
+    public String getUserId() {
+        return userId;
+    }
 
-	@Override
-	public String toString() {
-		return "SignUpForm [userId=" + userId + ", nickname=" + nickName + "]";
-	}
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickname) {
+        this.nickName = nickname;
+    }
+
+    @Override
+    public String toString() {
+        return "SignUpForm [userId=" + userId + ", nickname=" + nickName + "]";
+    }
 }

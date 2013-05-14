@@ -11,6 +11,8 @@ import net.slipp.support.security.SessionService;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 public class GlobalRequestAttributesInterceptor extends HandlerInterceptorAdapter {
+    public static final String DEFAULT_LOGIN_USER_REQUEST_KEY = "loginUser";
+    
 	@Resource (name = "sessionService")
 	private SessionService sessionService;
 	
@@ -20,7 +22,7 @@ public class GlobalRequestAttributesInterceptor extends HandlerInterceptorAdapte
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		SocialUser loginUser = sessionService.getLoginUser();
-		request.setAttribute("loginUser", loginUser);
+        request.setAttribute(DEFAULT_LOGIN_USER_REQUEST_KEY, loginUser);
 		
 		if (!loginUser.isGuest()) {
 		    request.setAttribute("countNotifications", notificationService.countByNotifiee(loginUser));
