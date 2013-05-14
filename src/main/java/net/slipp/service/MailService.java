@@ -41,14 +41,14 @@ public class MailService {
             public void prepare(MimeMessage mimeMessage) throws MessagingException {
                 mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(user.getEmail()));
                 mimeMessage.setFrom(new InternetAddress("javajigi@gmail.com"));
-                mimeMessage.setSubject("SLiPP 회원가입 감사합니다.");
+                mimeMessage.setSubject("SLiPP에 오신것을 환영합니다!");
 
                 String fileName = "passwordinfo.ftl";
                 Map<String, Object> params = Maps.newHashMap();
                 params.put("user", user);
-                mimeMessage.setText(createMailTemplate(fileName, params), "utf-8", "html"); 
+                mimeMessage.setText(createMailTemplate(fileName, params), "utf-8", "html");
             }
-        }; 
+        };
         mailSender.send(preparator);
     }
 

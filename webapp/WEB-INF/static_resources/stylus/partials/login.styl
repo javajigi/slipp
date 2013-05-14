@@ -54,9 +54,6 @@
 .login-with-slipp-submit-btn
 	submitbtn();
 	margin-left: .5em;
-	background-color: #94A7B1;
-	&:hover
-		background-color: darken(#94A7B1, 10);
 .sign-in-to-slipp
 	float: right;
 .sign-in-to-slipp-notice
@@ -67,6 +64,17 @@
 	padding: .5em;
 	border-radius: 4px;
 .sign-in-to-slipp-btn
+	submitbtn();
+	width: 100%;
+	background-color: #2BB45D;
+	&:hover
+		background-color: lighten(#2BB45D, 10);
+.sign-in-with-sns
+	width: 30%;
+	margin: 0 auto;
+	@media phone-landscape
+		width: 100%;
+.sign-in-with-sns-submit-btn
 	submitbtn();
 	width: 100%;
 	background-color: #2BB45D;

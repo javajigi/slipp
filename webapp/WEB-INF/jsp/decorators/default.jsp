@@ -62,7 +62,7 @@
 							</c:if>
 						</a>
 						<div id="notificationLayer" class="notification-layer">
-							<a href="${loginUser.url}" class="link-to-personalize"><i class="icon-person"></i> 개인공간 이동 &rarr;</a>
+							<a href="${loginUser.url}" class="link-to-personalize"><i class="icon-person"></i> 나의 개인공간 &rarr;</a>
 							<strong class="title">응답알림</strong>
 							<ul></ul>
 						</div>
@@ -186,7 +186,10 @@ $(document).ready(function(){
 		});
 	}
 });
-
+</script>
+<script src="${url:resource('/javascripts/jquery.placeholder.min.js')}"></script>
+<script>
+$('input, textarea').placeholder();
 </script>
 </body>
 </html>
