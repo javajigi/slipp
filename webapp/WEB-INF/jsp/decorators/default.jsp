@@ -62,7 +62,7 @@
 							</c:if>
 						</a>
 						<div id="notificationLayer" class="notification-layer">
-							<a href="${loginUser.url}" class="link-to-personalize"><i class="icon-person"></i> 개인공간 이동 &rarr;</a>
+							<a href="${loginUser.url}" class="link-to-personalize"><i class="icon-person"></i> 나의 개인공간 &rarr;</a>
 							<strong class="title">응답알림</strong>
 							<ul></ul>
 						</div>

@@ -5,13 +5,7 @@
 </head>
 
 <section class="person-content">
-	<div class="person-info">
-		<img class="person-info-thumb" src="${sf:stripHttp(socialUser.imageUrl)}" width="80" height="80" alt="" />
-		<div class="person-info-text">
-			<h1 class="person-info-name">${socialUser.displayName}</h1>
-			<a href="/users/changepassword/${socialUser.id}" class="person-info-link-to-change-pw">비밀번호 변경하기</a> <strong>가입일:</strong> yyyy/mm/dd
-		</div>
-	</div>
+	<slipp:profile-header socialUser="${socialUser}"/>
 	<section class="person-change-pw">
 		<form:form modelAttribute="password" cssClass="person-change-pw-form" action="/users/changepassword/${socialUser.id}" method="post">
 			<h1>비밀번호 변경</h1>

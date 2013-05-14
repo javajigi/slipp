@@ -44,7 +44,9 @@
 						<form:input path="userId" class="inp_id" placeholder="아이디" />
 						<form:input path="nickName" class="inp_pw" placeholder="닉네임" />
 						<form:input path="email" class="inp_email" placeholder="이메일" />
-						<p class="sign-in-to-slipp-notice">패스워드는 등록한 메일주소로 발송되며, 로그인 후에 개인페이지에서 수정 가능합니다.</p>
+						<p class="sign-in-to-slipp-notice">
+							- 등록한 메일로 초기 비밀번호를 보내드립니다. <br />
+							- 개인공간에서 비밀번호를 변경할 수 있습니다.</p>
 						<button type="submit" class="sign-in-to-slipp-btn"><i class="icon-signin"></i> 회원가입</button>
 				</form:form>
 			</div>
