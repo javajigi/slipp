@@ -1891,13 +1891,9 @@ body {
   color: #fff;
   background-color: #005580;
   margin-left: 0.5em;
-  background-color: #94a7b1;
 }
 .login-with-slipp-submit-btn:hover {
   background-color: #0077b3;
-}
-.login-with-slipp-submit-btn:hover {
-  background-color: #778f9b;
 }
 .sign-in-to-slipp {
   float: right;
@@ -1925,6 +1921,31 @@ body {
   background-color: #0077b3;
 }
 .sign-in-to-slipp-btn:hover {
+  background-color: #41d175;
+}
+.sign-in-with-sns {
+  width: 30%;
+  margin: 0 auto;
+}
+@media (max-width: 767px) {
+  .sign-in-with-sns {
+    width: 100%;
+  }
+}
+.sign-in-with-sns-submit-btn {
+  padding: 0.5em 0.8em;
+  border: 0 none;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  color: #fff;
+  background-color: #005580;
+  width: 100%;
+  background-color: #2bb45d;
+}
+.sign-in-with-sns-submit-btn:hover {
+  background-color: #0077b3;
+}
+.sign-in-with-sns-submit-btn:hover {
   background-color: #41d175;
 }
 .login-with-sns {
@@ -2048,14 +2069,36 @@ body {
 }
 .person-info-text {
   float: left;
+  margin-right: 1em;
+}
+.person-info-label {
+  display: inline-block;
+  width: 3.2em;
+  color: #999;
 }
 .person-info-name {
-  margin-top: 0.2em;
+  margin-top: 0;
   margin-bottom: 0.2em;
   font-size: 2em;
 }
-.person-info-link-to-change-pw {
-  font-size: 0.9em;
+.person-info-join,
+.person-info-sns {
+  margin: 0.5em 0;
+  border-bottom: 1px dashed #dfdfdf;
+}
+.person-info-sns a {
+  text-decoration: none;
+  color: #000;
+  font-size: 1.2em;
+}
+.person-info-util {
+  float: left;
+  background-color: #f7f7f7;
+  padding: 1em;
+}
+.person-info-util .bar {
+  color: #999;
+  padding: 0 0.4em;
 }
 .person-articles {
   *zoom: 1;
@@ -2069,6 +2112,22 @@ body {
 }
 .person-articles:after {
   clear: both;
+}
+.person-articles-type-select > a {
+  display: inline-block;
+  padding: 0.2em 0.4em;
+  font-size: 1.2em;
+  text-decoration: none;
+  color: #222;
+}
+.person-articles-type-select > a:hover {
+  background-color: #efefef;
+}
+.person-articles-type-select > a.active {
+  background-color: #eaeaea;
+}
+.person-articles-type-select > a.active:before {
+  content: '✔ ';
 }
 .person-answers {
   float: left;
