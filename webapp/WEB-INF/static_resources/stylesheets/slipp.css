@@ -2069,14 +2069,36 @@ body {
 }
 .person-info-text {
   float: left;
+  margin-right: 1em;
+}
+.person-info-label {
+  display: inline-block;
+  width: 3.2em;
+  color: #999;
 }
 .person-info-name {
-  margin-top: 0.2em;
+  margin-top: 0;
   margin-bottom: 0.2em;
   font-size: 2em;
 }
-.person-info-link-to-change-pw {
-  font-size: 0.9em;
+.person-info-join,
+.person-info-sns {
+  margin: 0.5em 0;
+  border-bottom: 1px dashed #dfdfdf;
+}
+.person-info-sns a {
+  text-decoration: none;
+  color: #000;
+  font-size: 1.2em;
+}
+.person-info-util {
+  float: left;
+  background-color: #f7f7f7;
+  padding: 1em;
+}
+.person-info-util .bar {
+  color: #999;
+  padding: 0 0.4em;
 }
 .person-articles {
   *zoom: 1;
@@ -2090,6 +2112,22 @@ body {
 }
 .person-articles:after {
   clear: both;
+}
+.person-articles-type-select > a {
+  display: inline-block;
+  padding: 0.2em 0.4em;
+  font-size: 1.2em;
+  text-decoration: none;
+  color: #222;
+}
+.person-articles-type-select > a:hover {
+  background-color: #efefef;
+}
+.person-articles-type-select > a.active {
+  background-color: #eaeaea;
+}
+.person-articles-type-select > a.active:before {
+  content: '✔ ';
 }
 .person-answers {
   float: left;
