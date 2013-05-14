@@ -13,7 +13,7 @@
 		</div>
 		<section class="qna-list">
 			<ul class="list">
-			<c:forEach items="${answers.content}" end="4" var="each">
+			<c:forEach items="${answers.content}" var="each">
 				<slipp:list each="${each.question}"/>
 			</c:forEach>
 			</ul>

@@ -1,7 +1,9 @@
 package net.slipp.web.user;
 
-import static net.slipp.web.QnAPageableHelper.*;
-
+import static net.slipp.web.QnAPageableHelper.DEFAULT_PAGE_NO;
+import static net.slipp.web.QnAPageableHelper.createPageableByAnswerCreatedDate;
+import static net.slipp.web.QnAPageableHelper.createPageableByQuestionUpdatedDate;
+import static net.slipp.web.QnAPageableHelper.revisedPage;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -85,7 +87,20 @@ public class UsersController {
         return "users/answers";
     }
     
-    @RequestMapping("/changepassword/{id}")
+    @RequestMapping("{id}/form")
+    public String updateForm(@LoginUser SocialUser loginUser, @PathVariable Long id, Model model)
+            throws Exception {
+        SocialUser socialUser = userService.findById(id);
+        if (!loginUser.isSameUser(socialUser)) {
+            throw new IllegalArgumentException("You cann't change another user!");
+        }
+        
+        model.addAttribute("user", new UserForm(socialUser.getUserId(), socialUser.getDisplayName(), socialUser.getEmail()));
+        model.addAttribute("socialUser", socialUser);
+        return "users/form";
+    }
+    
+    @RequestMapping("{id}/changepassword")
     public String changePasswordForm(@LoginUser SocialUser loginUser, @PathVariable Long id, Model model)
             throws Exception {
         SocialUser socialUser = userService.findById(id);
@@ -98,7 +113,7 @@ public class UsersController {
         return "users/changepassword";
     }
 
-    @RequestMapping(value = "/changepassword/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "{id}/changepassword", method = RequestMethod.POST)
     public String changePassword(@LoginUser SocialUser loginUser, @PathVariable Long id, PasswordDto password, Model model) throws Exception {
         SocialUser socialUser = userService.findById(id);
         

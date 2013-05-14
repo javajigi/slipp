@@ -119,7 +119,7 @@ public class QnaService {
 
 	public Page<Answer> findsAnswerByWriter(Long writerId, Pageable pageable) {
 		SocialUser writer = socialUserService.findById(writerId);
-		return answerRepository.findAll(QnaSpecifications.equalsWriterIdToAnswer(writer), pageable);
+		return answerRepository.findsAnswerByWriter(writer, pageable);
 	}
 
 	public void createAnswer(final SocialUser loginUser, Long questionId, final Answer answer) {
