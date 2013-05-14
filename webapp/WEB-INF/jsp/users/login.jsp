@@ -12,10 +12,10 @@
 			<div class="login-with-slipp">
 				<p class="login-with-slipp-text">SLiPP 계정으로 로그인하세요.</p>
 				<form id="authentication" action="/users/authenticate" method="POST">
-					<input id="authenticationId" name="authenticationId" class="inp-id" placeholder="아이디" type="text" value=""/>
+					<input id="authenticationId" name="authenticationId" class="inp-email" placeholder="이메일" type="text" value=""/>
 					<input id="authenticationPassword"  name="authenticationPassword" class="inp-title" placeholder="비밀번호" type="password" value=""/>
 					<c:if test="${not empty param.login_error}">
-					<label class="error" style="">아이디, 비밀번호가 정확하지 않습니다.</label>
+					<label class="error" style="">메일주소 혹은 비밀번호가 정확하지 않습니다.</label>
 					</c:if>
 					<p class="login-with-slipp-submit">
 						<label><input name="_spring_security_remember_me" class="inp-pw" type="checkbox" value="true"/> 자동로그인</label>
@@ -41,11 +41,11 @@
 			<div class="sign-in-to-slipp">
 				<p class="sign-in-to-slipp-text">계정이 없다면 간단히 만들어보세요.</p>
 				<form:form modelAttribute="user" cssClass="form-write" action="/users" method="post">
-						<form:input path="userId" class="inp_id" placeholder="아이디" />
-						<form:input path="nickName" class="inp_pw" placeholder="닉네임" />
+						<input type="hidden" path="userId" class="inp_id" placeholder="아이디" />
 						<form:input path="email" class="inp_email" placeholder="이메일" />
+						<form:input path="nickName" class="inp_pw" placeholder="닉네임" />
 						<p class="sign-in-to-slipp-notice">
-							- 등록한 메일로 초기 비밀번호를 보내드립니다. <br />
+							- 등록한 메일로 임시 비밀번호를 보내드립니다. <br />
 							- 개인공간에서 비밀번호를 변경할 수 있습니다.</p>
 						<button type="submit" class="sign-in-to-slipp-btn"><i class="icon-signin"></i> 회원가입</button>
 				</form:form>
