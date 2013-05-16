@@ -43,7 +43,7 @@
 				<form:form modelAttribute="user" cssClass="form-write" action="/users" method="post">
 						<input type="hidden" path="userId" class="inp_id" placeholder="아이디" />
 						<form:input path="email" class="inp_email" placeholder="이메일" />
-						<form:input path="nickName" class="inp_pw" placeholder="닉네임" />
+						<form:input path="userId" class="inp_pw" placeholder="닉네임" />
 						<p class="sign-in-to-slipp-notice">
 							- 등록한 메일로 임시 비밀번호를 보내드립니다. <br />
 							- 개인공간에서 비밀번호를 변경할 수 있습니다.</p>

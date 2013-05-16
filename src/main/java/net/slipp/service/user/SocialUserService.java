@@ -21,67 +21,73 @@ import org.springframework.util.Assert;
 
 @Transactional
 public class SocialUserService {
-	@Resource(name = "usersConnectionRepository")
-	private UsersConnectionRepository usersConnectionRepository;
+    @Resource(name = "usersConnectionRepository")
+    private UsersConnectionRepository usersConnectionRepository;
 
-	@Resource(name = "socialUserRepository")
-	private SocialUserRepository socialUserRepository;
-	
-	@Resource(name = "passwordEncoder")
-	PasswordEncoder passwordEncoder;
-	
+    @Resource(name = "socialUserRepository")
+    private SocialUserRepository socialUserRepository;
+
+    @Resource(name = "passwordEncoder")
+    PasswordEncoder passwordEncoder;
+
     @Resource(name = "passwordGenerator")
     private PasswordGenerator passwordGenerator;
-    
+
     @Resource(name = "mailService")
     private MailService mailService;
 
-	public void createNewSocialUser(String userId, String nickname, Connection<?> connection) throws ExistedUserException {
-		Assert.notNull(userId, "userId can't be null!");
-		Assert.notNull(connection, "connection can't be null!");
+    public void createNewSocialUser(String userId, String nickname, Connection<?> connection)
+            throws ExistedUserException {
+        Assert.notNull(userId, "userId can't be null!");
+        Assert.notNull(connection, "connection can't be null!");
 
-		ConnectionRepository connectionRepository = usersConnectionRepository.createConnectionRepository(userId);
-		if (!isUserIdAvailable(userId)) {
-			throw new ExistedUserException(userId + " already is existed user!");
-		}
+        ConnectionRepository connectionRepository = usersConnectionRepository.createConnectionRepository(userId);
+        if (!isUserIdAvailable(userId)) {
+            throw new ExistedUserException(userId + " already is existed user!");
+        }
 
-		connectionRepository.addConnection(connection);
-		
-		SocialUser socialUser = findByUserId(userId);
-		socialUser.setDisplayName(nickname);
-	}
+        connectionRepository.addConnection(connection);
 
-	private boolean isUserIdAvailable(String userId) {
-		List<SocialUser> socialUsers = socialUserRepository.findsByUserId(userId);
-		return socialUsers.isEmpty();
-	}
-	
-	public SocialUser findById(Long id) {
-	    Assert.notNull(id, "id can't be null!");
-	    return socialUserRepository.findOne(id);
-	}
+        SocialUser socialUser = findByUserId(userId);
+        socialUser.setDisplayName(nickname);
+    }
 
-	public SocialUser findByUserId(String userId) {
-		Assert.notNull(userId, "userId can't be null!");
-		
-		List<SocialUser> socialUsers = socialUserRepository.findsByUserId(userId);
-		if (socialUsers.isEmpty()) {
-			return null;
-		}
-		
-		return socialUsers.get(0);
-	}
+    private boolean isUserIdAvailable(String userId) {
+        List<SocialUser> socialUsers = socialUserRepository.findsByUserId(userId);
+        return socialUsers.isEmpty();
+    }
 
-	public SocialUser findByUserIdAndConnectionKey(String userId, ConnectionKey connectionKey) {
-		Assert.notNull(userId, "userId can't be null!");
-		Assert.notNull(connectionKey, "connectionKey can't be null!");
-		
-		SocialUser socialUser = socialUserRepository.findByUserIdAndProviderIdAndProviderUserId(userId,
-				connectionKey.getProviderId(), connectionKey.getProviderUserId());
-		return socialUser;
-	}
+    public SocialUser findById(Long id) {
+        Assert.notNull(id, "id can't be null!");
+        return socialUserRepository.findOne(id);
+    }
+    
+    public SocialUser findByEmail(Long id) {
+        Assert.notNull(id, "id can't be null!");
+        return socialUserRepository.findOne(id);
+    }
 
-    public SocialUser createUser(String userId, String userName, String email) {
+    public SocialUser findByUserId(String userId) {
+        Assert.notNull(userId, "userId can't be null!");
+
+        List<SocialUser> socialUsers = socialUserRepository.findsByUserId(userId);
+        if (socialUsers.isEmpty()) {
+            return null;
+        }
+
+        return socialUsers.get(0);
+    }
+
+    public SocialUser findByUserIdAndConnectionKey(String userId, ConnectionKey connectionKey) {
+        Assert.notNull(userId, "userId can't be null!");
+        Assert.notNull(connectionKey, "connectionKey can't be null!");
+
+        SocialUser socialUser = socialUserRepository.findByUserIdAndProviderIdAndProviderUserId(userId,
+                connectionKey.getProviderId(), connectionKey.getProviderUserId());
+        return socialUser;
+    }
+
+    public SocialUser createUser(String userId, String email) {
         String rawPassword = passwordGenerator.generate();
         String uuid = UUID.randomUUID().toString();
         SocialUser socialUser = new SocialUser();
@@ -90,7 +96,6 @@ public class SocialUserService {
         socialUser.setProviderId(SocialUser.DEFAULT_SLIPP_PROVIDER_ID);
         socialUser.setProviderUserId(userId);
         socialUser.setRank(1);
-        socialUser.setDisplayName(userName);
         socialUser.setAccessToken(uuid);
         socialUser.setRawPassword(rawPassword);
         socialUser.setPassword(encodePassword(rawPassword));
@@ -98,7 +103,7 @@ public class SocialUserService {
         mailService.sendPasswordInformation(socialUser);
         return socialUser;
     }
-    
+
     private String encodePassword(String rawPass) {
         return passwordEncoder.encodePassword(rawPass, null);
     }
@@ -110,7 +115,7 @@ public class SocialUserService {
         }
 
         user.changePassword(passwordEncoder, password.getOldPassword(), password.getNewPassword());
-        
+
         return user;
     }
 }

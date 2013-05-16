@@ -36,15 +36,9 @@ $(document).ready(function() {
 		rules: {
 			userId: {
 				required: true,
-				minlength: 4,
-				maxlength: 12,
-				regexp: /^[0-9a-zA-Z]{4,12}$/,
-				duplicateUserId: "#userId"
-			},
-			nickName:  {
-				required: true,
 				minlength: 2,
-				maxlength: 12
+				maxlength: 20,
+				duplicateUserId: "#userId"
 			},
 			email: {
 				required: true,
@@ -54,14 +48,8 @@ $(document).ready(function() {
 		messages: {
 			userId: {
 				required: AL10N.User.requiredUserId(),
-				minlength: AL10N.User.minLenUserId(4),
-				maxlength: AL10N.User.maxLenUserId(12),
-				regexp: AL10N.User.invalidUserIdFormat()
-			},
-			nickName:  {
-				required: AL10N.User.requiredNickName(),
-				minlength: AL10N.User.minLenNickName(2),
-				maxlength: AL10N.User.maxLenNickName(12)
+				minlength: AL10N.User.minLenUserId(2),
+				maxlength: AL10N.User.maxLenUserId(20)
 			},
 			email: {
 				required: AL10N.User.requiredEmail(),
@@ -81,7 +69,7 @@ $(document).ready(function() {
 		},
 		messages: {
 			authenticationId: {
-				required: AL10N.User.requiredUserId()
+				required: AL10N.User.requiredEmail()
 			},
 			authenticationPassword:  {
 				required: AL10N.User.requiredPassword()

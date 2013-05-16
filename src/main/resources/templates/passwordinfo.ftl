@@ -1,11 +1,10 @@
 
-<p>${user.displayName}님, <strong>SLiPP</strong>에 오신것을 환영합니다!</p>
+<p>${user.userId}님, <strong>SLiPP</strong>에 오신것을 환영합니다!</p>
 <br />
 
 <strong>가입정보</strong>
 <p>
 아이디 : <strong>${user.userId}</strong><br/>
-닉네임 : <strong>${user.displayName}</strong><br />
 비밀번호 : <strong>${user.rawPassword}</strong>
 </p>
 

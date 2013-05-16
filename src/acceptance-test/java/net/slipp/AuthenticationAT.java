@@ -53,12 +53,11 @@ public class AuthenticationAT extends AbstractATTest {
     
     private UserForm join_to_slipp() throws Exception {
         String userId = createUserId();
-        String nickName = environment.getProperty("slipp.nickName1");
         String email = environment.getProperty("slipp.email1");
         LoginPage loginPage = indexPage.goLoginPage();
-        indexPage = loginPage.join(userId, nickName, email);
+        indexPage = loginPage.join(userId, email);
         assertThat(indexPage.isLoginStatus(), is(true));
-        return new UserForm(userId, nickName, email);
+        return new UserForm(userId, email);
     }
 
     private String createUserId() {
@@ -79,7 +78,7 @@ public class AuthenticationAT extends AbstractATTest {
     public void join_change_password_login() throws Exception {
         UserForm userForm = join_to_slipp();
         ProfilePage profilePage = indexPage.goProfilePage();
-        profilePage.verifyPageTitle(userForm.getNickName());
+        profilePage.verifyPageTitle(userForm.getUserId());
         ChangePasswordPage changePasswordPage = profilePage.goChangePasswordPage();
         
         String oldPassword = FixedPasswordGenerator.DEFAULT_FIXED_PASSWORD;

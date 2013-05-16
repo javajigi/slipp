@@ -46,11 +46,9 @@ public class LoginPage {
         return new IndexPage(driver);
     }
 
-    public IndexPage join(String userId, String nickName, String email) {
+    public IndexPage join(String userId, String email) {
         driver.findElement(By.id("userId")).clear();
         driver.findElement(By.id("userId")).sendKeys(userId);
-        driver.findElement(By.id("nickName")).clear();
-        driver.findElement(By.id("nickName")).sendKeys(nickName);
         driver.findElement(By.id("email")).clear();
         driver.findElement(By.id("email")).sendKeys(email);
         driver.findElement(By.cssSelector(".btn-submit")).click();
