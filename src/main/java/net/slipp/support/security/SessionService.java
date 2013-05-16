@@ -1,11 +1,10 @@
 package net.slipp.support.security;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
+import net.slipp.domain.ProviderType;
 import net.slipp.domain.user.SocialUser;
-import net.slipp.repository.user.SocialUserRepository;
+import net.slipp.service.user.SocialUserService;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,24 +15,42 @@ import org.springframework.stereotype.Service;
  */
 @Service("sessionService")
 public class SessionService {
-    @Resource(name = "socialUserRepository")
-    private SocialUserRepository socialUserRepository;
+    @Resource(name = "socialUserService")
+    private SocialUserService socialUserService;
 
     public SocialUser getLoginUser() {
         if (!isAuthenticated()) {
             return SocialUser.GUEST_USER;
         }
         
-        List<SocialUser> socialUsers = socialUserRepository.findsByUserId(getAuthenticatedUserName());
-        if (socialUsers.isEmpty()){
-        	return SocialUser.GUEST_USER;
+        SocialUser socialUser;
+        if (isSlippUser()) {
+            socialUser = socialUserService.findByEmailAndProviderId(getAuthenticatedUserName(), ProviderType.slipp);
+        } else {
+            socialUser = socialUserService.findByUserId(getAuthenticatedUserName());
         }
-        
-        return socialUsers.get(0);
+        if (socialUser == null) {
+            return SocialUser.GUEST_USER;
+        }
+        return socialUser;
     }
     
     public boolean isAuthenticated() {
         return getAuthentication() == null ? false : getAuthentication().isAuthenticated();
+    }
+    
+    public boolean isSlippUser() {
+        Authentication authentication = getAuthentication();
+        Object details = authentication.getDetails();
+        if (details == null) {
+            return false;
+        }
+        
+        if (details instanceof ProviderType) {
+            return true;
+        }
+        
+        return false;
     }
     
     public Authentication getAuthentication() {

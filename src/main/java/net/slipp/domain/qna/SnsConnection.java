@@ -5,13 +5,15 @@ import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
+import net.slipp.domain.ProviderType;
+
 import org.apache.commons.lang.StringUtils;
 
 @Embeddable
 public class SnsConnection {
 	@Enumerated(EnumType.STRING)
-	@Column(name = "sns_type", nullable = true, columnDefinition = SnsType.COLUMN_DEFINITION)
-	private SnsType snsType;
+	@Column(name = "sns_type", nullable = true, columnDefinition = ProviderType.COLUMN_DEFINITION)
+	private ProviderType snsType;
 	
 	@Column(name = "post_id", length = 100, nullable = true)
 	private String postId;
@@ -19,7 +21,7 @@ public class SnsConnection {
 	public SnsConnection() {
 	}
 
-	public SnsConnection(SnsType snsType, String postId) {
+	public SnsConnection(ProviderType snsType, String postId) {
 		this.snsType = snsType;
 		this.postId = postId;
 	}
@@ -28,7 +30,7 @@ public class SnsConnection {
 		return !StringUtils.isBlank(postId);
 	}
 	
-	public SnsType getSnsType() {
+	public ProviderType getSnsType() {
 		return snsType;
 	}
 	

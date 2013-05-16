@@ -27,7 +27,7 @@ attribute name="each" required="true" rtexprvalue="true" type="net.slipp.domain.
 										<span class="time">
 											<fmt:formatDate value="${each.createdDate}" pattern="yyyy-MM-dd HH:mm" />
 										</span>
-										<a href="${each.latestParticipant.url}" class="author">${each.latestParticipant.displayName}</a>
+										<a href="${each.latestParticipant.url}" class="author">${each.latestParticipant.userId}</a>
 									</c:when>
 									<c:otherwise>
 										<i class="icon-add-comment"></i>
@@ -35,7 +35,7 @@ attribute name="each" required="true" rtexprvalue="true" type="net.slipp.domain.
 										<span class="time">
 											<fmt:formatDate value="${each.updatedDate}" pattern="yyyy-MM-dd HH:mm" />
 										</span>
-										<a href="${each.latestParticipant.url}" class="author">${each.latestParticipant.displayName}</a>
+										<a href="${each.latestParticipant.url}" class="author">${each.latestParticipant.userId}</a>
 									</c:otherwise>
 								</c:choose>
 							</div>

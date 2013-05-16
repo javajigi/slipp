@@ -26,6 +26,7 @@ import javax.persistence.OrderBy;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import net.slipp.domain.ProviderType;
 import net.slipp.domain.tag.Tag;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.support.jpa.CreatedDateEntityListener;
@@ -295,7 +296,7 @@ public class Question implements HasCreatedDate {
 	}
 
 	public SnsConnection connected(String postId) {
-		this.snsConnection = new SnsConnection(SnsType.valueOf(writer.getProviderId()), postId);
+		this.snsConnection = new SnsConnection(ProviderType.valueOf(writer.getProviderId()), postId);
 		return this.snsConnection;
 	}
 	

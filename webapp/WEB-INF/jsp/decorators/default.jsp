@@ -56,7 +56,7 @@
 					<li class="user-info">
 						<a href="/notifications" id="notificationButton" class="notification-button">
 							<img class="user-thumb" src="${sf:stripHttp(loginUser.imageUrl)}" width="24" height="24" alt="" />
-							<span class="user-name">${loginUser.displayName}</span>
+							<span class="user-name">${loginUser.userId}</span>
 							<c:if test="${countNotifications != 0}">
 								<span class="notification-count">${countNotifications}</span>
 							</c:if>

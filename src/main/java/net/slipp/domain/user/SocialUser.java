@@ -11,6 +11,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import net.slipp.domain.ProviderType;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -22,9 +24,6 @@ import org.springframework.security.authentication.encoding.PasswordEncoder;
 @Cache(region = "socialUser", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class SocialUser {
     public static final SocialUser GUEST_USER = new GuestSocialUser();
-
-    private static final String DEFAULT_FACEBOOK_PROVIDER_ID = "facebook";
-    public static final String DEFAULT_SLIPP_PROVIDER_ID = "slipp";
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -42,7 +41,7 @@ public class SocialUser {
 
     private String email;
 
-    @Column(nullable = false)
+    @Column(nullable=false, columnDefinition = ProviderType.COLUMN_DEFINITION)
     private String providerId;
 
     private String providerUserId;
@@ -117,15 +116,20 @@ public class SocialUser {
     public String getProviderId() {
         return providerId;
     }
+    
+    public ProviderType getProviderIdBySnsType() {
+        return ProviderType.valueOf(providerId);
+    }
 
     public void setProviderId(String providerId) {
         this.providerId = providerId;
     }
+    
 
     public String getProviderUserId() {
         return providerUserId;
     }
-
+    
     public void setProviderUserId(String providerUserId) {
         this.providerUserId = providerUserId;
     }
@@ -215,11 +219,11 @@ public class SocialUser {
     }
 
     public boolean isFacebookUser() {
-        return DEFAULT_FACEBOOK_PROVIDER_ID.equals(getProviderId());
+        return ProviderType.facebook == getProviderIdBySnsType();
     }
 
     public boolean isSLiPPUser() {
-        return DEFAULT_SLIPP_PROVIDER_ID.equals(getProviderId());
+        return ProviderType.slipp == getProviderIdBySnsType();
     }
     
     public void changePassword(PasswordEncoder encoder, String oldPassword, String newPassword) {

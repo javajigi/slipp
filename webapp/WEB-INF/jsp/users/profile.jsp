@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%><%@ include file="/WEB-INF/jsp/include/tags.jspf"%>
 <head>
-	<title>${socialUser.displayName}의 개인공간 :: SLiPP</title>
+	<title>${socialUser.userId}의 개인공간 :: SLiPP</title>
 </head>
 
 <section class="person-content">

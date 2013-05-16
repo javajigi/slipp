@@ -9,6 +9,7 @@ import static org.junit.Assert.*;
 
 import java.util.Set;
 
+import net.slipp.domain.ProviderType;
 import net.slipp.domain.tag.Tag;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.repository.tag.TagRepository;
@@ -201,7 +202,7 @@ public class QuestionTest {
         String postId = "123456";
         SnsConnection actual = dut.connected(postId);
 
-        SnsConnection expected = new SnsConnection(SnsType.facebook, postId);
+        SnsConnection expected = new SnsConnection(ProviderType.facebook, postId);
         assertThat(actual, is(expected));
     }
 }

@@ -50,7 +50,14 @@ public class SlippSecurityAuthenticationFilter extends AbstractAuthenticationPro
 		} else {
 			SocialUser signInDetails = (SocialUser) request.getSession().getAttribute(
 					SlippSecuritySignInAdapter.SIGN_IN_DETAILS_SESSION_ATTRIBUTE_NAME);
-			UserDetails userDetails = userDetailsService.loadUserByUsername(signInDetails.getUserId());
+			
+			UserDetails userDetails;
+			if (signInDetails.isSLiPPUser()) {
+			    SlippUserDetailsService slippUserDetailsService = (SlippUserDetailsService)userDetailsService;
+			    userDetails = slippUserDetailsService.loadUserByEmail(signInDetails.getUserId());
+			} else {
+			    userDetails = userDetailsService.loadUserByUsername(signInDetails.getUserId());
+			}
 			return new UsernamePasswordAuthenticationToken(userDetails.getUsername(),
 					userDetails.getPassword(), userDetails.getAuthorities());			
 		}

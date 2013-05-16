@@ -69,7 +69,7 @@
 		<constructor-arg value="${slipp.remember.token.key}" />
 	</bean>
 	
-	<bean id="daoAuthenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider"
+	<bean id="daoAuthenticationProvider" class="net.slipp.social.security.SlippDaoAuthenticationProvider"
 		p:userDetailsService-ref="slippUserDetailsService"
 		p:passwordEncoder-ref="passwordEncoder"
 	/>	

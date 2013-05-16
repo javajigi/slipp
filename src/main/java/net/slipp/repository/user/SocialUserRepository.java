@@ -43,4 +43,6 @@ public interface SocialUserRepository extends CrudRepository<SocialUser, Long>,
     @Query("SELECT distinct u.userId FROM SocialUser u where u.providerId = :providerId and u.providerUserId in (:providerUserIds)")
     List<String> findUsersConnectedTo(@Param("providerId") String providerId,
             @Param("providerUserIds") Set<String> providerUserIds);
+
+    SocialUser findByEmailAndProviderId(String email, String providerId);
 }

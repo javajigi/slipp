@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import javax.annotation.Resource;
 
+import net.slipp.domain.ProviderType;
 import net.slipp.domain.user.ExistedUserException;
 import net.slipp.domain.user.PasswordDto;
 import net.slipp.domain.user.SocialUser;
@@ -62,11 +63,6 @@ public class SocialUserService {
         return socialUserRepository.findOne(id);
     }
     
-    public SocialUser findByEmail(Long id) {
-        Assert.notNull(id, "id can't be null!");
-        return socialUserRepository.findOne(id);
-    }
-
     public SocialUser findByUserId(String userId) {
         Assert.notNull(userId, "userId can't be null!");
 
@@ -76,6 +72,13 @@ public class SocialUserService {
         }
 
         return socialUsers.get(0);
+    }
+    
+    public SocialUser findByEmailAndProviderId(String email, ProviderType providerType) {
+        Assert.notNull(email, "email can't be null!");
+        Assert.notNull(providerType, "providerType can't be null!");
+        
+        return socialUserRepository.findByEmailAndProviderId(email, providerType.name());
     }
 
     public SocialUser findByUserIdAndConnectionKey(String userId, ConnectionKey connectionKey) {
@@ -93,7 +96,7 @@ public class SocialUserService {
         SocialUser socialUser = new SocialUser();
         socialUser.setUserId(userId);
         socialUser.setEmail(email);
-        socialUser.setProviderId(SocialUser.DEFAULT_SLIPP_PROVIDER_ID);
+        socialUser.setProviderId(ProviderType.slipp.name());
         socialUser.setProviderUserId(userId);
         socialUser.setRank(1);
         socialUser.setAccessToken(uuid);
