@@ -12,6 +12,7 @@
 		duplicateUserId: m("{0} 닉네임은 다른 사용자가 이미 사용하고 있는 닉네임입니다."),
 		requiredEmail: m("이메일 주소를 입력해 주세요."),
 		invalidEmailFormat: m("정확한 이메일을 입력해 주세요."),
+		duplicateEmail: m("{0} 이메일은 다른 사용자가 이미 사용하고 있는 닉네임입니다."),
 		requiredPassword: m("비밀번호를 입력해 주세요."),
 		requiredOldPassword: m("현재 비밀번호를 입력해 주세요."),
 		requiredNewPassword: m("신규 비밀번호를 입력해 주세요."),

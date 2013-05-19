@@ -1,28 +1,51 @@
 $(document).ready(function() {
-    $.validator.addMethod("regexp", function(value, element, regexp) {
-    	return this.optional(element) || regexp.test(value);
-    });
-    
     $.validator.addMethod("duplicateUserId", function(value, element, param) {
     	var validator = this;
     	var userId = $(param).val();
+    	var isSuccess = false;
     	
-		$.post('/api/users/duplicateUserId',
-				{ userId: userId },
-				function(response) {
-					if( !response ) {
-						return true;
-					}
-					
-					var errors = {};
-					errors[element.name] = AL10N.User.duplicateUserId(userId);
-					validator.showErrors(errors);
-					return false;
-				}, 'json'
-		);
+		$.ajax({
+			url: '/api/users/duplicateUserId',
+			data: { userId: userId },
+			success: function(response) {
+				if( !response ) {
+					return true;
+				}
+				var errors = {};
+				errors[element.name] = AL10N.User.duplicateUserId(userId);
+				validator.showErrors(errors);
+				return false;
+			}, 
+			dataType: 'json',
+			async: false
+		});
 		
 		return true;
     });
+    
+    $.validator.addMethod("duplicateEmail", function(value, element, param) {
+    	var validator = this;
+    	var email = $(param).val();
+    	
+		$.ajax({
+			url: '/api/users/duplicateEmail',
+			type: 'POST',
+			data: {email: email, providerType: 'slipp'},
+			success: function(response) {
+				if( !response ) {
+					return true;
+				}
+				var errors = {};
+				errors[element.name] = AL10N.User.duplicateEmail(email);
+				validator.showErrors(errors);
+				return false;
+			}, 
+			dataType: 'json',
+			async: false
+		});
+		
+		return true;
+    }, '');
     
     $.validator.addMethod("validateEmail", function(value, element, param) {
     	var validator = this;
@@ -34,26 +57,27 @@ $(document).ready(function() {
 	
 	$("#user").validate({
 		rules: {
+			email: {
+				required: true,
+				validateEmail: "#email",
+				duplicateEmail: "#email"
+			},
 			userId: {
 				required: true,
 				minlength: 2,
 				maxlength: 20,
 				duplicateUserId: "#userId"
-			},
-			email: {
-				required: true,
-				validateEmail: "#email"
 			}
 		},
 		messages: {
+			email: {
+				required: AL10N.User.requiredEmail(),
+				validateEmail: AL10N.User.invalidEmailFormat()
+			},
 			userId: {
 				required: AL10N.User.requiredUserId(),
 				minlength: AL10N.User.minLenUserId(2),
 				maxlength: AL10N.User.maxLenUserId(20)
-			},
-			email: {
-				required: AL10N.User.requiredEmail(),
-				validateEmail: AL10N.User.invalidEmailFormat()
 			}
 		}
 	});
