@@ -76,8 +76,8 @@ public class SlippDaoAuthenticationProvider extends AbstractUserDetailsAuthentic
         UserDetails loadedUser;
 
         try {
-            SlippUserDetailsService userDetailsService = (SlippUserDetailsService)getUserDetailsService();
-            loadedUser = userDetailsService.loadUserByEmail(email);
+            SlippUserDetailsService slippUserDetailsService = (SlippUserDetailsService)getUserDetailsService();
+            loadedUser = slippUserDetailsService.loadUserByEmail(email);
         } catch (UsernameNotFoundException notFound) {
             throw notFound;
         } catch (Exception repositoryProblem) {

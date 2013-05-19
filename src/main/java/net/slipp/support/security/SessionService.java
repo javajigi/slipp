@@ -42,11 +42,12 @@ public class SessionService {
     public boolean isSlippUser() {
         Authentication authentication = getAuthentication();
         Object details = authentication.getDetails();
-        if (details == null) {
+        if (!(details instanceof ProviderType)) {
             return false;
         }
         
-        if (details instanceof ProviderType) {
+        ProviderType providerType = (ProviderType)details;
+        if (providerType == ProviderType.slipp) {
             return true;
         }
         

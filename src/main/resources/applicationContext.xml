@@ -54,7 +54,7 @@
 	/>
 		
 	<bean id="slippRememberMeServices"
-		class="org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices">
+		class="net.slipp.social.security.SlippTokenBasedRememberMeServices">
 		<property name="userDetailsService" ref="slippUserDetailsService" />
 		<property name="key" value="${slipp.remember.token.key}" />
 		<property name="tokenValiditySeconds" value="1209600" />

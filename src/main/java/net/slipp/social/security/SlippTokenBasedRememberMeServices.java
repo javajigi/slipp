@@ -37,7 +37,7 @@ public class SlippTokenBasedRememberMeServices extends AbstractRememberMeService
     protected UserDetails processAutoLoginCookie(String[] cookieTokens, HttpServletRequest request,
             HttpServletResponse response) {
 
-        if (cookieTokens.length != 3) {
+        if (cookieTokens.length != 4) {
             throw new InvalidCookieException("Cookie token did not contain 3" +
                     " tokens, but contained '" + Arrays.asList(cookieTokens) + "'");
         }
@@ -59,8 +59,8 @@ public class SlippTokenBasedRememberMeServices extends AbstractRememberMeService
 
         // Check the user exists.
         // Defer lookup until after expiry time checked, to possibly avoid expensive database call.
-
-        SlippUser userDetails = (SlippUser)getUserDetailsService().loadUserByUsername(cookieTokens[0]);
+        ProviderType providerType = ProviderType.valueOf(cookieTokens[3]);
+        SlippUser userDetails = getSlippUserDetails(providerType, cookieTokens[0]);
 
         // Check signature of token matches remaining details.
         // Must do this after user lookup, as we need the DAO-derived password.
@@ -78,6 +78,15 @@ public class SlippTokenBasedRememberMeServices extends AbstractRememberMeService
         return userDetails;
     }
 
+	private SlippUser getSlippUserDetails(ProviderType providerType, String firstCookieToken) {
+        if (providerType == ProviderType.slipp) {
+        	SlippUserDetailsService slippUserDetailsService = (SlippUserDetailsService)getUserDetailsService();
+        	return (SlippUser)slippUserDetailsService.loadUserByEmail(firstCookieToken);
+        } else {
+        	return (SlippUser)getUserDetailsService().loadUserByUsername(firstCookieToken);
+        }
+	}
+    
     /**
      * Calculates the digital signature to be put in the cookie. Default value is
      * MD5 ("username:tokenExpiryTime:password:key")
@@ -103,6 +112,7 @@ public class SlippTokenBasedRememberMeServices extends AbstractRememberMeService
             Authentication successfulAuthentication) {
         String username = retrieveUserName(successfulAuthentication);
         String password = retrievePassword(successfulAuthentication);
+        ProviderType providerType = retrieveProviderType(successfulAuthentication);
 
         // If unable to find a username and password, just abort as TokenBasedRememberMeServices is
         // unable to construct a valid token in this case.
@@ -113,7 +123,7 @@ public class SlippTokenBasedRememberMeServices extends AbstractRememberMeService
 
         
         if (!StringUtils.hasLength(password)) {
-            UserDetails user = getUserDetailsService().loadUserByUsername(username);
+        	SlippUser user = getSlippUserDetails(providerType, username);
             password = user.getPassword();
 
             if (!StringUtils.hasLength(password)) {
@@ -127,7 +137,7 @@ public class SlippTokenBasedRememberMeServices extends AbstractRememberMeService
         // SEC-949
         expiryTime += 1000L* (tokenLifetime < 0 ? TWO_WEEKS_S : tokenLifetime);
 
-        String signatureValue = makeTokenSignature(expiryTime, username, password);
+        String signatureValue = makeTokenSignature(expiryTime, username, password, providerType);
 
         setCookie(new String[] {username, Long.toString(expiryTime), signatureValue}, tokenLifetime, request, response);
 
@@ -178,8 +188,8 @@ public class SlippTokenBasedRememberMeServices extends AbstractRememberMeService
         }
     }
     
-    protected String retrieveProviderType(Authentication authentication) {
-        return authentication.getDetails();
+    protected ProviderType retrieveProviderType(Authentication authentication) {
+        return (ProviderType)authentication.getDetails();
     }
 
     private boolean isInstanceOfUserDetails(Authentication authentication) {
