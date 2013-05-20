@@ -117,6 +117,10 @@ public class FacebookService {
         }
 
         Comments comments = post.getComments();
+        if (comments == null) {
+            return fbComments;
+        }
+        
         List<Comment> commentData = comments.getData();
         for (Comment comment : commentData) {
             fbComments.add(FacebookComment.create(comment));

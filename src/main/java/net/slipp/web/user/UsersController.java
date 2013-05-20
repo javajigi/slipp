@@ -49,7 +49,7 @@ public class UsersController {
 
     @RequestMapping(value = "", method = RequestMethod.POST)
     public String create(UserForm user, HttpServletRequest request, HttpServletResponse response) {
-        SocialUser socialUser = userService.createUser(user.getUserId(), user.getEmail());
+        SocialUser socialUser = userService.createSlippUser(user.getUserId(), user.getEmail());
         autoLoginAuthenticator.login(socialUser.getEmail(), socialUser.getRawPassword());
         return "redirect:/";
     }
@@ -110,7 +110,7 @@ public class UsersController {
             throw new IllegalArgumentException("You cann't change another user!");
         }
         
-        userService.updateSocialUser(id, userForm.getEmail(), userForm.getUserId());
+        userService.updateSlippUser(loginUser, userForm.getEmail(), userForm.getUserId());
         
         return String.format("redirect:/users/%d/%s", id, URLEncoder.encode(socialUser.getUserId(), "UTF-8"));
     }

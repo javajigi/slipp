@@ -50,16 +50,6 @@ public class SocialUserService {
         connectionRepository.addConnection(connection);
     }
     
-    public void updateSocialUser(Long id, String email, String userId) {
-        Assert.notNull(id, "id can't be null!");
-        Assert.notNull(email, "email can't be null!");
-        Assert.notNull(userId, "userId can't be null!");
-        
-        SocialUser socialUser = socialUserRepository.findOne(id);
-        socialUser.setEmail(email);
-        socialUser.setUserId(userId);
-    }
-
     private boolean isUserIdAvailable(String userId) {
         List<SocialUser> socialUsers = socialUserRepository.findsByUserId(userId);
         return socialUsers.isEmpty();
@@ -97,7 +87,17 @@ public class SocialUserService {
         return socialUser;
     }
 
-    public SocialUser createUser(String userId, String email) {
+    public SocialUser createSlippUser(String userId, String email) {
+        SocialUser existedUser = findByUserId(userId);
+        if (existedUser != null) {
+            throw new IllegalArgumentException(userId + " userId already is existed User.");
+        }
+        
+        existedUser = findByEmailAndProviderId(email, ProviderType.slipp);
+        if (existedUser != null) {
+            throw new IllegalArgumentException(email + " email address already is existed User.");
+        }
+        
         String rawPassword = passwordGenerator.generate();
         String uuid = UUID.randomUUID().toString();
         SocialUser socialUser = new SocialUser();
@@ -112,6 +112,16 @@ public class SocialUserService {
         socialUserRepository.save(socialUser);
         mailService.sendPasswordInformation(socialUser);
         return socialUser;
+    }
+    
+    public void updateSlippUser(SocialUser loginUser, String email, String userId) {
+        Assert.notNull(loginUser, "loginUser can't be null!");
+        Assert.notNull(email, "email can't be null!");
+        Assert.notNull(userId, "userId can't be null!");
+        
+        SocialUser socialUser = socialUserRepository.findOne(loginUser.getId());
+        socialUser.setEmail(email);
+        socialUser.setUserId(userId);
     }
 
     private String encodePassword(String rawPass) {
