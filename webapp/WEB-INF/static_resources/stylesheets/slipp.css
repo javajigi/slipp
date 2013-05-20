@@ -2150,15 +2150,30 @@ body {
     width: 100%;
   }
 }
+.person-change-account-setting h1,
 .person-change-pw h1 {
   font-size: 1.4em;
 }
+.person-change-account-setting-form,
 .person-change-pw-form {
   padding-top: 1em;
 }
+.person-change-account-setting-label,
 .person-change-pw-label {
   margin-top: 1em;
   margin-bottom: 0;
+}
+.person-change-account-setting-submit {
+  padding: 0.5em 0.8em;
+  border: 0 none;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  color: #fff;
+  background-color: #005580;
+  margin-top: 1em;
+}
+.person-change-account-setting-submit:hover {
+  background-color: #0077b3;
 }
 .person-change-pw-submit {
   padding: 0.5em 0.8em;
