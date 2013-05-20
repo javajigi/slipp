@@ -6,12 +6,19 @@
 
 <section class="person-content">
 	<slipp:profile-header socialUser="${socialUser}"/>
-	<section class="sign-in-to-slipp">
-		<form:form modelAttribute="user" cssClass="form-write" action="/users/${socialUser.id}" method="put">
-			<input type="hidden" id="providerType" name="providerType" value="${socialUser.providerId}" />	
-			<form:input path="email" class="inp_email" placeholder="이메일" />
-			<form:input path="userId" class="inp_id" placeholder="아이디" />
-			<button type="submit" class="sign-in-to-slipp-btn"><i class="icon-signin"></i>개인정보수정</button>
+	<section class="person-change-account-setting">
+		<form:form modelAttribute="user" cssClass="person-change-account-setting-form" action="/users/${socialUser.id}" method="put">
+			<h1>개인정보 변경</h1>
+			<input type="hidden" id="providerType" name="providerType" value="${socialUser.providerId}" />
+			<div class="box-input-line">
+				<p class="person-change-account-setting-label">이메일</p>
+				<form:input path="email" class="inp_email" />
+			</div>
+			<div class="box-input-line">
+				<p class="person-change-account-setting-label">닉네임</p>
+				<form:input path="userId" class="inp_id" placeholder="아이디" />
+			</div>
+			<button type="submit" class="person-change-account-setting-submit"><i class="icon-login"></i> 개인정보수정</button>
 		</form:form>
 	</section>
 </section>
