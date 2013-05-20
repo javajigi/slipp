@@ -10,7 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.slipp.domain.ProviderType;
 
+import org.springframework.security.authentication.RememberMeAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
+import org.springframework.security.core.authority.mapping.NullAuthoritiesMapper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.codec.Hex;
@@ -20,6 +23,7 @@ import org.springframework.security.web.authentication.rememberme.InvalidCookieE
 import org.springframework.util.StringUtils;
 
 public class SlippTokenBasedRememberMeServices extends AbstractRememberMeServices {
+    private GrantedAuthoritiesMapper authoritiesMapper = new NullAuthoritiesMapper();
     /**
      * @deprecated Use with-args constructor
      */
@@ -31,14 +35,12 @@ public class SlippTokenBasedRememberMeServices extends AbstractRememberMeService
         super(key, userDetailsService);
     }
 
-    //~ Methods ========================================================================================================
-
     @Override
     protected UserDetails processAutoLoginCookie(String[] cookieTokens, HttpServletRequest request,
             HttpServletResponse response) {
 
         if (cookieTokens.length != 4) {
-            throw new InvalidCookieException("Cookie token did not contain 3" +
+            throw new InvalidCookieException("Cookie token did not contain 4" +
                     " tokens, but contained '" + Arrays.asList(cookieTokens) + "'");
         }
 
@@ -67,8 +69,7 @@ public class SlippTokenBasedRememberMeServices extends AbstractRememberMeService
         // If efficiency was a major issue, just add in a UserCache implementation,
         // but recall that this method is usually only called once per HttpSession - if the token is valid,
         // it will cause SecurityContextHolder population, whilst if invalid, will cause the cookie to be cancelled.
-        String expectedTokenSignature = makeTokenSignature(tokenExpiryTime, userDetails.getUsername(),
-                userDetails.getPassword(), userDetails.getProviderType());
+        String expectedTokenSignature = makeTokenSignature(tokenExpiryTime, userDetails.getUsername(), userDetails.getPassword());
 
         if (!equals(expectedTokenSignature,cookieTokens[2])) {
             throw new InvalidCookieException("Cookie token[2] contained signature '" + cookieTokens[2]
@@ -76,6 +77,14 @@ public class SlippTokenBasedRememberMeServices extends AbstractRememberMeService
         }
 
         return userDetails;
+    }
+    
+    protected Authentication createSuccessfulAuthentication(HttpServletRequest request, UserDetails user) {
+        RememberMeAuthenticationToken auth = new RememberMeAuthenticationToken(getKey(), user,
+                authoritiesMapper.mapAuthorities(user.getAuthorities()));
+        SlippUser slippUser = (SlippUser)user;
+        auth.setDetails(slippUser.getProviderType());
+        return auth;
     }
 
 	private SlippUser getSlippUserDetails(ProviderType providerType, String firstCookieToken) {
@@ -91,8 +100,8 @@ public class SlippTokenBasedRememberMeServices extends AbstractRememberMeService
      * Calculates the digital signature to be put in the cookie. Default value is
      * MD5 ("username:tokenExpiryTime:password:key")
      */
-    protected String makeTokenSignature(long tokenExpiryTime, String username, String password, ProviderType provider) {
-        String data = username + ":" + tokenExpiryTime + ":" + password + ":" + getKey() + ":" + provider.name();
+    protected String makeTokenSignature(long tokenExpiryTime, String username, String password) {
+        String data = username + ":" + tokenExpiryTime + ":" + password + ":" + getKey();
         MessageDigest digest;
         try {
             digest = MessageDigest.getInstance("MD5");
@@ -137,9 +146,9 @@ public class SlippTokenBasedRememberMeServices extends AbstractRememberMeService
         // SEC-949
         expiryTime += 1000L* (tokenLifetime < 0 ? TWO_WEEKS_S : tokenLifetime);
 
-        String signatureValue = makeTokenSignature(expiryTime, username, password, providerType);
+        String signatureValue = makeTokenSignature(expiryTime, username, password);
 
-        setCookie(new String[] {username, Long.toString(expiryTime), signatureValue}, tokenLifetime, request, response);
+        setCookie(new String[] {username, Long.toString(expiryTime), signatureValue, providerType.name()}, tokenLifetime, request, response);
 
         if (logger.isDebugEnabled()) {
             logger.debug("Added remember-me cookie for user '" + username + "', expiry: '"
