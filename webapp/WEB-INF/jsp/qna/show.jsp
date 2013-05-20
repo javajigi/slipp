@@ -27,9 +27,11 @@
 			</c:forEach>
 			</form>
 
+			<c:if test="${question.snsConnected}">
 			<p class="article-count">페이스북으로 공유된 글에 달린 의견</p>
 			<div class="qna-facebook-comment">
 			</div>
+			</c:if>
 
 			<sec:authorize access="!hasRole('ROLE_USER')">
 				<p class="msg-to-login">

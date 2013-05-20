@@ -52,12 +52,11 @@ public class SocialUserServiceTest {
 	@Ignore @Test
 	public void createNewSocialUser_availableUserId() throws Exception {
 		String userId = "userId";
-		String nickName = "nickName";
 		when(usersConnectionRepository.createConnectionRepository(userId)).thenReturn(connectionRepository);
 		MultiValueMap<String, Connection<?>> connections = new LinkedMultiValueMap<String, Connection<?>>();
 		when(connectionRepository.findAllConnections()).thenReturn(connections);
 		
-		dut.createNewSocialUser(userId, nickName, connection);
+		dut.createNewSocialUser(userId, connection);
 		
 		verify(connectionRepository).addConnection(connection);
 	}
@@ -65,13 +64,12 @@ public class SocialUserServiceTest {
 	@Ignore @Test(expected=ExistedUserException.class)
 	public void createNewSocialUser_notAvailableUserId() throws Exception {
 		String userId = "userId";
-		String nickName = "nickName";
 		when(usersConnectionRepository.createConnectionRepository(userId)).thenReturn(connectionRepository);
 		MultiValueMap<String, Connection<?>> connections = new LinkedMultiValueMap<String, Connection<?>>();
 		connections.add("facebook", connection);
 		when(connectionRepository.findAllConnections()).thenReturn(connections);
 		
-		dut.createNewSocialUser(userId, nickName, connection);
+		dut.createNewSocialUser(userId, connection);
 	}
 	
 	@Test

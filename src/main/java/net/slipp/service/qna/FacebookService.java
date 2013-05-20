@@ -1,5 +1,6 @@
 package net.slipp.service.qna;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -100,13 +101,13 @@ public class FacebookService {
 
     public List<FacebookComment> findFacebookComments(Long questionId) {
         Question question = questionRepository.findOne(questionId);
-        SnsConnection snsConnection = question.getSnsConnection();
-        if (!snsConnection.isConnected()) {
-            throw new IllegalStateException(question.getQuestionId() + " is not connected!");
+        if (!question.isSnsConnected()) {
+            return new ArrayList<FacebookComment>();
         }
 
         SocialUser socialUser = question.getWriter();
         FacebookClient facebookClient = new DefaultFacebookClient(socialUser.getAccessToken());
+        SnsConnection snsConnection = question.getSnsConnection();
         log.debug("postId : {}", snsConnection.getPostId());
         
         List<FacebookComment> fbComments = Lists.newArrayList();

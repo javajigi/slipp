@@ -7,22 +7,34 @@
 	<div class="person-info">
 		<img class="person-info-thumb" src="${sf:stripHttp(socialUser.imageUrl)}" width="80" height="80" alt="" />
 		<div class="person-info-text">
-			<h1 class="person-info-name">${socialUser.userId}</h1>
+			<h1 class="person-info-name"><a href="${socialUser.url}">${socialUser.userId}</a></h1>
 			<div class="person-info-join">
 				<span class="person-info-label">가입일</span>
 				<fmt:formatDate value="${socialUser.createDate}" pattern="yyyy-MM-dd HH:mm" />
 			</div>
+			<c:if test="${not socialUser.SLiPPUser}">
 			<div class="person-info-sns">
 				<span class="person-info-label">SNS</span>
-				<a href=""><i class="foundicon-facebook"></i></a>
-				<a href=""><i class="foundicon-twitter"></i></a>
-				<a href=""><i class="foundicon-google-plus"></i></a>
+				<a href="${socialUser.profileUrl}" target="_blank">
+					<c:if test="${socialUser.providerId == 'facebook'}">
+					<i class="foundicon-facebook"></i>
+					</c:if>
+					<c:if test="${socialUser.providerId == 'twitter'}">
+					<i class="foundicon-twitter"></i>
+					</c:if>
+					<c:if test="${socialUser.providerId == 'google'}">
+					<i class="foundicon-google-plus"></i>
+					</c:if>					
+				</a>
 			</div>
+			</c:if>
 		</div>
 		<c:if test="${sf:isWriter(socialUser, loginUser)}">
 		<div class="person-info-util">
+			<c:if test="${socialUser.SLiPPUser}">
 			<a href="/users/${socialUser.id}/changepassword">비밀번호 변경하기</a>
 			<span class="bar"> | </span>
+			</c:if>
 			<a href="/users/${socialUser.id}/form">개인정보 변경하기</a>
 		</div>
 		</c:if>

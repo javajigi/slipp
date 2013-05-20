@@ -8,10 +8,10 @@
 	<slipp:profile-header socialUser="${socialUser}"/>
 	<section class="sign-in-to-slipp">
 		<form:form modelAttribute="user" cssClass="form-write" action="/users/${socialUser.id}" method="put">
-				<form:input path="userId" class="inp_id" placeholder="아이디" />
-				<form:input path="nickName" class="inp_pw" placeholder="닉네임" />
-				<form:input path="email" class="inp_email" placeholder="이메일" />
-				<button type="submit" class="sign-in-to-slipp-btn"><i class="icon-signin"></i>개인정보수정</button>
+			<input type="hidden" id="providerType" name="providerType" value="${socialUser.providerId}" />	
+			<form:input path="email" class="inp_email" placeholder="이메일" />
+			<form:input path="userId" class="inp_id" placeholder="아이디" />
+			<button type="submit" class="sign-in-to-slipp-btn"><i class="icon-signin"></i>개인정보수정</button>
 		</form:form>
 	</section>
 </section>

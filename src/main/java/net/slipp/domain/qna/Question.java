@@ -306,6 +306,10 @@ public class Question implements HasCreatedDate {
 		}
         return snsConnection;
     }
+	
+	public boolean isSnsConnected() {
+	    return getSnsConnection().isConnected();
+	}
 
 	/**
 	 * 베스트 댓글 하나를 반환한다.

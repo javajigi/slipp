@@ -23,20 +23,19 @@ $(document).ready(function() {
 		return true;
     });
     
-    $.validator.addMethod("duplicateEmail", function(value, element, param) {
+    $.validator.addMethod("duplicateEmail", function(value, element, params) {
     	var validator = this;
-    	var email = $(param).val();
     	
 		$.ajax({
 			url: '/api/users/duplicateEmail',
 			type: 'POST',
-			data: {email: email, providerType: 'slipp'},
+			data: params,
 			success: function(response) {
 				if( !response ) {
 					return true;
 				}
 				var errors = {};
-				errors[element.name] = AL10N.User.duplicateEmail(email);
+				errors[element.name] = AL10N.User.duplicateEmail(params.email);
 				validator.showErrors(errors);
 				return false;
 			}, 
@@ -60,7 +59,8 @@ $(document).ready(function() {
 			email: {
 				required: true,
 				validateEmail: "#email",
-				duplicateEmail: "#email"
+				duplicateEmail: function() 
+					{ return { email: $('#email').val(), providerType: $('#providerType').val() }; }
 			},
 			userId: {
 				required: true,

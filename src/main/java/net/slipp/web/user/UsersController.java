@@ -5,6 +5,8 @@ import static net.slipp.web.QnAPageableHelper.createPageableByAnswerCreatedDate;
 import static net.slipp.web.QnAPageableHelper.createPageableByQuestionUpdatedDate;
 import static net.slipp.web.QnAPageableHelper.revisedPage;
 
+import java.net.URLEncoder;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -60,7 +62,7 @@ public class UsersController {
     @RequestMapping("/{id}")
     public String profileById(@PathVariable Long id) throws Exception {
         SocialUser socialUser = userService.findById(id);
-        return String.format("redirect:/users/%d/%s", id, socialUser.getUserId());
+        return String.format("redirect:/users/%d/%s", id, URLEncoder.encode(socialUser.getUserId(), "UTF-8"));
     }
     
     @RequestMapping("/{id}/{userId}")
@@ -98,6 +100,19 @@ public class UsersController {
         model.addAttribute("user", new UserForm(socialUser.getUserId(), socialUser.getEmail()));
         model.addAttribute("socialUser", socialUser);
         return "users/form";
+    }
+    
+    @RequestMapping(value="{id}", method=RequestMethod.PUT)
+    public String update(@LoginUser SocialUser loginUser, @PathVariable Long id, UserForm userForm)
+            throws Exception {
+        SocialUser socialUser = userService.findById(id);
+        if (!loginUser.isSameUser(socialUser)) {
+            throw new IllegalArgumentException("You cann't change another user!");
+        }
+        
+        userService.updateSocialUser(id, userForm.getEmail(), userForm.getUserId());
+        
+        return String.format("redirect:/users/%d/%s", id, URLEncoder.encode(socialUser.getUserId(), "UTF-8"));
     }
     
     @RequestMapping("{id}/changepassword")

@@ -45,7 +45,7 @@ public class SlippSecuritySignUpController {
 	public String signUpSubmit(ServletWebRequest request, SignUpForm signUpForm, BindingResult result) {
 		Connection<?> connection = ProviderSignInUtils.getConnection(request);
 		try {
-			socialUserService.createNewSocialUser(signUpForm.getUserId(), signUpForm.getNickName(), connection);
+			socialUserService.createNewSocialUser(signUpForm.getUserId(), connection);
 			signInAdapter.signIn(signUpForm.getUserId(), connection, request);
 			return "redirect:" + authenticateUrl;
 		} catch (ExistedUserException e) {

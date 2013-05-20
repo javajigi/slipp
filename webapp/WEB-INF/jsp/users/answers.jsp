@@ -8,8 +8,8 @@
 	<slipp:profile-header socialUser="${socialUser}"/>
 	<div class="person-articles">
 		<div class="person-articles-type-select">
-			<a class="active" href="${socialUser.url}/questions">질문</a>
-			<a href="${socialUser.url}/answers">답변</a>
+			<a href="${socialUser.url}/questions">질문</a>
+			<a class="active" href="${socialUser.url}/answers">답변</a>
 		</div>
 		<section class="qna-list">
 			<ul class="list">

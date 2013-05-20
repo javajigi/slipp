@@ -7,19 +7,13 @@ package net.slipp.social.security;
 public class SignUpForm {
     private String userId;
 
-    private String nickName;
-
     public SignUpForm() {
     }
 
-    public SignUpForm(String nickName) {
-        this(null, nickName);
+    public SignUpForm(String userId) {
+        this.userId = userId;
     }
 
-    public SignUpForm(String userId, String nickName) {
-        this.userId = userId;
-        this.nickName = nickName;
-    }
 
     public String getUserId() {
         return userId;
@@ -29,16 +23,8 @@ public class SignUpForm {
         this.userId = userId;
     }
 
-    public String getNickName() {
-        return nickName;
-    }
-
-    public void setNickName(String nickname) {
-        this.nickName = nickname;
-    }
-
     @Override
     public String toString() {
-        return "SignUpForm [userId=" + userId + ", nickname=" + nickName + "]";
+        return "SignUpForm [userId=" + userId + "]";
     }
 }

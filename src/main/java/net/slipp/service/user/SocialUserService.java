@@ -37,7 +37,7 @@ public class SocialUserService {
     @Resource(name = "mailService")
     private MailService mailService;
 
-    public void createNewSocialUser(String userId, String nickname, Connection<?> connection)
+    public void createNewSocialUser(String userId, Connection<?> connection)
             throws ExistedUserException {
         Assert.notNull(userId, "userId can't be null!");
         Assert.notNull(connection, "connection can't be null!");
@@ -48,9 +48,16 @@ public class SocialUserService {
         }
 
         connectionRepository.addConnection(connection);
-
-        SocialUser socialUser = findByUserId(userId);
-        socialUser.setDisplayName(nickname);
+    }
+    
+    public void updateSocialUser(Long id, String email, String userId) {
+        Assert.notNull(id, "id can't be null!");
+        Assert.notNull(email, "email can't be null!");
+        Assert.notNull(userId, "userId can't be null!");
+        
+        SocialUser socialUser = socialUserRepository.findOne(id);
+        socialUser.setEmail(email);
+        socialUser.setUserId(userId);
     }
 
     private boolean isUserIdAvailable(String userId) {

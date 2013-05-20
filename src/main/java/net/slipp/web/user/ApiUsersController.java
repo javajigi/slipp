@@ -33,7 +33,7 @@ public class ApiUsersController {
 	@RequestMapping("/duplicateEmail")
 	public @ResponseBody
 	String duplicateEmail(@LoginUser(required = false) SocialUser loginUser, String email, ProviderType providerType) {
-		log.debug("email : {}", email);
+		log.debug("email : {}, providerType : {}", email, providerType);
 
 		SocialUser socialUser = userService.findByEmailAndProviderId(email, providerType);
 		return checkDuplicate(loginUser, socialUser);

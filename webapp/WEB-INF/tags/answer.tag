@@ -20,7 +20,7 @@ attribute name="isBest" required="true" rtexprvalue="true" type="java.lang.Boole
 			<img src='${sf:stripHttp(each.writer.imageUrl)}' class="article-author-thumb" alt="" />
 		</div>
 		<div class="article-header-text">
-			<a href="${sf:stripHttp(each.writer.profileUrl)}" class="article-author-name">${each.writer.userId}</a>
+			<a href="${sf:stripHttp(each.writer.url)}" class="article-author-name">${each.writer.userId}</a>
 			<a href="#answer-${each.answerId}" class="article-header-time" title="퍼머링크">
 				<fmt:formatDate value="${each.createdDate}" pattern="yyyy-MM-dd HH:mm" />
 				<i class="icon-link"></i>

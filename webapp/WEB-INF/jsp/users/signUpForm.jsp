@@ -9,9 +9,8 @@
 		<h1 class="login-content-title">Sustainable Life, Programming, Programmer</h1>
 		<p class="login-content-welcome">삶과 일의 균형을 맞추면서 행복하게 살 수 있는 세상을 꿈꿉니다.</p>
 			<form:form action="" method="post" cssClass="sign-in-with-sns" modelAttribute="signUpForm">
-				<form:input type="hidden" value= "ididid" path="userId" />
 				<p>SLiPP에서 사용할 닉네임을 입력해 주세요.</p>
-				<form:input path="nickName" cssClass="inp_nickname focused"/><br/>
+				<form:input path="userId" cssClass="inp_nickname focused"/><br/>
 				<form:errors path="*" />
 				<button class="sign-in-with-sns-submit-btn" type="submit"><i class="icon-signin"></i> 회원가입</button>
 			</form:form>
