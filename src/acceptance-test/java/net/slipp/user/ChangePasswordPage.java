@@ -17,7 +17,7 @@ public class ChangePasswordPage {
         driver.findElement(By.id("newPassword")).sendKeys(newPassword);
         driver.findElement(By.id("newPasswordConfirm")).clear();
         driver.findElement(By.id("newPasswordConfirm")).sendKeys(newPassword);
-        driver.findElement(By.cssSelector(".btn-submit")).click();
+        driver.findElement(By.cssSelector(".person-change-pw-submit")).click();
         return new ProfilePage(driver);
         
     }

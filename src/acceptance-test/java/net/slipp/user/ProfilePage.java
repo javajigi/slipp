@@ -14,7 +14,7 @@ public class ProfilePage {
     }
 
     public void verifyPageTitle(String nickName) {
-        assertThat(driver.getTitle(), is(nickName + " 공간 :: SLiPP"));
+        assertThat(driver.getTitle(), is(nickName + "의 개인공간 :: SLiPP"));
     }
 
     public ChangePasswordPage goChangePasswordPage() {

@@ -27,17 +27,17 @@ public class AuthenticationAT extends AbstractATTest {
     
     @Test
     public void login_after_relogin() throws Exception {
-        String firstNickName = "firstNickName";
+        String firstNickName = environment.getProperty("facebook.nickName1");
         indexPage.loginToFacebook(
                 environment.getProperty("facebook.email1"), 
-                environment.getProperty("facebook.password1"), 
+                environment.getProperty("facebook.password1"),
                 firstNickName);
         
         FBLogoutPage logoutPage = new FBLogoutPage(driver);
         logoutPage.verifyCurrentLoginUser(firstNickName);
         logoutPage.logout();
         
-        String secondNickName = "secondNickName";
+        String secondNickName = environment.getProperty("facebook.nickName2");
         indexPage.loginToFacebook(
                 environment.getProperty("facebook.email2"), 
                 environment.getProperty("facebook.password2"), 
@@ -53,7 +53,7 @@ public class AuthenticationAT extends AbstractATTest {
     
     private UserForm join_to_slipp() throws Exception {
         String userId = createUserId();
-        String email = environment.getProperty("slipp.email1");
+        String email = System.currentTimeMillis() + environment.getProperty("slipp.email1");
         LoginPage loginPage = indexPage.goLoginPage();
         indexPage = loginPage.join(userId, email);
         assertThat(indexPage.isLoginStatus(), is(true));
@@ -61,8 +61,7 @@ public class AuthenticationAT extends AbstractATTest {
     }
 
     private String createUserId() {
-        String userId = environment.getProperty("slipp.userId1") + System.currentTimeMillis();
-        return userId.substring(0, 10);
+        return environment.getProperty("slipp.userId1") + System.currentTimeMillis();
     }
     
     @Test
@@ -70,7 +69,7 @@ public class AuthenticationAT extends AbstractATTest {
         UserForm userForm = join_to_slipp();
         indexPage = indexPage.logout();
         LoginPage loginPage = indexPage.goLoginPage();
-        loginPage.loginToSlipp(userForm.getUserId(), FixedPasswordGenerator.DEFAULT_FIXED_PASSWORD);
+        loginPage.loginToSlipp(userForm.getEmail(), FixedPasswordGenerator.DEFAULT_FIXED_PASSWORD);
         assertThat(indexPage.isLoginStatus(), is(true));
     }
     
@@ -86,7 +85,7 @@ public class AuthenticationAT extends AbstractATTest {
         changePasswordPage.changePassword(oldPassword, newPassword);
         indexPage = indexPage.logout();
         LoginPage loginPage = indexPage.goLoginPage();
-        loginPage.loginToSlipp(userForm.getUserId(), newPassword);
+        loginPage.loginToSlipp(userForm.getEmail(), newPassword);
         assertThat(indexPage.isLoginStatus(), is(true));
     }
     

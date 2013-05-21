@@ -67,10 +67,10 @@ public class IndexPage {
 	public IndexPage logout() {
 	    FBLogoutPage logoutPage = new FBLogoutPage(driver);
         logoutPage.logout();
-	    List<WebElement> logoutLinks = driver.findElements(By.cssSelector("a.link-loginout"));
-	    if (!logoutLinks.isEmpty()) {
-	        logoutLinks.get(0).click();
-	    }
+        
+        if (isLoginStatus()) {
+            driver.findElement(By.cssSelector("a.link-loginout")).click();
+        }
 		return new IndexPage(driver);
 	}
 	
@@ -106,12 +106,13 @@ public class IndexPage {
     }
     
     public boolean isLoginStatus() {
-        List<WebElement> logouts = driver.findElements(By.linkText("LogOut"));
+        List<WebElement> logouts = driver.findElements(By.cssSelector("a[title='로그아웃']"));
         return logouts.size() == 1;
     }
 
     public ProfilePage goProfilePage() {
         driver.findElement(By.cssSelector("li.user-info > a > img.user-thumb")).click();
+        driver.findElement(By.cssSelector("a.link-to-personalize")).click();
         return new ProfilePage(driver);
     }
 }

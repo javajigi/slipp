@@ -7,18 +7,23 @@
 
 	<entry key="facebook.email1">jwvnjnv_dingleson_1358644162@tfbnw.net</entry>
 	<entry key="facebook.password1">test1234</entry>
+	<entry key="facebook.nickName1">firstNickName</entry>
 	
 	<entry key="facebook.email2">yxlbakn_alisonman_1358644169@tfbnw.net</entry>
 	<entry key="facebook.password2">test1234</entry>
+	<entry key="facebook.nickName2">secondNickName</entry>
 	
 	<entry key="facebook.email3">fourxnj_liman_1358646246@tfbnw.net</entry>
 	<entry key="facebook.password3">test1234</entry>
+	<entry key="facebook.nickName3">thirdNickName</entry>
 	
 	<entry key="facebook.email4">imfumga_alisonsen_1358646239@tfbnw.net</entry>
 	<entry key="facebook.password4">test1234</entry>
+	<entry key="facebook.nickName4">forthNickName</entry>
 	
 	<entry key="facebook.email5">xkyzssf_changsen_1358646231@tfbnw.net</entry>
 	<entry key="facebook.password5">test1234</entry>
+	<entry key="facebook.nickName5">fifthNickName</entry>
 	
 	<entry key="slipp.userId1">slipp</entry>
 	<entry key="slipp.nickName1">slipper</entry>

@@ -5,6 +5,7 @@ import static org.junit.Assert.assertThat;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -63,6 +64,7 @@ public class QuestionPage {
 
     public QuestionPage likeAnswer() {
         driver.findElement(By.cssSelector("button.btn-like-article > strong.like-count")).click();
+        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
         return new QuestionPage(driver);
     }
 
