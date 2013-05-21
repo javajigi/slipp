@@ -2,12 +2,7 @@
 <p>${user.userId}님, <strong>SLiPP</strong>에 오신것을 환영합니다!</p>
 <br />
 
-<strong>가입정보</strong>
-<p>
-아이디 : <strong>${user.userId}</strong><br/>
-비밀번호 : <strong>${user.rawPassword}</strong>
-</p>
-
+<p>* 초기 비밀번호는 <strong>${user.rawPassword}</strong>입니다.</p>
 <p>* 로그인 후 나의 개인공간에서 비밀번호를 변경할 수 있습니다.</p>
 
 <div style="height:1px;border-top:1px solid #dfdfdf;"></div>
