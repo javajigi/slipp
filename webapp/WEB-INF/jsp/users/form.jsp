@@ -18,6 +18,10 @@
 				<p class="person-change-account-setting-label">닉네임</p>
 				<form:input path="userId" class="inp_id" placeholder="아이디" />
 			</div>
+			<div class="box-input-line">
+				<p class="person-change-account-setting-label">프로필이미지는
+				<a href="http://gravatar.com" target="_blank">Gravatar</a>를 사용합니다.</p>
+			</div>
 			<button type="submit" class="person-change-account-setting-submit"><i class="icon-login"></i> 개인정보수정</button>
 		</form:form>
 	</section>
