@@ -12,7 +12,7 @@ $(document).ready(function() {
 					return true;
 				}
 				var errors = {};
-				errors[element.name] = AL10N.User.duplicateUserId(userId);
+				errors[element.name] = SL10N.User.duplicateUserId(userId);
 				validator.showErrors(errors);
 				return false;
 			}, 
@@ -35,7 +35,7 @@ $(document).ready(function() {
 					return true;
 				}
 				var errors = {};
-				errors[element.name] = AL10N.User.duplicateEmail(params.email);
+				errors[element.name] = SL10N.User.duplicateEmail(params.email);
 				validator.showErrors(errors);
 				return false;
 			}, 
@@ -71,13 +71,13 @@ $(document).ready(function() {
 		},
 		messages: {
 			email: {
-				required: AL10N.User.requiredEmail(),
-				validateEmail: AL10N.User.invalidEmailFormat()
+				required: SL10N.User.requiredEmail(),
+				validateEmail: SL10N.User.invalidEmailFormat()
 			},
 			userId: {
-				required: AL10N.User.requiredUserId(),
-				minlength: AL10N.User.minLenUserId(2),
-				maxlength: AL10N.User.maxLenUserId(20)
+				required: SL10N.User.requiredUserId(),
+				minlength: SL10N.User.minLenUserId(2),
+				maxlength: SL10N.User.maxLenUserId(20)
 			}
 		}
 	});
@@ -93,10 +93,10 @@ $(document).ready(function() {
 		},
 		messages: {
 			authenticationId: {
-				required: AL10N.User.requiredEmail()
+				required: SL10N.User.requiredEmail()
 			},
 			authenticationPassword:  {
-				required: AL10N.User.requiredPassword()
+				required: SL10N.User.requiredPassword()
 			}
 		}
 	});	

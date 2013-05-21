@@ -49,5 +49,5 @@
 		}
 	};	
 	
-	window.AL10N = {};
+	window.SL10N = {};
 }(jQuery));

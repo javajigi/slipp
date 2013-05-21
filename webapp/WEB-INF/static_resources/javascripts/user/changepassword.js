@@ -10,7 +10,7 @@ $(document).ready(function() {
         }
         
         return true;
-    }, AL10N.User.confirmPassword());	
+    }, SL10N.User.confirmPassword());	
 	
 	$("#password").validate({
 		rules: {
@@ -27,14 +27,14 @@ $(document).ready(function() {
 		},
 		messages: {
 			oldPassword: {
-				required: AL10N.User.requiredOldPassword()
+				required: SL10N.User.requiredOldPassword()
 			},
 			newPassword:  {
-				required: AL10N.User.requiredNewPassword()
+				required: SL10N.User.requiredNewPassword()
 			},
 			newPasswordConfirm: {
-				required: AL10N.User.requiredNewPasswordConfirm(),
-				passwordConfirm: AL10N.User.confirmPassword()
+				required: SL10N.User.requiredNewPasswordConfirm(),
+				passwordConfirm: SL10N.User.confirmPassword()
 			}
 		}
 	});

@@ -11,7 +11,7 @@ $(document).ready(function() {
 					}
 					
 					var errors = {};
-					errors[element.name] = AL10N.User.duplicateUserId(userId);
+					errors[element.name] = SL10N.User.duplicateUserId(userId);
 					validator.showErrors(errors);
 					return false;
 				}, 'json'
@@ -37,15 +37,15 @@ $(document).ready(function() {
 		},
 		messages: {
 			userId: {
-				required: AL10N.User.requiredUserId(),
-				minlength: AL10N.User.minLenUserId(4),
-				maxlength: AL10N.User.maxLenUserId(12),
-				regexp: AL10N.User.invalidUserIdFormat()
+				required: SL10N.User.requiredUserId(),
+				minlength: SL10N.User.minLenUserId(4),
+				maxlength: SL10N.User.maxLenUserId(12),
+				regexp: SL10N.User.invalidUserIdFormat()
 			},
 			nickName:  {
-				required: AL10N.User.requiredNickName(),
-				minlength: AL10N.User.minLenNickName(2),
-				maxlength: AL10N.User.maxLenNickName(12)
+				required: SL10N.User.requiredNickName(),
+				minlength: SL10N.User.minLenNickName(2),
+				maxlength: SL10N.User.maxLenNickName(12)
 			}
 		}
 	});

@@ -4,10 +4,16 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 import net.slipp.domain.user.SocialUser;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class ApiUsersControllerTest {
-	private ApiUsersController dut = new ApiUsersController();
+	private ApiUsersController dut;
+	
+	@Before 
+	public void setup() {
+		dut = new ApiUsersController();
+	}
 	
 	@Test
 	public void checkDuplicate_doesnot_existed() {

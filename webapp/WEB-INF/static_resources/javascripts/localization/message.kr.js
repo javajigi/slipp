@@ -1,11 +1,11 @@
 (function (m) {
 	"use strict";
 
-	AL10N.Global = {
+	SL10N.Global = {
 		loginRequired: m("로그인을 해 주세요.")
 	},
 
-	AL10N.User = {
+	SL10N.User = {
 		requiredUserId: m("닉네임을 입력해 주세요."),
 		minLenUserId: m("닉네임은 {0}자 이상이어야 합니다."),
 		maxLenUserId: m("닉네임은 {0}자 이하이어야 합니다."),
