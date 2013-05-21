@@ -44,5 +44,5 @@ public interface SocialUserRepository extends CrudRepository<SocialUser, Long>,
     List<String> findUsersConnectedTo(@Param("providerId") String providerId,
             @Param("providerUserIds") Set<String> providerUserIds);
 
-    SocialUser findByEmailAndProviderId(String email, String providerId);
+    SocialUser findByEmail(String email);
 }

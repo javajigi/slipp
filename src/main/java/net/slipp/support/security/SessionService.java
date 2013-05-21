@@ -25,7 +25,7 @@ public class SessionService {
         
         SocialUser socialUser;
         if (isSlippUser()) {
-            socialUser = socialUserService.findByEmailAndProviderId(getAuthenticatedUserName(), ProviderType.slipp);
+            socialUser = socialUserService.findByEmail(getAuthenticatedUserName());
         } else {
             socialUser = socialUserService.findByUserId(getAuthenticatedUserName());
         }

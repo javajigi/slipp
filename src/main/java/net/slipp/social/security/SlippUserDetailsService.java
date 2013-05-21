@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import net.slipp.domain.ProviderType;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.service.user.SocialUserService;
 
@@ -42,7 +41,7 @@ public class SlippUserDetailsService implements UserDetailsService {
     }
 
     public UserDetails loadUserByEmail(String email) throws UsernameNotFoundException {
-        SocialUser socialUser = socialUserService.findByEmailAndProviderId(email, ProviderType.slipp);
+        SocialUser socialUser = socialUserService.findByEmail(email);
         if (socialUser == null) {
             throw new UsernameNotFoundException(String.format("%s not found!", email));
         }

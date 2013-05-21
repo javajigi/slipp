@@ -2,7 +2,6 @@ package net.slipp.web.user;
 
 import javax.annotation.Resource;
 
-import net.slipp.domain.ProviderType;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.service.user.SocialUserService;
 import net.slipp.support.web.argumentresolver.LoginUser;
@@ -32,10 +31,10 @@ public class ApiUsersController {
 
 	@RequestMapping("/duplicateEmail")
 	public @ResponseBody
-	String duplicateEmail(@LoginUser(required = false) SocialUser loginUser, String email, ProviderType providerType) {
-		log.debug("email : {}, providerType : {}", email, providerType);
+	String duplicateEmail(@LoginUser(required = false) SocialUser loginUser, String email) {
+		log.debug("email : {}", email);
 
-		SocialUser socialUser = userService.findByEmailAndProviderId(email, providerType);
+		SocialUser socialUser = userService.findByEmail(email);
 		return checkDuplicate(loginUser, socialUser);
 	}
 

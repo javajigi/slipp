@@ -72,11 +72,9 @@ public class SocialUserService {
         return socialUsers.get(0);
     }
     
-    public SocialUser findByEmailAndProviderId(String email, ProviderType providerType) {
+    public SocialUser findByEmail(String email) {
         Assert.notNull(email, "email can't be null!");
-        Assert.notNull(providerType, "providerType can't be null!");
-        
-        return socialUserRepository.findByEmailAndProviderId(email, providerType.name());
+        return socialUserRepository.findByEmail(email);
     }
 
     public SocialUser findByUserIdAndConnectionKey(String userId, ConnectionKey connectionKey) {
@@ -94,7 +92,7 @@ public class SocialUserService {
             throw new IllegalArgumentException(userId + " userId already is existed User.");
         }
         
-        existedUser = findByEmailAndProviderId(email, ProviderType.slipp);
+        existedUser = findByEmail(email);
         if (existedUser != null) {
             throw new IllegalArgumentException(email + " email address already is existed User.");
         }

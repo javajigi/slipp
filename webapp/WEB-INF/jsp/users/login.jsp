@@ -41,7 +41,6 @@
 			<div class="sign-in-to-slipp">
 				<p class="sign-in-to-slipp-text">계정이 없다면 간단히 만들어보세요.</p>
 				<form:form modelAttribute="user" cssClass="form-write" action="/users" method="post">
-						<input type="hidden" id="providerType" name="providerType" value="slipp" />
 						<form:input path="email" class="inp_email" placeholder="이메일" />
 						<form:input path="userId" class="inp_pw" placeholder="닉네임" />
 						<p class="sign-in-to-slipp-notice">
