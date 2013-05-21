@@ -7,7 +7,7 @@
 <section class="person-content">
 	<slipp:profile-header socialUser="${socialUser}"/>
 	<section class="person-change-account-setting">
-		<form:form modelAttribute="user" cssClass="person-change-account-setting-form" action="/users/${socialUser.id}" method="put">
+		<form:form id="modifyUser" modelAttribute="user" cssClass="person-change-account-setting-form" action="/users/${socialUser.id}" method="put">
 			<h1>개인정보 변경</h1>
 			<div class="box-input-line">
 				<p class="person-change-account-setting-label">이메일</p>

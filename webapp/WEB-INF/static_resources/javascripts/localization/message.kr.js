@@ -2,7 +2,8 @@
 	"use strict";
 
 	SL10N.Global = {
-		loginRequired: m("로그인을 해 주세요.")
+		loginRequired: m("로그인을 해 주세요."),
+		relogin: m("변경된 정보 반영을 위해 다시 로그인해야 합니다.")
 	},
 
 	SL10N.User = {

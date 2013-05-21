@@ -36,6 +36,10 @@ $(document).ready(function() {
 				required: SL10N.User.requiredNewPasswordConfirm(),
 				passwordConfirm: SL10N.User.confirmPassword()
 			}
-		}
+		},
+	    submitHandler: function(form) {
+	        window.alert(SL10N.Global.relogin());
+	        form.submit();
+	    }
 	});
 });
