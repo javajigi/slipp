@@ -112,7 +112,7 @@ public class UsersController {
         
         userService.updateSlippUser(loginUser, userForm.getEmail(), userForm.getUserId());
         
-        return String.format("redirect:/users/%d/%s", id, URLEncoder.encode(socialUser.getUserId(), "UTF-8"));
+        return "redirect:/users/logout";
     }
     
     @RequestMapping("{id}/changepassword")

@@ -12,6 +12,7 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import net.slipp.domain.ProviderType;
+import net.slipp.support.utils.MD5Util;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -24,6 +25,8 @@ import org.springframework.security.authentication.encoding.PasswordEncoder;
 @Cache(region = "socialUser", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class SocialUser {
     public static final SocialUser GUEST_USER = new GuestSocialUser();
+    
+    public static final String DEFAULT_SLIPP_USER_PROFILE_SUFFIX = "http://www.gravatar.com/avatar/";
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -234,6 +237,15 @@ public class SocialUser {
         
         this.password = encoder.encodePassword(newPassword, null);
     }
+    
+	public void update(String email, String userId) {
+		this.email = email;
+		this.userId = userId;
+		
+		if (isSLiPPUser()) {
+			this.imageUrl = DEFAULT_SLIPP_USER_PROFILE_SUFFIX + MD5Util.md5Hex(email);
+		}
+	}
 
     static class GuestSocialUser extends SocialUser {
         @Override

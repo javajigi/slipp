@@ -23,8 +23,6 @@ import org.springframework.util.Assert;
 
 @Transactional
 public class SocialUserService {
-    private static final String DEFAULT_SLIPP_USER_PROFILE_SUFFIX = "http://www.gravatar.com/avatar/";
-    
     @Resource(name = "usersConnectionRepository")
     private UsersConnectionRepository usersConnectionRepository;
 
@@ -106,7 +104,7 @@ public class SocialUserService {
         SocialUser socialUser = new SocialUser();
         socialUser.setUserId(userId);
         socialUser.setEmail(email);
-        socialUser.setImageUrl(DEFAULT_SLIPP_USER_PROFILE_SUFFIX + MD5Util.md5Hex(email));
+        socialUser.setImageUrl(SocialUser.DEFAULT_SLIPP_USER_PROFILE_SUFFIX + MD5Util.md5Hex(email));
         socialUser.setProviderId(ProviderType.slipp.name());
         socialUser.setProviderUserId(userId);
         socialUser.setRank(1);
@@ -124,8 +122,7 @@ public class SocialUserService {
         Assert.notNull(userId, "userId can't be null!");
         
         SocialUser socialUser = socialUserRepository.findOne(loginUser.getId());
-        socialUser.setEmail(email);
-        socialUser.setUserId(userId);
+        socialUser.update(email, userId);
     }
 
     private String encodePassword(String rawPass) {
