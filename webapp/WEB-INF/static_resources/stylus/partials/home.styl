@@ -1,16 +1,6 @@
 .home-content
 	clearfix();
 	width: 100%;
-	.link-more
-		@media not-desktop
-			margin:0 -1em;
-		a
-			display: block;
-			padding: .4em 1em;
-			text-align: right;
-			color: #333;
-			background-color: #eaeaea;
-			background-image: linear-gradient(#f5f5f5, #fafafa);
 	.mailing
 		.mailing-form
 			clearfix();
@@ -40,12 +30,13 @@
 			background-color: #000;
 	.notice
 		h1
-			margin-bottom: 0;
+			a
+				color: #222;
 		.list
 			list-style: none;
 			margin: 0;
 			padding: 0;
-			border-top: 1px solid #eaeaea;
+			border-top: 1px solid #dadada;
 			font-size: .9em;
 			@media not-desktop
 				margin:0 -1em;
@@ -58,8 +49,13 @@
 					padding-left: 1em;
 					padding-right: 1em;
 			.title
-				font-size: 1.2em;
+				font-size: 1.3em;
+				a
+					color: #222;
 			.time
 				color: #999;
+			.cont
+				margin-top: .2em;
+				color: #666;
 		.rss
 			margin-top: 1em;

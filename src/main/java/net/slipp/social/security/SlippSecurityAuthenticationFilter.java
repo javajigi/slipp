@@ -14,7 +14,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.authentication.RememberMeServices;
@@ -38,7 +37,6 @@ public class SlippSecurityAuthenticationFilter extends AbstractAuthenticationPro
 	}
 
 	@Override
-	@Autowired(required = false)
 	public void setRememberMeServices(RememberMeServices rememberMeServices) {
 		super.setRememberMeServices(rememberMeServices);
 	}
@@ -51,9 +49,18 @@ public class SlippSecurityAuthenticationFilter extends AbstractAuthenticationPro
 		} else {
 			SocialUser signInDetails = (SocialUser) request.getSession().getAttribute(
 					SlippSecuritySignInAdapter.SIGN_IN_DETAILS_SESSION_ATTRIBUTE_NAME);
-			UserDetails userDetails = userDetailsService.loadUserByUsername(signInDetails.getUserId());
-			return new UsernamePasswordAuthenticationToken(userDetails.getUsername(),
-					userDetails.getPassword(), userDetails.getAuthorities());			
+			
+			SlippUser userDetails;
+			if (signInDetails.isSLiPPUser()) {
+			    SlippUserDetailsService slippUserDetailsService = (SlippUserDetailsService)userDetailsService;
+			    userDetails = (SlippUser)slippUserDetailsService.loadUserByEmail(signInDetails.getUserId());
+			} else {
+			    userDetails = (SlippUser)userDetailsService.loadUserByUsername(signInDetails.getUserId());
+			}
+			UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails.getUsername(),
+					userDetails.getPassword(), userDetails.getAuthorities());
+			authenticationToken.setDetails(userDetails.getProviderType());
+			return authenticationToken;
 		}
 	}
 }

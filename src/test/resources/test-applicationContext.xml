@@ -41,5 +41,5 @@
 		<constructor-arg index="0">
 			<util:properties location="classpath:application-properties.xml" />
 		</constructor-arg>
-	</bean>    
+	</bean>  
 </beans>

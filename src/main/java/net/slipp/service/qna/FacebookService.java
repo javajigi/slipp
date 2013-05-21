@@ -1,9 +1,14 @@
 package net.slipp.service.qna;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import net.slipp.domain.qna.Answer;
+import net.slipp.domain.qna.FacebookComment;
 import net.slipp.domain.qna.Question;
+import net.slipp.domain.qna.SnsConnection;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.repository.qna.AnswerRepository;
 import net.slipp.repository.qna.QuestionRepository;
@@ -17,10 +22,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import com.google.common.collect.Lists;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.Parameter;
+import com.restfb.exception.FacebookGraphException;
+import com.restfb.types.Comment;
 import com.restfb.types.FacebookType;
+import com.restfb.types.Post;
+import com.restfb.types.Post.Comments;
 
 @Service
 @Transactional
@@ -43,7 +53,7 @@ public class FacebookService {
         log.info("questionId : {}", questionId);
         Question question = questionRepository.findOne(questionId);
         Assert.notNull(question, "Question should be not null!");
-        
+
         String message = createFacebookMessage(question.getContents());
         String postId = sendMessageToFacebook(loginUser, createLink(question.getQuestionId()), message);
         if (postId != null) {
@@ -89,6 +99,44 @@ public class FacebookService {
         }
     }
 
+    public List<FacebookComment> findFacebookComments(Long questionId) {
+        Question question = questionRepository.findOne(questionId);
+        if (!question.isSnsConnected()) {
+            return new ArrayList<FacebookComment>();
+        }
+
+        SocialUser socialUser = question.getWriter();
+        FacebookClient facebookClient = new DefaultFacebookClient(socialUser.getAccessToken());
+        SnsConnection snsConnection = question.getSnsConnection();
+        log.debug("postId : {}", snsConnection.getPostId());
+        
+        List<FacebookComment> fbComments = Lists.newArrayList();
+        Post post = findPost(facebookClient, snsConnection.getPostId());
+        if (post == null) {
+            return fbComments;
+        }
+
+        Comments comments = post.getComments();
+        if (comments == null) {
+            return fbComments;
+        }
+        
+        List<Comment> commentData = comments.getData();
+        for (Comment comment : commentData) {
+            fbComments.add(FacebookComment.create(comment));
+        }
+        return fbComments;
+    }
+
+    private Post findPost(FacebookClient facebookClient, String postId) {
+        try {
+            return facebookClient.fetchObject(postId, Post.class);
+        } catch (FacebookGraphException e) {
+            log.error("{} postId, errorMessage : {}", postId, e.getMessage());
+            return null;
+        }
+    }
+
     String createLink(Long questionId) {
         String link = String.format("%s/questions/%d", createApplicationUrl(), questionId);
         return link;
@@ -98,7 +146,7 @@ public class FacebookService {
         String link = String.format("%s/questions/%d#answer-%d", createApplicationUrl(), questionId, answerId);
         return link;
     }
-    
+
     protected String createApplicationUrl() {
         return applicationUrl;
     }

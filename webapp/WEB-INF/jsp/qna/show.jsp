@@ -26,9 +26,16 @@
 				<slipp:answer each="${each}" isBest="false"/>
 			</c:forEach>
 			</form>
+
+			<c:if test="${question.snsConnected}">
+			<p class="article-count">페이스북으로 공유된 글에 달린 의견</p>
+			<div class="qna-facebook-comment">
+			</div>
+			</c:if>
+
 			<sec:authorize access="!hasRole('ROLE_USER')">
 				<p class="msg-to-login">
-					<b><a href="/login">로그인</a></b>해서 의견을 나누세요!
+					<b><a href="/users/login">SLiPP계정</a></b>으로 의견을 나누세요!
 				</p>
 			</sec:authorize>
 			<sec:authorize access="hasRole('ROLE_USER')">
@@ -41,7 +48,7 @@
 						<div class="submit-write">
 							<c:if test="${loginUser.facebookUser}">
 							<label class="msg-send-to-facebook">
-								<form:checkbox path="connected" /> 페이스북으로 전송
+								<form:checkbox path="connected" /> 페이스북으로 전송하려면 체크하세요
 							</label>
 							</c:if>
 							<button type="submit" class="btn-submit"><i class="icon-submit"></i> 작성완료</button>
@@ -97,6 +104,19 @@ hljs.initHighlightingOnLoad();
 <script src="${url:resource('/javascripts/qna/image.upload.js')}"></script>
 <script src="${url:resource('/javascripts/jquery.markitup.js')}"></script>
 <script>
+$(document).ready(function(){
+	function showFacebookComments(questionId) {
+		var url = '/api/facebooks/' + questionId + '/comments';
+		$.get(url,
+			function(response) {
+				$('.qna-facebook-comment').html(response);
+				return false;
+			}, 'html'
+		);
+	}
+
+	showFacebookComments(${question.questionId});
+});
 $('#contents').markItUp(mySettings);
 </script>
 

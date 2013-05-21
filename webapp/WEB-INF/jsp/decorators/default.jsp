@@ -14,6 +14,8 @@
 	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="${url:resource('/javascripts/slipp.js')}"></script>
+<script src="${url:resource('/javascripts/localization/message.kr.js')}"></script>
 <decorator:head />
 </head>
 
@@ -42,9 +44,9 @@
 			<nav class="user-menu">
 				<ul role="menu">
 					<sec:authorize access="!hasRole('ROLE_USER')">
-					<li class="msg-for-login">로그인해서 의견을 나누세요!</li>
+					<li class="msg-for-login">SLiPP 계정으로 의견을 나누세요! &rarr;</li>
 					<li class="loginout">
-						<a href="/login" class="link-loginout"><span class="text">LogIn</span> <i class="icon-loginout"></i></a>
+						<a href="/users/login" class="link-loginout" title="SLiPP 계정연결"><i class="icon-loginout"></i></a>
 					</li>
 					</sec:authorize>
 					<sec:authorize access="hasRole('ROLE_USER')">
@@ -60,12 +62,13 @@
 							</c:if>
 						</a>
 						<div id="notificationLayer" class="notification-layer">
+							<a href="${loginUser.url}" class="link-to-personalize"><i class="icon-person"></i> 나의 개인공간 &rarr;</a>
 							<strong class="title">응답알림</strong>
 							<ul></ul>
 						</div>
 					</li>
 					<li class="loginout">
-						<a href="/logout" class="link-loginout"><span class="text">LogOut</span> <i class="icon-loginout"></i></a>
+						<a href="/users/logout" class="link-loginout" title="로그아웃"><i class="icon-loginout"></i></a>
 					</li>
 					</sec:authorize>
 				</ul>
@@ -146,7 +149,7 @@ $(document).ready(function(){
 		getNotificationData();
 		$notificationLayer.toggle();
 	});
-	
+
 	$siteSearchButton.on('click', function(e) {
 		var $siteSearchArea = $('#siteSearchArea');
 		e.preventDefault();
@@ -183,7 +186,10 @@ $(document).ready(function(){
 		});
 	}
 });
-
+</script>
+<script src="${url:resource('/javascripts/jquery.placeholder.min.js')}"></script>
+<script>
+$('input, textarea').placeholder();
 </script>
 </body>
 </html>

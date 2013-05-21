@@ -21,6 +21,7 @@ $(document).ready(function(){
 	setNicknamesLink();
 	setImgRealSizeLink();
 	setFloatingBtnLike();
+	setFloatingContentSub();
 
 	function addAnswerTo() {
 		var orgUserId = $(this).data('answer-user-id');
@@ -32,8 +33,9 @@ $(document).ready(function(){
 
 		return false;
 	}
+
 	function likeAnswerTo() {
-		$likeAnswerBtn = $('#likeAnswerButton');
+		$likeAnswerBtn = $(this).parent();
 		$.post($likeAnswerBtn.attr('href'), {},
 			function(result) {
 				$likeAnswerBtn.find('.like-count').html(result);
@@ -41,7 +43,7 @@ $(document).ready(function(){
 		);
 		return false;
 	}
-	
+
 	function arroundSpace(contents, orgUserId){
 		if ( $.trim(contents).length > 0) {
 			contents += ' ';
@@ -50,6 +52,7 @@ $(document).ready(function(){
 
 		return contents;
 	}
+
 	function setNicknamesLink(){
 		var nickNames = [];
 
@@ -66,12 +69,14 @@ $(document).ready(function(){
 			$(this).html(cont);
 		});
 	}
+
 	function setImgRealSizeLink() {
 		var $images = $('.article-doc img');
 		var imageUrl = $images.attr('src');
 
 		$images.wrap('<a href="'+imageUrl+'" target="_blank"></a>');
 	}
+
 	function setFloatingBtnLike() {
 		var $window = $(window);
 		var $articles = $('.article');
@@ -84,7 +89,7 @@ $(document).ready(function(){
 				var $btnLikeArticle = $(this).find('.btn-like-article');
 				var offsetTop = $(this).offset().top;
 				var height = $(this).height();
-				var isFloatingMode = scrollTop > offsetTop && scrollTop - offsetTop + 150 < height;
+				var isFloatingMode = scrollTop > offsetTop && scrollTop - offsetTop + 100 < height;
 
 				if (isFloatingMode) {
 					$btnLikeArticle.addClass('fixed');
@@ -94,5 +99,25 @@ $(document).ready(function(){
 			});
 		});
 	}
-	
+
+	function setFloatingContentSub() {
+		var $window = $(window);
+		var $contentSub = $('.content-sub');
+		var $floating = $contentSub.find('.floating')
+		var srollTop;
+
+		$window.scroll(function(event) {
+			scrollTop = $window.scrollTop();
+			var offsetTop = $contentSub.offset().top;
+			var height = $(this).height();
+			var isFloatingMode = scrollTop > offsetTop;
+
+			console.log(isFloatingMode)
+			if (isFloatingMode) {
+				$floating.css({top:0, position: 'fixed'})
+			} else {
+				$floating.css({top:'', position: 'relative'})
+			}
+		});
+	}
 });

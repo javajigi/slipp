@@ -1,6 +1,6 @@
 package net.slipp.domain.user;
 
-import net.slipp.domain.user.SocialUser;
+import net.slipp.user.MockPasswordEncoder;
 
 public class SocialUserBuilder {
     private String userId;
@@ -19,12 +19,25 @@ public class SocialUserBuilder {
 
     private String imageUrl;
     
+    private String rawPassword;
+
+    private String password;
+
+    private String email;
+    
     public static SocialUserBuilder aSocialUser() {
     	return new SocialUserBuilder();
     }
 
     public SocialUserBuilder withUserId(String userId) {
         this.userId = userId;
+        return this;
+    }
+    
+    public SocialUserBuilder withRawPassword(String rawPassword) {
+        MockPasswordEncoder encoder = new MockPasswordEncoder();
+        this.rawPassword = rawPassword;
+        this.password = encoder.encodePassword(rawPassword);
         return this;
     }
     
@@ -48,6 +61,11 @@ public class SocialUserBuilder {
     	return this;
     }
     
+    public SocialUserBuilder withEmail(String email) {
+        this.email = email;
+        return this;
+    }
+    
     public SocialUser createTestUser(String userId) {
 		withUserId(userId);
 		withAccessToken("1234-5678" + userId);
@@ -65,6 +83,9 @@ public class SocialUserBuilder {
         socialUser.setDisplayName(displayName);
         socialUser.setProfileUrl(profileUrl);
         socialUser.setImageUrl(imageUrl);
+        socialUser.setPassword(password);
+        socialUser.setRawPassword(rawPassword);
+        socialUser.setEmail(email);
         return socialUser;
     }
 }

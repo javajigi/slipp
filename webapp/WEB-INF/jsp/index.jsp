@@ -31,7 +31,7 @@
 										<span class="time">
 											<fmt:formatDate value="${each.createdDate}" pattern="yyyy-MM-dd HH:mm" />
 										</span>
-										<a href="${each.latestParticipant.profileUrl}" class="author">${each.latestParticipant.userId}</a>
+										<a href="${each.latestParticipant.url}" class="author">${each.latestParticipant.userId}</a>
 									</c:when>
 									<c:otherwise>
 										<i class="icon-add-comment"></i>
@@ -39,7 +39,7 @@
 										<span class="time">
 											<fmt:formatDate value="${each.updatedDate}" pattern="yyyy-MM-dd HH:mm" />
 										</span>
-										<a href="${each.latestParticipant.profileUrl}" class="author">${each.latestParticipant.userId}</a>
+										<a href="${each.latestParticipant.url}" class="author">${each.latestParticipant.userId}</a>
 									</c:otherwise>
 								</c:choose>
 							</div>
@@ -59,7 +59,7 @@
 		<slipp:side-tags tags="${tags}"/>
 	</div>
 	<div class="content-sub">
-		<!-- 
+		<!--
 		<section class="mailing">
 			<h1>SLiPP Mailing</h1>
 			<p>메일주소를 등록하시면 SLiPP에 올라오는 흥미로운 이야기를 모아서 정기적으로 메일을 보내드립니다.</p>
@@ -72,7 +72,7 @@
 		</section>
 		 -->
 		<section class="notice">
-			<h1><a href="/wiki/display/slipp/Home">SLiPP 소식</a></h1>
+			<h1><a href="/wiki/display/slipp/Home">SLiPP log</a></h1>
 			<ul class="list">
 				<c:forEach items="${pages}" var="page">
 				<li>

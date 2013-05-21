@@ -20,6 +20,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import net.slipp.domain.ProviderType;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.support.jpa.CreatedAndUpdatedDateEntityListener;
 import net.slipp.support.jpa.HasCreatedAndUpdatedDate;
@@ -171,7 +172,7 @@ public class Answer implements HasCreatedAndUpdatedDate, Comparable<Answer> {
 	}
 	
     public SnsConnection connected(String postId) {
-        this.snsConnection = new SnsConnection(SnsType.valueOf(writer.getProviderId()), postId); 
+        this.snsConnection = new SnsConnection(ProviderType.valueOf(writer.getProviderId()), postId); 
         return this.snsConnection;
     }
 	

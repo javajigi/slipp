@@ -124,18 +124,16 @@ public class QnAAT extends AbstractATTest {
 	}
 
     @Test
-	public void 로그인과_로그아웃_답변에_대한_공감() throws Exception {
+	public void answer_best() throws Exception {
     	loginToFacebook(1);
     	createQuestion(questionFixture);
         loginToAnotherUser(2);
         QuestionPage questionPage = answerToQuestion();
         questionPage = questionPage.likeAnswer();
         questionPage.verifyLikeCount(1);
-        
     	logout();
     	indexPage.goToQuestion(0);
     	questionPage.likeAnswer();
-    	verifyLoginPage();
 	}
 
     private LoginUser loginToAnotherUser(int userNo) {
@@ -156,7 +154,7 @@ public class QnAAT extends AbstractATTest {
         
         questionPage.verifyBestAnswer();
     }
-
+    
     private QuestionPage likeAnswer(int userNo, int likeCount) {
         loginToAnotherUser(userNo);
         QuestionPage questionPage = indexPage.goToQuestion(0);
@@ -165,10 +163,6 @@ public class QnAAT extends AbstractATTest {
         return questionPage;
     }
 
-	private void verifyLoginPage() {
-		assertThat(driver.getTitle(), is("로그인 :: SLiPP"));
-	}
-	
 	private QuestionPage answerToQuestion(int index) {
 		String answer = "정확히 내가 바라는 답변이다.";
     	QuestionPage questionPage = indexPage.goToQuestion(index);
@@ -200,10 +194,7 @@ public class QnAAT extends AbstractATTest {
     private LoginUser getLoginUser(int number) {
     	  String email = environment.getProperty("facebook.email" + number);
           String password = environment.getProperty("facebook.password" + number);
-          String nickName = "자바지기";
-          if (number > 1) {
-          	nickName = nickName + number;
-          }
+          String nickName = environment.getProperty("facebook.nickName" + number);
           return new LoginUser(email, password, nickName);
     }
     

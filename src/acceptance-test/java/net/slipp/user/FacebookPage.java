@@ -1,7 +1,5 @@
 package net.slipp.user;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
 import net.slipp.LoginUser;
 import net.slipp.qna.IndexPage;
 

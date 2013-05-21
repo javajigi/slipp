@@ -3,11 +3,8 @@ package net.slipp.qna;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-import java.util.List;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -16,11 +13,11 @@ public class FBLogoutPage {
 
     public FBLogoutPage(WebDriver driver) {
         this.driver = driver;
-        driver.get("http://localhost:8080/fblogout");
+        driver.get("http://localhost:8080/users/fblogout");
     }
 
     public FBLogoutPage goToLogoutPage() {
-        driver.get("http://localhost:8080/fblogout");
+        driver.get("http://localhost:8080/users/fblogout");
         return new FBLogoutPage(driver);
     }
 
@@ -32,10 +29,7 @@ public class FBLogoutPage {
     public IndexPage logout() {
         new WebDriverWait(driver, 1000).until(ExpectedConditions.visibilityOfElementLocated(By.id("fbLogoutBtn")));
         driver.findElement(By.id("fbLogoutBtn")).click();
-        List<WebElement> logoutLinks = driver.findElements(By.linkText("로그아웃"));
-        if (!logoutLinks.isEmpty()) {
-            logoutLinks.get(0).click();
-        }
+        driver.findElement(By.cssSelector("a.link-loginout")).click();
         return new IndexPage(driver);
     }
 }

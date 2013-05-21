@@ -1,9 +1,17 @@
 package net.slipp.service.user;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import net.slipp.domain.user.ExistedUserException;
+import net.slipp.domain.user.PasswordDto;
+import net.slipp.domain.user.SocialUser;
+import net.slipp.domain.user.SocialUserBuilder;
+import net.slipp.repository.user.SocialUserRepository;
+import net.slipp.user.MockPasswordEncoder;
 
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,7 +24,6 @@ import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
-@Ignore
 @RunWith(MockitoJUnitRunner.class)
 public class SocialUserServiceTest {
 	@Mock
@@ -26,12 +33,23 @@ public class SocialUserServiceTest {
 	private ConnectionRepository connectionRepository;
 	
 	@Mock
+	private SocialUserRepository socialUserRepository;
+	
+	private MockPasswordEncoder encoder;
+	
+	@Mock
 	private Connection<?> connection;
 	
 	@InjectMocks
 	private SocialUserService dut = new SocialUserService();
 	
-	@Test
+	@Before
+	public void setup() {
+	    encoder = new MockPasswordEncoder();
+	    dut.passwordEncoder = encoder;
+	}
+	
+	@Ignore @Test
 	public void createNewSocialUser_availableUserId() throws Exception {
 		String userId = "userId";
 		when(usersConnectionRepository.createConnectionRepository(userId)).thenReturn(connectionRepository);
@@ -43,7 +61,7 @@ public class SocialUserServiceTest {
 		verify(connectionRepository).addConnection(connection);
 	}
 	
-	@Test(expected=ExistedUserException.class)
+	@Ignore @Test(expected=ExistedUserException.class)
 	public void createNewSocialUser_notAvailableUserId() throws Exception {
 		String userId = "userId";
 		when(usersConnectionRepository.createConnectionRepository(userId)).thenReturn(connectionRepository);
@@ -53,4 +71,17 @@ public class SocialUserServiceTest {
 		
 		dut.createNewSocialUser(userId, connection);
 	}
+	
+	@Test
+    public void changePassword() throws Exception {
+	    String oldPassword = "oldPassword";
+	    String newPassword = "newPassword";
+	    
+	    SocialUser socialUser = new SocialUserBuilder().withRawPassword(oldPassword).build();
+        PasswordDto password = new PasswordDto(socialUser.getId(), oldPassword, newPassword, newPassword);
+	    when(socialUserRepository.findOne(socialUser.getId())).thenReturn(socialUser);
+	    
+        SocialUser changedUser = dut.changePassword(socialUser, password);
+        assertThat(changedUser.getPassword(), is(encoder.encodePassword(newPassword, null)));
+    }
 }

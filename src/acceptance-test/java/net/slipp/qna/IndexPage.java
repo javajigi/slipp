@@ -5,6 +5,8 @@ import java.util.List;
 import net.slipp.LoginUser;
 import net.slipp.user.FacebookPage;
 import net.slipp.user.GooglePage;
+import net.slipp.user.LoginPage;
+import net.slipp.user.ProfilePage;
 import net.slipp.user.TwitterPage;
 
 import org.openqa.selenium.By;
@@ -65,10 +67,10 @@ public class IndexPage {
 	public IndexPage logout() {
 	    FBLogoutPage logoutPage = new FBLogoutPage(driver);
         logoutPage.logout();
-	    List<WebElement> logoutLinks = driver.findElements(By.cssSelector("a.link-loginout"));
-	    if (!logoutLinks.isEmpty()) {
-	        logoutLinks.get(0).click();
-	    }
+        
+        if (isLoginStatus()) {
+            driver.findElement(By.cssSelector("a.link-loginout")).click();
+        }
 		return new IndexPage(driver);
 	}
 	
@@ -97,4 +99,20 @@ public class IndexPage {
 		questions.get(index).findElement(By.cssSelector("strong.subject > a")).click();
 		return new QuestionPage(driver);
 	}
+
+    public LoginPage goLoginPage() {
+        driver.findElement(By.cssSelector("a.link-loginout")).click();
+        return new LoginPage(driver);
+    }
+    
+    public boolean isLoginStatus() {
+        List<WebElement> logouts = driver.findElements(By.cssSelector("a[title='로그아웃']"));
+        return logouts.size() == 1;
+    }
+
+    public ProfilePage goProfilePage() {
+        driver.findElement(By.cssSelector("li.user-info > a > img.user-thumb")).click();
+        driver.findElement(By.cssSelector("a.link-to-personalize")).click();
+        return new ProfilePage(driver);
+    }
 }
