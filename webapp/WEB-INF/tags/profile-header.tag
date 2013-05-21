@@ -5,7 +5,14 @@
 %><%@ attribute name="socialUser" required="true" rtexprvalue="true" type="net.slipp.domain.user.SocialUser" description="사용자"
 %>
 	<div class="person-info">
-		<img class="person-info-thumb" src="${sf:stripHttp(socialUser.imageUrl)}" width="80" height="80" alt="" />
+		<c:choose>
+		<c:when test="${socialUser.SLiPPUser}">
+		<a href="http://ko.gravatar.com/" target="_blank"><img class="person-info-thumb" src="${sf:stripHttp(socialUser.imageUrl)}" width="80" height="80" alt="" /></a>
+		</c:when>
+		<c:otherwise>
+		<a href="${socialUser.profileUrl}" target="_blank"><img class="person-info-thumb" src="${sf:stripHttp(socialUser.imageUrl)}" width="80" height="80" alt="" /></a>		
+		</c:otherwise>
+		</c:choose>
 		<div class="person-info-text">
 			<h1 class="person-info-name"><a href="${socialUser.url}">${socialUser.userId}</a></h1>
 			<div class="person-info-join">

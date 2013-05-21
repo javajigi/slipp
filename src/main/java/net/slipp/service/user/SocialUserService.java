@@ -11,6 +11,7 @@ import net.slipp.domain.user.PasswordDto;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.repository.user.SocialUserRepository;
 import net.slipp.service.MailService;
+import net.slipp.support.utils.MD5Util;
 
 import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.social.connect.Connection;
@@ -22,6 +23,8 @@ import org.springframework.util.Assert;
 
 @Transactional
 public class SocialUserService {
+    private static final String DEFAULT_SLIPP_USER_PROFILE_SUFFIX = "http://www.gravatar.com/avatar/";
+    
     @Resource(name = "usersConnectionRepository")
     private UsersConnectionRepository usersConnectionRepository;
 
@@ -103,6 +106,7 @@ public class SocialUserService {
         SocialUser socialUser = new SocialUser();
         socialUser.setUserId(userId);
         socialUser.setEmail(email);
+        socialUser.setImageUrl(DEFAULT_SLIPP_USER_PROFILE_SUFFIX + MD5Util.md5Hex(email));
         socialUser.setProviderId(ProviderType.slipp.name());
         socialUser.setProviderUserId(userId);
         socialUser.setRank(1);
