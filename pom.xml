@@ -17,6 +17,15 @@
 		<jetty.version>6.1.22</jetty.version>
 		<jpametamodel.generated.dir>${basedir}/target/generated-sources/jpametamodel</jpametamodel.generated.dir>
 		<acceptance.test.dir>${basedir}/src/acceptance-test/java</acceptance.test.dir>
+
+
+		<!-- SONAR -->
+		<sonar.language>java</sonar.language>
+		<sonar.jdbc.url>jdbc:mysql://localhost:3306/sonar?useUnicode=true&amp;characterEncoding=utf8</sonar.jdbc.url>
+		<sonar.jdbc.driverClassName>com.mysql.jdbc.Driver</sonar.jdbc.driverClassName>
+		<sonar.jdbc.username>slipp</sonar.jdbc.username>
+		<sonar.jdbc.password>password</sonar.jdbc.password>
+		<sonar.host.url>http://localhost:9000</sonar.host.url>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -150,8 +159,8 @@
 			<groupId>org.freemarker</groupId>
 			<artifactId>freemarker</artifactId>
 			<version>2.3.16</version>
-		</dependency>		
-		
+		</dependency>
+
 
 		<!-- Log - slf4j -->
 		<dependency>
@@ -459,6 +468,11 @@
 					</dependency>
 				</dependencies>
 			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>2.0</version>
+			</plugin>
 		</plugins>
 	</build>
 	<repositories>
@@ -478,9 +492,4 @@
 			<url>http://mvn.carbonfive.com/public</url>
 		</pluginRepository>
 	</pluginRepositories>
-	<reports>
-		<report>maven-emma-plugin</report>
-		<report>maven-pmd-plugin</report>
-		<report>jdepend-maven-plugin</report>
-	</reports>
 </project>

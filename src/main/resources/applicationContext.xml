@@ -120,7 +120,7 @@
 
 		<remember-me services-ref="slippRememberMeServices" />
 	</security:http>
-
+	
 	<bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder">
 	    <constructor-arg index="0" value="256"/>
 	</bean>

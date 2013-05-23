@@ -5,6 +5,7 @@ import java.util.List;
 import net.slipp.domain.qna.FacebookComment;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +18,7 @@ import com.restfb.types.FacebookType;
 import com.restfb.types.Post;
 import com.restfb.types.Post.Comments;
 
+@Ignore
 public class RestFBTest {
     private static Logger logger = LoggerFactory.getLogger(RestFBTest.class);
 
@@ -24,7 +26,7 @@ public class RestFBTest {
 
     @Before
     public void setup() {
-        String accessToken = "AAACm7YIxcxcBAK5umCPnYRC90q3POoFxKeyOTqQoXJdPDOm0X3gGSH4ZC5ZCuNSScn9pjwCfKT4pS1yrt4ZClp2I7bq3bjEd5PkNaVTHgZDZD";
+        String accessToken = "ACCESS_TOKEN";
         dut = new DefaultFacebookClient(accessToken);
     }
 
