@@ -17,7 +17,7 @@
 		<jetty.version>6.1.22</jetty.version>
 		<jpametamodel.generated.dir>${basedir}/target/generated-sources/jpametamodel</jpametamodel.generated.dir>
 		<acceptance.test.dir>${basedir}/src/acceptance-test/java</acceptance.test.dir>
-
+		<maven.test.failure.ignore>true</maven.test.failure.ignore>
 
 		<!-- SONAR -->
 		<sonar.language>java</sonar.language>
@@ -26,6 +26,7 @@
 		<sonar.jdbc.username>slipp</sonar.jdbc.username>
 		<sonar.jdbc.password>password</sonar.jdbc.password>
 		<sonar.host.url>http://localhost:9000</sonar.host.url>
+		<sonar.exclusions>**/net/slipp/domain/**/*_.java</sonar.exclusions>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -464,14 +465,8 @@
 				</configuration>
 				<executions>
 					<execution>
-						<id>integration-test</id>
 						<goals>
 							<goal>integration-test</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>verify</id>
-						<goals>
 							<goal>verify</goal>
 						</goals>
 					</execution>
@@ -513,7 +508,7 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>			
+			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>sonar-maven-plugin</artifactId>
