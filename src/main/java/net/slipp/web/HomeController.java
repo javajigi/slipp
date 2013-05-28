@@ -37,6 +37,7 @@ public class HomeController {
 	@RequestMapping("/")
 	public String home(Model model) {
 		if (isProductionMode()) {
+			
 			model.addAttribute("pages", wikiService.findWikiPages());			
 		}
 		model.addAttribute("questions", qnaService.findsQuestion(createPageableByQuestionUpdatedDate(DEFAULT_PAGE_NO, DEFAULT_PAGE_SIZE)));
