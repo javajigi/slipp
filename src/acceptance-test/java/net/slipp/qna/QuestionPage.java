@@ -64,7 +64,7 @@ public class QuestionPage {
 
     public QuestionPage likeAnswer() {
         driver.findElement(By.cssSelector("button.btn-like-article > strong.like-count")).click();
-        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
         return new QuestionPage(driver);
     }
 
