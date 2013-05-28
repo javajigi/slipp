@@ -59,18 +59,6 @@
 		<slipp:side-tags tags="${tags}"/>
 	</div>
 	<div class="content-sub">
-		<!--
-		<section class="mailing">
-			<h1>SLiPP Mailing</h1>
-			<p>메일주소를 등록하시면 SLiPP에 올라오는 흥미로운 이야기를 모아서 정기적으로 메일을 보내드립니다.</p>
-			<form action="/" class="mailing-form">
-				<fieldset>
-					<input type="email" class="inp-mail" placeholder="Your Email" />
-					<button type="submit" class="btn-submit">등록</button>
-				</fieldset>
-			</form>
-		</section>
-		 -->
 		<section class="notice">
 			<h1><a href="/wiki/display/slipp/Home">SLiPP log</a></h1>
 			<ul class="list">
