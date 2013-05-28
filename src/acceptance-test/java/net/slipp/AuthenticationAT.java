@@ -14,6 +14,7 @@ import net.slipp.web.UserForm;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.Alert;
 
 public class AuthenticationAT extends AbstractATTest {
     private IndexPage indexPage;
@@ -83,7 +84,8 @@ public class AuthenticationAT extends AbstractATTest {
         String oldPassword = FixedPasswordGenerator.DEFAULT_FIXED_PASSWORD;
         String newPassword = "newPassword";
         changePasswordPage.changePassword(oldPassword, newPassword);
-        indexPage = indexPage.logout();
+        Alert alert = driver.switchTo().alert();
+        alert.accept();
         LoginPage loginPage = indexPage.goLoginPage();
         loginPage.loginToSlipp(userForm.getEmail(), newPassword);
         assertThat(indexPage.isLoginStatus(), is(true));

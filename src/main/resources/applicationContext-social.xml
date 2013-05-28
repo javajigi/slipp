@@ -56,8 +56,6 @@
 	<bean id="textEncryptor" class="org.springframework.security.crypto.encrypt.Encryptors"
 		factory-method="noOpText" />
 		
-	<bean id="socialUserService" class="net.slipp.service.user.SocialUserService" />
-		
 	<bean id="slippUserDetailsService" class="net.slipp.social.security.SlippUserDetailsService" 
 		p:adminUsers="자바지기:eclipse4j"
 	/>

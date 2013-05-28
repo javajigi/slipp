@@ -1,15 +1,11 @@
 package net.slipp.support.security;
 
-import static net.slipp.domain.user.SocialUserBuilder.*;
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
-
-import java.util.Arrays;
-import java.util.List;
-
+import static net.slipp.domain.user.SocialUserBuilder.aSocialUser;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.when;
 import net.slipp.domain.user.SocialUser;
-import net.slipp.repository.user.SocialUserRepository;
+import net.slipp.service.user.SocialUserService;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,7 +21,7 @@ import org.springframework.security.core.context.SecurityContextImpl;
 @RunWith(MockitoJUnitRunner.class)
 public class SessionServiceTest {
     @Mock 
-    SocialUserRepository socialUserRepository;
+    SocialUserService socialUserService;
     
     @InjectMocks
     private SessionService dut = new SessionService();
@@ -37,7 +33,6 @@ public class SessionServiceTest {
         SocialUser actual = dut.getLoginUser();
         assertThat(actual, is(SocialUser.GUEST_USER));
     }
-    
 
     @Test
     public void getSocialUserWhenLoginSuccess() {
@@ -45,9 +40,7 @@ public class SessionServiceTest {
         setupLoginUser(createAuthorizedAuthentication(userId));
         
         SocialUser socialUser = aSocialUser().withUserId(userId).build();
-        List<SocialUser> socialUsers = Arrays.asList(socialUser);
-        
-        when(socialUserRepository.findsByUserId("loginId")).thenReturn(socialUsers);
+        when(socialUserService.findByUserId("loginId")).thenReturn(socialUser);
         SocialUser actual = dut.getLoginUser();
         assertThat(actual, is(socialUser));
     }
