@@ -12,6 +12,7 @@ import java.util.Set;
 import net.slipp.domain.ProviderType;
 import net.slipp.domain.tag.Tag;
 import net.slipp.domain.user.SocialUser;
+import net.slipp.domain.user.SocialUserBuilder;
 import net.slipp.repository.tag.TagRepository;
 
 import org.junit.Before;
@@ -204,5 +205,18 @@ public class QuestionTest {
 
         SnsConnection expected = new SnsConnection(ProviderType.facebook, postId);
         assertThat(actual, is(expected));
+    }
+    
+    @Test
+    public void getTotalAnswerCount() throws Exception {
+        SocialUser writer1 = new SocialUserBuilder().withProviderType(ProviderType.facebook).build();
+        Question dut = aQuestion()
+                .withWriter(writer1)
+                .withAnswer(new Answer())
+                .withAnswer(new Answer())
+                .build();
+        SnsConnection connection = dut.connected("12345");
+        connection.updateAnswerCount(3);
+        assertThat(dut.getTotalAnswerCount(), is(5));
     }
 }
