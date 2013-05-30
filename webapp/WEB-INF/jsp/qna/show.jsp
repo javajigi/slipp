@@ -22,6 +22,9 @@
 				<slipp:answer each="${question.bestAnswer}" isBest="true"/>
 			</c:if>
 			<p class="article-count"><strong>${question.answerCount}</strong>개의 의견</p>
+			<c:if test="${question.snsConnected}">
+			<p class="article-count"><strong>${question.snsAnswerCount}</strong>개의 페이스북 의견</p>
+			</c:if>
 			<c:forEach items="${question.answers}" var="each">
 				<slipp:answer each="${each}" isBest="false"/>
 			</c:forEach>

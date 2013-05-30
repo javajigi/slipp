@@ -129,6 +129,10 @@ public class Question implements HasCreatedDate {
     public int getAnswerCount() {
         return answerCount;
     }
+    
+    public int getSnsAnswerCount() {
+        return snsConnection.getSnsAnswerCount();
+    }
 
     public int getTotalAnswerCount() {
         return answerCount + snsConnection.getSnsAnswerCount();
