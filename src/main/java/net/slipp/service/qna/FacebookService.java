@@ -110,8 +110,24 @@ public class FacebookService {
         SnsConnection snsConnection = question.getSnsConnection();
         log.debug("postId : {}", snsConnection.getPostId());
         
-        List<FacebookComment> fbComments = Lists.newArrayList();
         Post post = findPost(facebookClient, snsConnection.getPostId());
+        List<FacebookComment> fbComments = findComments(post);
+        log.debug("count comments : {}, from post : {}", fbComments.size(), snsConnection.getPostId());
+        snsConnection.updateAnswerCount(fbComments.size());
+        return fbComments;
+    }
+
+    private Post findPost(FacebookClient facebookClient, String postId) {
+        try {
+            return facebookClient.fetchObject(postId, Post.class);
+        } catch (FacebookGraphException e) {
+            log.error("{} postId, errorMessage : {}", postId, e.getMessage());
+            return null;
+        }
+    }
+    
+    private List<FacebookComment> findComments(Post post) {
+        List<FacebookComment> fbComments = Lists.newArrayList();
         if (post == null) {
             return fbComments;
         }
@@ -126,15 +142,6 @@ public class FacebookService {
             fbComments.add(FacebookComment.create(comment));
         }
         return fbComments;
-    }
-
-    private Post findPost(FacebookClient facebookClient, String postId) {
-        try {
-            return facebookClient.fetchObject(postId, Post.class);
-        } catch (FacebookGraphException e) {
-            log.error("{} postId, errorMessage : {}", postId, e.getMessage());
-            return null;
-        }
     }
 
     String createLink(Long questionId) {
