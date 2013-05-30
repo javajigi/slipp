@@ -21,7 +21,7 @@ attribute name="each" required="true" rtexprvalue="true" type="net.slipp.domain.
 							</c:if>
 							<div class="auth-info">
 								<c:choose>
-									<c:when test="${each.answerCount == 0}">
+									<c:when test="${each.totalAnswerCount == 0}">
 										<i class="icon-new-article"></i>
 										<span class="type">새글</span>
 										<span class="time">
@@ -41,7 +41,7 @@ attribute name="each" required="true" rtexprvalue="true" type="net.slipp.domain.
 							</div>
 							<div class="reply" title="댓글">
 								<i class="icon-reply"></i>
-								<span class="point">${each.answerCount}</span>
+								<span class="point">${each.totalAnswerCount}</span>
 							</div>
 						</div>
 					</div>

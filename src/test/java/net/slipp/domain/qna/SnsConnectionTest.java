@@ -17,5 +17,13 @@ public class SnsConnectionTest {
 		connection = new SnsConnection(ProviderType.facebook, "123456");
 		assertThat(connection.isConnected(), is(true));
 	}
+	
+	@Test
+    public void updateAnswerCount() throws Exception {
+	    SnsConnection connection = new SnsConnection();
+	    int answerCount = 5;
+	    connection.updateAnswerCount(answerCount);
+	    assertThat(connection.getSnsAnswerCount(), is(answerCount));
+    }
 
 }

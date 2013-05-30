@@ -28,7 +28,10 @@
 			</form>
 
 			<c:if test="${question.snsConnected}">
-			<p class="article-count">페이스북으로 공유된 글에 달린 의견</p>
+			<p class="article-count">
+				페이스북으로 공유된 글에 달린 댓글<br />
+				<strong>${question.snsAnswerCount}</strong>개의 의견
+			</p>
 			<div class="qna-facebook-comment">
 			</div>
 			</c:if>
