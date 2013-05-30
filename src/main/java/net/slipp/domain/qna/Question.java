@@ -294,6 +294,8 @@ public class Question implements HasCreatedDate {
         this.title = title;
         this.contentsHolder = Lists.newArrayList(contents);
         newTags(newTags);
+        this.updatedDate = new Date();
+        this.latestParticipant = getWriter();
     }
 
     public Set<SocialUser> findNotificationUser(SocialUser loginUser) {
