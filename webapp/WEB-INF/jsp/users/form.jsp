@@ -29,4 +29,5 @@
 </section>
 
 <script src="${url:resource('/javascripts/jquery.validate.min.js')}"></script>
+<script src="${url:resource('/javascripts/support/slipp.validate.js')}"></script>
 <script src="${url:resource('/javascripts/user/login.js')}"></script>

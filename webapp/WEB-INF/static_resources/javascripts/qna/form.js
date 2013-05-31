@@ -2,13 +2,11 @@ $(document).ready(function() {
 	$("#question").validate({
 		rules: {
 			title: "required",
-			contents: "required",
-			tagnames: "required"
+			contents: "required"
 		},
 		messages: {
-			title: "제목을 입력하세요.",
-			contents: "내용을 입력하세요.",
-			tagnames: "컨텐츠의 체계적인 관리를 위하여 태그를 하나 이상 입력하세요."
+			title: SL10N.QnA.requiredTitle(),
+			contents: SL10N.QnA.requiredContents()
 		}
 	});
 

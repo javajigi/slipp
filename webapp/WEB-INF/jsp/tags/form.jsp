@@ -31,6 +31,7 @@
 </div>
 
 <script src="${url:resource('/javascripts/jquery.validate.min.js')}"></script>
+<script src="${url:resource('/javascripts/support/slipp.validate.js')}"></script>
 <script src="${url:resource('/javascripts/tag/form.js')}"></script>
 <script src="${url:resource('/javascripts/highlight.pack.js')}"></script>
 <script src="${url:resource('/javascripts/qna/qna-set.js')}"></script>
