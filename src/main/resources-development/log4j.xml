@@ -9,16 +9,8 @@
 	</appender>
 	
 	<logger name="net.slipp">
-		<level value="DEBUG" />
+		<level value="INFO" />
 	</logger>
-	
-    <logger name="org.hibernate">
-        <level value="WARN" />
-    </logger>
-
-    <logger name="org.hibernate.SQL">
-        <level value="DEBUG" />
-    </logger>	
 	
 	<root>
 		<priority value="INFO" />
