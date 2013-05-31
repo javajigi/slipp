@@ -1,4 +1,4 @@
-package net.slipp.web.qna;
+package net.slipp.web.tag;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,6 +31,12 @@ public class TagController {
 
 	@Resource(name = "tagService")
 	private TagService tagService;
+	
+	@RequestMapping("/form")
+	public String createForm(Model model) {
+	    model.addAttribute("tag", new TagForm());
+	    return "tags/form";
+	}
 	
 	@RequestMapping("/search")
 	public @ResponseBody List<TagForm> searchByTagName(String name) {

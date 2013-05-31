@@ -31,6 +31,11 @@
 					<li>
 						<a href="/questions"><i class="icon-list"></i> <span class="text">글목록</span></a>
 					</li>
+					<sec:authorize access="hasRole('ROLE_USER')">
+					<li>
+						<a href="/tags/form" id="requestTag"><i class="icon-list"></i> <span class="text">태그추가</span></a>
+					</li>
+					</sec:authorize>
 					<sec:authorize access="hasRole('ROLE_ADMINISTRATOR')">
 					<li>
 						<a href="/admin/tags" id="tagManagement"><i class="icon-list"></i> <span class="text">태그관리</span></a>
