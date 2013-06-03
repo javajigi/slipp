@@ -60,6 +60,8 @@ public class SlippTokenBasedRememberMeServices extends AbstractRememberMeService
             throw new InvalidCookieException("Cookie token[1] did not contain a valid number (contained '" +
                     cookieTokens[1] + "')");
         }
+        
+        log.info("cookieTokens tokenExpiryTime : {}", tokenExpiryTime);
 
         if (isTokenExpired(tokenExpiryTime)) {
             throw new InvalidCookieException("Cookie token[1] has expired (expired on '"
@@ -67,6 +69,7 @@ public class SlippTokenBasedRememberMeServices extends AbstractRememberMeService
         }
 
         ProviderType providerType = ProviderType.valueOf(cookieTokens[3]);
+        log.info("cookieTokens providerType : {}", providerType);
         SlippUser userDetails = getSlippUserDetails(providerType, cookieTokens[0]);
 
         // Check signature of token matches remaining details.
