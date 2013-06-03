@@ -71,6 +71,7 @@ public class SlippTokenBasedRememberMeServices extends AbstractRememberMeService
         ProviderType providerType = ProviderType.valueOf(cookieTokens[3]);
         log.info("cookieTokens providerType : {}", providerType);
         SlippUser userDetails = getSlippUserDetails(providerType, cookieTokens[0]);
+        log.info("userDetails.username : {}, password : {}", userDetails.getUsername(), userDetails.getPassword());
 
         // Check signature of token matches remaining details.
         // Must do this after user lookup, as we need the DAO-derived password.
@@ -78,7 +79,8 @@ public class SlippTokenBasedRememberMeServices extends AbstractRememberMeService
         // but recall that this method is usually only called once per HttpSession - if the token is valid,
         // it will cause SecurityContextHolder population, whilst if invalid, will cause the cookie to be cancelled.
         String expectedTokenSignature = makeTokenSignature(tokenExpiryTime, userDetails.getUsername(), userDetails.getPassword());
-
+        log.info("expectedTokenSignature : {}, actualTokenSignature : {}", expectedTokenSignature, cookieTokens[2]);
+        
         if (!equals(expectedTokenSignature,cookieTokens[2])) {
             throw new InvalidCookieException("Cookie token[2] contained signature '" + cookieTokens[2]
                                                                                                     + "' but expected '" + expectedTokenSignature + "'");
