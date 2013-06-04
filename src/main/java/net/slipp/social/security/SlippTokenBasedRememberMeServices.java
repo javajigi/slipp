@@ -28,13 +28,11 @@ public class SlippTokenBasedRememberMeServices extends AbstractRememberMeService
     private static Logger log = LoggerFactory.getLogger(SlippTokenBasedRememberMeServices.class);
     
     private GrantedAuthoritiesMapper authoritiesMapper = new NullAuthoritiesMapper();
-    /**
-     * @deprecated Use with-args constructor
-     */
-    @Deprecated
+
+    @SuppressWarnings("deprecation")
     public SlippTokenBasedRememberMeServices() {
     }
-
+    
     public SlippTokenBasedRememberMeServices(String key, UserDetailsService userDetailsService) {
         super(key, userDetailsService);
     }
@@ -42,14 +40,12 @@ public class SlippTokenBasedRememberMeServices extends AbstractRememberMeService
     @Override
     protected UserDetails processAutoLoginCookie(String[] cookieTokens, HttpServletRequest request,
             HttpServletResponse response) {
-        log.info("processAutoLoginCookie start!");
-        
         if (cookieTokens.length != 4) {
             throw new InvalidCookieException("Cookie token did not contain 4" +
                     " tokens, but contained '" + Arrays.asList(cookieTokens) + "'");
         }
         
-        log.info("cookieTokens userId : {}", cookieTokens[0]);
+        log.debug("cookieTokens userId : {}", cookieTokens[0]);
 
         long tokenExpiryTime;
 
@@ -61,17 +57,13 @@ public class SlippTokenBasedRememberMeServices extends AbstractRememberMeService
                     cookieTokens[1] + "')");
         }
         
-        log.info("cookieTokens tokenExpiryTime : {}", tokenExpiryTime);
-
         if (isTokenExpired(tokenExpiryTime)) {
             throw new InvalidCookieException("Cookie token[1] has expired (expired on '"
                     + new Date(tokenExpiryTime) + "'; current time is '" + new Date() + "')");
         }
 
         ProviderType providerType = ProviderType.valueOf(cookieTokens[3]);
-        log.info("cookieTokens providerType : {}", providerType);
         SlippUser userDetails = getSlippUserDetails(providerType, cookieTokens[0]);
-        log.info("userDetails.username : {}, password : {}", userDetails.getUsername(), userDetails.getPassword());
 
         // Check signature of token matches remaining details.
         // Must do this after user lookup, as we need the DAO-derived password.
@@ -79,14 +71,10 @@ public class SlippTokenBasedRememberMeServices extends AbstractRememberMeService
         // but recall that this method is usually only called once per HttpSession - if the token is valid,
         // it will cause SecurityContextHolder population, whilst if invalid, will cause the cookie to be cancelled.
         String expectedTokenSignature = makeTokenSignature(tokenExpiryTime, userDetails.getUsername(), userDetails.getPassword());
-        log.info("expectedTokenSignature : {}, actualTokenSignature : {}", expectedTokenSignature, cookieTokens[2]);
-        
         if (!equals(expectedTokenSignature,cookieTokens[2])) {
             throw new InvalidCookieException("Cookie token[2] contained signature '" + cookieTokens[2]
                                                                                                     + "' but expected '" + expectedTokenSignature + "'");
         }
-
-        log.info("processAutoLogin success userId : {}", cookieTokens[0]);
         
         return userDetails;
     }
@@ -131,7 +119,6 @@ public class SlippTokenBasedRememberMeServices extends AbstractRememberMeService
     @Override
     public void onLoginSuccess(HttpServletRequest request, HttpServletResponse response,
             Authentication successfulAuthentication) {
-        log.info("onLoginSuccess start!");
         String username = retrieveUserName(successfulAuthentication);
         String password = retrievePassword(successfulAuthentication);
         ProviderType providerType = retrieveProviderType(successfulAuthentication);
@@ -161,8 +148,6 @@ public class SlippTokenBasedRememberMeServices extends AbstractRememberMeService
 
         String signatureValue = makeTokenSignature(expiryTime, username, password);
         
-        log.info("cookie signatureValue : {}", signatureValue);
-
         setCookie(new String[] {username, Long.toString(expiryTime), signatureValue, providerType.name()}, tokenLifetime, request, response);
 
         if (logger.isDebugEnabled()) {
