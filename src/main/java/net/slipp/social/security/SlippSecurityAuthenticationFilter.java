@@ -51,18 +51,18 @@ public class SlippSecurityAuthenticationFilter extends AbstractAuthenticationPro
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException, IOException, ServletException {
 		if(sessionService.isAuthenticated()) {
-		    log.info("already authentication userId is : {}", sessionService.getAuthentication().getPrincipal());
+		    log.debug("already authentication userId is : {}", sessionService.getAuthentication().getPrincipal());
 			return sessionService.getAuthentication();
 		} else {
 			SocialUser signInDetails = (SocialUser) request.getSession().getAttribute(
 					SlippSecuritySignInAdapter.SIGN_IN_DETAILS_SESSION_ATTRIBUTE_NAME);
 			
 			if (signInDetails == null) {
-			    log.info("sns login failed. so login anonymous!");
+			    log.debug("sns login failed. so login anonymous!");
 			    return new AnonymousAuthenticationToken("slippAnonymousAuthenticationToken", "anonymousUser", AuthorityUtils.createAuthorityList("ROLE_ANONYMOUS"));
 			}
 			
-			log.info("sns login success. login userId : {}", signInDetails.getUserId());
+			log.debug("sns login success. login userId : {}", signInDetails.getUserId());
 			
 			SlippUser userDetails;
 			if (signInDetails.isSLiPPUser()) {
