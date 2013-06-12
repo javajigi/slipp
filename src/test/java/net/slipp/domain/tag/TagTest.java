@@ -54,12 +54,20 @@ public class TagTest {
     }
     
     @Test
-	public void createNewTag() throws Exception {
+	public void createNewTagFromQuestion() throws Exception {
 		String name = "newTag";
 		Tag dut = Tag.newTag(name);
 		assertThat(dut.isPooled(), is(false));
 		assertThat(dut.getName(), is(name));
 		assertThat(dut.getParent(), is(nullValue()));
+	}
+    
+    @Test
+	public void createNewTagFromUser() throws Exception {
+		String name = "requestedTag";
+		TagInfo tagInfo = new TagInfo(null, null, null);
+		Tag dut = Tag.newTag(name, tagInfo);
+		assertThat(dut.getTagInfo(), is(tagInfo));
 	}
     
     @Test
@@ -75,4 +83,4 @@ public class TagTest {
 		assertThat(newTag.isPooled(), is(true));
 		assertThat(newTag.getParent(), is(parent));
 	}
-}
+}    

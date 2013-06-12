@@ -37,7 +37,8 @@ public class TagBuilder {
 	}
 	
 	public Tag build() {
-		Tag tag = new Tag(name, parentTag, pooled) {
+		TagInfo tagInfo = new TagInfo(null, null, null);
+		Tag tag = new Tag(name, parentTag, pooled, tagInfo) {
 			public Long getTagId() {
 				return id;
 			}

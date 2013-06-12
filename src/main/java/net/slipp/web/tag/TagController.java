@@ -6,7 +6,10 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import net.slipp.domain.tag.Tag;
+import net.slipp.domain.user.SocialUser;
 import net.slipp.service.tag.TagService;
+import net.slipp.service.user.SocialUserService;
+import net.slipp.support.web.argumentresolver.LoginUser;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +31,9 @@ public class TagController {
 	
 	private static final int DEFAULT_PAGE_NO = 1;
 	private static final int DEFAULT_PAGE_SIZE = 20;
+	
+	@Resource(name = "socialUserService")
+	private SocialUserService socialUserService;
 
 	@Resource(name = "tagService")
 	private TagService tagService;
@@ -36,6 +42,18 @@ public class TagController {
 	public String createForm(Model model) {
 	    model.addAttribute("tag", new TagForm());
 	    return "tags/form";
+	}
+	
+	@RequestMapping(value="", method=RequestMethod.POST)
+	public String create(@LoginUser SocialUser loginUser, TagForm tag) {
+		socialUserService.updateSlippUser(loginUser, tag.getEmail(), loginUser.getUserId());
+		tagService.saveTag(tag.toTag(loginUser));
+	    return "redirect:/tags/completed";
+	}
+	
+	@RequestMapping("/create/completed")
+	public String createCompleted() {
+	    return "tags/completed";
 	}
 	
 	@RequestMapping("/search")

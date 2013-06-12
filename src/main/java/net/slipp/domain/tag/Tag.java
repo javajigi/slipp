@@ -3,6 +3,7 @@ package net.slipp.domain.tag;
 import java.util.Set;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -35,18 +36,22 @@ public class Tag {
 
 	@OneToOne
 	@org.hibernate.annotations.ForeignKey(name = "fk_tag_parent_id")
-	public Tag parent;
+	private Tag parent;
+	
+	@Embedded
+	private TagInfo tagInfo;
 	
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy="tags")
 	private Set<Question> questions = Sets.newHashSet();
 
 	public Tag() {
 	}
-
-	Tag(String name, Tag parent, boolean pooled) {
+	
+	Tag(String name, Tag parent, boolean pooled, TagInfo tagInfo) {
 		this.name = name;
 		this.parent = parent;
 		this.pooled = pooled;
+		this.tagInfo = tagInfo;
 	}
 
 	public Long getTagId() {
@@ -88,6 +93,10 @@ public class Tag {
 	public Tag getParent() {
 		return this.parent;
 	}
+	
+	public TagInfo getTagInfo() {
+		return tagInfo;
+	}
 
 	private boolean isRootTag() {
 		return parent == null;
@@ -119,11 +128,15 @@ public class Tag {
 	}
 	
 	public static Tag pooledTag(String name, Tag parent) {
-		return new Tag(name, parent, true);
+		return new Tag(name, parent, true, null);
 	}
 	
 	public static Tag newTag(String name) {
-		return new Tag(name, null, false);
+		return newTag(name, null);
+	}
+	
+	public static Tag newTag(String name, TagInfo tagInfo) {
+		return new Tag(name, null, false, tagInfo);
 	}
 
 	@Override
