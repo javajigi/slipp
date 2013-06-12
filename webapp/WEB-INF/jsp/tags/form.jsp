@@ -16,10 +16,16 @@
 				</div>
 				<div class="box-input-line">
 					<form:input path="name" cssClass="inp-title" placeholder="태그명" />
-				</div>				
+				</div>
 				<div class="box-write">
 					<form:textarea path="description"  cols="80" rows="15"/>
 				</div>
+				<c:if test="${loginUser.facebookUser}">
+				<div class="box-input-line">
+					태그와 연결할 페이스북 그룹<br/>
+					<form:radiobuttons path="groupId" items="${fbGroups}" itemLabel="name" itemValue="groupId" />
+				</div>
+				</c:if>
 				<div class="submit-write">
 					<button type="submit" class="btn-submit"><i class="icon-submit"></i> 추가 요청</button>
 				</div>

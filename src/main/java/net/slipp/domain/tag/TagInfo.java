@@ -15,7 +15,7 @@ public class TagInfo {
     @Column(length=100, nullable=true)
     private String groupId;
     
-    @Column(length=500, nullable=true)
+    @Column(length=1000, nullable=true)
     private String description;
     
     public TagInfo() {
@@ -37,6 +37,13 @@ public class TagInfo {
 
 	public String getDescription() {
 		return description;
+	}
+	
+	public boolean isRequestedTag() {
+	    if (owner == null) {
+	        return false;
+	    }
+	    return true;
 	}
 
 	@Override

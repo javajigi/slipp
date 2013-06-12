@@ -11,6 +11,9 @@ $(document).ready(function() {
 				minlength: 2,
 				maxlength: 20,
 				duplicateTag: "#name"
+			},
+			description: {
+				maxlength: 1000
 			}
 		},
 		messages: {
@@ -22,6 +25,9 @@ $(document).ready(function() {
 				required: SL10N.Tag.requiredName(),
 				minlength: SL10N.Tag.minLenTag(2),
 				maxlength: SL10N.Tag.maxLenTag(20)
+			},
+			description: {
+				maxlength: SL10N.Tag.maxLenDescription(1000)
 			}
 		}
 	});	

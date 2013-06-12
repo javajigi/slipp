@@ -31,6 +31,7 @@
 		requiredName: m("태그명을 입력하세요."),
 		minLenTag: m("태그명은 {0}자 이상이어야 합니다."),
 		maxLenTag: m("태그명은 {0}자 이하이어야 합니다."),
-		duplicateTag: m("{0} 태그는 등록되어 있는 태그입니다.")
+		duplicateTag: m("{0} 태그는 등록되어 있는 태그입니다."),
+		maxLenDescription: m("태그 설명은 {0}자 이하이어야 합니다.")
 	};
 }(SLiPP.Localization.message));

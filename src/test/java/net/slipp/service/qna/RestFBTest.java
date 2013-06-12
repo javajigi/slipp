@@ -2,7 +2,7 @@ package net.slipp.service.qna;
 
 import java.util.List;
 
-import net.slipp.domain.qna.FacebookComment;
+import net.slipp.domain.fb.FacebookComment;
 
 import org.junit.Before;
 import org.junit.Test;

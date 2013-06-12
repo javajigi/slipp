@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Set;
 import java.util.StringTokenizer;
 
+import javax.annotation.Resource;
 import javax.inject.Inject;
 
 import net.slipp.domain.tag.Tag;
 import net.slipp.repository.tag.TagRepository;
+import net.slipp.service.MailService;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +22,9 @@ import com.google.common.collect.Sets;
 @Service
 @Transactional
 public class TagService {
+    @Resource(name = "mailService")
+    private MailService mailService;
+    
     private TagRepository tagRepository;
 
     public TagService() {
@@ -85,6 +90,17 @@ public class TagService {
 
     public Tag saveTag(Tag tag) {
         return tagRepository.save(tag);
+    }
+    
+    public Tag requestNewTag(Tag tag) {
+        Tag existedTag = tagRepository.findByName(tag.getName());
+        if (existedTag != null) {
+            throw new IllegalArgumentException(tag.getName() + " is already existed tag.");
+        }
+        
+        Tag savedTag = tagRepository.save(tag);
+        mailService.sendNewTagInformation(tag);
+        return savedTag;
     }
 
     public Tag findTagByName(String name) {

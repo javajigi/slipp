@@ -20,159 +20,167 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import com.google.common.collect.Sets;
 
 @Entity
-@Cache(region="tag", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(region = "tag", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Tag {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long tagId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long tagId;
 
-	@Column(name = "name", length = 50, unique = true, nullable = false)
-	private String name;
+    @Column(name = "name", length = 50, unique = true, nullable = false)
+    private String name;
 
-	private int taggedCount = 0;
+    private int taggedCount = 0;
 
-    @Column(name = "pooled", nullable=false)
-	private boolean pooled;
+    @Column(name = "pooled", nullable = false)
+    private boolean pooled;
 
-	@OneToOne
-	@org.hibernate.annotations.ForeignKey(name = "fk_tag_parent_id")
-	private Tag parent;
-	
-	@Embedded
-	private TagInfo tagInfo;
-	
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy="tags")
-	private Set<Question> questions = Sets.newHashSet();
+    @OneToOne
+    @org.hibernate.annotations.ForeignKey(name = "fk_tag_parent_id")
+    private Tag parent;
 
-	public Tag() {
-	}
-	
-	Tag(String name, Tag parent, boolean pooled, TagInfo tagInfo) {
-		this.name = name;
-		this.parent = parent;
-		this.pooled = pooled;
-		this.tagInfo = tagInfo;
-	}
+    @Embedded
+    private TagInfo tagInfo;
 
-	public Long getTagId() {
-		return tagId;
-	}
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "tags")
+    private Set<Question> questions = Sets.newHashSet();
 
-	public void setTagId(Long tagId) {
-		this.tagId = tagId;
-	}
+    public Tag() {
+    }
 
-	public String getName() {
-		return name;
-	}
+    Tag(String name, Tag parent, boolean pooled, TagInfo tagInfo) {
+        this.name = name;
+        this.parent = parent;
+        this.pooled = pooled;
+        this.tagInfo = tagInfo;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public Long getTagId() {
+        return tagId;
+    }
 
-	public void setTaggedCount(int taggedCount) {
-		this.taggedCount = taggedCount;
-	}
+    public void setTagId(Long tagId) {
+        this.tagId = tagId;
+    }
 
-	public int getTaggedCount() {
-		return taggedCount;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public boolean isPooled() {
-		return pooled;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void tagged() {
-		taggedCount += 1;
-	}
+    public void setTaggedCount(int taggedCount) {
+        this.taggedCount = taggedCount;
+    }
 
-	public void deTagged() {
-		taggedCount -= 1;
-	}
+    public int getTaggedCount() {
+        return taggedCount;
+    }
 
-	public Tag getParent() {
-		return this.parent;
-	}
-	
-	public TagInfo getTagInfo() {
-		return tagInfo;
-	}
+    public boolean isPooled() {
+        return pooled;
+    }
 
-	private boolean isRootTag() {
-		return parent == null;
-	}
-	
-	public void movePooled(Tag parent) {
-		this.pooled = true;
-		this.parent = parent;
-		
-		for (Question each : questions) {
-			each.tagsToDenormalizedTags();
-		}
-	}
+    public void tagged() {
+        taggedCount += 1;
+    }
 
-	/**
-	 * Root 태그인 경우 자기 자신, 자식 태그인 경우 부모 태그를 반환한다.
-	 * 
-	 * @return
-	 */
-	public Tag getRevisedTag() {
-		if (isRootTag()) {
-			return this;
-		}
-		return this.parent;
-	}
-	
-	public static Tag pooledTag(String name) {
-		return pooledTag(name, null);
-	}
-	
-	public static Tag pooledTag(String name, Tag parent) {
-		return new Tag(name, parent, true, null);
-	}
-	
-	public static Tag newTag(String name) {
-		return newTag(name, null);
-	}
-	
-	public static Tag newTag(String name, TagInfo tagInfo) {
-		return new Tag(name, null, false, tagInfo);
-	}
+    public void deTagged() {
+        taggedCount -= 1;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((tagId == null) ? 0 : tagId.hashCode());
-		return result;
-	}
+    public Tag getParent() {
+        return this.parent;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Tag other = (Tag) obj;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (tagId == null) {
-			if (other.tagId != null)
-				return false;
-		} else if (!tagId.equals(other.tagId))
-			return false;
-		return true;
-	}
+    public TagInfo getTagInfo() {
+        return tagInfo;
+    }
 
-	@Override
-	public String toString() {
-		return "Tag [tagId=" + tagId + ", name=" + name + ", taggedCount=" + taggedCount + ", pooled=" + pooled
-				+ ", parent=" + parent + "]";
-	}
+    private boolean isRootTag() {
+        return parent == null;
+    }
+
+    public void movePooled(Tag parent) {
+        this.pooled = true;
+        this.parent = parent;
+
+        for (Question each : questions) {
+            each.tagsToDenormalizedTags();
+        }
+    }
+
+    public boolean isRequestedTag() {
+        if (tagInfo == null) {
+            return false;
+        }
+
+        return tagInfo.isRequestedTag();
+    }
+
+    /**
+     * Root 태그인 경우 자기 자신, 자식 태그인 경우 부모 태그를 반환한다.
+     * 
+     * @return
+     */
+    public Tag getRevisedTag() {
+        if (isRootTag()) {
+            return this;
+        }
+        return this.parent;
+    }
+
+    public static Tag pooledTag(String name) {
+        return pooledTag(name, null);
+    }
+
+    public static Tag pooledTag(String name, Tag parent) {
+        return new Tag(name, parent, true, null);
+    }
+
+    public static Tag newTag(String name) {
+        return newTag(name, null);
+    }
+
+    public static Tag newTag(String name, TagInfo tagInfo) {
+        return new Tag(name, null, false, tagInfo);
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        result = prime * result + ((tagId == null) ? 0 : tagId.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Tag other = (Tag) obj;
+        if (name == null) {
+            if (other.name != null)
+                return false;
+        } else if (!name.equals(other.name))
+            return false;
+        if (tagId == null) {
+            if (other.tagId != null)
+                return false;
+        } else if (!tagId.equals(other.tagId))
+            return false;
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Tag [tagId=" + tagId + ", name=" + name + ", taggedCount=" + taggedCount + ", pooled=" + pooled
+                + ", parent=" + parent + "]";
+    }
 }

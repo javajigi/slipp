@@ -5,8 +5,9 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import net.slipp.domain.fb.FacebookComment;
+import net.slipp.domain.fb.FacebookGroup;
 import net.slipp.domain.qna.Answer;
-import net.slipp.domain.qna.FacebookComment;
 import net.slipp.domain.qna.Question;
 import net.slipp.domain.qna.SnsConnection;
 import net.slipp.domain.user.SocialUser;
@@ -23,12 +24,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import com.google.common.collect.Lists;
+import com.restfb.Connection;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.Parameter;
 import com.restfb.exception.FacebookGraphException;
 import com.restfb.types.Comment;
 import com.restfb.types.FacebookType;
+import com.restfb.types.Group;
 import com.restfb.types.Post;
 import com.restfb.types.Post.Comments;
 
@@ -116,7 +119,19 @@ public class FacebookService {
         snsConnection.updateAnswerCount(fbComments.size());
         return fbComments;
     }
-
+    
+    public List<FacebookGroup> findFacebookGroups(SocialUser loginUser) {
+        FacebookClient facebookClient = new DefaultFacebookClient(loginUser.getAccessToken());
+        Connection<Group> myGroups = facebookClient.fetchConnection("/me/groups", Group.class);
+        List<FacebookGroup> fbGroups = Lists.newArrayList();
+        for (List<Group> groups : myGroups) {
+            for (Group group : groups) {
+                fbGroups.add(new FacebookGroup(group.getId(), group.getName()));
+            }
+        }
+        return fbGroups;
+    }
+    
     private Post findPost(FacebookClient facebookClient, String postId) {
         try {
             return facebookClient.fetchObject(postId, Post.class);

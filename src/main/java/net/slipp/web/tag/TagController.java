@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 
 import net.slipp.domain.tag.Tag;
 import net.slipp.domain.user.SocialUser;
+import net.slipp.service.qna.FacebookService;
 import net.slipp.service.tag.TagService;
 import net.slipp.service.user.SocialUserService;
 import net.slipp.support.web.argumentresolver.LoginUser;
@@ -38,8 +39,12 @@ public class TagController {
 	@Resource(name = "tagService")
 	private TagService tagService;
 	
+    @Resource(name = "facebookService")
+    private FacebookService facebookService;
+	
 	@RequestMapping("/form")
-	public String createForm(Model model) {
+	public String createForm(@LoginUser SocialUser loginUser, Model model) {
+	    model.addAttribute("fbGroups", facebookService.findFacebookGroups(loginUser));
 	    model.addAttribute("tag", new TagForm());
 	    return "tags/form";
 	}
@@ -47,11 +52,11 @@ public class TagController {
 	@RequestMapping(value="", method=RequestMethod.POST)
 	public String create(@LoginUser SocialUser loginUser, TagForm tag) {
 		socialUserService.updateSlippUser(loginUser, tag.getEmail(), loginUser.getUserId());
-		tagService.saveTag(tag.toTag(loginUser));
+		tagService.requestNewTag(tag.toTag(loginUser));
 	    return "redirect:/tags/completed";
 	}
 	
-	@RequestMapping("/create/completed")
+	@RequestMapping("/completed")
 	public String createCompleted() {
 	    return "tags/completed";
 	}
@@ -67,7 +72,6 @@ public class TagController {
 		return tags;
 	}
 	
-	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String tags(Integer page, ModelMap model) throws Exception {
 		model.addAttribute("tags", tagService.findPooledTags(createPageable(page)));
 		model.addAttribute("parentTags", tagService.findPooledTags());
