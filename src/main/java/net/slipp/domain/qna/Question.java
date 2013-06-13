@@ -28,6 +28,7 @@ import javax.persistence.TemporalType;
 
 import net.slipp.domain.ProviderType;
 import net.slipp.domain.tag.Tag;
+import net.slipp.domain.tag.Tags;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.support.jpa.CreatedDateEntityListener;
 import net.slipp.support.jpa.HasCreatedDate;
@@ -345,7 +346,11 @@ public class Question implements HasCreatedDate {
         Collections.sort(sortAnswers);
         return sortAnswers.get(0);
     }
-
+    
+    public Tag getConnectedGroupTag() {
+        return new Tags(tags).getConnectedGroupTag();
+    }
+    
     @Override
     public String toString() {
         return "Question [questionId=" + questionId + ", writer=" + writer + ", title=" + title + ", contentsHolder="

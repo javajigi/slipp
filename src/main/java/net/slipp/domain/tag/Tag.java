@@ -118,6 +118,14 @@ public class Tag {
 
         return tagInfo.isRequestedTag();
     }
+    
+    public boolean isConnectGroup() {
+        if (isRequestedTag()) {
+            return tagInfo.isConnectGroup();
+        }
+
+        return false;
+    }    
 
     /**
      * Root 태그인 경우 자기 자신, 자식 태그인 경우 부모 태그를 반환한다.
@@ -136,7 +144,7 @@ public class Tag {
     }
 
     public static Tag pooledTag(String name, Tag parent) {
-        return new Tag(name, parent, true, null);
+        return new Tag(name.toLowerCase(), parent, true, null);
     }
 
     public static Tag newTag(String name) {
@@ -144,7 +152,7 @@ public class Tag {
     }
 
     public static Tag newTag(String name, TagInfo tagInfo) {
-        return new Tag(name, null, false, tagInfo);
+        return new Tag(name.toLowerCase(), null, false, tagInfo);
     }
 
     @Override

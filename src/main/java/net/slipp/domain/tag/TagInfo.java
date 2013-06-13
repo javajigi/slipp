@@ -4,10 +4,14 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
 
+import org.apache.commons.lang.StringUtils;
+
 import net.slipp.domain.user.SocialUser;
 
 @Embeddable
 public class TagInfo {
+    static final String FACEBOOK_GROUP_URL_PREFIX = "https://www.facebook.com/groups/";
+    
     @ManyToOne
     @org.hibernate.annotations.ForeignKey(name = "fk_tag_owner")
     private SocialUser owner;
@@ -45,6 +49,18 @@ public class TagInfo {
 	    }
 	    return true;
 	}
+	
+    public boolean isConnectGroup() {
+        return !StringUtils.isBlank(groupId);
+    }
+    
+    public String getGroupUrl() {
+        if (isConnectGroup()) {
+            return FACEBOOK_GROUP_URL_PREFIX + groupId;
+        }
+        
+        return "";
+    }
 
 	@Override
 	public String toString() {

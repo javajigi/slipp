@@ -9,7 +9,7 @@ $(document).ready(function() {
 			name: {
 				required: true,
 				minlength: 2,
-				maxlength: 20,
+				maxlength: 50,
 				duplicateTag: "#name"
 			},
 			description: {
@@ -24,7 +24,7 @@ $(document).ready(function() {
 			name: {
 				required: SL10N.Tag.requiredName(),
 				minlength: SL10N.Tag.minLenTag(2),
-				maxlength: SL10N.Tag.maxLenTag(20)
+				maxlength: SL10N.Tag.maxLenTag(50)
 			},
 			description: {
 				maxlength: SL10N.Tag.maxLenDescription(1000)

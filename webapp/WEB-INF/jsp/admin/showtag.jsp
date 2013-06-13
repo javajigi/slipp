@@ -14,6 +14,7 @@
 				<tr>
 					<th>이름</th>
 					<th>소유주</th>
+					<th>연결 URL</th>
 					<th>설명</th>
 				</tr>
 			</thead>
@@ -23,6 +24,7 @@
 					<c:choose>
 					<c:when test="${tag.requestedTag}">
 					<td>${tagInfo.owner.userId}</td>
+					<td><a href="${tagInfo.groupUrl}" target="_blank">${tagInfo.groupUrl}</a></td>	
 					<td>${tagInfo.description}</td>					
 					</c:when>
 					<c:otherwise>
