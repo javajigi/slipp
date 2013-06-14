@@ -5,13 +5,6 @@
 	<div class="content-main">
 		<section class="qna-list">
 			<slipp:header />
-			<c:if test="${currentTag.requestedTag }">
-			<c:set var="tagInfo" value="${currentTag.tagInfo}"/>
-			<c:if test="${currentTag.connectGroup}">
-			연결 SNS : <a href="${tagInfo.groupUrl}" target="_blank">${tagInfo.groupUrl}</a><br/>
-			</c:if>
-			태그설명 : ${tagInfo.description}	
-			</c:if>
 			<ul class="list">
 			<c:forEach items="${questions.content}" var="each">
 				<slipp:list each="${each}"/>

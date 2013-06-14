@@ -12,6 +12,13 @@
   <c:otherwise>
     <header>
     	<h1><i class="icon-tag" title="태그"></i> ${currentTag.name} <small>: ${currentTag.taggedCount}개의 글</small></h1>
+    	<c:set var="tagInfo" value="${currentTag.tagInfo}"/>
+    	<c:if test="${currentTag.connectGroup}">
+		<a href="${tagInfo.groupUrl}" target="_blank"><i class="foundicon-facebook"></i></a>
+		</c:if>
+    	<c:if test="${currentTag.requestedTag }">
+    	${tagInfo.description}
+    	</c:if>
     </header>
   </c:otherwise>
 </c:choose>
