@@ -102,6 +102,15 @@ public class TagService {
         mailService.sendNewTagInformation(tag);
         return savedTag;
     }
+    
+	public Tag updateRequestNewTag(Tag tag) {
+		Tag existedTag = tagRepository.findByName(tag.getName());
+        if (existedTag == null) {
+            throw new IllegalArgumentException(tag.getName() + " is not existed tag.");
+        }
+        existedTag.updateTagInfo(tag.getTagInfo());
+        return tagRepository.save(existedTag);
+	}
 
     public Tag findTagByName(String name) {
         return tagRepository.findByName(name);

@@ -61,6 +61,10 @@ public class TagInfo {
         
         return "";
     }
+    
+	public boolean isRequestedBy(SocialUser socialUser) {
+		return owner.isSameUser(socialUser);
+	}
 
 	@Override
 	public String toString() {

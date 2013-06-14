@@ -21,6 +21,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -55,6 +56,21 @@ public class TagController {
 		tagService.requestNewTag(tag.toTag(loginUser));
 	    return "redirect:/tags/completed";
 	}
+	
+	@RequestMapping("/{tagId}/form")
+	public String updateForm(@LoginUser SocialUser loginUser, @PathVariable Long tagId, Model model) {
+	    model.addAttribute("fbGroups", facebookService.findFacebookGroups(loginUser));
+	    Tag tag = tagService.findTagById(tagId);
+	    model.addAttribute("tag", new TagForm(tag));
+	    return "tags/updateform";
+	}
+	
+	@RequestMapping(value="", method=RequestMethod.PUT)
+	public String update(@LoginUser SocialUser loginUser, TagForm tag) {
+		socialUserService.updateSlippUser(loginUser, tag.getEmail(), loginUser.getUserId());
+		tagService.updateRequestNewTag(tag.toTag(loginUser));
+	    return String.format("redirect:/questions/tagged/%s", tag.getName());
+	}	
 	
 	@RequestMapping("/completed")
 	public String createCompleted() {

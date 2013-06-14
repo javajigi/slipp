@@ -10,6 +10,9 @@
 				<slipp:list each="${each}"/>
 			</c:forEach>
 			</ul>
+	    	<c:if test="${currentTag.requestedTag }">
+	    	태그 설명 : ${sf:hbr(currentTag.tagInfo.description)}
+	    	</c:if>
 			<nav class="pager">
 				<ul>
 					<sl:pager page="${questions}" prefixUri="/questions/tagged/${currentTag.name}"/>

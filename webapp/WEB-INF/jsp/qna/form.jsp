@@ -9,14 +9,10 @@
 <section class="write-content">
 	<div class="content-main">
 		<h1 class="write-title">새 글 작성</h1>
-		<c:choose>
-			<c:when test="${not empty question.questionId}">
-				<c:set var="method" value="PUT" />
-			</c:when>
-			<c:otherwise>
-				<c:set var="method" value="POST" />
-			</c:otherwise>
-		</c:choose>
+		<c:set var="method" value="POST" />
+		<c:if test="${not empty question.questionId}">
+			<c:set var="method" value="PUT" />
+		</c:if>		
 		<form:form modelAttribute="question" cssClass="form-write" action="/questions" method="${method}">
 			<form:hidden path="questionId"/>
 			<fieldset>

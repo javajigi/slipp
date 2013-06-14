@@ -5,6 +5,8 @@ import net.slipp.domain.tag.TagInfo;
 import net.slipp.domain.user.SocialUser;
 
 public class TagForm {
+	private Long tagId;
+	
     private String email;
     
     private String name;
@@ -20,7 +22,24 @@ public class TagForm {
         this.name = name;
     }
     
-    public void setName(String name) {
+	public TagForm(Tag tag) {
+		TagInfo tagInfo = tag.getTagInfo();
+		this.tagId = tag.getTagId();
+		this.email = tagInfo.getOwner().getEmail();
+		this.name = tag.getName();
+		this.groupId = tagInfo.getGroupId();
+		this.description = tagInfo.getDescription();
+	}
+	
+	public Long getTagId() {
+		return tagId;
+	}
+
+	public void setTagId(Long tagId) {
+		this.tagId = tagId;
+	}
+
+	public void setName(String name) {
         this.name = name;
     }
     

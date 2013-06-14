@@ -25,7 +25,7 @@
 					<c:when test="${tag.requestedTag}">
 					<td>${tagInfo.owner.userId}</td>
 					<td><a href="${tagInfo.groupUrl}" target="_blank">${tagInfo.groupUrl}</a></td>	
-					<td>${tagInfo.description}</td>					
+					<td>${sf:hbr(tagInfo.description)}</td>					
 					</c:when>
 					<c:otherwise>
 					<td></td>
