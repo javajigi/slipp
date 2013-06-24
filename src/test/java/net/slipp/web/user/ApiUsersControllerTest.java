@@ -17,23 +17,23 @@ public class ApiUsersControllerTest {
 	
 	@Test
 	public void checkDuplicate_doesnot_existed() {
-		String actual = dut.checkDuplicate(SocialUser.GUEST_USER, null);
-		assertThat(actual, is("false"));
+		boolean actual = dut.checkDuplicate(SocialUser.GUEST_USER, null);
+		assertThat(actual, is(false));
 	}
 
 	@Test
 	public void checkDuplicate_login_isSameUser() {
 		SocialUser loginUser = new SocialUser(1L);
 		SocialUser existedUser = loginUser;
-		String actual = dut.checkDuplicate(loginUser, existedUser);
-		assertThat(actual, is("false"));
+		boolean actual = dut.checkDuplicate(loginUser, existedUser);
+		assertThat(actual, is(false));
 	}
 	
 	@Test
 	public void checkDuplicate_login_isNotSameUser() {
 		SocialUser loginUser = new SocialUser(1L);
 		SocialUser existedUser = new SocialUser(2L);
-		String actual = dut.checkDuplicate(loginUser, existedUser);
-		assertThat(actual, is("true"));
+		boolean actual = dut.checkDuplicate(loginUser, existedUser);
+		assertThat(actual, is(true));
 	}
 }

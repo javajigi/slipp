@@ -57,7 +57,7 @@
 		factory-method="noOpText" />
 		
 	<bean id="slippUserDetailsService" class="net.slipp.social.security.SlippUserDetailsService" 
-		p:adminUsers="자바지기:eclipse4j"
+		p:adminUsers="자바지기:eclipse4j:진우"
 	/>
 	
 	<bean id="signInAdapter" class="net.slipp.social.security.SlippSecuritySignInAdapter" />

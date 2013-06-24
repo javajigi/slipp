@@ -9,6 +9,7 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 			<th>태그된 질문 수</th>
 			<th>부모 태그</th>
 			<c:if test="${admin}">
+			<th>사용자 요청 태그</th>
 			<th></th>
 			</c:if>
 		</tr>
@@ -24,6 +25,7 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 				</c:if>
 			</td>
 			<c:if test="${admin}">
+			<td>${each.requestedTag}</td>
 			<td>
 				<c:if test="${not each.pooled}">
 				<form class="form-search" action="/admin/moveNewTag" method="post">
