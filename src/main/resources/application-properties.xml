@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>application-properties</comment>
+
+	<entry key="environment">DEVELOPMENT</entry>
+
+	<!-- Site -->
+	<entry key="resources.cache.seconds">0</entry>
+	
+	<!-- Database -->
+	<entry key="database.driverClassName">com.mysql.jdbc.Driver</entry>
+	<entry key="database.url">jdbc:mysql://127.0.0.1/slipp?uniCode=true&amp;characterEncoding=utf8</entry>
+	<entry key="database.username">slipp</entry>
+	<entry key="database.password">slipp</entry>
+	
+	<!-- WikiDatabase -->
+	<entry key="wiki.database.driverClassName">com.mysql.jdbc.Driver</entry>
+	<entry key="wiki.database.url">jdbc:mysql://127.0.0.1/wiki?uniCode=true&amp;characterEncoding=utf8</entry>
+	<entry key="wiki.database.username">slipp</entry>
+	<entry key="wiki.database.password">slipp</entry>	
+	
+	<!-- URL -->
+	<entry key="application.url">http://localhost:8080</entry>
+	
+	
+	<!-- security -->
+	<entry key="socialsignin.signUpView">/signUpForm</entry>
+	
+	<entry key="twitter.consumerKey">AJhERgHd21YfwRwpeYlXw</entry>	
+	<entry key="twitter.consumerSecret">X9QVyivBnE02VH8B8WrOloOMutUTZJncl1vyjpqtM</entry>
+
+	<entry key="facebook.clientId">129401280541462</entry>
+	<entry key="facebook.clientSecret">aaa19d8c1b937955e491045f17883793</entry>
+	<entry key="facebook.accessToken">129401280541462|QK9vh4ArX8oyMq1c29ae6Oc9-Vc</entry>
+
+	<!-- Facebook 연동 테스트를 위한 accessToken -->
+	<entry key="my.facebook.accessToken">AAACm7YIxcxcBAK5umCPnYRC90q3POoFxKeyOTqQoXJdPDOm0X3gGSH4ZC5ZCuNSScn9pjwCfKT4pS1yrt4ZClp2I7bq3bjEd5PkNaVTHgZDZD</entry>
+			
+	<entry key="google.clientId">947885374160-m208umb21feusmcvb1pn6cbkosi4t8ds.apps.googleusercontent.com</entry>
+	<entry key="google.clientSecret">NzqCUntSMuBuI_PasCxaf1BQ</entry>
+	
+	<entry key="slipp.remember.token.key">766062e0-ac8d-11e1-afa6-0800200c9a66</entry>
+	
+	<!-- Attachment -->
+	<entry key="attachment.root.dir">/home/javajigi/attachments</entry>	
+	
+	<entry key="mail.server.host">127.0.0.1</entry>
+	<entry key="mail.server.port">21</entry>
+	<entry key="mail.server.username">slipp</entry>
+	<entry key="mail.server.password">slipp</entry>
+	
+	
+	<entry key="facebook.application.url">slipp</entry>
+	
+</properties>

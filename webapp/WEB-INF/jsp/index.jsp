@@ -60,6 +60,19 @@
 	</div>
 	<div class="content-sub">
 		<section class="notice">
+			<h1><a href="">수다양!</a></h1>
+			<ul class="list smallTalksUl">
+				<c:forEach items="${smallTalks}" var="smallTalk">
+				<li>
+					<strong class="title"><a href="">${smallTalk.talk}</a></strong>
+					<div class="time">${smallTalk.time}</div>
+				</li>
+				</c:forEach>
+			</ul>
+			<textarea id="smallTalk" name="smallTalk"></textarea>
+		</section>
+	<%-- 
+		<section class="notice">
 			<h1><a href="/wiki/display/slipp/Home">SLiPP log</a></h1>
 			<ul class="list">
 				<c:forEach items="${pages}" var="page">
@@ -76,5 +89,45 @@
 				<a href="http://feeds.feedburner.com/slipp"><img src="http://feeds.feedburner.com/~fc/slipp?bg=99CCFF&amp;fg=444444&amp;anim=0" height="26" width="88" style="border:0" alt="" /></a>
 			</div>
 		</section>
+	--%>
 	</div>
 </div>
+<script type="text/x-tmpl" id="tmpl-smalltalks">
+{% for (var i=0; i<o.length; i++) { %}
+	<li>
+		<strong class="title"><a href="">{%=o[i].talk%}</a></strong>
+		<div class="time">{%=o[i].time%}</div>
+	</li>
+{% } %}
+</script>
+<script src="${url:resource('/javascripts/jquery.tmpl.min.js')}"></script>
+<script type="text/javascript">
+	var smallTalkService = {
+		get : function(){
+			$.get('/smalltalks', function(data) {
+				$(".smallTalksUl").html( tmpl("tmpl-smalltalks", data) );
+			});
+		},
+		save : function(){
+			var that = this;
+			var talk = $('#smallTalk').val();
+			$.post('/smalltalks', { 'talk' : talk }, function(data) {
+				if( data == 'OK' ){
+					that.get();
+					$('#smallTalk').val('');
+				}
+			});
+		},
+		bind : function(){
+			var that = this;
+			$('#smallTalk').on('keypress', function(evt){
+				if( event.which == 13 ) {
+					that.save();
+				}
+			});
+		}
+	}
+	$(document).ready(function(){
+		smallTalkService.bind();
+	});
+</script>
