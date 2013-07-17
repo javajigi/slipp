@@ -64,7 +64,7 @@
 			<ul class="list smallTalksUl">
 				<c:forEach items="${smallTalks}" var="smallTalk">
 				<li>
-					<strong class="title"><a href="">${smallTalk.talk}</a></strong>
+					<strong class="title"><pre>${smallTalk.talk}</pre></strong>
 					<div class="time">${smallTalk.time}</div>
 				</li>
 				</c:forEach>
@@ -95,7 +95,7 @@
 <script type="text/x-tmpl" id="tmpl-smalltalks">
 {% for (var i=0; i<o.length; i++) { %}
 	<li>
-		<strong class="title"><a href="">{%=o[i].talk%}</a></strong>
+		<strong class="title"><pre>{%=o[i].talk%}</pre></strong>
 		<div class="time">{%=o[i].time%}</div>
 	</li>
 {% } %}
@@ -118,15 +118,40 @@
 				}
 			});
 		},
+		getCaret : function(el) {
+		    var pos = 0;
+		    if (document.selection) {
+		    	el.focus ();
+		    	var Sel = document.selection.createRange();
+		    	var SelLength = document.selection.createRange().text.length;
+		    	Sel.moveStart ('character', -el.value.length);
+		    	pos = Sel.text.length - SelLength;
+		    }else if (el.selectionStart || el.selectionStart == '0'){
+		    	pos = el.selectionStart;
+		    }
+		    return pos;
+		},
 		bind : function(){
 			var that = this;
 			$('#smallTalk').on('keypress', function(evt){
-				if( event.which == 13 ) {
-					that.save();
+				if (evt.which == 13 && evt.ctrlKey){
+					var content = this.value;
+					var caret = that.getCaret(this);
+					this.value = content.substring(0,caret)+"\n"+content.substring(caret,content.length);
+					evt.stopPropagation();
+				}else if (evt.which == 13){
+					var talk = $.trim($(this).val());
+					console.log(talk.length);
+					if( talk.length > 0 ){
+						that.save();
+						return;
+					}
+					return;
 				}
 			});
 		}
-	}
+	};
+	
 	$(document).ready(function(){
 		smallTalkService.bind();
 	});
