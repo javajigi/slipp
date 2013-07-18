@@ -1,7 +1,6 @@
 package net.slipp.domain.smallTalk;
 
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,11 +11,14 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 import net.slipp.domain.user.SocialUser;
 import net.slipp.support.jpa.CreatedAndUpdatedDateEntityListener;
 import net.slipp.support.jpa.HasCreatedAndUpdatedDate;
 import net.slipp.support.utils.TimeUtils;
+
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 @EntityListeners({ CreatedAndUpdatedDateEntityListener.class })
@@ -26,6 +28,8 @@ public class SmallTalk implements HasCreatedAndUpdatedDate {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long smallTalkId;
 	
+	@NotNull
+	@Length(min=1, max=255)
 	@Column(name = "talk", length = 255, nullable = false)
 	private String talk;
 	

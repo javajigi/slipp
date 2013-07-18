@@ -1,7 +1,5 @@
 package net.slipp.service.smalltalk;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
 import net.slipp.domain.smallTalk.SmallTalk;
@@ -27,10 +25,12 @@ public class SmallTalkService {
 		smallTalkRepository.save(smallTalk);
 	}
 
-	public List<SmallTalk> getLastTalks() {
-		PageRequest pageSpecification = new PageRequest(0, 10, sortByIdDesc());
-		Page<SmallTalk> pages = smallTalkRepository.findAll(pageSpecification);
-		return pages.getContent();
+	public Page<SmallTalk> getLastTalks() {
+		return smallTalkRepository.findAll(getPager());
+	}
+
+	private PageRequest getPager() {
+		return new PageRequest(0, 10, sortByIdDesc());
 	}
 
 	private Sort sortByIdDesc() {

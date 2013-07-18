@@ -49,7 +49,7 @@ public class HomeController {
 
 	private void productionMode(Model model) {
 		//if (isProductionMode()) {
-			List<SmallTalk> smallTalks = smallTalkService.getLastTalks();
+			List<SmallTalk> smallTalks = smallTalkService.getLastTalks().getContent();
 			model.addAttribute("smallTalks", smallTalks);
 			//model.addAttribute("pages", wikiService.findWikiPages());			
 		//}

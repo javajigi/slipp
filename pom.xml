@@ -10,7 +10,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<org.slf4j.version>1.6.1</org.slf4j.version>
 		<jpa.version>2.0.0</jpa.version>
-		<hibernate.version>4.1.10.Final</hibernate.version>
+		<hibernate.version>4.2.0.Final</hibernate.version>
 		<org.springframework.version>3.1.2.RELEASE</org.springframework.version>
 		<org.springframework.social.version>1.0.2.RELEASE</org.springframework.social.version>
 		<org.springframework.security.version>3.1.0.RELEASE</org.springframework.security.version>
@@ -150,7 +150,12 @@
 			<artifactId>hibernate-ehcache</artifactId>
 			<version>${hibernate.version}</version>
 		</dependency>
-
+		<dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+        
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
