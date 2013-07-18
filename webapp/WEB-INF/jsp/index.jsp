@@ -69,7 +69,14 @@
 				</li>
 				</c:forEach>
 			</ul>
-			<textarea id="smallTalk" name="smallTalk"></textarea>
+			<sec:authorize access="hasRole('ROLE_USER')">
+			<div style="float: left;">
+				<textarea id="smallTalk" name="smallTalk"></textarea>
+			</div>
+			<div style="float: left;">
+				<a href="#" class="submitBtn">[저장하기]</a>
+			</div>
+			</sec:authorize>
 		</section>
 	<%-- 
 		<section class="notice">
@@ -92,6 +99,7 @@
 	--%>
 	</div>
 </div>
+<%-- 이동 예정. --%>
 <script type="text/x-tmpl" id="tmpl-smalltalks">
 {% for (var i=0; i<o.length; i++) { %}
 	<li>
@@ -101,6 +109,7 @@
 {% } %}
 </script>
 <script src="${url:resource('/javascripts/jquery.tmpl.min.js')}"></script>
+<script src="${url:resource('/javascripts/autogrow.min.js')}"></script>
 <script type="text/javascript">
 	var smallTalkService = {
 		get : function(){
@@ -118,41 +127,21 @@
 				}
 			});
 		},
-		getCaret : function(el) {
-		    var pos = 0;
-		    if (document.selection) {
-		    	el.focus ();
-		    	var Sel = document.selection.createRange();
-		    	var SelLength = document.selection.createRange().text.length;
-		    	Sel.moveStart ('character', -el.value.length);
-		    	pos = Sel.text.length - SelLength;
-		    }else if (el.selectionStart || el.selectionStart == '0'){
-		    	pos = el.selectionStart;
-		    }
-		    return pos;
+		bindAutogrow : function(){
+			$('#smallTalk').autogrow();
 		},
-		bind : function(){
+		bindSubmitBtn : function(){
 			var that = this;
-			$('#smallTalk').on('keypress', function(evt){
-				if (evt.which == 13 && evt.ctrlKey){
-					var content = this.value;
-					var caret = that.getCaret(this);
-					this.value = content.substring(0,caret)+"\n"+content.substring(caret,content.length);
-					evt.stopPropagation();
-				}else if (evt.which == 13){
-					var talk = $.trim($(this).val());
-					console.log(talk.length);
-					if( talk.length > 0 ){
-						that.save();
-						return;
-					}
-					return;
-				}
+			$('.submitBtn').on('click', function(evt){
+				evt.preventDefault();
+				that.save();
 			});
 		}
 	};
 	
 	$(document).ready(function(){
-		smallTalkService.bind();
+		smallTalkService.bindAutogrow();
+		smallTalkService.bindSubmitBtn();
+		
 	});
 </script>
