@@ -7,7 +7,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import net.slipp.domain.smallTalk.SmallTalk;
+import net.slipp.domain.smalltalk.SmallTalk;
 import net.slipp.domain.wiki.WikiPage;
 import net.slipp.service.qna.QnaService;
 import net.slipp.service.smalltalk.SmallTalkService;

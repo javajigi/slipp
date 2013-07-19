@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import net.slipp.domain.smallTalk.SmallTalk;
+import net.slipp.domain.smalltalk.SmallTalk;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.service.smalltalk.SmallTalkService;
 import net.slipp.support.web.argumentresolver.LoginUser;

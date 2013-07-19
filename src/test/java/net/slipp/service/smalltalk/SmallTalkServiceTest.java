@@ -5,7 +5,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.List;
 
-import net.slipp.domain.smallTalk.SmallTalk;
+import net.slipp.domain.smalltalk.SmallTalk;
 import net.slipp.repository.smalltalk.SmallTalkRepository;
 
 import org.junit.Before;

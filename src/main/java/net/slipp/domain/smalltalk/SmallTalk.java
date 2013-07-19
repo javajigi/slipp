@@ -1,4 +1,4 @@
-package net.slipp.domain.smallTalk;
+package net.slipp.domain.smalltalk;
 
 import java.util.Date;
 

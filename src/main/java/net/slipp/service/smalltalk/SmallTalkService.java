@@ -2,7 +2,7 @@ package net.slipp.service.smalltalk;
 
 import javax.annotation.Resource;
 
-import net.slipp.domain.smallTalk.SmallTalk;
+import net.slipp.domain.smalltalk.SmallTalk;
 import net.slipp.repository.smalltalk.SmallTalkRepository;
 
 import org.slf4j.Logger;
