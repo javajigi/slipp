@@ -9,7 +9,7 @@
 	.box-input-line
 		margin: 1em 0;
 		input[type='text']
-			normalinput();
+			@extend $normalinput;
 			width: 100%;
 	.inp-title
 		font-weight: bold;
@@ -62,7 +62,7 @@
 				display: block;
 				margin-right: 0;
 		.btn-submit
-			submitbtn();
+			@extend $submitbtn;
 .form-fileupload
 	display: inline-block;
 	padding: .5em;
@@ -123,7 +123,7 @@
 		border: 1px solid #ddd;
 		background: none;
 	.markItUpHeader
-		clearfix();
+		@extend $clearfix;
 		padding: 4px;
 		border-bottom: 1px solid #ddd;
 		background-color: #efefef;
