@@ -5,148 +5,52 @@
 	<div class="content-main">
 		<section class="qna-list">
 			<h1>최근화제</h1>
-<ul class="list">
-
+			<ul class="list">
+			<c:forEach items="${questions.content}" end="4" var="each">
 				<li>
 					<div class="wrap">
 						<div class="main">
 							<strong class="subject">
-								<a href="/questions/170">우리는 함수형 프로그래밍을 배워야 할까?</a>
+								<a href="/questions/${each.questionId}">${sf:h(each.title)}</a>
 							</strong>
-
+							<c:if test="${each.denormalizedTags != ''}">
+								<div class="tags">
+									<i class="icon-tag" title="태그"></i>
+									<span class="tag-list">
+										<c:forEach items="${each.denormalizedTags}" var="tag">
+											<span class="tag">${tag}</span>
+										</c:forEach>
+									</span>
+								</div>
+							</c:if>
 							<div class="auth-info">
-
-
-
+								<c:choose>
+									<c:when test="${each.totalAnswerCount == 0}">
+										<i class="icon-new-article"></i>
+										<span class="type">새글</span>
+										<span class="time">
+											<fmt:formatDate value="${each.createdDate}" pattern="yyyy-MM-dd HH:mm" />
+										</span>
+										<a href="${each.latestParticipant.url}" class="author">${each.latestParticipant.userId}</a>
+									</c:when>
+									<c:otherwise>
 										<i class="icon-add-comment"></i>
 										<span class="type">응답</span>
 										<span class="time">
-											2013-07-30 10:30
+											<fmt:formatDate value="${each.updatedDate}" pattern="yyyy-MM-dd HH:mm" />
 										</span>
-										<a href="/users/65/fupfin" class="author">fupfin</a>
-
-
+										<a href="${each.latestParticipant.url}" class="author">${each.latestParticipant.userId}</a>
+									</c:otherwise>
+								</c:choose>
 							</div>
 							<div class="reply" title="댓글">
 								<i class="icon-reply"></i>
-								<span class="point">6</span>
+								<span class="point">${each.totalAnswerCount}</span>
 							</div>
 						</div>
 					</div>
 				</li>
-
-				<li>
-					<div class="wrap">
-						<div class="main">
-							<strong class="subject">
-								<a href="/questions/168">회사일이 재미없어 질 때 어떻게 극복하시나요?</a>
-							</strong>
-
-							<div class="auth-info">
-
-
-
-										<i class="icon-add-comment"></i>
-										<span class="type">응답</span>
-										<span class="time">
-											2013-07-29 08:23
-										</span>
-										<a href="/users/94/ezblog" class="author">ezblog</a>
-
-
-							</div>
-							<div class="reply" title="댓글">
-								<i class="icon-reply"></i>
-								<span class="point">10</span>
-							</div>
-						</div>
-					</div>
-				</li>
-
-				<li>
-					<div class="wrap">
-						<div class="main">
-							<strong class="subject">
-								<a href="/questions/169">TestCase는 어떤식으로 작성하나요?</a>
-							</strong>
-
-							<div class="auth-info">
-
-
-
-										<i class="icon-add-comment"></i>
-										<span class="type">응답</span>
-										<span class="time">
-											2013-07-26 16:43
-										</span>
-										<a href="/users/87/benghun" class="author">benghun</a>
-
-
-							</div>
-							<div class="reply" title="댓글">
-								<i class="icon-reply"></i>
-								<span class="point">2</span>
-							</div>
-						</div>
-					</div>
-				</li>
-
-				<li>
-					<div class="wrap">
-						<div class="main">
-							<strong class="subject">
-								<a href="/questions/163">람다식이 가져다줄 자바프로그래밍의 변화는 무엇이 있을까요?</a>
-							</strong>
-
-							<div class="auth-info">
-
-
-
-										<i class="icon-add-comment"></i>
-										<span class="type">응답</span>
-										<span class="time">
-											2013-07-25 23:35
-										</span>
-										<a href="/users/85/ologist" class="author">ologist</a>
-
-
-							</div>
-							<div class="reply" title="댓글">
-								<i class="icon-reply"></i>
-								<span class="point">9</span>
-							</div>
-						</div>
-					</div>
-				</li>
-
-				<li>
-					<div class="wrap">
-						<div class="main">
-							<strong class="subject">
-								<a href="/questions/167">WAS에서 멀티 인스턴스를 사용할 수 있잖아요, 그럼 그 인스턴스란 어떤 개념인가요?</a>
-							</strong>
-
-							<div class="auth-info">
-
-
-
-										<i class="icon-add-comment"></i>
-										<span class="type">응답</span>
-										<span class="time">
-											2013-07-23 17:16
-										</span>
-										<a href="/users/187/minkyong.an" class="author">minkyong.an</a>
-
-
-							</div>
-							<div class="reply" title="댓글">
-								<i class="icon-reply"></i>
-								<span class="point">5</span>
-							</div>
-						</div>
-					</div>
-				</li>
-
+			</c:forEach>
 			</ul>
 			<nav class="link-more">
 				<a href="/questions">전체목록보기 &raquo;</a>
