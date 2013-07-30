@@ -6,7 +6,7 @@
 		font-size: 1.2em;
 	input[type='text'],
 	input[type='password']
-		normalinput();
+		@extend $normalinput;
 		width: 100%;
 		margin: .5em 0;
 .login-content-title
@@ -19,7 +19,7 @@
 	@media phone
 		display: none;
 .choose-login-type
-	clearfix();
+	@extend $clearfix;
 	position: relative;
 	text-align: left;
 	.divide-bar
@@ -49,10 +49,10 @@
 		float: none;
 		width: 100%;
 .login-with-slipp-submit
-	clearfix();
+	@extend $clearfix;
 	text-align: right;
 .login-with-slipp-submit-btn
-	submitbtn();
+	@extend $submitbtn;
 	margin-left: .5em;
 .sign-in-to-slipp
 	float: right;
@@ -64,7 +64,7 @@
 	padding: .5em;
 	border-radius: 4px;
 .sign-in-to-slipp-btn
-	submitbtn();
+	@extend $submitbtn;
 	width: 100%;
 	background-color: #2BB45D;
 	&:hover
@@ -75,7 +75,7 @@
 	@media phone-landscape
 		width: 100%;
 .sign-in-with-sns-submit-btn
-	submitbtn();
+	@extend $submitbtn;
 	width: 100%;
 	background-color: #2BB45D;
 	&:hover

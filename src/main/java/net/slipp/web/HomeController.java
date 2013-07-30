@@ -1,14 +1,16 @@
 package net.slipp.web;
 
-import static net.slipp.web.QnAPageableHelper.*;
+import static net.slipp.web.QnAPageableHelper.createPageableByQuestionUpdatedDate;
 
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import net.slipp.domain.smalltalk.SmallTalk;
 import net.slipp.domain.wiki.WikiPage;
 import net.slipp.service.qna.QnaService;
+import net.slipp.service.smalltalk.SmallTalkService;
 import net.slipp.service.tag.TagService;
 import net.slipp.service.wiki.WikiService;
 
@@ -34,15 +36,23 @@ public class HomeController {
 	@Resource(name = "tagService")
 	private TagService tagService;
 	
+	@Resource(name = "smallTalkService")
+	private SmallTalkService smallTalkService;
+	
 	@RequestMapping("/")
 	public String home(Model model) {
-		if (isProductionMode()) {
-			
-			model.addAttribute("pages", wikiService.findWikiPages());			
-		}
+		productionMode(model);
 		model.addAttribute("questions", qnaService.findsQuestion(createPageableByQuestionUpdatedDate(DEFAULT_PAGE_NO, DEFAULT_PAGE_SIZE)));
 		model.addAttribute("tags", tagService.findPooledTags());		
 		return "index";
+	}
+
+	private void productionMode(Model model) {
+		//if (isProductionMode()) {
+			List<SmallTalk> smallTalks = smallTalkService.getLastTalks().getContent();
+			model.addAttribute("smallTalks", smallTalks);
+			//model.addAttribute("pages", wikiService.findWikiPages());			
+		//}
 	}
 
 	private boolean isProductionMode() {

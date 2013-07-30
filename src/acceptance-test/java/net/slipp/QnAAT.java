@@ -6,7 +6,6 @@ import static org.junit.Assert.assertThat;
 import java.util.List;
 
 import net.slipp.qna.AnswerUpdateFormPage;
-import net.slipp.qna.IndexPage;
 import net.slipp.qna.QuestionFixture;
 import net.slipp.qna.QuestionFormPage;
 import net.slipp.qna.QuestionPage;
@@ -23,7 +22,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class QnAAT extends AbstractATTest {
     private QuestionFixture questionFixture;
-    private IndexPage indexPage;
     
     @Before
     public void setup() {
@@ -183,20 +181,6 @@ public class QnAAT extends AbstractATTest {
         questionPage.verify(questionFixture.getTitle(), questionFixture.getContents(), questionFixture.getPlainTags());
         return questionPage;
 	}
-    
-    private LoginUser loginToFacebook(int number) {
-        indexPage = new IndexPage(driver);
-        LoginUser loginUser = getLoginUser(number);
-        indexPage = indexPage.loginToFacebook(loginUser);
-        return loginUser;
-    }
-    
-    private LoginUser getLoginUser(int number) {
-    	  String email = environment.getProperty("facebook.email" + number);
-          String password = environment.getProperty("facebook.password" + number);
-          String nickName = environment.getProperty("facebook.nickName" + number);
-          return new LoginUser(email, password, nickName);
-    }
     
     @After
     public void tearDown() {

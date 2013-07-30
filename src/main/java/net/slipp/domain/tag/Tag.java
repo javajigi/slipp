@@ -3,6 +3,7 @@ package net.slipp.domain.tag;
 import java.util.Set;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -12,14 +13,16 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
 import net.slipp.domain.qna.Question;
+import net.slipp.domain.user.SocialUser;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.springframework.security.access.AccessDeniedException;
 
 import com.google.common.collect.Sets;
 
 @Entity
-@Cache(region="tag", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(region = "tag", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Tag {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,23 +33,27 @@ public class Tag {
 
 	private int taggedCount = 0;
 
-    @Column(name = "pooled", nullable=false)
+	@Column(name = "pooled", nullable = false)
 	private boolean pooled;
 
 	@OneToOne
 	@org.hibernate.annotations.ForeignKey(name = "fk_tag_parent_id")
-	public Tag parent;
-	
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy="tags")
+	private Tag parent;
+
+	@Embedded
+	private TagInfo tagInfo;
+
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "tags")
 	private Set<Question> questions = Sets.newHashSet();
 
 	public Tag() {
 	}
 
-	Tag(String name, Tag parent, boolean pooled) {
+	Tag(String name, Tag parent, boolean pooled, TagInfo tagInfo) {
 		this.name = name;
 		this.parent = parent;
 		this.pooled = pooled;
+		this.tagInfo = tagInfo;
 	}
 
 	public Long getTagId() {
@@ -89,17 +96,37 @@ public class Tag {
 		return this.parent;
 	}
 
+	public TagInfo getTagInfo() {
+		return tagInfo;
+	}
+
 	private boolean isRootTag() {
 		return parent == null;
 	}
-	
+
 	public void movePooled(Tag parent) {
 		this.pooled = true;
 		this.parent = parent;
-		
+
 		for (Question each : questions) {
 			each.tagsToDenormalizedTags();
 		}
+	}
+
+	public boolean isRequestedTag() {
+		if (tagInfo == null) {
+			return false;
+		}
+
+		return tagInfo.isRequestedTag();
+	}
+
+	public boolean isConnectGroup() {
+		if (isRequestedTag()) {
+			return tagInfo.isConnectGroup();
+		}
+
+		return false;
 	}
 
 	/**
@@ -113,17 +140,33 @@ public class Tag {
 		}
 		return this.parent;
 	}
-	
+
+	public void updateTagInfo(TagInfo tagInfo) {
+		if (!isRequestedBy(tagInfo.getOwner())) {
+			throw new AccessDeniedException("you are not owner!");
+		}
+
+		this.tagInfo = tagInfo;
+	}
+
+	private boolean isRequestedBy(SocialUser socialUser) {
+		return tagInfo.isRequestedBy(socialUser);
+	}
+
 	public static Tag pooledTag(String name) {
 		return pooledTag(name, null);
 	}
-	
+
 	public static Tag pooledTag(String name, Tag parent) {
-		return new Tag(name, parent, true);
+		return new Tag(name.toLowerCase(), parent, true, null);
 	}
-	
+
 	public static Tag newTag(String name) {
-		return new Tag(name, null, false);
+		return newTag(name, null);
+	}
+
+	public static Tag newTag(String name, TagInfo tagInfo) {
+		return new Tag(name.toLowerCase(), null, false, tagInfo);
 	}
 
 	@Override

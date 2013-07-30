@@ -15,36 +15,36 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/api/users")
 public class ApiUsersController {
-	private static Logger log = LoggerFactory.getLogger(ApiUsersController.class);
+    private static Logger log = LoggerFactory.getLogger(ApiUsersController.class);
 
-	@Resource(name = "socialUserService")
-	private SocialUserService userService;
+    @Resource(name = "socialUserService")
+    private SocialUserService userService;
 
-	@RequestMapping("/duplicateUserId")
-	public @ResponseBody
-	String duplicateUserId(@LoginUser(required = false) SocialUser loginUser, String userId) {
-		log.debug("userId : {}", userId);
+    @RequestMapping("/duplicateUserId")
+    public @ResponseBody
+    boolean duplicateUserId(@LoginUser(required = false) SocialUser loginUser, String userId) {
+        log.debug("userId : {}", userId);
 
-		SocialUser socialUser = userService.findByUserId(userId);
-		return checkDuplicate(loginUser, socialUser);
-	}
+        SocialUser socialUser = userService.findByUserId(userId);
+        return checkDuplicate(loginUser, socialUser);
+    }
 
-	@RequestMapping("/duplicateEmail")
-	public @ResponseBody
-	String duplicateEmail(@LoginUser(required = false) SocialUser loginUser, String email) {
-		log.debug("email : {}", email);
+    @RequestMapping("/duplicateEmail")
+    public @ResponseBody
+    boolean duplicateEmail(@LoginUser(required = false) SocialUser loginUser, String email) {
+        log.debug("email : {}", email);
 
-		SocialUser socialUser = userService.findByEmail(email);
-		return checkDuplicate(loginUser, socialUser);
-	}
+        SocialUser socialUser = userService.findByEmail(email);
+        return checkDuplicate(loginUser, socialUser);
+    }
 
-	String checkDuplicate(SocialUser loginUser, SocialUser socialUser) {
-		if (socialUser == null) {
-			return "false";
-		}
-		if (socialUser.isSameUser(loginUser)) {
-			return "false";
-		}
-		return "true";
-	}
+    boolean checkDuplicate(SocialUser loginUser, SocialUser socialUser) {
+        if (socialUser == null) {
+            return false;
+        }
+        if (socialUser.isSameUser(loginUser)) {
+            return false;
+        }
+        return true;
+    }
 }
