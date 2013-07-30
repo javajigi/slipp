@@ -5,52 +5,148 @@
 	<div class="content-main">
 		<section class="qna-list">
 			<h1>최근화제</h1>
-			<ul class="list">
-			<c:forEach items="${questions.content}" end="4" var="each">
+<ul class="list">
+
 				<li>
 					<div class="wrap">
 						<div class="main">
 							<strong class="subject">
-								<a href="/questions/${each.questionId}">${sf:h(each.title)}</a>
+								<a href="/questions/170">우리는 함수형 프로그래밍을 배워야 할까?</a>
 							</strong>
-							<c:if test="${each.denormalizedTags != ''}">
-								<div class="tags">
-									<i class="icon-tag" title="태그"></i>
-									<span class="tag-list">
-										<c:forEach items="${each.denormalizedTags}" var="tag">
-											<span class="tag">${tag}</span>
-										</c:forEach>
-									</span>
-								</div>
-							</c:if>
+
 							<div class="auth-info">
-								<c:choose>
-									<c:when test="${each.totalAnswerCount == 0}">
-										<i class="icon-new-article"></i>
-										<span class="type">새글</span>
-										<span class="time">
-											<fmt:formatDate value="${each.createdDate}" pattern="yyyy-MM-dd HH:mm" />
-										</span>
-										<a href="${each.latestParticipant.url}" class="author">${each.latestParticipant.userId}</a>
-									</c:when>
-									<c:otherwise>
+
+
+
 										<i class="icon-add-comment"></i>
 										<span class="type">응답</span>
 										<span class="time">
-											<fmt:formatDate value="${each.updatedDate}" pattern="yyyy-MM-dd HH:mm" />
+											2013-07-30 10:30
 										</span>
-										<a href="${each.latestParticipant.url}" class="author">${each.latestParticipant.userId}</a>
-									</c:otherwise>
-								</c:choose>
+										<a href="/users/65/fupfin" class="author">fupfin</a>
+
+
 							</div>
 							<div class="reply" title="댓글">
 								<i class="icon-reply"></i>
-								<span class="point">${each.totalAnswerCount}</span>
+								<span class="point">6</span>
 							</div>
 						</div>
 					</div>
 				</li>
-			</c:forEach>
+
+				<li>
+					<div class="wrap">
+						<div class="main">
+							<strong class="subject">
+								<a href="/questions/168">회사일이 재미없어 질 때 어떻게 극복하시나요?</a>
+							</strong>
+
+							<div class="auth-info">
+
+
+
+										<i class="icon-add-comment"></i>
+										<span class="type">응답</span>
+										<span class="time">
+											2013-07-29 08:23
+										</span>
+										<a href="/users/94/ezblog" class="author">ezblog</a>
+
+
+							</div>
+							<div class="reply" title="댓글">
+								<i class="icon-reply"></i>
+								<span class="point">10</span>
+							</div>
+						</div>
+					</div>
+				</li>
+
+				<li>
+					<div class="wrap">
+						<div class="main">
+							<strong class="subject">
+								<a href="/questions/169">TestCase는 어떤식으로 작성하나요?</a>
+							</strong>
+
+							<div class="auth-info">
+
+
+
+										<i class="icon-add-comment"></i>
+										<span class="type">응답</span>
+										<span class="time">
+											2013-07-26 16:43
+										</span>
+										<a href="/users/87/benghun" class="author">benghun</a>
+
+
+							</div>
+							<div class="reply" title="댓글">
+								<i class="icon-reply"></i>
+								<span class="point">2</span>
+							</div>
+						</div>
+					</div>
+				</li>
+
+				<li>
+					<div class="wrap">
+						<div class="main">
+							<strong class="subject">
+								<a href="/questions/163">람다식이 가져다줄 자바프로그래밍의 변화는 무엇이 있을까요?</a>
+							</strong>
+
+							<div class="auth-info">
+
+
+
+										<i class="icon-add-comment"></i>
+										<span class="type">응답</span>
+										<span class="time">
+											2013-07-25 23:35
+										</span>
+										<a href="/users/85/ologist" class="author">ologist</a>
+
+
+							</div>
+							<div class="reply" title="댓글">
+								<i class="icon-reply"></i>
+								<span class="point">9</span>
+							</div>
+						</div>
+					</div>
+				</li>
+
+				<li>
+					<div class="wrap">
+						<div class="main">
+							<strong class="subject">
+								<a href="/questions/167">WAS에서 멀티 인스턴스를 사용할 수 있잖아요, 그럼 그 인스턴스란 어떤 개념인가요?</a>
+							</strong>
+
+							<div class="auth-info">
+
+
+
+										<i class="icon-add-comment"></i>
+										<span class="type">응답</span>
+										<span class="time">
+											2013-07-23 17:16
+										</span>
+										<a href="/users/187/minkyong.an" class="author">minkyong.an</a>
+
+
+							</div>
+							<div class="reply" title="댓글">
+								<i class="icon-reply"></i>
+								<span class="point">5</span>
+							</div>
+						</div>
+					</div>
+				</li>
+
 			</ul>
 			<nav class="link-more">
 				<a href="/questions">전체목록보기 &raquo;</a>
@@ -59,36 +155,41 @@
 		<slipp:side-tags tags="${tags}"/>
 	</div>
 	<div class="content-sub">
-		<section class="smalltalks">
+		<section class="smalltalk ui-smalltalk-list-collapse">
 			<h1>수다양!</h1>
-			<ul class="smalltalks-list">
-				<c:forEach items="${smallTalks}" var="smallTalk">
-				<li>
-					<strong class="title"><pre>${smallTalk.talk}</pre></strong>
-					<div class="time">${smallTalk.time}</div>
-					<div class="writer">${smallTalk.writer.userId}</div>
-				</li>
-				</c:forEach>
-			</ul>
 			<sec:authorize access="hasRole('ROLE_USER')">
-				<form action="" class="smalltalks-form">
-					<div style="float: left;">
-						<textarea id="smallTalkMessage" name="smallTalkMessage"></textarea>
-					</div>
-					<div style="float: left;">
-						<button type="submit " class="btn-smalltalks-form-submit">[저장하기]</button>
-					</div>
+				<form action="" class="smalltalk-form">
+						<textarea id="smallTalkMessage" name="smallTalkMessage" class="tf-smalltalk-form-msg"></textarea>
+						<div class="smalltalk-form-util">
+							<p class="smalltalk-form-util-msg"><i class="icon-smalltalk-msg"></i> 요즘 어떠세요?</p>
+							<button type="submit " class="btn-smalltalk-form-util-submit">나도 한마디</button>
+						</div>
 				</form>
 			</sec:authorize>
+			<ul class="smalltalk-list">
+				<c:forEach items="${smallTalks}" var="smallTalk" varStatus="status">
+				<li class="smalltalk-list-item smalltalk-list-item-${status.count}">
+					<div class="smalltalk-list-item-info">
+						<strong class="smalltalk-list-item-info-author">${smallTalk.writer.userId}</strong>
+						<span class="smalltalk-list-item-info-time">${smallTalk.time}</span>
+					</div>
+					<div class="smalltalk-list-item-cont">${smallTalk.talk}</div>
+				</li>
+				</c:forEach>
+				<li class="smalltalk-list-expand">
+					<button class="btn-smalltalk-list-expand">more <i class="icon-smalltalk-expand"></i></button>
+				</li>
+			</ul>
+			<p class="smalltalk-notice">* 최근 10개까지만 보여집니다.</p>
 		</section>
 		<section class="notice">
 			<h1><a href="/wiki/display/slipp/Home">SLiPP log</a></h1>
-			<ul class="list">
+			<ul class="notice-list">
 				<c:forEach items="${pages}" var="page">
-				<li>
-					<strong class="title"><a href="/wiki/pages/viewpage.action?pageId=${page.pageId}">${page.title}</a></strong>
-					<div class="time">${page.creationDate}</div>
-					<div class="cont">
+				<li class="notice-list-item">
+					<strong class="notice-item-title"><a href="/wiki/pages/viewpage.action?pageId=${page.pageId}">${page.title}</a></strong>
+					<div class="notice-list-item-time">${page.creationDate}</div>
+					<div class="notice-list-item-cont">
 						${page.shortContents}
 					</div>
 				</li>
@@ -102,46 +203,55 @@
 </div>
 <%-- 이동 예정. --%>
 <script src="${url:resource('/javascripts/jquery.tmpl.min.js')}"></script>
-<script src="${url:resource('/javascripts/autogrow.min.js')}"></script>
-<script type="text/x-tmpl" id="tmpl-smalltalks-list">
+<%-- <script src="${url:resource('/javascripts/autogrow.min.js')}"></script> --%>
+<script type="text/x-tmpl" id="tmpl-smalltalk-list">
 {% for (var i=0; i<o.length; i++) { %}
-	<li>
-		<strong class="title"><pre>{%=o[i].talk%}</pre></strong>
-		<div class="time">{%=o[i].time%}</div>
+	<li class="smalltalk-list-item smalltalk-list-item-${status.count}">
+		<div class="smalltalk-list-item-info">
+			<span class="smalltalk-list-item-info-time">{%=o[i].time%}</span>
+		</div>
+		<div class="smalltalk-list-item-cont">{%=o[i].talk%}</div>
 	</li>
 {% } %}
 </script>
 <script type="text/javascript">
-	var smallTalkService = {
+	var smalltalkService = {
 		init: function() {
 			var that = this;
 
-			$(that.MessageField).autogrow();
-			$('.smalltalks-form').on('submit', function(evt){
+			// $(that.MessageField).autogrow();
+			$('.smalltalk-form').on('submit', function(evt){
 				evt.preventDefault();
 				that.save();
 			});
+			$('.btn-smalltalk-list-expand').on('click', function(evt) {
+				that.expand();
+			})
 		},
 		MessageField: '#smallTalkMessage',
-		save : function(){
+		save : function() {
 			var that = this;
 			var $talk = $(that.MessageField);
 
 			$.post('/smalltalks', { 'talk' : $talk.val() }, function(data) {
-				if( data == 'OK' ){
+				if (data == 'OK') {
 					that.get();
 					$talk.val('');
 				}
 			});
+			that.expand();
 		},
-		get : function(){
+		get : function() {
 			$.get('/smalltalks', function(data) {
-				$('.smalltalks-list').html( tmpl('tmpl-smalltalks-list', data) );
+				$('.smalltalk-list').html( tmpl('tmpl-smalltalk-list', data) );
 			});
+		},
+		expand: function() {
+			$('.smalltalk').removeClass('ui-smalltalk-list-collapse');
 		}
 	};
 
 	$(document).ready(function(){
-		smallTalkService.init();
+		smalltalkService.init();
 	});
 </script>
