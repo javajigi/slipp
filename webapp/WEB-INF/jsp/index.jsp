@@ -65,6 +65,7 @@
 						<textarea id="smallTalkMessage" name="smallTalkMessage" class="tf-smalltalk-form-msg" style="resize: none"></textarea>
 						<div class="smalltalk-form-util">
 							<p class="smalltalk-form-util-msg"><i class="icon-smalltalk-msg"></i> 요즘 어떠세요?</p>
+							<p class="smalltalk-form-fail-msg" style="display: none"></p>
 							<button type="submit " class="btn-smalltalk-form-util-submit">나도 한마디</button>
 						</div>
 				</form>
@@ -88,7 +89,7 @@
 		<section class="notice">
 			<h1><a href="/wiki/display/slipp/Home">SLiPP log</a></h1>
 			<ul class="notice-list">
-				<c:forEach items="${pages}" var="page" varStatus="status">
+				<c:forEach items="${pages}" var="page" varStatus="status" end="2">
 				<li class="notice-list-item">
 					<strong class="notice-item-title"><a href="/wiki/pages/viewpage.action?pageId=${page.pageId}">${page.title}</a></strong>
 					<div class="notice-list-item-time">${page.creationDate}</div>

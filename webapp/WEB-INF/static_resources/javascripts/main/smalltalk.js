@@ -1,6 +1,11 @@
 var smalltalkService = {
+	messageField: '#smallTalkMessage',
+	failMessageField: '.smalltalk-form-fail-msg',
 	init: function() {
 		var that = this;
+		var $talk = $(that.messageField);
+		var $fail = $(that.failMessageField);
+		
 		$('.smalltalk-form').on('submit', function(evt){
 			evt.preventDefault();
 			that.save();
@@ -11,17 +16,23 @@ var smalltalkService = {
 				return false;
 			}
 			that.expand();
-		})
+		});
+		$talk.on('keydown', function(){
+			$fail.hide();
+		});
 	},
-	MessageField: '#smallTalkMessage',
 	save : function() {
 		var that = this;
-		var $talk = $(that.MessageField);
-
+		var $talk = $(that.messageField);
+		var $fail = $(that.failMessageField);
+		
 		$.post('/smalltalks', { 'talk' : $talk.val() }, function(data) {
 			if (data == 'OK') {
 				that.get();
 				$talk.val('');
+			}else{
+				$fail.html("수다는 간단하게 100글자까지만~");
+				$fail.show();
 			}
 		});
 		that.expand();
