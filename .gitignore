@@ -4,3 +4,4 @@
 /.settings
 /chromedriver.log
 /.gradle
+/bin

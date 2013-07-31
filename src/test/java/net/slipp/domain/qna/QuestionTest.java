@@ -1,11 +1,13 @@
 package net.slipp.domain.qna;
 
-import static net.slipp.domain.qna.AnswerBuilder.*;
-import static net.slipp.domain.qna.QuestionBuilder.*;
-import static net.slipp.domain.tag.TagBuilder.*;
-import static net.slipp.domain.tag.TagTest.*;
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import static net.slipp.domain.qna.AnswerBuilder.anAnswer;
+import static net.slipp.domain.qna.QuestionBuilder.aQuestion;
+import static net.slipp.domain.tag.TagBuilder.aTag;
+import static net.slipp.domain.tag.TagTest.JAVA;
+import static net.slipp.domain.tag.TagTest.JAVASCRIPT;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
 
 import java.util.Set;
 

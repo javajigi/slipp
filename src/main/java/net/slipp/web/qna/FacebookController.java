@@ -6,7 +6,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import net.slipp.domain.qna.FacebookComment;
+import net.slipp.domain.fb.FacebookComment;
 import net.slipp.service.qna.FacebookService;
 
 import org.slf4j.Logger;

@@ -3,6 +3,7 @@ package net.slipp.qna;
 import java.util.List;
 
 import net.slipp.LoginUser;
+import net.slipp.tag.RequestTagPage;
 import net.slipp.user.FacebookPage;
 import net.slipp.user.GooglePage;
 import net.slipp.user.LoginPage;
@@ -74,11 +75,6 @@ public class IndexPage {
 		return new IndexPage(driver);
 	}
 	
-	public AdminTagPage goAdminTagPage() {
-		driver.findElement(By.cssSelector("#tagManagement")).click();
-		return new AdminTagPage(driver);
-	}
-
 	public QuestionFormPage goQuestionForm() {
 		driver.findElement(By.id("writeBtn")).click();
 		return new QuestionFormPage(driver);
@@ -114,5 +110,15 @@ public class IndexPage {
         driver.findElement(By.cssSelector("li.user-info > a > img.user-thumb")).click();
         driver.findElement(By.cssSelector("a.link-to-personalize")).click();
         return new ProfilePage(driver);
+    }
+    
+    public AdminTagPage goAdminTagPage() {
+        driver.findElement(By.cssSelector("#tagManagement")).click();
+        return new AdminTagPage(driver);
+    }
+
+    public RequestTagPage goRequestTagPage() {
+        driver.findElement(By.cssSelector("#requestTag")).click();
+        return new RequestTagPage(driver);
     }
 }

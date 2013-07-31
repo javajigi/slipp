@@ -5,8 +5,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import net.slipp.domain.fb.FacebookComment;
 import net.slipp.domain.qna.Answer;
-import net.slipp.domain.qna.FacebookComment;
 import net.slipp.domain.qna.Question;
 import net.slipp.domain.qna.SnsConnection;
 import net.slipp.domain.user.SocialUser;
