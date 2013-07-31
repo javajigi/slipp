@@ -5,14 +5,14 @@ var smalltalkService = {
 		var that = this;
 		var $talk = $(that.messageField);
 		var $fail = $(that.failMessageField);
-		
+
 		$('.smalltalk-form').on('submit', function(evt){
 			evt.preventDefault();
 			that.save();
 		});
 		$('.btn-smalltalk-list-expand').on('click', function(evt) {
 			var smalltalkCount = $(this).data('smalltalk-count');
-			if( typeof( smalltalkCount ) == "undefined" || smalltalkCount == 0 ) {
+			if( typeof( smalltalkCount ) == "undefined" || smalltalkCount === 0 ) {
 				return false;
 			}
 			that.expand();
@@ -21,11 +21,11 @@ var smalltalkService = {
 			$fail.hide();
 		});
 	},
-	save : function() {
+	save: function() {
 		var that = this;
 		var $talk = $(that.messageField);
 		var $fail = $(that.failMessageField);
-		
+
 		$.post('/smalltalks', { 'talk' : $talk.val() }, function(data) {
 			if (data == 'OK') {
 				that.get();
@@ -37,7 +37,7 @@ var smalltalkService = {
 		});
 		that.expand();
 	},
-	get : function() {
+	get: function() {
 		$.get('/smalltalks', function(data) {
 			$('.smalltalk-list').html( tmpl('tmpl-smalltalk-list', data) );
 		});

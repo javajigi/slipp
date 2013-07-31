@@ -63,9 +63,9 @@
 			<sec:authorize access="hasRole('ROLE_USER')">
 				<form action="" class="smalltalk-form">
 						<textarea id="smallTalkMessage" name="smallTalkMessage" class="tf-smalltalk-form-msg" style="resize: none"></textarea>
+						<label for="smallTalkMessage" class="smalltalk-form-fail-msg error" style="display: none"></label>
 						<div class="smalltalk-form-util">
 							<p class="smalltalk-form-util-msg"><i class="icon-smalltalk-msg"></i> 요즘 어떠세요?</p>
-							<p class="smalltalk-form-fail-msg" style="display: none"></p>
 							<button type="submit " class="btn-smalltalk-form-util-submit">나도 한마디</button>
 						</div>
 				</form>
