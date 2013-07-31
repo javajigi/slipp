@@ -6,11 +6,9 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import net.slipp.domain.fb.FacebookComment;
-import net.slipp.domain.fb.FacebookGroup;
 import net.slipp.domain.qna.Answer;
 import net.slipp.domain.qna.Question;
 import net.slipp.domain.qna.SnsConnection;
-import net.slipp.domain.tag.Tag;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.repository.qna.AnswerRepository;
 import net.slipp.repository.qna.QuestionRepository;
@@ -25,14 +23,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import com.google.common.collect.Lists;
-import com.restfb.Connection;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.Parameter;
 import com.restfb.exception.FacebookGraphException;
 import com.restfb.types.Comment;
 import com.restfb.types.FacebookType;
-import com.restfb.types.Group;
 import com.restfb.types.Post;
 import com.restfb.types.Post.Comments;
 
@@ -59,13 +55,13 @@ public class FacebookService {
         Assert.notNull(question, "Question should be not null!");
 
         String message = createFacebookMessage(question.getContents());
-        String postId = sendMessageToFacebook(loginUser, createLink(question.getQuestionId()), "me", message);
+        String postId = sendMessageToFacebook(loginUser, createLink(question.getQuestionId()), message);
         if (postId != null) {
             question.connected(postId);
         }
     }
 
-    private String sendMessageToFacebook(SocialUser loginUser, String link, String receiverId, String message) {
+    private String sendMessageToFacebook(SocialUser loginUser, String link, String message) {
         String postId = null;
         try {
             FacebookClient facebookClient = new DefaultFacebookClient(loginUser.getAccessToken());
@@ -75,7 +71,7 @@ public class FacebookService {
                     break;
                 }
 
-                FacebookType response = facebookClient.publish(receiverId + "/feed", FacebookType.class,
+                FacebookType response = facebookClient.publish("me/feed", FacebookType.class,
                         Parameter.with("link", link), Parameter.with("message", message));
                 postId = response.getId();
 
@@ -89,25 +85,6 @@ public class FacebookService {
     }
 
     @Async
-    public void sendToGroupQuestionMessage(SocialUser loginUser, Long questionId) {
-        log.info("questionId : {}", questionId);
-        Question question = questionRepository.findOne(questionId);
-        Assert.notNull(question, "Question should be not null!");
-
-        Tag connectedGroupTag = question.getConnectedGroupTag();
-        if (connectedGroupTag == null) {
-            return;
-        }
-
-        String message = createFacebookMessage(question.getContents());
-        String postId = sendMessageToFacebook(loginUser, createLink(question.getQuestionId()), connectedGroupTag
-                .getTagInfo().getGroupId(), message);
-        if (postId != null) {
-            question.connected(postId);
-        }
-    }
-
-    @Async
     public void sendToAnswerMessage(SocialUser loginUser, Long answerId) {
         log.info("answerId : {}", answerId);
         Answer answer = answerRepository.findOne(answerId);
@@ -116,7 +93,7 @@ public class FacebookService {
         Question question = answer.getQuestion();
         String message = createFacebookMessage(answer.getContents());
 
-        String postId = sendMessageToFacebook(loginUser, createLink(question.getQuestionId(), answerId), "me", message);
+        String postId = sendMessageToFacebook(loginUser, createLink(question.getQuestionId(), answerId), message);
         if (postId != null) {
             answer.connected(postId);
         }
@@ -132,24 +109,12 @@ public class FacebookService {
         FacebookClient facebookClient = new DefaultFacebookClient(socialUser.getAccessToken());
         SnsConnection snsConnection = question.getSnsConnection();
         log.debug("postId : {}", snsConnection.getPostId());
-
+        
         Post post = findPost(facebookClient, snsConnection.getPostId());
         List<FacebookComment> fbComments = findComments(post);
         log.debug("count comments : {}, from post : {}", fbComments.size(), snsConnection.getPostId());
         snsConnection.updateAnswerCount(fbComments.size());
         return fbComments;
-    }
-
-    public List<FacebookGroup> findFacebookGroups(SocialUser loginUser) {
-        FacebookClient facebookClient = new DefaultFacebookClient(loginUser.getAccessToken());
-        Connection<Group> myGroups = facebookClient.fetchConnection("/me/groups", Group.class);
-        List<FacebookGroup> fbGroups = Lists.newArrayList();
-        for (List<Group> groups : myGroups) {
-            for (Group group : groups) {
-                fbGroups.add(new FacebookGroup(group.getId(), group.getName()));
-            }
-        }
-        return fbGroups;
     }
 
     private Post findPost(FacebookClient facebookClient, String postId) {
@@ -160,7 +125,7 @@ public class FacebookService {
             return null;
         }
     }
-
+    
     private List<FacebookComment> findComments(Post post) {
         List<FacebookComment> fbComments = Lists.newArrayList();
         if (post == null) {
@@ -171,7 +136,7 @@ public class FacebookService {
         if (comments == null) {
             return fbComments;
         }
-
+        
         List<Comment> commentData = comments.getData();
         for (Comment comment : commentData) {
             fbComments.add(FacebookComment.create(comment));
