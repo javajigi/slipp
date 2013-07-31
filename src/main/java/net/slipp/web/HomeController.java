@@ -48,11 +48,13 @@ public class HomeController {
 	}
 
 	private void productionMode(Model model) {
-		//if (isProductionMode()) {
-			List<SmallTalk> smallTalks = smallTalkService.getLastTalks().getContent();
-			model.addAttribute("smallTalks", smallTalks);
-			//model.addAttribute("pages", wikiService.findWikiPages());			
-		//}
+		List<SmallTalk> smallTalks = smallTalkService.getLastTalks().getContent();
+		model.addAttribute("smallTalks", smallTalks);
+		if (isProductionMode()) {
+			model.addAttribute("pages", wikiService.findWikiPages());			
+		}else{
+			model.addAttribute("pages", wikiService.findDummyWikiPages());
+		}
 	}
 
 	private boolean isProductionMode() {

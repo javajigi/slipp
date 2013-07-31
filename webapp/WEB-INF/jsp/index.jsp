@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
 %><%@ include file="/WEB-INF/jsp/include/tags.jspf" %>
-
 <div class="home-content">
 	<div class="content-main">
 		<section class="qna-list">
@@ -63,7 +62,7 @@
 			<h1>수다양!</h1>
 			<sec:authorize access="hasRole('ROLE_USER')">
 				<form action="" class="smalltalk-form">
-						<textarea id="smallTalkMessage" name="smallTalkMessage" class="tf-smalltalk-form-msg"></textarea>
+						<textarea id="smallTalkMessage" name="smallTalkMessage" class="tf-smalltalk-form-msg" style="resize: none"></textarea>
 						<div class="smalltalk-form-util">
 							<p class="smalltalk-form-util-msg"><i class="icon-smalltalk-msg"></i> 요즘 어떠세요?</p>
 							<button type="submit " class="btn-smalltalk-form-util-submit">나도 한마디</button>
@@ -81,7 +80,7 @@
 				</li>
 				</c:forEach>
 				<li class="smalltalk-list-expand">
-					<button class="btn-smalltalk-list-expand">more <i class="icon-smalltalk-expand"></i></button>
+					<button class="btn-smalltalk-list-expand" data-smalltalk-count="${fn:length(smallTalks)}">more <i class="icon-smalltalk-expand"></i></button>
 				</li>
 			</ul>
 			<p class="smalltalk-notice">* 최근 10개까지만 보여집니다.</p>
@@ -89,13 +88,15 @@
 		<section class="notice">
 			<h1><a href="/wiki/display/slipp/Home">SLiPP log</a></h1>
 			<ul class="notice-list">
-				<c:forEach items="${pages}" var="page">
+				<c:forEach items="${pages}" var="page" varStatus="status">
 				<li class="notice-list-item">
 					<strong class="notice-item-title"><a href="/wiki/pages/viewpage.action?pageId=${page.pageId}">${page.title}</a></strong>
 					<div class="notice-list-item-time">${page.creationDate}</div>
+					<c:if test="${status.index == 0}">
 					<div class="notice-list-item-cont">
 						${page.shortContents}
 					</div>
+					</c:if>
 				</li>
 				</c:forEach>
 			</ul>
@@ -105,57 +106,21 @@
 		</section>
 	</div>
 </div>
-<%-- 이동 예정. --%>
 <script src="${url:resource('/javascripts/jquery.tmpl.min.js')}"></script>
-<%-- <script src="${url:resource('/javascripts/autogrow.min.js')}"></script> --%>
+<script src="${url:resource('/javascripts/main/smalltalk.js')}"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		smalltalkService.init();
+	});
+</script>
 <script type="text/x-tmpl" id="tmpl-smalltalk-list">
 {% for (var i=0; i<o.length; i++) { %}
 	<li class="smalltalk-list-item smalltalk-list-item-${status.count}">
 		<div class="smalltalk-list-item-info">
+			<strong class="smalltalk-list-item-info-author">{%=o[i].writer.userId%}</strong>
 			<span class="smalltalk-list-item-info-time">{%=o[i].time%}</span>
 		</div>
 		<div class="smalltalk-list-item-cont">{%=o[i].talk%}</div>
 	</li>
 {% } %}
-</script>
-<script type="text/javascript">
-	var smalltalkService = {
-		init: function() {
-			var that = this;
-
-			// $(that.MessageField).autogrow();
-			$('.smalltalk-form').on('submit', function(evt){
-				evt.preventDefault();
-				that.save();
-			});
-			$('.btn-smalltalk-list-expand').on('click', function(evt) {
-				that.expand();
-			})
-		},
-		MessageField: '#smallTalkMessage',
-		save : function() {
-			var that = this;
-			var $talk = $(that.MessageField);
-
-			$.post('/smalltalks', { 'talk' : $talk.val() }, function(data) {
-				if (data == 'OK') {
-					that.get();
-					$talk.val('');
-				}
-			});
-			that.expand();
-		},
-		get : function() {
-			$.get('/smalltalks', function(data) {
-				$('.smalltalk-list').html( tmpl('tmpl-smalltalk-list', data) );
-			});
-		},
-		expand: function() {
-			$('.smalltalk').removeClass('ui-smalltalk-list-collapse');
-		}
-	};
-
-	$(document).ready(function(){
-		smalltalkService.init();
-	});
 </script>
