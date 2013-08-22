@@ -6,6 +6,8 @@ var smalltalkService = {
 		var $talk = $(that.messageField);
 		var $fail = $(that.failMessageField);
 
+		that.makeUrlToLink();
+
 		$('.smalltalk-form').on('submit', function(evt){
 			evt.preventDefault();
 			that.save();
@@ -38,11 +40,31 @@ var smalltalkService = {
 		that.expand();
 	},
 	get: function() {
+		var that = this;
+		var $talk = $(that.messageField);
+		
 		$.get('/smalltalks', function(data) {
 			$('.smalltalk-list').html( tmpl('tmpl-smalltalk-list', data) );
+			that.makeUrlToLink();
 		});
 	},
 	expand: function() {
 		$('.smalltalk').removeClass('ui-smalltalk-list-collapse');
+	},
+	makeUrlToLink: function() {
+		var $items = $('.smalltalk-list-item-cont');
+
+		$items.each(function() {
+			var cont = $(this).html();
+				$(this).html(urlify(cont));
+		});
+
+		function urlify(text) {
+			var urlRegex = /(https?:\/\/[^\s]+)/g;
+			return text.replace(urlRegex, function(url) {
+				return '<a href="' + url + '" target="_blank">' + url + '</a>';
+			});
+		}
 	}
+
 };
