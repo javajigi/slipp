@@ -440,7 +440,8 @@ body{overflow-y:scroll}
 .ui-smalltalk-list-collapse .smalltalk-list-item-3{bottom:-1.8em;-webkit-transform:rotate(1.6deg);-moz-transform:rotate(1.6deg);-o-transform:rotate(1.6deg);-ms-transform:rotate(1.6deg);transform:rotate(1.6deg);width:94%;-webkit-box-shadow:0 3px 4px rgba(0,0,0,0.2);box-shadow:0 3px 4px rgba(0,0,0,0.2);background-color:#f3f3f3}
 .smalltalk-list-item-info{margin-bottom:.4em;border-bottom:1px dashed #dfdfdf}
 .smalltalk-list-item-info-time{padding-left:.8em;color:#999;font-size:.8em}
-.smalltalk-list-item-cont{font-size:1.2em}
+.smalltalk-list-item-cont{word-break:break-all;font-size:1.2em;}
+.smalltalk-list-item-cont a{color:#222;border-bottom:1px dashed #999;text-decoration:none}
 .smalltalk-list-expand{position:absolute;right:4px;top:100%;z-index:100;text-align:right}
 .btn-smalltalk-list-expand{display:none;width:50px;border:0 none;-webkit-border-radius:0 0 3px 3px;border-radius:0 0 3px 3px;background-color:#8fb4b9;color:#fff;}
 .btn-smalltalk-list-expand:after{content:'';position:absolute;left:50%;top:100%;margin-left:-21px;border-width:5px 22px;border-style:solid;border-color:#8fb4b9 transparent transparent transparent}
