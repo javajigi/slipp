@@ -27,7 +27,7 @@
 			<div class="login-with-sns">
 				<p class="login-with-sns-text">또는, SNS 계정으로 로그인하세요.</p>
 				<form action="/signin/facebook" method="POST">
-					<input type="hidden" name="scope" value="publish_stream,user_groups" />
+					<input type="hidden" name="scope" value="publish_stream" />
 					<button type="submit" class="btn-login-facebook"><i class="foundicon-facebook"></i> 페이스북</button>
 				</form>
 				<form action="/signin/twitter" method="POST">
@@ -56,5 +56,4 @@
 </sction>
 
 <script src="${url:resource('/javascripts/jquery.validate.min.js')}"></script>
-<script src="${url:resource('/javascripts/support/slipp.validate.js')}"></script>
 <script src="${url:resource('/javascripts/user/login.js')}"></script>

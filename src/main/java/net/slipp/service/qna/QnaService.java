@@ -65,13 +65,6 @@ public class QnaService {
 				}
 			});
 		}
-		
-        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
-            public void afterCommit() {
-                facebookService.sendToGroupQuestionMessage(loginUser, savedQuestion.getQuestionId());
-            }
-        });
-        
 		return savedQuestion;
 	}
 

@@ -31,11 +31,6 @@
 					<li>
 						<a href="/questions"><i class="icon-list"></i> <span class="text">글목록</span></a>
 					</li>
-					<sec:authorize access="hasRole('ROLE_USER')">
-					<li>
-						<a href="/tags/form" id="requestTag"><i class="icon-list"></i> <span class="text">태그추가</span></a>
-					</li>
-					</sec:authorize>
 					<sec:authorize access="hasRole('ROLE_ADMINISTRATOR')">
 					<li>
 						<a href="/admin/tags" id="tagManagement"><i class="icon-list"></i> <span class="text">태그관리</span></a>
@@ -56,11 +51,7 @@
 					</sec:authorize>
 					<sec:authorize access="hasRole('ROLE_USER')">
 					<li>
-						<c:set var="createUrl" value="/questions/form" />
-						<c:if test="${not empty currentTag}">
-						<c:set var="createUrl" value="/questions/form?currentTag=${currentTag.name}" />
-						</c:if>
-						<a id="writeBtn" href="${createUrl}" class="link-write"><i class="icon-write"></i> <span class="text">새글쓰기</span></a>
+						<a id="writeBtn" href="/questions/form" class="link-write"><i class="icon-write"></i> <span class="text">새글쓰기</span></a>
 					</li>
 					<li class="user-info">
 						<a href="/notifications" id="notificationButton" class="notification-button">
