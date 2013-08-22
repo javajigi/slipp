@@ -37,6 +37,7 @@ var smalltalkService = {
 				$fail.show();
 			}
 		});
+		that.makeUrlToLink();
 		that.expand();
 	},
 	get: function() {
