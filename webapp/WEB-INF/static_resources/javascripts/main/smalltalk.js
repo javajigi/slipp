@@ -37,12 +37,12 @@ var smalltalkService = {
 				$fail.show();
 			}
 		});
-		that.makeUrlToLink();
 		that.expand();
 	},
 	get: function() {
 		$.get('/smalltalks', function(data) {
 			$('.smalltalk-list').html( tmpl('tmpl-smalltalk-list', data) );
+			that.makeUrlToLink();
 		});
 	},
 	expand: function() {
