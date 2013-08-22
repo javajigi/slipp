@@ -40,6 +40,9 @@ var smalltalkService = {
 		that.expand();
 	},
 	get: function() {
+		var that = this;
+		var $talk = $(that.messageField);
+		
 		$.get('/smalltalks', function(data) {
 			$('.smalltalk-list').html( tmpl('tmpl-smalltalk-list', data) );
 			that.makeUrlToLink();
