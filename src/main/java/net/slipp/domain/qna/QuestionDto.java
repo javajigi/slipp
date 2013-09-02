@@ -11,6 +11,8 @@ public class QuestionDto {
     
     private boolean connected = false;
     
+    private String groupId;
+    
     public QuestionDto() {
     }
     
@@ -63,6 +65,14 @@ public class QuestionDto {
     
     public boolean isConnected() {
         return this.connected;
+    }
+    
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
     }
 
     @Override

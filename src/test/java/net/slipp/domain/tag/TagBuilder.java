@@ -1,11 +1,15 @@
 package net.slipp.domain.tag;
 
+import net.slipp.domain.user.SocialUser;
+
 public class TagBuilder {
 	private Long id;
 	private String name;
 	private int taggedCount;
 	private boolean pooled;
 	private Tag parentTag;
+    private SocialUser owner;
+    private String groupId;
 
 	public static TagBuilder aTag() {
 		return new TagBuilder();
@@ -36,8 +40,19 @@ public class TagBuilder {
 		return this;
 	}
 	
+	public TagBuilder withOwner(SocialUser owner) {
+	    this.owner = owner;
+        return this;
+    }
+	
+    public TagBuilder withGroupId(String groupId) {
+        this.groupId = groupId;
+        return this;
+    }
+	
 	public Tag build() {
-		Tag tag = new Tag(name, parentTag, pooled) {
+		TagInfo tagInfo = new TagInfo(owner, groupId, null);
+		Tag tag = new Tag(name, parentTag, pooled, tagInfo) {
 			public Long getTagId() {
 				return id;
 			}

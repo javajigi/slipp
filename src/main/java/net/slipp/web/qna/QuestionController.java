@@ -1,13 +1,16 @@
 package net.slipp.web.qna;
 
-import static net.slipp.web.QnAPageableHelper.*;
+import static net.slipp.web.QnAPageableHelper.createPageableByQuestionUpdatedDate;
+import static net.slipp.web.QnAPageableHelper.revisedPage;
 
 import javax.annotation.Resource;
 
 import net.slipp.domain.qna.Answer;
 import net.slipp.domain.qna.Question;
 import net.slipp.domain.qna.QuestionDto;
+import net.slipp.domain.tag.Tag;
 import net.slipp.domain.user.SocialUser;
+import net.slipp.service.qna.FacebookService;
 import net.slipp.service.qna.QnaService;
 import net.slipp.service.tag.TagService;
 import net.slipp.support.web.argumentresolver.LoginUser;
@@ -33,6 +36,9 @@ public class QuestionController {
 	
 	@Resource(name = "tagService")
 	private TagService tagService;
+	
+    @Resource(name = "facebookService")
+    private FacebookService facebookService;	
 
 	@RequestMapping("")
 	public String index(Integer page, Model model) {
@@ -44,8 +50,21 @@ public class QuestionController {
 	}
 
 	@RequestMapping("/form")
-	public String createForm(@LoginUser SocialUser loginUser, Model model) {
-		model.addAttribute("question", new QuestionDto());
+	public String createForm(@LoginUser SocialUser loginUser, String currentTag, Model model) {
+	    logger.debug("currentTag : {}", currentTag);
+	    
+	    QuestionDto questionDto = new QuestionDto();
+	    if (currentTag != null) {
+	        Tag tag = tagService.findTagByName(currentTag);
+	        if (tag.isRequestedTag()) {
+	            questionDto.setPlainTags(tag.getName());
+	        }
+	    }
+	    
+	    if (loginUser.isFacebookUser()) {
+	        model.addAttribute("fbGroups", facebookService.findFacebookGroups(loginUser));
+	    }
+		model.addAttribute("question", questionDto);
 		model.addAttribute("tags", tagService.findPooledTags());
 		return "qna/form";
 	}
@@ -97,6 +116,6 @@ public class QuestionController {
 		model.addAttribute("currentTag", tagService.findTagByName(name));
 		model.addAttribute("questions", qnaService.findsByTag(name, createPageableByQuestionUpdatedDate(page, DEFAULT_PAGE_SIZE)));
 		model.addAttribute("tags", tagService.findPooledTags());
-		return "qna/list";
+		return "qna/taglist";
 	}
 }

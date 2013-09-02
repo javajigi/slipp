@@ -25,6 +25,12 @@
 				<div class="box-input-line">
 					<form:input path="plainTags" cssClass="inp-tags" placeholder="태그 - 공백 또는 쉼표로 구분 ex) javajigi, slipp" />
 				</div>
+				<c:if test="${loginUser.facebookUser}">
+				<div class="box-input-line">
+					태그와 연결할 페이스북 그룹<br/>
+					<form:radiobuttons path="groupId" items="${fbGroups}" itemLabel="name" itemValue="groupId" />
+				</div>
+				</c:if>				
 				<div class="submit-write">
 					<c:if test="${loginUser.facebookUser and empty question.questionId}">
 					<label class="msg-send-to-facebook">
