@@ -11,7 +11,7 @@ public class QuestionDto {
     
     private boolean connected = false;
     
-    private String groupId;
+    private String[] connectedGroupIds;
     
     public QuestionDto() {
     }
@@ -67,15 +67,15 @@ public class QuestionDto {
         return this.connected;
     }
     
-    public String getGroupId() {
-        return groupId;
-    }
+    public String[] getConnectedGroupIds() {
+		return connectedGroupIds;
+	}
 
-    public void setGroupId(String groupId) {
-        this.groupId = groupId;
-    }
+	public void setConnectedGroupIds(String[] connectedGroupIds) {
+		this.connectedGroupIds = connectedGroupIds;
+	}
 
-    @Override
+	@Override
     public String toString() {
         return "QuestionDto [questionId=" + questionId + ", title=" + title + ", contents=" + contents + ", plainTags="
                 + plainTags + "]";

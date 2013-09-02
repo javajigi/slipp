@@ -25,14 +25,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import com.google.common.collect.Lists;
-import com.restfb.Connection;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.Parameter;
 import com.restfb.exception.FacebookGraphException;
 import com.restfb.types.Comment;
 import com.restfb.types.FacebookType;
-import com.restfb.types.Group;
 import com.restfb.types.Post;
 import com.restfb.types.Post.Comments;
 
@@ -142,14 +140,9 @@ public class FacebookService {
 
     public List<FacebookGroup> findFacebookGroups(SocialUser loginUser) {
         FacebookClient facebookClient = new DefaultFacebookClient(loginUser.getAccessToken());
-        Connection<Group> myGroups = facebookClient.fetchConnection("/me/groups", Group.class);
-        List<FacebookGroup> fbGroups = Lists.newArrayList();
-        for (List<Group> groups : myGroups) {
-            for (Group group : groups) {
-                fbGroups.add(new FacebookGroup(group.getId(), group.getName()));
-            }
-        }
-        return fbGroups;
+        String query = "SELECT gid, name FROM group WHERE gid IN " + 
+				"(SELECT gid FROM group_member WHERE uid = me() AND bookmark_order <= 10 order by bookmark_order ASC)";
+		return facebookClient.executeFqlQuery(query, FacebookGroup.class);
     }
 
     private Post findPost(FacebookClient facebookClient, String postId) {

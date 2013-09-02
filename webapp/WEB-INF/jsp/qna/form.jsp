@@ -28,7 +28,9 @@
 				<c:if test="${loginUser.facebookUser}">
 				<div class="box-input-line">
 					태그와 연결할 페이스북 그룹<br/>
-					<form:radiobuttons path="groupId" items="${fbGroups}" itemLabel="name" itemValue="groupId" />
+					<c:forEach items="${fbGroups}"  var="each">
+					<input type="checkbox" name="connectedGroupIds" value="${each.groupId}" />${each.name}<br/>
+					</c:forEach>
 				</div>
 				</c:if>				
 				<div class="submit-write">
