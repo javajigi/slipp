@@ -105,7 +105,7 @@ public class Question implements HasCreatedDate {
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "question_sns_connections", joinColumns = @JoinColumn(name = "question_id"))
     @org.hibernate.annotations.ForeignKey(name = "fk_question_sns_connection_question_id")
-    private Collection<SnsConnection> snsConnetions;    
+    private Collection<SnsConnection> snsConnetions = Sets.newHashSet();    
     
     public Question() {
     }

@@ -9,7 +9,6 @@ import javax.inject.Inject;
 
 import net.slipp.domain.fb.FacebookGroup;
 import net.slipp.domain.tag.Tag;
-import net.slipp.domain.tag.TagInfo;
 import net.slipp.repository.tag.TagRepository;
 import net.slipp.service.MailService;
 
@@ -61,7 +60,7 @@ public class TagService {
             
             Tag tag = tagRepository.findByGroupId(each.getGroupId());
             if (tag == null) {
-                Tag newTag = Tag.newTag(each.getName(), new TagInfo(each.getGroupId(), each.getName()));
+                Tag newTag = Tag.groupedTag(each.getName(), each.getGroupId());
                 tags.add(tagRepository.save(newTag));
             } else {
                 tags.add(tag);

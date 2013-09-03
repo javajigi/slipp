@@ -1,6 +1,5 @@
 package net.slipp.domain.tag;
 
-import static net.slipp.domain.tag.TagBuilder.aTag;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Set;
@@ -12,12 +11,8 @@ import com.google.common.collect.Sets;
 public class TagsTest {
     @Test
     public void getConnectedGroupTag() throws Exception {
-        Tag java1 = aTag().withName("java").withPooled(true).build();
-        Tag connectedTag = aTag()
-                .withName("SLiPP")
-                .withPooled(true)
-                .withGroupId("1234567")
-                .build();
+        Tag java1 = Tag.pooledTag("java"); 
+        Tag connectedTag = Tag.groupedTag("SLiPP", "1234567"); 
         Set<Tag> tagSet = Sets.newHashSet(java1, connectedTag);
         Tags tags = new Tags(tagSet);
         Set<Tag> groupTags = tags.getConnectedGroupTags();
@@ -26,8 +21,8 @@ public class TagsTest {
     
     @Test
     public void getConnectedGroupTagHasNotConntectedGroup() throws Exception {
-        Tag java1 = aTag().withName("java").withPooled(true).build();
-        Tag c = aTag().withName("c").withPooled(false).build();
+        Tag java1 = Tag.pooledTag("java");
+        Tag c = Tag.pooledTag("c");
 
         Set<Tag> tagSet = Sets.newHashSet(java1, c);
         Tags tags = new Tags(tagSet);

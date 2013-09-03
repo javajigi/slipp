@@ -5,7 +5,7 @@ import java.util.Date;
 import com.restfb.types.CategorizedFacebookType;
 import com.restfb.types.Comment;
 
-public class FacebookComment {
+public class FacebookComment implements Comparable<FacebookComment> {
     private String id;
     private String userId;
     private String name;
@@ -43,6 +43,11 @@ public class FacebookComment {
 
     public String getName() {
         return name;
+    }
+    
+    @Override
+    public int compareTo(FacebookComment target) {
+        return (int)(createdTime.getTime() - target.createdTime.getTime());
     }
 
     @Override

@@ -112,6 +112,9 @@ public class Tag {
 	}
 
 	public boolean isConnectGroup() {
+	    if (tagInfo == null) {
+	        return false;
+	    }
 		return tagInfo.isConnectGroup();
 	}
 
@@ -136,11 +139,11 @@ public class Tag {
 	}
 
 	public static Tag newTag(String name) {
-		return newTag(name, null);
+		return new Tag(name.toLowerCase(), null, false, null);
 	}
 
-	public static Tag newTag(String name, TagInfo tagInfo) {
-		return new Tag(name.toLowerCase(), null, true, tagInfo);
+	public static Tag groupedTag(String name, String groupId) {
+		return new Tag(name.toLowerCase(), null, true, new TagInfo(groupId, name));
 	}
 
 	@Override

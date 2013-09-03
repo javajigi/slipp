@@ -2,6 +2,7 @@ package net.slipp.service.qna;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -141,6 +142,7 @@ public class FacebookService {
             log.debug("count comments : {}, from post : {}", fbComments.size(), snsConnection.getPostId());
             snsConnection.updateAnswerCount(fbComments.size());
         }
+        Collections.sort(fbComments);
         return fbComments;
     }
 

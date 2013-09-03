@@ -1,8 +1,9 @@
 package net.slipp.domain.tag;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-import static net.slipp.domain.tag.TagBuilder.*;
+import static net.slipp.domain.tag.TagBuilder.aTag;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 
@@ -58,16 +59,8 @@ public class TagTest {
 		String name = "newTag";
 		Tag dut = Tag.newTag(name);
 		assertThat(dut.isPooled(), is(false));
-		assertThat(dut.getName(), is(name));
+		assertThat(dut.getName(), is(name.toLowerCase()));
 		assertThat(dut.getParent(), is(nullValue()));
-	}
-    
-    @Test
-	public void createNewTagFromUser() throws Exception {
-		String name = "requestedTag";
-		TagInfo tagInfo = new TagInfo(null, null);
-		Tag dut = Tag.newTag(name, tagInfo);
-		assertThat(dut.getTagInfo(), is(tagInfo));
 	}
     
     @Test
