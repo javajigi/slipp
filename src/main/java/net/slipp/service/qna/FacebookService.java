@@ -2,6 +2,7 @@ package net.slipp.service.qna;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -92,16 +93,18 @@ public class FacebookService {
         Question question = questionRepository.findOne(questionId);
         Assert.notNull(question, "Question should be not null!");
 
-        Tag connectedGroupTag = question.getConnectedGroupTag();
-        if (connectedGroupTag == null) {
+        Set<Tag> connectedGroupTags = question.getConnectedGroupTag();
+        if (connectedGroupTags.isEmpty()) {
             return;
         }
-
+        
         String message = createFacebookMessage(question.getContents());
-        String postId = sendMessageToFacebook(loginUser, createLink(question.getQuestionId()), connectedGroupTag
-                .getTagInfo().getGroupId(), message);
-        if (postId != null) {
-            question.connected(postId);
+        String link = createLink(question.getQuestionId());
+        for (Tag connectedGroupTag : connectedGroupTags) {
+            String postId = sendMessageToFacebook(loginUser, link, connectedGroupTag.getTagInfo().getGroupId(), message);
+            if (postId != null) {
+                question.connected(postId);
+            }            
         }
     }
 

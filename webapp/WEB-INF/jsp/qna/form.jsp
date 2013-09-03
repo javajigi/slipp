@@ -29,7 +29,7 @@
 				<div class="box-input-line">
 					태그와 연결할 페이스북 그룹<br/>
 					<c:forEach items="${fbGroups}"  var="each">
-					<input type="checkbox" name="connectedGroupIds" value="${each.groupId}" />${each.name}<br/>
+					<input type="checkbox" name="plainFacebookGroups" value="${each.groupId}::${each.name}" />${each.name}<br/>
 					</c:forEach>
 				</div>
 				</c:if>				

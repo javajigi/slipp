@@ -1,6 +1,18 @@
 package net.slipp.domain.qna;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
+import net.slipp.domain.fb.FacebookGroup;
+
+import org.apache.commons.lang.StringUtils;
+
+import com.google.common.collect.Sets;
+
 public class QuestionDto {
+    private static final String FACEBOOK_GROUP_DELIMETER = "::";
+    
     private Long questionId;
     
     private String title;
@@ -11,17 +23,17 @@ public class QuestionDto {
     
     private boolean connected = false;
     
-    private String[] connectedGroupIds;
+    private String[] plainFacebookGroups;
     
     public QuestionDto() {
     }
     
     public QuestionDto(String title, String contents, String plainTags) {
-    	this(null, title, contents, plainTags);
+        this(null, title, contents, plainTags);
     }
     
     public QuestionDto(Long questionId, String title, String contents, String plainTags) {
-    	this.questionId = questionId;
+        this.questionId = questionId;
         this.title = title;
         this.contents = contents;
         this.plainTags = plainTags;
@@ -67,17 +79,53 @@ public class QuestionDto {
         return this.connected;
     }
     
-    public String[] getConnectedGroupIds() {
-		return connectedGroupIds;
-	}
+    public String[] getPlainFacebookGroups() {
+        return plainFacebookGroups;
+    }
 
-	public void setConnectedGroupIds(String[] connectedGroupIds) {
-		this.connectedGroupIds = connectedGroupIds;
-	}
+    public void setPlainFacebookGroups(String[] plainFacebookGroups) {
+        this.plainFacebookGroups = plainFacebookGroups;
+    }
+    
+    public Set<FacebookGroup> getFacebookGroups() {
+        return createFacebookGroups(this.plainFacebookGroups);
+    }
 
-	@Override
+    static Set<FacebookGroup> createFacebookGroups(String[] fbGroups) {
+        if (fbGroups == null || fbGroups.length == 0) {
+            return new HashSet<FacebookGroup>();
+        }
+        
+        Set<FacebookGroup> groups = Sets.newHashSet();
+        for (String each : fbGroups) {
+            groups.add(createFacebookGroup(each));
+        }
+        return groups;
+    }
+    
+    static FacebookGroup createFacebookGroup(String fbGroup) {
+        if (StringUtils.isBlank(fbGroup)) {
+            return new FacebookGroup.EmptyFacebookGroup();
+        }
+        String[] parsedGroups = fbGroup.split(FACEBOOK_GROUP_DELIMETER);
+        if (parsedGroups.length != 2) {
+            return new FacebookGroup.EmptyFacebookGroup();
+        }
+        return new FacebookGroup(parsedGroups[0], replaceSpaceToDash(parsedGroups[1]));
+    }
+    
+    static String replaceSpaceToDash(String groupName) {
+        if (StringUtils.isBlank(groupName)) {
+            return "";
+        }
+        
+        return groupName.replaceAll(" ", "-");
+    }
+
+    @Override
     public String toString() {
         return "QuestionDto [questionId=" + questionId + ", title=" + title + ", contents=" + contents + ", plainTags="
-                + plainTags + "]";
+                + plainTags + ", connected=" + connected + ", plainFacebookGroups="
+                + Arrays.toString(plainFacebookGroups) + "]";
     }
 }

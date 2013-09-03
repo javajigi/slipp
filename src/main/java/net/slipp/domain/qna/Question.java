@@ -105,7 +105,7 @@ public class Question implements HasCreatedDate {
 
     @Embedded
     private SnsConnection snsConnection = new SnsConnection();
-
+    
     public Question() {
     }
 
@@ -347,8 +347,8 @@ public class Question implements HasCreatedDate {
         return sortAnswers.get(0);
     }
     
-    public Tag getConnectedGroupTag() {
-        return new Tags(tags).getConnectedGroupTag();
+    public Set<Tag> getConnectedGroupTag() {
+        return new Tags(tags).getConnectedGroupTags();
     }
     
     @Override

@@ -8,7 +8,6 @@ import javax.annotation.Resource;
 import net.slipp.domain.qna.Answer;
 import net.slipp.domain.qna.Question;
 import net.slipp.domain.qna.QuestionDto;
-import net.slipp.domain.tag.Tag;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.service.qna.FacebookService;
 import net.slipp.service.qna.QnaService;
@@ -53,18 +52,10 @@ public class QuestionController {
 	public String createForm(@LoginUser SocialUser loginUser, String currentTag, Model model) {
 	    logger.debug("currentTag : {}", currentTag);
 	    
-	    QuestionDto questionDto = new QuestionDto();
-	    if (currentTag != null) {
-	        Tag tag = tagService.findTagByName(currentTag);
-	        if (tag.isRequestedTag()) {
-	            questionDto.setPlainTags(tag.getName());
-	        }
-	    }
-	    
 	    if (loginUser.isFacebookUser()) {
 	        model.addAttribute("fbGroups", facebookService.findFacebookGroups(loginUser));
 	    }
-		model.addAttribute("question", questionDto);
+		model.addAttribute("question", new QuestionDto());
 		model.addAttribute("tags", tagService.findPooledTags());
 		return "qna/form";
 	}
@@ -116,6 +107,6 @@ public class QuestionController {
 		model.addAttribute("currentTag", tagService.findTagByName(name));
 		model.addAttribute("questions", qnaService.findsByTag(name, createPageableByQuestionUpdatedDate(page, DEFAULT_PAGE_SIZE)));
 		model.addAttribute("tags", tagService.findPooledTags());
-		return "qna/taglist";
+		return "qna/list";
 	}
 }

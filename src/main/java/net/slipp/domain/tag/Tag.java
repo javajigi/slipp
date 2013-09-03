@@ -13,11 +13,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
 import net.slipp.domain.qna.Question;
-import net.slipp.domain.user.SocialUser;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.springframework.security.access.AccessDeniedException;
 
 import com.google.common.collect.Sets;
 
@@ -113,20 +111,8 @@ public class Tag {
 		}
 	}
 
-	public boolean isRequestedTag() {
-		if (tagInfo == null) {
-			return false;
-		}
-
-		return tagInfo.isRequestedTag();
-	}
-
 	public boolean isConnectGroup() {
-		if (isRequestedTag()) {
-			return tagInfo.isConnectGroup();
-		}
-
-		return false;
+		return tagInfo.isConnectGroup();
 	}
 
 	/**
@@ -139,18 +125,6 @@ public class Tag {
 			return this;
 		}
 		return this.parent;
-	}
-
-	public void updateTagInfo(TagInfo tagInfo) {
-		if (!isRequestedBy(tagInfo.getOwner())) {
-			throw new AccessDeniedException("you are not owner!");
-		}
-
-		this.tagInfo = tagInfo;
-	}
-
-	private boolean isRequestedBy(SocialUser socialUser) {
-		return tagInfo.isRequestedBy(socialUser);
 	}
 
 	public static Tag pooledTag(String name) {
@@ -166,7 +140,7 @@ public class Tag {
 	}
 
 	public static Tag newTag(String name, TagInfo tagInfo) {
-		return new Tag(name.toLowerCase(), null, false, tagInfo);
+		return new Tag(name.toLowerCase(), null, true, tagInfo);
 	}
 
 	@Override

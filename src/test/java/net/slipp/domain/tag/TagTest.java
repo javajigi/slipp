@@ -65,7 +65,7 @@ public class TagTest {
     @Test
 	public void createNewTagFromUser() throws Exception {
 		String name = "requestedTag";
-		TagInfo tagInfo = new TagInfo(null, null, null);
+		TagInfo tagInfo = new TagInfo(null, null);
 		Tag dut = Tag.newTag(name, tagInfo);
 		assertThat(dut.getTagInfo(), is(tagInfo));
 	}

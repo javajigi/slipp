@@ -2,6 +2,8 @@ package net.slipp.domain.tag;
 
 import java.util.Set;
 
+import com.google.common.collect.Sets;
+
 public class Tags {
     private Set<Tag> tags;
 
@@ -9,17 +11,17 @@ public class Tags {
         this.tags = tags;
     }
 
-    public Tag getConnectedGroupTag() {
+    public Set<Tag> getConnectedGroupTags() {
+        Set<Tag> groupTags = Sets.newHashSet();
         for (Tag tag : tags) {
             if (!tag.isPooled()) {
                 continue;
             }
             
             if (tag.isConnectGroup()) {
-                return tag;
+                groupTags.add(tag);
             }
         }
-        return null;
+        return groupTags;
     }
-
 }

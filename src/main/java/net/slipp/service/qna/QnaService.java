@@ -54,17 +54,27 @@ public class QnaService {
 		Assert.notNull(questionDto, "question should be not null!");
 
 		Set<Tag> tags = tagService.processTags(questionDto.getPlainTags());
+		Set<Tag> groupTags = tagService.processGroupTags(questionDto.getFacebookGroups());
+		tags.addAll(groupTags);
 
 		Question newQuestion = new Question(loginUser, questionDto.getTitle(), questionDto.getContents(), tags);
 		final Question savedQuestion = questionRepository.save(newQuestion);
 
-		if (questionDto.isConnected()) {
-			TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
-				public void afterCommit() {
-					facebookService.sendToQuestionMessage(loginUser, savedQuestion.getQuestionId());
-				}
-			});
-		}
+//		if (questionDto.isConnected()) {
+//			TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
+//				public void afterCommit() {
+//					facebookService.sendToQuestionMessage(loginUser, savedQuestion.getQuestionId());
+//				}
+//			});
+//		}
+//		
+//		if (!groupTags.isEmpty()) {
+//            TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
+//                public void afterCommit() {
+//                    facebookService.sendToGroupQuestionMessage(loginUser, savedQuestion.getQuestionId());
+//                }
+//            });		    
+//		}
 		return savedQuestion;
 	}
 

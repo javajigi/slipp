@@ -7,7 +7,9 @@ import java.util.StringTokenizer;
 import javax.annotation.Resource;
 import javax.inject.Inject;
 
+import net.slipp.domain.fb.FacebookGroup;
 import net.slipp.domain.tag.Tag;
+import net.slipp.domain.tag.TagInfo;
 import net.slipp.repository.tag.TagRepository;
 import net.slipp.service.MailService;
 
@@ -42,8 +44,25 @@ public class TagService {
             Tag tag = tagRepository.findByName(each);
             if (tag == null) {
                 Tag newTag = Tag.newTag(each);
-                Tag persisted = tagRepository.save(newTag);
-                tags.add(persisted);
+                tags.add(tagRepository.save(newTag));
+            } else {
+                tags.add(tag);
+            }
+        }
+        return tags;
+    }
+    
+    public Set<Tag> processGroupTags(Set<FacebookGroup> groupTags) {
+        Set<Tag> tags = Sets.newHashSet();
+        for (FacebookGroup each : groupTags) {
+            if (each.isEmpty()) {
+                continue;
+            }
+            
+            Tag tag = tagRepository.findByName(each.getName());
+            if (tag == null) {
+                Tag newTag = Tag.newTag(each.getName(), new TagInfo(each.getGroupId(), each.getName()));
+                tags.add(tagRepository.save(newTag));
             } else {
                 tags.add(tag);
             }
@@ -59,7 +78,7 @@ public class TagService {
         }
         return parsedTags;
     }
-
+    
     public void moveToTag(Long newTagId, Long parentTagId) {
         Assert.notNull(newTagId, "이동할 tagId는 null이 될 수 없습니다.");
 
@@ -92,26 +111,6 @@ public class TagService {
         return tagRepository.save(tag);
     }
     
-    public Tag requestNewTag(Tag tag) {
-        Tag existedTag = tagRepository.findByName(tag.getName());
-        if (existedTag != null) {
-            throw new IllegalArgumentException(tag.getName() + " is already existed tag.");
-        }
-        
-        Tag savedTag = tagRepository.save(tag);
-        mailService.sendNewTagInformation(tag);
-        return savedTag;
-    }
-    
-	public Tag updateRequestNewTag(Tag tag) {
-		Tag existedTag = tagRepository.findByName(tag.getName());
-        if (existedTag == null) {
-            throw new IllegalArgumentException(tag.getName() + " is not existed tag.");
-        }
-        existedTag.updateTagInfo(tag.getTagInfo());
-        return tagRepository.save(existedTag);
-	}
-
     public Tag findTagByName(String name) {
         return tagRepository.findByName(name);
     }
