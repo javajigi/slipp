@@ -9,7 +9,6 @@ import net.slipp.domain.qna.Answer;
 import net.slipp.domain.qna.Question;
 import net.slipp.domain.qna.QuestionDto;
 import net.slipp.domain.user.SocialUser;
-import net.slipp.service.qna.FacebookService;
 import net.slipp.service.qna.QnaService;
 import net.slipp.service.tag.TagService;
 import net.slipp.support.web.argumentresolver.LoginUser;
@@ -36,9 +35,6 @@ public class QuestionController {
 	@Resource(name = "tagService")
 	private TagService tagService;
 	
-    @Resource(name = "facebookService")
-    private FacebookService facebookService;	
-
 	@RequestMapping("")
 	public String index(Integer page, Model model) {
 		page = revisedPage(page);
@@ -52,9 +48,6 @@ public class QuestionController {
 	public String createForm(@LoginUser SocialUser loginUser, String currentTag, Model model) {
 	    logger.debug("currentTag : {}", currentTag);
 	    
-	    if (loginUser.isFacebookUser()) {
-	        model.addAttribute("fbGroups", facebookService.findFacebookGroups(loginUser));
-	    }
 		model.addAttribute("question", new QuestionDto());
 		model.addAttribute("tags", tagService.findPooledTags());
 		return "qna/form";

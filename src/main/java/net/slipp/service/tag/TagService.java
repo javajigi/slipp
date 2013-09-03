@@ -59,7 +59,7 @@ public class TagService {
                 continue;
             }
             
-            Tag tag = tagRepository.findByName(each.getName());
+            Tag tag = tagRepository.findByGroupId(each.getGroupId());
             if (tag == null) {
                 Tag newTag = Tag.newTag(each.getName(), new TagInfo(each.getGroupId(), each.getName()));
                 tags.add(tagRepository.save(newTag));

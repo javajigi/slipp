@@ -9,6 +9,18 @@ $(document).ready(function() {
 			contents: SL10N.QnA.requiredContents()
 		}
 	});
+	
+	function showFacebookGroups() {
+		var url = '/api/facebooks/groups';
+		$.get(url,
+			function(response) {
+				$('.qna-facebook-groups').html(response);
+				return false;
+			}, 'html'
+		);
+	}
+
+	showFacebookGroups();	
 
 	var tagnames = '';
 
