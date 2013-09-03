@@ -16,6 +16,8 @@ import net.slipp.service.rank.ScoreLikeService;
 import net.slipp.service.tag.TagService;
 import net.slipp.service.user.SocialUserService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.AccessDeniedException;
@@ -28,6 +30,8 @@ import org.springframework.util.Assert;
 @Service("qnaService")
 @Transactional
 public class QnaService {
+    private static Logger log = LoggerFactory.getLogger(QnaService.class);
+    
 	@Resource(name = "questionRepository")
 	private QuestionRepository questionRepository;
 
@@ -49,32 +53,29 @@ public class QnaService {
 	@Resource(name = "socialUserService")
 	private SocialUserService socialUserService;
 
-	public Question createQuestion(final SocialUser loginUser, QuestionDto questionDto) {
+	public Question createQuestion(final SocialUser loginUser, final QuestionDto questionDto) {
 		Assert.notNull(loginUser, "loginUser should be not null!");
 		Assert.notNull(questionDto, "question should be not null!");
 
 		Set<Tag> tags = tagService.processTags(questionDto.getPlainTags());
-		Set<Tag> groupTags = tagService.processGroupTags(questionDto.getFacebookGroups());
+		final Set<Tag> groupTags = tagService.processGroupTags(questionDto.getFacebookGroups());
+		log.debug("group tag size : {}", groupTags.size());
 		tags.addAll(groupTags);
 
 		Question newQuestion = new Question(loginUser, questionDto.getTitle(), questionDto.getContents(), tags);
 		final Question savedQuestion = questionRepository.save(newQuestion);
 
-//		if (questionDto.isConnected()) {
-//			TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
-//				public void afterCommit() {
-//					facebookService.sendToQuestionMessage(loginUser, savedQuestion.getQuestionId());
-//				}
-//			});
-//		}
-//		
-//		if (!groupTags.isEmpty()) {
-//            TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
-//                public void afterCommit() {
-//                    facebookService.sendToGroupQuestionMessage(loginUser, savedQuestion.getQuestionId());
-//                }
-//            });		    
-//		}
+		TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
+			public void afterCommit() {
+			    if (questionDto.isConnected()) {
+			        facebookService.sendToQuestionMessage(loginUser, savedQuestion.getQuestionId());
+			    }
+			    
+			    if (!groupTags.isEmpty()) {
+			        facebookService.sendToGroupQuestionMessage(loginUser, savedQuestion.getQuestionId());
+			    }
+			}
+		});
 		return savedQuestion;
 	}
 

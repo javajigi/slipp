@@ -1,6 +1,7 @@
 package net.slipp.service.qna;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -131,13 +132,15 @@ public class FacebookService {
 
         SocialUser socialUser = question.getWriter();
         FacebookClient facebookClient = new DefaultFacebookClient(socialUser.getAccessToken());
-        SnsConnection snsConnection = question.getSnsConnection();
-        log.debug("postId : {}", snsConnection.getPostId());
-
-        Post post = findPost(facebookClient, snsConnection.getPostId());
-        List<FacebookComment> fbComments = findComments(post);
-        log.debug("count comments : {}, from post : {}", fbComments.size(), snsConnection.getPostId());
-        snsConnection.updateAnswerCount(fbComments.size());
+        Collection<SnsConnection> snsConnections = question.getSnsConnection();
+        List<FacebookComment> fbComments = Lists.newArrayList();
+        for (SnsConnection snsConnection : snsConnections) {
+            log.debug("postId : {}", snsConnection.getPostId());
+            Post post = findPost(facebookClient, snsConnection.getPostId());
+            fbComments.addAll(findComments(post));
+            log.debug("count comments : {}, from post : {}", fbComments.size(), snsConnection.getPostId());
+            snsConnection.updateAnswerCount(fbComments.size());
+        }
         return fbComments;
     }
 

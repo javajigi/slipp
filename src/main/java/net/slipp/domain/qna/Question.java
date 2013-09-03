@@ -9,7 +9,6 @@ import java.util.Set;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
@@ -103,8 +102,10 @@ public class Question implements HasCreatedDate {
     @Column(name = "deleted", nullable = false)
     private boolean deleted = false;
 
-    @Embedded
-    private SnsConnection snsConnection = new SnsConnection();
+    @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(name = "question_sns_connections", joinColumns = @JoinColumn(name = "question_id"))
+    @org.hibernate.annotations.ForeignKey(name = "fk_question_sns_connection_question_id")
+    private Collection<SnsConnection> snsConnetions;    
     
     public Question() {
     }
@@ -132,11 +133,15 @@ public class Question implements HasCreatedDate {
     }
     
     public int getSnsAnswerCount() {
-        return snsConnection.getSnsAnswerCount();
+        int snsAnswerCount = 0;
+        for (SnsConnection each : snsConnetions) {
+            snsAnswerCount += each.getSnsAnswerCount();
+        }
+        return snsAnswerCount;
     }
 
     public int getTotalAnswerCount() {
-        return answerCount + snsConnection.getSnsAnswerCount();
+        return answerCount + getSnsAnswerCount();
     }
 
     public Set<Tag> getTags() {
@@ -307,19 +312,17 @@ public class Question implements HasCreatedDate {
     }
 
     public SnsConnection connected(String postId) {
-        this.snsConnection = new SnsConnection(ProviderType.valueOf(writer.getProviderId()), postId);
-        return this.snsConnection;
-    }
-
-    public SnsConnection getSnsConnection() {
-        if (snsConnection == null) {
-            return new SnsConnection();
-        }
+        SnsConnection snsConnection = new SnsConnection(ProviderType.valueOf(writer.getProviderId()), postId);
+        snsConnetions.add(snsConnection);
         return snsConnection;
     }
 
+    public Collection<SnsConnection> getSnsConnection() {
+        return snsConnetions;
+    }
+
     public boolean isSnsConnected() {
-        return getSnsConnection().isConnected();
+        return !snsConnetions.isEmpty();
     }
 
     /**
