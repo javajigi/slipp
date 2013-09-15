@@ -1,6 +1,15 @@
 <#ftl encoding='UTF-8'>
-<input id="connected1" name="connected" type="checkbox" value="true"> 페이스북으로 전송하려면 체크하세요<br/>
-태그와 연결할 페이스북 그룹<br/>
-<#list groups as each>
-<input type="checkbox" name="plainFacebookGroups" value="${each.groupId}::${each.name}" />${each.name}<br/>
-</#list>
+<section class="qna-connect-facebook">
+	<h1>페이스북 연동</h1>
+	<label class="qna-connect-facebook-item">
+		<input id="connected1" name="connected" type="checkbox" value="true">
+		<span>내 담벼락에 게시</span>
+	</label>
+	<h2>내 그룹에 게시</h2>
+	<#list groups as each>
+	<label class="qna-connect-facebook-item">
+	<input type="checkbox" name="plainFacebookGroups" value="${each.groupId}::${each.name}" />
+	<span>${each.name}</span>
+	</label>
+	</#list>
+</section>

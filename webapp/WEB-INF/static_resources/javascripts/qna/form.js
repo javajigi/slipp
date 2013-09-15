@@ -10,17 +10,31 @@ $(document).ready(function() {
 		}
 	});
 
-	function showFacebookGroups() {
+	function showFacebookConnect() {
 		var url = '/api/facebooks/groups';
 		$.get(url,
 			function(response) {
-				$('.qna-facebook-groups').replaceWith(response);
+				$('.qna-connect-facebook').replaceWith(response);
+
+				// checkbox evt handler
+				$('.qna-connect-facebook-item').find('input:checkbox').on('change', function() {
+					var $this = $(this);
+					var $box = $this.parent('.qna-connect-facebook-item');
+					var isChecked = $this.is(':checked');
+
+					if (isChecked) {
+						$box.addClass('checked');
+					} else {
+						$box.removeClass('checked');
+					}
+				});
+
 				return false;
 			}, 'html'
 		);
 	}
 
-	showFacebookGroups();
+	showFacebookConnect();
 
 	var tagnames = '';
 

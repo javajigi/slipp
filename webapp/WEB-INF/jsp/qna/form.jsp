@@ -12,7 +12,7 @@
 		<c:set var="method" value="POST" />
 		<c:if test="${not empty question.questionId}">
 			<c:set var="method" value="PUT" />
-		</c:if>		
+		</c:if>
 		<form:form modelAttribute="question" cssClass="form-write" action="/questions" method="${method}">
 			<form:hidden path="questionId"/>
 			<fieldset>
@@ -26,9 +26,8 @@
 					<form:input path="plainTags" cssClass="inp-tags" placeholder="태그 - 공백 또는 쉼표로 구분 ex) javajigi, slipp" />
 				</div>
 				<c:if test="${loginUser.facebookUser and empty question.questionId}">
-				<div class="qna-facebook-groups">
-				</div>				
-				</c:if>				
+					<div class="qna-connect-facebook" style="display: none;"></div>
+				</c:if>
 				<div class="submit-write">
 					<button type="submit" class="btn-submit"><i class="icon-submit"></i> 작성완료</button>
 				</div>
