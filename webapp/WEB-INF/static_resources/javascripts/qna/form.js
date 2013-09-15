@@ -36,10 +36,10 @@ $(document).ready(function() {
 		},
 		parse: function(data) {
 			var array = [];
-						for(var i=0;i<data.length;i++) {
-							array[array.length] = { data: data[i], value: data[i] };
-						}
-						return array;
+			for(var i=0;i<data.length;i++) {
+				array[array.length] = { data: data[i], value: data[i] };
+			}
+			return array;
 		},
 		matchSubset: false,
 		width: $('.box-input-line').width(),
