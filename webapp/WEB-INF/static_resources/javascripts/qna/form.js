@@ -9,7 +9,7 @@ $(document).ready(function() {
 			contents: SL10N.QnA.requiredContents()
 		}
 	});
-	
+
 	function showFacebookGroups() {
 		var url = '/api/facebooks/groups';
 		$.get(url,
@@ -20,7 +20,7 @@ $(document).ready(function() {
 		);
 	}
 
-	showFacebookGroups();	
+	showFacebookGroups();
 
 	var tagnames = '';
 
@@ -30,16 +30,16 @@ $(document).ready(function() {
 		autoFill: false,
 		extraParams: {
 			name: function() {
-			    tagnames = $('#plainTags').val();
+					tagnames = $('#plainTags').val();
 				return Slipp.TagParser.findEndTag(tagnames);
 			}
 		},
 		parse: function(data) {
-			var array = new Array();
-            for(var i=0;i<data.length;i++) {
-            	array[array.length] = { data: data[i], value: data[i] };
-            }
-            return array;
+			var array = [];
+						for(var i=0;i<data.length;i++) {
+							array[array.length] = { data: data[i], value: data[i] };
+						}
+						return array;
 		},
 		matchSubset: false,
 		width: $('.box-input-line').width(),
