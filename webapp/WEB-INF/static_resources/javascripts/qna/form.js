@@ -14,7 +14,7 @@ $(document).ready(function() {
 		var url = '/api/facebooks/groups';
 		$.get(url,
 			function(response) {
-				$('.qna-facebook-groups').html(response);
+				$('.qna-facebook-groups').replaceWith(response);
 				return false;
 			}, 'html'
 		);
