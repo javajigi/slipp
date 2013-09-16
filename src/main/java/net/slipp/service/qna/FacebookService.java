@@ -105,7 +105,7 @@ public class FacebookService {
         for (Tag connectedGroupTag : connectedGroupTags) {
             String postId = sendMessageToFacebook(loginUser, link, connectedGroupTag.getTagInfo().getGroupId(), message);
             if (postId != null) {
-                question.connected(postId);
+                question.connected(postId, connectedGroupTag.getGroupId());
             }            
         }
     }

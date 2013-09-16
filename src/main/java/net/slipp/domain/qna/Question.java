@@ -312,7 +312,11 @@ public class Question implements HasCreatedDate {
     }
 
     public SnsConnection connected(String postId) {
-        SnsConnection snsConnection = new SnsConnection(ProviderType.valueOf(writer.getProviderId()), postId);
+        return connected(postId, null);
+    }
+    
+    public SnsConnection connected(String postId, String groupId) {
+        SnsConnection snsConnection = new SnsConnection(ProviderType.valueOf(writer.getProviderId()), postId, groupId);
         snsConnetions.add(snsConnection);
         return snsConnection;
     }
