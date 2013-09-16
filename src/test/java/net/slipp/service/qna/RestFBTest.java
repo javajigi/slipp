@@ -56,7 +56,7 @@ public class RestFBTest {
 		Comments comments = post.getComments();
 		List<Comment> commentData = comments.getData();
 		for (Comment comment : commentData) {
-			FacebookComment fbComment = FacebookComment.create(comment);
+			FacebookComment fbComment = FacebookComment.create(null, comment);
 			logger.debug("fbComment: " + fbComment);
 		}
 	}

@@ -40,6 +40,10 @@ public class SnsConnection {
     public boolean isConnected() {
         return !StringUtils.isBlank(postId);
     }
+    
+    public boolean isGroupConnected() {
+        return !StringUtils.isBlank(groupId);
+    }
 
     public ProviderType getSnsType() {
         return snsType;
