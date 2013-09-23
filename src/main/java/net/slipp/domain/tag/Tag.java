@@ -97,6 +97,13 @@ public class Tag {
 	public TagInfo getTagInfo() {
 		return tagInfo;
 	}
+	
+	public String getGroupId() {
+		if (tagInfo == null) {
+			return null;
+		}
+		return tagInfo.getGroupId();
+	}
 
 	private boolean isRootTag() {
 		return parent == null;

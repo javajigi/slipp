@@ -17,6 +17,9 @@ public class SnsConnection {
 
     @Column(name = "post_id", length = 100, nullable = true)
     private String postId;
+    
+    @Column(name = "group_id", length = 100, nullable = true)
+    private String groupId;
 
     @Column(name = "sns_answer_count", nullable = false)
     private int snsAnswerCount = 0;
@@ -25,12 +28,21 @@ public class SnsConnection {
     }
 
     public SnsConnection(ProviderType snsType, String postId) {
+        this(snsType, postId, null);
+    }
+    
+    public SnsConnection(ProviderType snsType, String postId, String groupId) {
         this.snsType = snsType;
         this.postId = postId;
+        this.groupId = groupId;
     }
 
     public boolean isConnected() {
         return !StringUtils.isBlank(postId);
+    }
+    
+    public boolean isGroupConnected() {
+        return !StringUtils.isBlank(groupId);
     }
 
     public ProviderType getSnsType() {
@@ -40,6 +52,10 @@ public class SnsConnection {
     public String getPostId() {
         return postId;
     }
+    
+    public String getGroupId() {
+		return groupId;
+	}
 
     public int getSnsAnswerCount() {
         return snsAnswerCount;
