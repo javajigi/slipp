@@ -4,10 +4,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.StringTokenizer;
 
+import javax.annotation.Resource;
 import javax.inject.Inject;
 
+import net.slipp.domain.fb.FacebookGroup;
 import net.slipp.domain.tag.Tag;
 import net.slipp.repository.tag.TagRepository;
+import net.slipp.service.MailService;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +23,9 @@ import com.google.common.collect.Sets;
 @Service
 @Transactional
 public class TagService {
+    @Resource(name = "mailService")
+    private MailService mailService;
+    
     private TagRepository tagRepository;
 
     public TagService() {
@@ -37,8 +43,25 @@ public class TagService {
             Tag tag = tagRepository.findByName(each);
             if (tag == null) {
                 Tag newTag = Tag.newTag(each);
-                Tag persisted = tagRepository.save(newTag);
-                tags.add(persisted);
+                tags.add(tagRepository.save(newTag));
+            } else {
+                tags.add(tag);
+            }
+        }
+        return tags;
+    }
+    
+    public Set<Tag> processGroupTags(Set<FacebookGroup> groupTags) {
+        Set<Tag> tags = Sets.newHashSet();
+        for (FacebookGroup each : groupTags) {
+            if (each.isEmpty()) {
+                continue;
+            }
+            
+            Tag tag = tagRepository.findByGroupId(each.getGroupId());
+            if (tag == null) {
+                Tag newTag = Tag.groupedTag(each.getName(), each.getGroupId());
+                tags.add(tagRepository.save(newTag));
             } else {
                 tags.add(tag);
             }
@@ -54,7 +77,7 @@ public class TagService {
         }
         return parsedTags;
     }
-
+    
     public void moveToTag(Long newTagId, Long parentTagId) {
         Assert.notNull(newTagId, "이동할 tagId는 null이 될 수 없습니다.");
 
@@ -86,7 +109,7 @@ public class TagService {
     public Tag saveTag(Tag tag) {
         return tagRepository.save(tag);
     }
-
+    
     public Tag findTagByName(String name) {
         return tagRepository.findByName(name);
     }

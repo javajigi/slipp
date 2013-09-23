@@ -131,4 +131,11 @@
 	<task:annotation-driven executor="slippExecutor"/>
 	
 	<task:executor id="slippExecutor" pool-size="5"/>
+	
+	<bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" 
+		p:config-location="classpath:ehcache.xml"
+		p:shared="true"/>
+	
+	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager" 
+		p:cache-manager-ref="ehcache"/>
 </beans>
