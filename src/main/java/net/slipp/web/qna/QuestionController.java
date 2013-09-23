@@ -1,6 +1,7 @@
 package net.slipp.web.qna;
 
-import static net.slipp.web.QnAPageableHelper.*;
+import static net.slipp.web.QnAPageableHelper.createPageableByQuestionUpdatedDate;
+import static net.slipp.web.QnAPageableHelper.revisedPage;
 
 import javax.annotation.Resource;
 
@@ -33,7 +34,7 @@ public class QuestionController {
 	
 	@Resource(name = "tagService")
 	private TagService tagService;
-
+	
 	@RequestMapping("")
 	public String index(Integer page, Model model) {
 		page = revisedPage(page);
@@ -44,7 +45,9 @@ public class QuestionController {
 	}
 
 	@RequestMapping("/form")
-	public String createForm(@LoginUser SocialUser loginUser, Model model) {
+	public String createForm(@LoginUser SocialUser loginUser, String currentTag, Model model) {
+	    logger.debug("currentTag : {}", currentTag);
+	    
 		model.addAttribute("question", new QuestionDto());
 		model.addAttribute("tags", tagService.findPooledTags());
 		return "qna/form";
