@@ -298,6 +298,12 @@
 			<artifactId>restfb</artifactId>
 			<version>1.6.12</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>1.7.1</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>slipp</finalName>
