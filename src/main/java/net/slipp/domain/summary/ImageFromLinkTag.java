@@ -4,7 +4,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class ImageFromLinkTag {
+public class ImageFromLinkTag extends ImageFromTag{
 
 	public String image(Document doc) {
 		Element element = doc.head();

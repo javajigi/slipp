@@ -21,6 +21,7 @@ public class SiteSummary implements Serializable {
 	public SiteSummary(Document doc) {
 		this.title = doc.title();
 		this.thumbnailImage = SiteImage.getImage(doc);
+		this.contents = SiteContents.getContents(doc);
 	}
 
 	public String getTitle() {
