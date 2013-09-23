@@ -23,6 +23,7 @@ import net.slipp.support.web.tags.SlippFunctions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -129,6 +130,7 @@ public class FacebookService {
 		}
 	}
 
+	@Cacheable(value="fbcomments", key="#questionId")
 	public List<FacebookComment> findFacebookComments(Long questionId) {
 		Question question = questionRepository.findOne(questionId);
 		if (!question.isSnsConnected()) {
@@ -158,6 +160,7 @@ public class FacebookService {
 		return fbComments;
 	}
 
+	@Cacheable(value="fbgroups", key="#loginUser.id")
 	public List<FacebookGroup> findFacebookGroups(SocialUser loginUser) {
 		FacebookClient facebookClient = new DefaultFacebookClient(loginUser.getAccessToken());
 		String query = "SELECT gid, name FROM group WHERE gid IN "
