@@ -10,6 +10,32 @@ $(document).ready(function() {
 		}
 	});
 
+	function showFacebookConnect() {
+		var url = '/api/facebooks/groups';
+		$.get(url,
+			function(response) {
+				$('.qna-connect-facebook').replaceWith(response);
+
+				// checkbox evt handler
+				$('.qna-connect-facebook-item').find('input:checkbox').on('change', function() {
+					var $this = $(this);
+					var $box = $this.parent('.qna-connect-facebook-item');
+					var isChecked = $this.is(':checked');
+
+					if (isChecked) {
+						$box.addClass('checked');
+					} else {
+						$box.removeClass('checked');
+					}
+				});
+
+				return false;
+			}, 'html'
+		);
+	}
+
+	showFacebookConnect();
+
 	var tagnames = '';
 
 	$('#plainTags').autocomplete('/tags/search', {
@@ -18,16 +44,16 @@ $(document).ready(function() {
 		autoFill: false,
 		extraParams: {
 			name: function() {
-			    tagnames = $('#plainTags').val();
+					tagnames = $('#plainTags').val();
 				return Slipp.TagParser.findEndTag(tagnames);
 			}
 		},
 		parse: function(data) {
-			var array = new Array();
-            for(var i=0;i<data.length;i++) {
-            	array[array.length] = { data: data[i], value: data[i] };
-            }
-            return array;
+			var array = [];
+			for(var i=0;i<data.length;i++) {
+				array[array.length] = { data: data[i], value: data[i] };
+			}
+			return array;
 		},
 		matchSubset: false,
 		width: $('.box-input-line').width(),
