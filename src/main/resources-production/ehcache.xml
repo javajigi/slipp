@@ -42,14 +42,5 @@
 	    timeToIdleSeconds="3600"
 	    timeToLiveSeconds="3600"
 	    overflowToDisk="false"
-	/>
-	
-	<cache
-	    name="fbcomments"	
-	    maxElementsInMemory="1000"
-	    eternal="false"
-	    timeToIdleSeconds="3600"
-	    timeToLiveSeconds="3600"
-	    overflowToDisk="false"
 	/>	
 </ehcache>

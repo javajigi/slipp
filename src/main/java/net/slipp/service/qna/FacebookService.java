@@ -130,7 +130,6 @@ public class FacebookService {
 		}
 	}
 
-	@Cacheable(value="fbcomments", key="#questionId")
 	public List<FacebookComment> findFacebookComments(Long questionId) {
 		Question question = questionRepository.findOne(questionId);
 		if (!question.isSnsConnected()) {
