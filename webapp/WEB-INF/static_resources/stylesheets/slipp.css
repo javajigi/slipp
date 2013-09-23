@@ -247,6 +247,8 @@ body{overflow-y:scroll}
 .view-content .article-header-thumb{width:48px}
 .view-content .article-author-thumb{width:40px;height:40px;-webkit-border-radius:3px;border-radius:3px}
 .view-content .article-author-name{font-weight:bold;font-size:1.1em}
+.view-content .article-author-fbgroup{display:inline-block;margin-left:.8em;font-style:italic;font-size:.8em;color:#666;}
+.view-content .article-author-fbgroup a{display:inline-block;overflow:hidden;max-width:8em;white-space:nowrap;-o-text-overflow:ellipsis;text-overflow:ellipsis;color:#333;font-weight:bold}
 .view-content .article-header-time{display:block;font-size:.8em;color:#666;}
 .view-content .article-header-time:hover{text-decoration:none;}
 .view-content .article-header-time:hover .icon-link{color:#3aa}
