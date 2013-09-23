@@ -112,7 +112,6 @@ $(document).ready(function(){
 			var height = $(this).height();
 			var isFloatingMode = scrollTop > offsetTop;
 
-			console.log(isFloatingMode)
 			if (isFloatingMode) {
 				$floating.css({top:0, position: 'fixed'})
 			} else {

@@ -1,7 +1,9 @@
 package net.slipp.service.qna;
 
-import static net.slipp.domain.tag.TagTest.*;
-import static org.mockito.Mockito.*;
+import static net.slipp.domain.tag.TagTest.JAVA;
+import static net.slipp.domain.tag.TagTest.NEWTAG;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.HashSet;
 import java.util.Set;

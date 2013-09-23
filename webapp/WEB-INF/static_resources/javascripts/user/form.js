@@ -22,13 +22,6 @@ $(document).ready(function() {
 	
 	$("#signUpForm").validate({
 		rules: {
-			userId: {
-				required: true,
-				minlength: 4,
-				maxlength: 12,
-				regexp: /^[0-9a-zA-Z]{4,12}$/,
-				duplicateUserId: "#userId"
-			},
 			nickName:  {
 				required: true,
 				minlength: 2,
@@ -36,16 +29,10 @@ $(document).ready(function() {
 			}
 		},
 		messages: {
-			userId: {
-				required: SL10N.User.requiredUserId(),
-				minlength: SL10N.User.minLenUserId(4),
-				maxlength: SL10N.User.maxLenUserId(12),
-				regexp: SL10N.User.invalidUserIdFormat()
-			},
 			nickName:  {
-				required: SL10N.User.requiredNickName(),
-				minlength: SL10N.User.minLenNickName(2),
-				maxlength: SL10N.User.maxLenNickName(12)
+				required: SL10N.User.requiredUserId(),
+				minlength: SL10N.User.minLenUserId(2),
+				maxlength: SL10N.User.maxLenUserId(12)
 			}
 		}
 	});

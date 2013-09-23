@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.Set;
 
+import net.slipp.domain.fb.FacebookGroup;
 import net.slipp.domain.tag.Tag;
 import net.slipp.repository.tag.TagRepository;
 
@@ -15,6 +16,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import com.google.common.collect.Sets;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TagServiceTest {
@@ -55,6 +58,25 @@ public class TagServiceTest {
         // then
         assertThat(tags.contains(java), is(true));
         assertThat(tags.contains(newTag), is(true));
+    }
+    
+    @Test
+    public void processGroupTags() throws Exception {
+        FacebookGroup groupTag1 = new FacebookGroup("1234", "생활코딩");
+        FacebookGroup groupTag2 = new FacebookGroup("5678", "SLiPP스터디");
+        Tag tag1 = Tag.groupedTag(groupTag1.getName(), groupTag1.getGroupId());
+        Tag tag2 = Tag.groupedTag(groupTag2.getName(), groupTag2.getGroupId());
+        
+        Set<FacebookGroup> newTags = Sets.newHashSet(groupTag1, groupTag2);
+        when(tagRepository.findByGroupId(tag1.getTagInfo().getGroupId())).thenReturn(tag1);
+        when(tagRepository.save(tag2)).thenReturn(tag2);
+        
+        // when
+        Set<Tag> tags = dut.processGroupTags(newTags);
+        
+        // then
+        assertThat(tags.contains(tag1), is(true));
+        assertThat(tags.contains(tag2), is(true));
     }
     
     @Test
