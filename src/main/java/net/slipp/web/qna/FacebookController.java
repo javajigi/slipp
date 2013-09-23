@@ -7,7 +7,9 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import net.slipp.domain.fb.FacebookComment;
+import net.slipp.domain.user.SocialUser;
 import net.slipp.service.qna.FacebookService;
+import net.slipp.support.web.argumentresolver.LoginUser;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,6 +44,15 @@ public class FacebookController {
         params.put("comments", fbComments);
         
         String result = createTemplate("fbcomments.ftl", params);
+        log.debug("result : {}", result);
+        return result;
+    }
+    
+    @RequestMapping(value="/groups", produces="text/plain;charset=UTF-8")
+    public @ResponseBody String findGroups(@LoginUser SocialUser loginUser) throws Exception {
+        Map<String, Object> params = Maps.newHashMap();
+        params.put("groups", facebookService.findFacebookGroups(loginUser));
+        String result = createTemplate("fbgroups.ftl", params);
         log.debug("result : {}", result);
         return result;
     }

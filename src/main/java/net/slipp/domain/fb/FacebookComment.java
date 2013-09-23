@@ -2,27 +2,38 @@ package net.slipp.domain.fb;
 
 import java.util.Date;
 
+import net.slipp.domain.tag.Tag;
+
 import com.restfb.types.CategorizedFacebookType;
 import com.restfb.types.Comment;
 
-public class FacebookComment {
+public class FacebookComment implements Comparable<FacebookComment> {
     private String id;
     private String userId;
     private String name;
     private Date createdTime;
     private String message;
+    private String groupId;
+    private String groupName;
 
-    private FacebookComment(String id, String userId, String name, Date createdTime, String message) {
+    private FacebookComment(String id, String userId, String name, Date createdTime, String message, String groupId, String groupName) {
         this.id = id;
         this.userId = userId;
         this.name = name;
         this.createdTime = createdTime;
         this.message = message;
+        this.groupId = groupId;
+        this.groupName = groupName;
     }
 
-    public static FacebookComment create(Comment comment) {
+    public static FacebookComment create(Tag tag, Comment comment) {
         CategorizedFacebookType user = comment.getFrom();
-        return new FacebookComment(comment.getId(), user.getId(), user.getName(), comment.getCreatedTime(), comment.getMessage());
+        
+        if (tag == null) {
+        	return new FacebookComment(comment.getId(), user.getId(), user.getName(), comment.getCreatedTime(), comment.getMessage(), null, null);
+        } 
+        
+        return new FacebookComment(comment.getId(), user.getId(), user.getName(), comment.getCreatedTime(), comment.getMessage(), tag.getGroupId(), tag.getName());
     }
 
     public String getId() {
@@ -43,6 +54,19 @@ public class FacebookComment {
 
     public String getName() {
         return name;
+    }
+    
+    public String getGroupId() {
+		return groupId;
+	}
+    
+    public String getGroupName() {
+		return groupName;
+	}
+    
+    @Override
+    public int compareTo(FacebookComment target) {
+        return (int)(createdTime.getTime() - target.createdTime.getTime());
     }
 
     @Override

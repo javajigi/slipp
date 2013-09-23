@@ -3,6 +3,7 @@ package net.slipp.service.qna;
 import java.util.List;
 
 import net.slipp.domain.fb.FacebookComment;
+import net.slipp.domain.fb.FacebookGroup;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -55,19 +56,28 @@ public class RestFBTest {
 		Comments comments = post.getComments();
 		List<Comment> commentData = comments.getData();
 		for (Comment comment : commentData) {
-			FacebookComment fbComment = FacebookComment.create(comment);
+			FacebookComment fbComment = FacebookComment.create(null, comment);
 			logger.debug("fbComment: " + fbComment);
 		}
 	}
 
 	@Test
 	public void findGroups() throws Exception {
-		Connection<Group> myGroups = dut.fetchConnection("/me/groups", Group.class);
-		logger.debug("group size : {}", myGroups.getData().size());
+		Connection<Group> myGroups = dut.fetchConnection("/me/groups", Group.class,
+				Parameter.with("limit", 10));
+		logger.debug("group size : {}", myGroups.getData());
 		for (List<Group> groups : myGroups) {
 			for (Group group : groups) {
 				logger.debug("group name : {}", group.getName());
 			}
 		}
+	}
+	
+	@Test
+	public void findGroupsByFql() throws Exception {
+		String query = "SELECT gid, name FROM group WHERE gid IN " + 
+				"(SELECT gid FROM group_member WHERE uid = me() AND bookmark_order <= 10 order by bookmark_order ASC)";
+		List<FacebookGroup> myGroups = dut.executeFqlQuery(query, FacebookGroup.class);
+		logger.debug("group size : {}", myGroups);
 	}
 }
