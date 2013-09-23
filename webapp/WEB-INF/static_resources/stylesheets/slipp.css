@@ -247,6 +247,8 @@ body{overflow-y:scroll}
 .view-content .article-header-thumb{width:48px}
 .view-content .article-author-thumb{width:40px;height:40px;-webkit-border-radius:3px;border-radius:3px}
 .view-content .article-author-name{font-weight:bold;font-size:1.1em}
+.view-content .article-author-fbgroup{display:inline-block;margin-left:.8em;font-style:italic;font-size:.8em;color:#666;}
+.view-content .article-author-fbgroup a{display:inline-block;overflow:hidden;max-width:8em;white-space:nowrap;-o-text-overflow:ellipsis;text-overflow:ellipsis;color:#333;font-weight:bold}
 .view-content .article-header-time{display:block;font-size:.8em;color:#666;}
 .view-content .article-header-time:hover{text-decoration:none;}
 .view-content .article-header-time:hover .icon-link{color:#3aa}
@@ -315,6 +317,14 @@ body{overflow-y:scroll}
 .markItUpInlineUpload .inline_upload_iframe{display:none}
 .markItUpInlineUpload .inline_upload_submit{display:block;width:100%;margin:.4em 0}
 .markItUpInlineUpload .text{margin:0}
+.qna-connect-facebook{background-color:#efefef;padding:.5em;}
+.qna-connect-facebook h1{margin:0 0 .2em;padding:0 0 0 .2em;border-bottom:2px dashed #fff;font-size:1.4em}
+.qna-connect-facebook h2{margin:.4em 0 0;padding:0 0 0 .2em;font-size:1.2em}
+.qna-connect-facebook-item{display:block;padding:.4em;border-bottom:1px solid #ddd;}
+@media (max-width: 480px){.qna-connect-facebook-item{margin-top:.4em}
+}.qna-connect-facebook-item:hover{background-color:#fff}
+.qna-connect-facebook-item.checked{background-color:#c8d6dd;border-bottom-color:#a8bfca}
+.qna-connect-facebook-item input,.qna-connect-facebook-item span{vertical-align:middle}
 .qna-tags ul{list-style:none;margin:0;padding:0}
 .qna-tags li{display:inline;list-style:none;}
 .list-content .qna-tags li,.view-content .qna-tags li{display:block;}

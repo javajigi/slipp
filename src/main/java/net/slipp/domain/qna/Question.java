@@ -9,7 +9,6 @@ import java.util.Set;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
@@ -28,6 +27,7 @@ import javax.persistence.TemporalType;
 
 import net.slipp.domain.ProviderType;
 import net.slipp.domain.tag.Tag;
+import net.slipp.domain.tag.Tags;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.support.jpa.CreatedDateEntityListener;
 import net.slipp.support.jpa.HasCreatedDate;
@@ -102,9 +102,11 @@ public class Question implements HasCreatedDate {
     @Column(name = "deleted", nullable = false)
     private boolean deleted = false;
 
-    @Embedded
-    private SnsConnection snsConnection = new SnsConnection();
-
+    @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(name = "question_sns_connections", joinColumns = @JoinColumn(name = "question_id"))
+    @org.hibernate.annotations.ForeignKey(name = "fk_question_sns_connection_question_id")
+    private Collection<SnsConnection> snsConnetions = Sets.newHashSet();    
+    
     public Question() {
     }
 
@@ -131,11 +133,15 @@ public class Question implements HasCreatedDate {
     }
     
     public int getSnsAnswerCount() {
-        return snsConnection.getSnsAnswerCount();
+        int snsAnswerCount = 0;
+        for (SnsConnection each : snsConnetions) {
+            snsAnswerCount += each.getSnsAnswerCount();
+        }
+        return snsAnswerCount;
     }
 
     public int getTotalAnswerCount() {
-        return answerCount + snsConnection.getSnsAnswerCount();
+        return answerCount + getSnsAnswerCount();
     }
 
     public Set<Tag> getTags() {
@@ -306,19 +312,21 @@ public class Question implements HasCreatedDate {
     }
 
     public SnsConnection connected(String postId) {
-        this.snsConnection = new SnsConnection(ProviderType.valueOf(writer.getProviderId()), postId);
-        return this.snsConnection;
+        return connected(postId, null);
     }
-
-    public SnsConnection getSnsConnection() {
-        if (snsConnection == null) {
-            return new SnsConnection();
-        }
+    
+    public SnsConnection connected(String postId, String groupId) {
+        SnsConnection snsConnection = new SnsConnection(ProviderType.valueOf(writer.getProviderId()), postId, groupId);
+        snsConnetions.add(snsConnection);
         return snsConnection;
     }
 
+    public Collection<SnsConnection> getSnsConnection() {
+        return snsConnetions;
+    }
+
     public boolean isSnsConnected() {
-        return getSnsConnection().isConnected();
+        return !snsConnetions.isEmpty();
     }
 
     /**
@@ -345,7 +353,11 @@ public class Question implements HasCreatedDate {
         Collections.sort(sortAnswers);
         return sortAnswers.get(0);
     }
-
+    
+    public Set<Tag> getConnectedGroupTag() {
+        return new Tags(tags).getConnectedGroupTags();
+    }
+    
     @Override
     public String toString() {
         return "Question [questionId=" + questionId + ", writer=" + writer + ", title=" + title + ", contentsHolder="
