@@ -2,22 +2,18 @@ package net.slipp.service.smalltalk;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-import java.util.List;
-
 import net.slipp.domain.smalltalk.SmallTalk;
 import net.slipp.repository.smalltalk.SmallTalkRepository;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-
-import com.google.common.collect.Lists;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SmallTalkServiceTest {
@@ -45,11 +41,8 @@ public class SmallTalkServiceTest {
 
 	@Test
 	public final void testGetLastTalks() throws Exception {
-		List<SmallTalk> smallTalks = Lists.newArrayList();
-		PageImpl<SmallTalk> p = new PageImpl<SmallTalk>(smallTalks);
-		when(smallTalkRepository.findAll(new PageRequest(0, 10))).thenReturn(p);
-		
-		dut.getLastTalks();
+		Page<SmallTalk> page = smallTalkRepository.findAll(new PageRequest(0, 10));
+		Assert.assertNull(page);
 	}
 
 }

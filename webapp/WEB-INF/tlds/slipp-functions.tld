@@ -94,11 +94,19 @@
 		</function-signature>
 	</function>
 	<function>
-		<description>특정 길이 이하의 글자만 남기고 리턴한다.</description>
+		<description>본문 중 링크가 있을경우 링크처리.</description>
 		<name>links</name>
 		<function-class>net.slipp.support.web.tags.SlippFunctions</function-class>
 		<function-signature>
 			java.lang.String links(java.lang.String)
+		</function-signature>
+	</function>
+	<function>
+		<description>본문 중 링크가 있을경우 링크처리.</description>
+		<name>linksToTitle</name>
+		<function-class>net.slipp.support.web.tags.SlippFunctions</function-class>
+		<function-signature>
+			java.lang.String linksToTitle(java.lang.String, java.lang.String)
 		</function-signature>
 	</function>
 	<function>
@@ -146,5 +154,13 @@
 		<function-signature>
 			java.lang.String stripHttp(java.lang.String)
 		</function-signature>
-	</function>		
+	</function>	
+	<function>
+		<description>본문 URL을 링크로 변환</description>
+		<name>urlToLink</name>
+		<function-class>net.slipp.support.web.tags.SlippFunctions</function-class>
+		<function-signature>
+			java.lang.String urlToLink(java.lang.String, java.lang.String)
+		</function-signature>
+	</function>	
 </taglib>

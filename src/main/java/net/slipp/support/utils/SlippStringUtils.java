@@ -36,7 +36,7 @@ public class SlippStringUtils extends StringUtils {
 		return str.trim().replaceAll("\\<.*?\\>", "");
 	}
 
-	public static String populateLinks(String str, int maxLength, String tail) {
+	public static String populateLinks(String str, int maxLength, String tail, String title) {
 		if (isBlank(str)) {
 			return str;
 		}
@@ -47,7 +47,7 @@ public class SlippStringUtils extends StringUtils {
 		while (matcher.find()) {
 			String link = matcher.group();
 			link = link.replaceAll("\\\\", "\\\\\\\\").replaceAll("\\$", "\\\\\\$");
-			String title = cut(link, maxLength, tail);
+			title = StringUtils.isBlank(title) ? cut(link, maxLength, tail) : title;
 			matcher.appendReplacement(sb, String.format("<a href=\"%s\" target=\"_blank\">%s</a>", link, title));
 		}
 		matcher.appendTail(sb);
@@ -55,9 +55,13 @@ public class SlippStringUtils extends StringUtils {
 	}
 
 	public static String populateLinks(String str) {
-		return populateLinks(str, -1, null);
+		return populateLinks(str, -1, null, null);
 	}
 
+	public static String populateLinks(String str, String title) {
+		return populateLinks(str, -1, null, title);
+	}
+	
 	public static String cut(String str, int maxLength, String tail) {
 		if (isEmpty(str)) {
 			return str;
@@ -158,5 +162,15 @@ public class SlippStringUtils extends StringUtils {
 		StringBuilder builder = new StringBuilder(p);
 		builder.append(s);
 		return builder.toString();
+	}
+	
+	public static String getUrlInText(String text){
+		String urlPattern = "((https?):((//)|(\\\\))+[\\w\\d:#@%/;$()~_?\\+-=\\\\\\.&]*)";
+		Pattern p = Pattern.compile(urlPattern, Pattern.CASE_INSENSITIVE);
+		Matcher m = p.matcher(text);
+		if (m.find()) {
+			return text.substring(m.start(0), m.end(0));
+		}
+		return null;
 	}
 }

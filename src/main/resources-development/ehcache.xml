@@ -43,4 +43,13 @@
 	    timeToLiveSeconds="3600"
 	    overflowToDisk="false"
 	/>
+	
+	<cache
+	    name="smallTalkCache"	
+	    maxElementsInMemory="10"
+	    eternal="false"
+	    timeToIdleSeconds="180"
+	    timeToLiveSeconds="180"
+	    overflowToDisk="false"
+	/>
 </ehcache>

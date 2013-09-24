@@ -77,7 +77,14 @@
 						<strong class="smalltalk-list-item-info-author">${smallTalk.writer.userId}</strong>
 						<span class="smalltalk-list-item-info-time">${smallTalk.time}</span>
 					</div>
-					<div class="smalltalk-list-item-cont">${smallTalk.talk}</div>
+					<%--<div class="smalltalk-list-item-cont">${sf:linksToTitle(smallTalk.talk, smallTalk.siteSummary.title)}</div>--%>
+					<div class="">
+						${sf:linksToTitle(smallTalk.talk, smallTalk.siteSummary.title)}
+						<br/>
+						${sf:cut(smallTalk.siteSummary.contents, 30, "...")}
+						<br/>
+						<img src="${smallTalk.siteSummary.thumbnailImage}" width="50px" height="50px"/>
+					</div>
 				</li>
 				</c:forEach>
 				<li class="smalltalk-list-expand">

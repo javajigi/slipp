@@ -11,11 +11,14 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import net.slipp.domain.summary.SiteSummary;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.support.jpa.CreatedAndUpdatedDateEntityListener;
 import net.slipp.support.jpa.HasCreatedAndUpdatedDate;
+import net.slipp.support.utils.SlippStringUtils;
 import net.slipp.support.utils.TimeUtils;
 
 import org.hibernate.validator.constraints.Length;
@@ -27,16 +30,16 @@ public class SmallTalk implements HasCreatedAndUpdatedDate {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long smallTalkId;
-	
+
 	@NotNull
-	@Length(min=1, max=100)
+	@Length(min = 1, max = 100)
 	@Column(name = "talk", length = 255, nullable = false)
 	private String talk;
-	
-    @ManyToOne
-    @org.hibernate.annotations.ForeignKey(name = "fk_smalltalk_writer")
-    private SocialUser writer;
-    
+
+	@ManyToOne
+	@org.hibernate.annotations.ForeignKey(name = "fk_smalltalk_writer")
+	private SocialUser writer;
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "created_date", nullable = false, updatable = false)
 	private Date createdDate;
@@ -44,7 +47,10 @@ public class SmallTalk implements HasCreatedAndUpdatedDate {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "updated_date", nullable = false)
 	private Date updatedDate;
-	
+
+	@Transient
+	private SiteSummary siteSummary;
+
 	public Date getCreatedDate() {
 		return createdDate;
 	}
@@ -76,11 +82,23 @@ public class SmallTalk implements HasCreatedAndUpdatedDate {
 	public void setWriter(SocialUser writer) {
 		this.writer = writer;
 	}
-	
-	public String getTime(){
-		if( TimeUtils.diffDay(new Date(), this.createdDate) == 0 ) {
+
+	public String getTime() {
+		if (TimeUtils.diffDay(new Date(), this.createdDate) == 0) {
 			return TimeUtils.agoTime(this.createdDate);
 		}
 		return "아주 오래전...";
+	}
+
+	public SiteSummary getSiteSummary() {
+		return siteSummary;
+	}
+
+	public void setSiteSummary(SiteSummary siteSummary) {
+		this.siteSummary = siteSummary;
+	}
+
+	public String getUrlInTalk() {
+		return SlippStringUtils.getUrlInText(getTalk());
 	}
 }

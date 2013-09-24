@@ -34,6 +34,6 @@ public class SmallTalkContoller {
 	}
 	@RequestMapping(value = "/smalltalks", method = RequestMethod.GET)
 	public @ResponseBody List<SmallTalk> find(){
-		return smallTalkService.getLastTalks().getContent();
+		return smallTalkService.getLastTalks();
 	}
 }

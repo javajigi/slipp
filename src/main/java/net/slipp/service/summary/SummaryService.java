@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import net.slipp.domain.summary.SiteSummary;
 
+import org.apache.commons.lang.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
@@ -17,8 +18,10 @@ public class SummaryService {
 
 	public SiteSummary findOneThumbnail(String url) {
 		try {
-			// Document doc =
-			// Jsoup.connect(url).userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; ko-KR; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6").get();
+			if( StringUtils.isBlank(url) ){
+				return null;
+			}
+			// Document doc = Jsoup.connect(url).userAgent("Mozilla/5.0").get();
 			Document doc = Jsoup.connect(url).get();
 			return new SiteSummary(doc);
 		} catch (IOException e) {
