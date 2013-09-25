@@ -18,8 +18,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class SummaryService {
 
-	Logger logger = LoggerFactory.getLogger(this.getClass());
-
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	private int TIMEOUT = 3*1000;
+	
 	public SiteSummary findOneThumbnail(String url) {
 		try {
 			if (StringUtils.isBlank(url)) {
@@ -29,7 +30,7 @@ public class SummaryService {
 			if (isImageDirectURL(url)) {
 				return new SiteSummary(FilenameUtils.getName(url), StringUtils.EMPTY, url, url);
 			}
-			Document doc = Jsoup.connect(url).get();
+			Document doc = Jsoup.connect(url).timeout(TIMEOUT).get();
 			return new SiteSummary(doc, url);
 		} catch (IOException e) {
 			logger.error(e.getMessage(), e);
@@ -40,6 +41,7 @@ public class SummaryService {
 	private boolean isImageDirectURL(String url) throws MalformedURLException, IOException {
 		URL u = new URL(url);
 		URLConnection urlConnection = u.openConnection();
+		urlConnection.setConnectTimeout(TIMEOUT);
 		String contentType = urlConnection.getContentType();
 		logger.info("ContentType : {} ", contentType);
 		if (contentType.indexOf("image") > -1) {

@@ -8,9 +8,10 @@ var smalltalkService = {
 
 		//that.makeUrlToLink();
 		that.ajaxLoad();
+		
 		$( document ).on( "submit", ".smalltalk-form", function(evt){
 			evt.preventDefault();
-			$(this).attr("disabled", true).text('저장중...');;
+			$('.btn-smalltalk-form-util-submit').attr("disabled", true).text('저장중...');
 			that.save();
 		});
 		
@@ -26,25 +27,28 @@ var smalltalkService = {
 		});
 	},
 	ajaxLoad: function() {
+		var waitingHtml = '<li><img src="/resources/images/ajax-document-loader.gif" width="100px" height="100px"></li>';
+		$('.smalltalk-list').html(waitingHtml);
 		$.get('/ajax/smalltalks', function(data){
-			$('.smalltalk').html(data);
+			$('.smalltalk-list').html(data);
+			$('.btn-smalltalk-form-util-submit').attr("disabled", false).text('나도 한마디');
 		});
 	},
 	save: function() {
 		var that = this;
 		var $talk = $(that.messageField);
 		var $fail = $(that.failMessageField);
-
 		$.post('/smalltalks', { 'talk' : $talk.val() }, function(data) {
 			if (data == 'OK') {
 				that.get();
 				$talk.val('');
+				that.ajaxLoad();
 			}else{
 				$fail.html("수다는 간단하게 100글자까지만~");
 				$fail.show();
 			}
 		});
-		that.expand();
+		//that.expand();
 	},
 	get: function() {
 		var that = this;

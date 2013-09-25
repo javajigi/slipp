@@ -60,9 +60,19 @@
 	<div class="content-sub">
 		<section class="smalltalk ui-smalltalk-list-collapse">
 			<h1>수다양!</h1>
+			<sec:authorize access="hasRole('ROLE_USER')">
+				<form action="" class="smalltalk-form">
+						<textarea id="smallTalkMessage" name="smallTalkMessage" class="tf-smalltalk-form-msg" style="resize: none"></textarea>
+						<label for="smallTalkMessage" class="smalltalk-form-fail-msg error" style="display: none"></label>
+						<div class="smalltalk-form-util">
+							<p class="smalltalk-form-util-msg"><i class="icon-smalltalk-msg"></i> 요즘 어떠세요?</p>
+							<button type="submit" class="btn-smalltalk-form-util-submit">나도 한마디</button>
+						</div>
+				</form>
+			</sec:authorize>
 			<ul class='smalltalk-list'>
-				<li><img src="${url:resource('/images/ajax-document-loader.gif')}" width="100px" height="100px"></li>
 			</ul>
+			<p class="smalltalk-notice">* 최근 10개까지만 보여집니다.</p>
 			<%-- 
 			------------------------------------------------
 			async/smalltalk.jsp 로 이동 로딩 문제로인해서 ajax방식으로 변경함.

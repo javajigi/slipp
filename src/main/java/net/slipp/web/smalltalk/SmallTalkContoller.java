@@ -24,23 +24,23 @@ import com.google.common.collect.Lists;
 
 @Controller
 public class SmallTalkContoller {
-	
+
 	private Logger log = LoggerFactory.getLogger(MailService.class);
-	
+
 	@Resource(name = "smallTalkService")
 	private SmallTalkService smallTalkService;
 
 	@RequestMapping(value = "/smalltalks", method = RequestMethod.POST)
 	public @ResponseBody
-	String save(@LoginUser SocialUser loginUser,
-			@Validated SmallTalk smallTalk, BindingResult result) {
+	String save(@LoginUser SocialUser loginUser, @Validated SmallTalk smallTalk, BindingResult result) {
 		if (result.hasErrors()) {
+			log.error("SmallTalk 를 저장할 수 없습니다. {}", smallTalk);
 			return "FAIL";
 		}
 		try {
 			smallTalk.setWriter(loginUser);
 			smallTalkService.save(smallTalk);
-		}catch (Exception e) {
+		} catch (Exception e) {
 			log.error("SmallTalk 데이터를 저장하는 중 오류.", e);
 			return "FAIL";
 		}
@@ -53,18 +53,18 @@ public class SmallTalkContoller {
 		List<SmallTalk> smallTalks = Lists.newArrayList();
 		try {
 			smallTalks = smallTalkService.getLastTalks();
-		}catch (Exception e) {
+		} catch (Exception e) {
 			log.error("SmallTalk 데이터를 가져오는 중 오류.", e);
 		}
 		return smallTalks;
 	}
 
 	@RequestMapping(value = "/ajax/smalltalks", method = RequestMethod.GET)
-	public String finds(Model model){
+	public String finds(Model model) {
 		List<SmallTalk> smallTalks = Lists.newArrayList();
 		try {
 			smallTalks = smallTalkService.getLastTalks();
-		}catch (Exception e) {
+		} catch (Exception e) {
 			log.error("SmallTalk 데이터를 가져오는 중 오류.", e);
 		}
 		model.addAttribute("smallTalks", smallTalks);

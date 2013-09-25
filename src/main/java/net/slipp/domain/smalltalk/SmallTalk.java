@@ -101,4 +101,23 @@ public class SmallTalk implements HasCreatedAndUpdatedDate {
 	public String getUrlInTalk() {
 		return SlippStringUtils.getUrlInText(getTalk());
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("SmallTalk [smallTalkId=");
+		builder.append(smallTalkId);
+		builder.append(", talk=");
+		builder.append(talk);
+		builder.append(", writer=");
+		builder.append(writer);
+		builder.append(", createdDate=");
+		builder.append(createdDate);
+		builder.append(", updatedDate=");
+		builder.append(updatedDate);
+		builder.append(", siteSummary=");
+		builder.append(siteSummary);
+		builder.append("]");
+		return builder.toString();
+	}
 }

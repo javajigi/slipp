@@ -9,19 +9,6 @@ taglib prefix="url" uri="http://www.slipp.net/url"%><%@
 taglib prefix="sf" uri="http://slipp.net/functions"%><%@
 taglib prefix="sl" uri="http://www.slipp.net/tags"%><%@
 taglib prefix="slipp" tagdir="/WEB-INF/tags" %>
-
-<h1>수다양!</h1>
-<sec:authorize access="hasRole('ROLE_USER')">
-	<form action="" class="smalltalk-form">
-			<textarea id="smallTalkMessage" name="smallTalkMessage" class="tf-smalltalk-form-msg" style="resize: none"></textarea>
-			<label for="smallTalkMessage" class="smalltalk-form-fail-msg error" style="display: none"></label>
-			<div class="smalltalk-form-util">
-				<p class="smalltalk-form-util-msg"><i class="icon-smalltalk-msg"></i> 요즘 어떠세요?</p>
-				<button type="submit" class="btn-smalltalk-form-util-submit">나도 한마디</button>
-			</div>
-	</form>
-</sec:authorize>
-<ul class="smalltalk-list">
 	<c:forEach items="${smallTalks}" var="smallTalk" varStatus="status">
 	<li class="smalltalk-list-item smalltalk-list-item-${status.count}">
 		<div class="smalltalk-list-item-info">
@@ -47,5 +34,3 @@ taglib prefix="slipp" tagdir="/WEB-INF/tags" %>
 	<li class="smalltalk-list-expand">
 		<button class="btn-smalltalk-list-expand" data-smalltalk-count="${fn:length(smallTalks)}">more <i class="icon-smalltalk-expand"></i></button>
 	</li>
-</ul>
-<p class="smalltalk-notice">* 최근 10개까지만 보여집니다.</p>
