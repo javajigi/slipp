@@ -87,7 +87,7 @@ public class FacebookService {
 
 				i++;
 			} while (postId == null);
-			log.info("connect post id : {}", postId);
+			log.debug("connect post id : {}", postId);
 		} catch (Throwable e) {
 			log.error("Facebook Connection Failed : {}", e.getMessage());
 		}
