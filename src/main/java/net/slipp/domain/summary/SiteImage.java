@@ -9,7 +9,6 @@ public class SiteImage {
 		ImageFromTag imageFromMetaTag = new ImageFromMetaTag();
 		ImageFromTag imageFromLinkTag = new ImageFromLinkTag();
 		ImageFromTag imageFromImgTag = new ImageFromImgTag();
-
 		String imageUrl = imageFromMetaTag.getImagePath(doc);
 		if (!StringUtils.isBlank(imageUrl)) {
 			return imageUrl;

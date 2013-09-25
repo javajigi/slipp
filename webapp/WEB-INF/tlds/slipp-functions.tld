@@ -163,4 +163,12 @@
 			java.lang.String urlToLink(java.lang.String, java.lang.String)
 		</function-signature>
 	</function>	
+	<function>
+		<description>본문 URL을 제거</description>
+		<name>removeLink</name>
+		<function-class>net.slipp.support.web.tags.SlippFunctions</function-class>
+		<function-signature>
+			java.lang.String removeLink(java.lang.String)
+		</function-signature>
+	</function>	
 </taglib>

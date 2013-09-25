@@ -8,11 +8,19 @@ public abstract class ImageFromTag {
 	public abstract String image(Document doc);
 	
 	public String getImagePath(Document doc){
-		return getPath(image(doc), doc);
+		String url = image(doc);
+		if( hasNotImageUrl(url) ) {
+			return null;
+		}
+		return getPath(url, doc);
+	}
+
+	private boolean hasNotImageUrl(String url) {
+		return StringUtils.isBlank(url);
 	}
 	
 	private String getPath(String url, Document doc) {
-		if( url.indexOf("http") == 0 || StringUtils.isBlank(url)){
+		if( url.indexOf("http") == 0 || hasNotImageUrl(url)){
 			return url;
 		}
 		if( url.indexOf("//") == 0 ) {

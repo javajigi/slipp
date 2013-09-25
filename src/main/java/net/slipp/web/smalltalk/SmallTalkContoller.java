@@ -10,6 +10,7 @@ import net.slipp.service.smalltalk.SmallTalkService;
 import net.slipp.support.web.argumentresolver.LoginUser;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,5 +36,12 @@ public class SmallTalkContoller {
 	@RequestMapping(value = "/smalltalks", method = RequestMethod.GET)
 	public @ResponseBody List<SmallTalk> find(){
 		return smallTalkService.getLastTalks();
+	}
+	
+	@RequestMapping(value = "/ajax/smalltalks", method = RequestMethod.GET)
+	public String finds(Model model){
+		List<SmallTalk> smallTalks = smallTalkService.getLastTalks();
+		model.addAttribute("smallTalks", smallTalks);
+		return "async/smalltalk";
 	}
 }

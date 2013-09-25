@@ -196,4 +196,8 @@ public class SlippFunctions {
 		
 		return url.replaceAll("http:", "");
 	}
+	
+	public static String removeLink(String str){
+		return SlippStringUtils.removeLinks(str);
+	}
 }

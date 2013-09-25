@@ -6,21 +6,28 @@ var smalltalkService = {
 		var $talk = $(that.messageField);
 		var $fail = $(that.failMessageField);
 
-		that.makeUrlToLink();
-
-		$('.smalltalk-form').on('submit', function(evt){
+		//that.makeUrlToLink();
+		that.ajaxLoad();
+		$( document ).on( "submit", ".smalltalk-form", function(evt){
 			evt.preventDefault();
+			$(this).attr("disabled", true).text('저장중...');;
 			that.save();
 		});
-		$('.btn-smalltalk-list-expand').on('click', function(evt) {
+		
+		$( document ).on( "click", ".btn-smalltalk-list-expand", function(evt){
 			var smalltalkCount = $(this).data('smalltalk-count');
 			if( typeof( smalltalkCount ) == "undefined" || smalltalkCount === 0 ) {
 				return false;
 			}
 			that.expand();
 		});
-		$talk.on('keydown', function(){
+		$( document ).on( "keydown", $talk, function(){
 			$fail.hide();
+		});
+	},
+	ajaxLoad: function() {
+		$.get('/ajax/smalltalks', function(data){
+			$('.smalltalk').html(data);
 		});
 	},
 	save: function() {

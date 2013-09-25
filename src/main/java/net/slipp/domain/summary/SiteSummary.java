@@ -11,17 +11,20 @@ public class SiteSummary implements Serializable {
 	private String title;
 	private String contents;
 	private String thumbnailImage;
+	private String targetUrl;
 
-	public SiteSummary(String title, String contents, String thumbnailImage) {
+	public SiteSummary(String title, String contents, String thumbnailImage, String targetUrl) {
 		this.title = title;
 		this.contents = contents;
 		this.thumbnailImage = thumbnailImage;
+		this.setTargetUrl(targetUrl);
 	}
 
-	public SiteSummary(Document doc) {
+	public SiteSummary(Document doc, String targetUrl) {
 		this.title = doc.title();
 		this.thumbnailImage = SiteImage.getImage(doc);
 		this.contents = SiteContents.getContents(doc);
+		this.setTargetUrl(targetUrl);
 	}
 
 	public String getTitle() {
@@ -46,5 +49,13 @@ public class SiteSummary implements Serializable {
 
 	public void setThumbnailImage(String thumbnailImage) {
 		this.thumbnailImage = thumbnailImage;
+	}
+
+	public String getTargetUrl() {
+		return targetUrl;
+	}
+
+	public void setTargetUrl(String targetUrl) {
+		this.targetUrl = targetUrl;
 	}
 }

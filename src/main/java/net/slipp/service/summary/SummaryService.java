@@ -27,10 +27,10 @@ public class SummaryService {
 			}
 			logger.info("is Image : {} {}", url, isImageDirectURL(url));
 			if (isImageDirectURL(url)) {
-				return new SiteSummary(FilenameUtils.getName(url), StringUtils.EMPTY, url);
+				return new SiteSummary(FilenameUtils.getName(url), StringUtils.EMPTY, url, url);
 			}
 			Document doc = Jsoup.connect(url).get();
-			return new SiteSummary(doc);
+			return new SiteSummary(doc, url);
 		} catch (IOException e) {
 			logger.error(e.getMessage(), e);
 		}

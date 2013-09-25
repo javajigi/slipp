@@ -60,6 +60,14 @@
 	<div class="content-sub">
 		<section class="smalltalk ui-smalltalk-list-collapse">
 			<h1>수다양!</h1>
+			<ul class='smalltalk-list'>
+				<li><img src="${url:resource('/images/ajax-document-loader.gif')}" width="100px" height="100px"></li>
+			</ul>
+			<%-- 
+			------------------------------------------------
+			async/smalltalk.jsp 로 이동 로딩 문제로인해서 ajax방식으로 변경함.
+			------------------------------------------------
+			<h1>수다양!</h1>
 			<sec:authorize access="hasRole('ROLE_USER')">
 				<form action="" class="smalltalk-form">
 						<textarea id="smallTalkMessage" name="smallTalkMessage" class="tf-smalltalk-form-msg" style="resize: none"></textarea>
@@ -77,13 +85,17 @@
 						<strong class="smalltalk-list-item-info-author">${smallTalk.writer.userId}</strong>
 						<span class="smalltalk-list-item-info-time">${smallTalk.time}</span>
 					</div>
-					<%--<div class="smalltalk-list-item-cont">${sf:linksToTitle(smallTalk.talk, smallTalk.siteSummary.title)}</div>--%>
-					<div class="">
-						${sf:linksToTitle(smallTalk.talk, smallTalk.siteSummary.title)}
-						<br/>
-						${sf:cut(smallTalk.siteSummary.contents, 30, "...")}
-						<br/>
-						<img src="${smallTalk.siteSummary.thumbnailImage}" width="50px" height="50px"/>
+					<div class="smalltalk-list-item-cont">${sf:removeLink(smallTalk.talk)}</div>
+					<div class="" style="width: 100%">
+					<table width="100%" border="1">
+						<tr>
+							<td colspan="2">${sf:linksToTitle(smallTalk.siteSummary.targetUrl, smallTalk.siteSummary.title)}</td>
+						<tr>
+						<tr>
+							<td><img src="${smallTalk.siteSummary.thumbnailImage}" width="50px" height="50px"/></td>
+							<td>${sf:cut(smallTalk.siteSummary.contents, 30, "...")}</td>
+						</tr>
+					</table>
 					</div>
 				</li>
 				</c:forEach>
@@ -92,6 +104,7 @@
 				</li>
 			</ul>
 			<p class="smalltalk-notice">* 최근 10개까지만 보여집니다.</p>
+			--%>
 		</section>
 		<section class="notice">
 			<h1><a href="/wiki/display/slipp/Home">SLiPP log</a></h1>

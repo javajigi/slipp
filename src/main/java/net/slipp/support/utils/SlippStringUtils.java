@@ -36,6 +36,22 @@ public class SlippStringUtils extends StringUtils {
 		return str.trim().replaceAll("\\<.*?\\>", "");
 	}
 
+	public static String removeLinks(String str) {
+		if (isBlank(str)) {
+			return str;
+		}
+
+		Matcher matcher = LINK_PATTERN.matcher(str);
+
+		StringBuffer sb = new StringBuffer();
+		while (matcher.find()) {
+			String link = matcher.group();
+			matcher.appendReplacement(sb, StringUtils.replace(str, link, StringUtils.EMPTY));
+		}
+		matcher.appendTail(sb);
+		return sb.toString();
+	}
+	
 	public static String populateLinks(String str, int maxLength, String tail, String title) {
 		if (isBlank(str)) {
 			return str;
