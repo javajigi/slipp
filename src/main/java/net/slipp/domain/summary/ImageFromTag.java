@@ -12,8 +12,11 @@ public abstract class ImageFromTag {
 	}
 	
 	private String getPath(String url, Document doc) {
-		if( url.indexOf("http") > -1 || StringUtils.isBlank(url)){
+		if( url.indexOf("http") == 0 || StringUtils.isBlank(url)){
 			return url;
+		}
+		if( url.indexOf("//") == 0 ) {
+			return "http:"+url;
 		}
 		return doc.baseUri().replaceAll("(?i:(https?://[^/]+)/.*)", "$1")+url;
 	}
