@@ -64,4 +64,11 @@ public class SummarykServiceTest {
 		logger.debug("\ntestFindOneThumnail_Tistory-------------------------------------------------------------------------------------");
 
 	}
+<<<<<<< HEAD
 }
+||||||| merged common ancestors
+}
+=======
+
+}
+>>>>>>> origin/feature/summary

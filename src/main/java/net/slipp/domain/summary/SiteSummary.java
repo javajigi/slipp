@@ -22,7 +22,7 @@ public class SiteSummary implements Serializable {
 
 	public SiteSummary(Document doc, String targetUrl) {
 		this.title = doc.title();
-		this.thumbnailImage = SiteImage.getImage(doc);
+		this.thumbnailImage = SiteImage.getImage(targetUrl, doc);
 		this.contents = SiteContents.getContents(doc);
 		this.setTargetUrl(targetUrl);
 	}
