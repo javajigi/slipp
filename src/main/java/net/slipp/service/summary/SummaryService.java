@@ -2,6 +2,7 @@ package net.slipp.service.summary;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -32,6 +33,8 @@ public class SummaryService {
 			}
 			Document doc = Jsoup.connect(url).timeout(TIMEOUT).get();
 			return new SiteSummary(doc, url);
+		} catch (SocketTimeoutException te) {
+			logger.warn("URL Connection TimeOut : {} - {}", url, te.getMessage());
 		} catch (IOException e) {
 			logger.error(e.getMessage(), e);
 		}

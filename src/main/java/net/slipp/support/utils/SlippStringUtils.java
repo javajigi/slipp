@@ -40,13 +40,10 @@ public class SlippStringUtils extends StringUtils {
 		if (isBlank(str)) {
 			return str;
 		}
-
 		Matcher matcher = LINK_PATTERN.matcher(str);
-
 		StringBuffer sb = new StringBuffer();
 		while (matcher.find()) {
-			String link = matcher.group();
-			matcher.appendReplacement(sb, StringUtils.replace(str, link, StringUtils.EMPTY));
+			matcher.appendReplacement(sb, StringUtils.EMPTY);
 		}
 		matcher.appendTail(sb);
 		return sb.toString();
