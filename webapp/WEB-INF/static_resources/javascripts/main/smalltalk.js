@@ -8,13 +8,13 @@ var smalltalkService = {
 
 		//that.makeUrlToLink();
 		that.ajaxLoad();
-		
+
 		$( document ).on( "submit", ".smalltalk-form", function(evt){
 			evt.preventDefault();
 			$('.btn-smalltalk-form-util-submit').attr("disabled", true).text('저장중...');
 			that.save();
 		});
-		
+
 		$( document ).on( "click", ".btn-smalltalk-list-expand", function(evt){
 			var smalltalkCount = $(this).data('smalltalk-count');
 			if( typeof( smalltalkCount ) == "undefined" || smalltalkCount === 0 ) {
@@ -27,7 +27,7 @@ var smalltalkService = {
 		});
 	},
 	ajaxLoad: function() {
-		var waitingHtml = '<li><img src="/resources/images/ajax-document-loader.gif" width="100px" height="100px"></li>';
+		var waitingHtml = '<li style="text-align: center;"><img src="/resources/images/ajax-document-loader.gif" width="100px" height="100px"></li>';
 		$('.smalltalk-list').html(waitingHtml);
 		$.get('/ajax/smalltalks', function(data){
 			$('.smalltalk-list').html(data);
@@ -53,7 +53,7 @@ var smalltalkService = {
 	get: function() {
 		var that = this;
 		var $talk = $(that.messageField);
-		
+
 		$.get('/smalltalks', function(data) {
 			$('.smalltalk-list').html( tmpl('tmpl-smalltalk-list', data) );
 			that.makeUrlToLink();
@@ -63,7 +63,7 @@ var smalltalkService = {
 		$('.smalltalk').removeClass('ui-smalltalk-list-collapse');
 	},
 	makeUrlToLink: function() {
-		var $items = $('.smalltalk-list-item-cont');
+		var $items = $('.smalltalk-item-cont');
 
 		$items.each(function() {
 			var cont = $(this).html();

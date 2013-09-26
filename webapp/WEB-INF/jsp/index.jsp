@@ -82,9 +82,7 @@
 					<strong class="notice-item-title"><a href="/wiki/pages/viewpage.action?pageId=${page.pageId}">${page.title}</a></strong>
 					<div class="notice-list-item-time">${page.creationDate}</div>
 					<c:if test="${status.index == 0}">
-					<div class="notice-list-item-cont">
-						${page.shortContents}
-					</div>
+						<div class="notice-list-item-cont">${page.shortContents}</div>
 					</c:if>
 				</li>
 				</c:forEach>
@@ -101,15 +99,4 @@
 	$(document).ready(function(){
 		smalltalkService.init();
 	});
-</script>
-<script type="text/x-tmpl" id="tmpl-smalltalk-list">
-{% for (var i=0; i<o.length; i++) { %}
-	<li class="smalltalk-list-item smalltalk-list-item-${status.count}">
-		<div class="smalltalk-list-item-info">
-			<strong class="smalltalk-list-item-info-author">{%=o[i].writer.userId%}</strong>
-			<span class="smalltalk-list-item-info-time">{%=o[i].time%}</span>
-		</div>
-		<div class="smalltalk-list-item-cont">{%=o[i].talk%}</div>
-	</li>
-{% } %}
 </script>
