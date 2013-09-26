@@ -32,7 +32,7 @@ public class SmallTalk implements HasCreatedAndUpdatedDate {
 	private Long smallTalkId;
 
 	@NotNull
-	@Length(min = 1, max = 100)
+	@Length(min = 1, max = 200)
 	@Column(name = "talk", length = 255, nullable = false)
 	private String talk;
 
