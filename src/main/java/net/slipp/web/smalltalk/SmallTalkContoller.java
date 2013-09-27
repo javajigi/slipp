@@ -47,18 +47,6 @@ public class SmallTalkContoller {
 		return "OK";
 	}
 
-	@RequestMapping(value = "/smalltalks", method = RequestMethod.GET)
-	public @ResponseBody
-	List<SmallTalk> find() {
-		List<SmallTalk> smallTalks = Lists.newArrayList();
-		try {
-			smallTalks = smallTalkService.getLastTalks();
-		} catch (Exception e) {
-			log.error("SmallTalk 데이터를 가져오는 중 오류.", e);
-		}
-		return smallTalks;
-	}
-
 	@RequestMapping(value = "/ajax/smalltalks", method = RequestMethod.GET)
 	public String finds(Model model) {
 		List<SmallTalk> smallTalks = Lists.newArrayList();

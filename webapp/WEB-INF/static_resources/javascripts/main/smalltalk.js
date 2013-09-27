@@ -40,7 +40,6 @@ var smalltalkService = {
 		var $fail = $(that.failMessageField);
 		$.post('/smalltalks', { 'talk' : $talk.val() }, function(data) {
 			if (data == 'OK') {
-				// that.get();
 				$talk.val('');
 				that.ajaxLoad();
 			}else{
@@ -50,15 +49,6 @@ var smalltalkService = {
 			}
 		});
 		//that.expand();
-	},
-	get: function() {
-		var that = this;
-		var $talk = $(that.messageField);
-
-		$.get('/smalltalks', function(data) {
-			$('.smalltalk-list').html( tmpl('tmpl-smalltalk-list', data) );
-			that.makeUrlToLink();
-		});
 	},
 	expand: function() {
 		$('.smalltalk').removeClass('ui-smalltalk-list-collapse');
