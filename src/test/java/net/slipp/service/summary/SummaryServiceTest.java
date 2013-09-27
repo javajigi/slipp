@@ -25,16 +25,27 @@ public class SummaryServiceTest {
 	}
 
 	@Test
-	public final void testFindOneThumnail_SLiPP() throws Exception {
+	public final void testFindOneThumnail_Okjsp() throws Exception {
 		SiteSummary siteSummary = summaryService
-				.findOneThumbnail("http://www.slipp.net");
-//		assertThat(siteSummary.getTitle(), is("[기자단]페가수스를 타고 세계 일주를 | 열린게시판 | ArcheAge"));
-		logger.debug("\ntestFindOneThumnail_ArcheAge-------------------------------------------------------------------------------------");
+				.findOneThumbnail("http://www.okjsp.net");
+		//assertThat(siteSummary.getTitle(), is("SLiPP"));
+		logger.debug("\ntestFindOneThumnail_Okjsp-------------------------------------------------------------------------------------");
 		logger.debug(siteSummary.getTitle());
 		logger.debug(siteSummary.getThumbnailImage());
 		logger.debug(siteSummary.getContents());
-		logger.debug("\ntestFindOneThumnail_ArcheAge-------------------------------------------------------------------------------------");
-
+		logger.debug("\ntestFindOneThumnail_Okjsp-------------------------------------------------------------------------------------");
+	}
+	
+	@Test
+	public final void testFindOneThumnail_SLiPP() throws Exception {
+		SiteSummary siteSummary = summaryService
+				.findOneThumbnail("http://www.slipp.net");
+		assertThat(siteSummary.getTitle(), is("SLiPP"));
+		logger.debug("\ntestFindOneThumnail_SLiPP-------------------------------------------------------------------------------------");
+		logger.debug(siteSummary.getTitle());
+		logger.debug(siteSummary.getThumbnailImage());
+		logger.debug(siteSummary.getContents());
+		logger.debug("\ntestFindOneThumnail_SLiPP-------------------------------------------------------------------------------------");
 	}
 	
 	@Test

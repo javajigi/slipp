@@ -34,7 +34,7 @@ public class SummaryService {
 			if (isImageDirectURL(url)) {
 				return new SiteSummary(FilenameUtils.getName(url), StringUtils.EMPTY, url, url);
 			}
-			Document doc = Jsoup.connect(url).timeout(TIMEOUT).get();
+			Document doc = Jsoup.connect(url).followRedirects(true).timeout(TIMEOUT).get();
 			return new SiteSummary(doc, url);
 		} catch (SocketTimeoutException te) {
 			logger.warn("URL Connection TimeOut : {} - {}", url, te.getMessage());
