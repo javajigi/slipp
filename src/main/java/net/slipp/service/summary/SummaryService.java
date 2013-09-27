@@ -26,6 +26,7 @@ public class SummaryService {
 	
 	@Cacheable(value="smallTalkCache", key="#url")
 	public SiteSummary findOneThumbnail(String url) {
+		logger.debug("findOneThumbnail url : {}", url);
 		try {
 			if (StringUtils.isBlank(url)) {
 				return null;

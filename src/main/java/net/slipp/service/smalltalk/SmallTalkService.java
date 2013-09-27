@@ -42,7 +42,10 @@ public class SmallTalkService {
 		List<SmallTalk> smallTalks = Lists.newArrayList();
 		for (SmallTalk smallTalk : orgSmallTalks) {
 		    if (smallTalk.hasUrl()) {
+		    	long start = System.currentTimeMillis();
 		        smallTalk.setSiteSummary(summaryService.findOneThumbnail(smallTalk.getUrlInTalk()));
+		        long end = System.currentTimeMillis();
+		        logger.debug("execution time : {}", (end-start));
 		    }
 			smallTalks.add(smallTalk);
 		}

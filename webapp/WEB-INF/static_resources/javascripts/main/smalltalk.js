@@ -40,12 +40,13 @@ var smalltalkService = {
 		var $fail = $(that.failMessageField);
 		$.post('/smalltalks', { 'talk' : $talk.val() }, function(data) {
 			if (data == 'OK') {
-				that.get();
+				// that.get();
 				$talk.val('');
 				that.ajaxLoad();
 			}else{
 				$fail.html("수다는 간단하게 100글자까지만~");
 				$fail.show();
+				$('.btn-smalltalk-form-util-submit').attr("disabled", false).text('나도 한마디');
 			}
 		});
 		//that.expand();

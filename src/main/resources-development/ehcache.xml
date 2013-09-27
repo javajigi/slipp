@@ -52,7 +52,5 @@
 	    timeToIdleSeconds="3600"
 	    timeToLiveSeconds="3600"
 	    overflowToDisk="false"
-	>
-		<pinning store="inCache" />
-	</cache>
+	/>
 </ehcache>
