@@ -20,13 +20,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SummaryService {
-
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	private int TIMEOUT = 3*1000;
 	
 	@Cacheable(value="smallTalkCache", key="#url")
 	public SiteSummary findOneThumbnail(String url) {
-		logger.debug("findOneThumbnail url : {}", url);
 		try {
 			if (StringUtils.isBlank(url)) {
 				return null;

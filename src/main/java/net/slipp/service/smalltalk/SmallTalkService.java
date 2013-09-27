@@ -10,7 +10,6 @@ import net.slipp.service.summary.SummaryService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -29,7 +28,6 @@ public class SmallTalkService {
 	@Resource (name = "summaryService")
 	private SummaryService summaryService;
 
-	@CacheEvict(value="smallTalkCache", allEntries=true)
 	public void save(SmallTalk smallTalk) {
 		logger.debug("SmallTalk : {}", smallTalk);
 		smallTalkRepository.save(smallTalk);
@@ -42,10 +40,7 @@ public class SmallTalkService {
 		List<SmallTalk> smallTalks = Lists.newArrayList();
 		for (SmallTalk smallTalk : orgSmallTalks) {
 		    if (smallTalk.hasUrl()) {
-		    	long start = System.currentTimeMillis();
 		        smallTalk.setSiteSummary(summaryService.findOneThumbnail(smallTalk.getUrlInTalk()));
-		        long end = System.currentTimeMillis();
-		        logger.debug("execution time : {}", (end-start));
 		    }
 			smallTalks.add(smallTalk);
 		}
