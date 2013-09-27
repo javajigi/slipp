@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @RunWith(MockitoJUnitRunner.class)
-public class SummarykServiceTest {
+public class SummaryServiceTest {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -24,6 +24,19 @@ public class SummarykServiceTest {
 	public void setUp() {
 	}
 
+	@Test
+	public final void testFindOneThumnail_SLiPP() throws Exception {
+		SiteSummary siteSummary = summaryService
+				.findOneThumbnail("http://www.slipp.net");
+//		assertThat(siteSummary.getTitle(), is("[기자단]페가수스를 타고 세계 일주를 | 열린게시판 | ArcheAge"));
+		logger.debug("\ntestFindOneThumnail_ArcheAge-------------------------------------------------------------------------------------");
+		logger.debug(siteSummary.getTitle());
+		logger.debug(siteSummary.getThumbnailImage());
+		logger.debug(siteSummary.getContents());
+		logger.debug("\ntestFindOneThumnail_ArcheAge-------------------------------------------------------------------------------------");
+
+	}
+	
 	@Test
 	public final void testFindOneThumnail_ArcheAge() throws Exception {
 		SiteSummary siteSummary = summaryService

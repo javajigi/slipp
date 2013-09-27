@@ -6,18 +6,20 @@ import org.jsoup.select.Elements;
 
 public class ImageFromLinkTag extends ImageFromTag{
 
+	private TagType tagType = TagType.link;
+	
 	public String image(Document doc) {
 		Element element = doc.head();
-		Elements imgElements = element.getElementsByTag("link");
+		Elements imgElements = element.getElementsByTag(tagType.getTag());
 		for (Element imgElement : imgElements) {
 			if (hasImage(imgElement)) {
-				return imgElement.attr("href");
+				return imgElement.attr(tagType.getAttrName());
 			}
 		}
 		return null;
 	}
 
 	private boolean hasImage(Element imgElement) {
-		return "image/x-icon".equals(imgElement.attr("type"));
+		return tagType.matchResource(imgElement.attr(tagType.getAttrResource()));
 	}
 }

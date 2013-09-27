@@ -21,13 +21,15 @@ public abstract class ImageFromTag {
 	}
 
 	private String getPath(String targetUrl, String imageSrcUrl, Document doc) {
-		if (imageSrcUrl.indexOf("http") == 0 || hasNotImageUrl(imageSrcUrl)) {
+		if ( StringUtils.startsWith(imageSrcUrl, "http") || hasNotImageUrl(imageSrcUrl)) {
 			return imageSrcUrl;
 		}
-		if (imageSrcUrl.indexOf("//") == 0) {
+		if ( StringUtils.startsWith(imageSrcUrl, "//") ) {
 			return "http:" + imageSrcUrl;
 		}
-		//return doc.baseUri().replaceAll("(?i:(https?://[^/]+)/.*)", "$1") + imageSrcUrl;
-		return targetUrl + FilenameUtils.getName(imageSrcUrl);
+		if (StringUtils.startsWith(imageSrcUrl, ".") ){
+			return targetUrl + FilenameUtils.getName(imageSrcUrl);
+		}
+		return targetUrl+imageSrcUrl;
 	}
 }

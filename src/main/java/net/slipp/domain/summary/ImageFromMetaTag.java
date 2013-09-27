@@ -6,18 +6,20 @@ import org.jsoup.select.Elements;
 
 public class ImageFromMetaTag extends ImageFromTag{
 
+	private TagType tagType = TagType.meta;	// to do inject?
+	
 	public String image(Document doc) {
 		Element element = doc.head();
-		Elements imgElements = element.getElementsByTag("meta");
+		Elements imgElements = element.getElementsByTag(tagType.getTag());
 		for (Element imgElement : imgElements) {
 			if (hasImage(imgElement)) {
-				return imgElement.attr("content");
+				return imgElement.attr(tagType.getAttrName());
 			}
 		}
 		return null;
 	}
 
 	private boolean hasImage(Element imgElement) {
-		return "og:image".equals(imgElement.attr("property"));
+		return tagType.matchResource(imgElement.attr(tagType.getAttrResource()));
 	}
 }
