@@ -28,7 +28,6 @@ public class SummaryService {
 			if (StringUtils.isBlank(url)) {
 				return null;
 			}
-			logger.debug("is Image : {} {}", url, isImageDirectURL(url));
 			if (isImageDirectURL(url)) {
 				return new SiteSummary(FilenameUtils.getName(url), StringUtils.EMPTY, url, url);
 			}
@@ -47,7 +46,6 @@ public class SummaryService {
 		URLConnection urlConnection = u.openConnection();
 		urlConnection.setConnectTimeout(TIMEOUT);
 		String contentType = urlConnection.getContentType();
-		logger.debug("ContentType : {} ", contentType);
 		if (contentType.indexOf("image") > -1) {
 			return true;
 		}
