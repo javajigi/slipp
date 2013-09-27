@@ -10,6 +10,7 @@ import net.slipp.domain.summary.SiteSummary;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringUtils;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
@@ -52,5 +53,4 @@ public class SummaryService {
 		}
 		return false;
 	}
-
 }
