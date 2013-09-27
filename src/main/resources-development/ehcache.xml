@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ehcache>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd" updateCheck="false">
     <defaultCache eternal="false" 
             overflowToDisk="false"
             maxElementsInMemory="50000" 
@@ -46,10 +47,12 @@
 	
 	<cache
 	    name="smallTalkCache"	
-	    maxElementsInMemory="10"
+	    maxElementsInMemory="100"
 	    eternal="false"
-	    timeToIdleSeconds="180"
-	    timeToLiveSeconds="180"
+	    timeToIdleSeconds="3600"
+	    timeToLiveSeconds="3600"
 	    overflowToDisk="false"
-	/>
+	>
+		<pinning store="inCache" />
+	</cache>
 </ehcache>

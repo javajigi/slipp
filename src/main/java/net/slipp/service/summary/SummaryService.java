@@ -15,6 +15,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,6 +24,7 @@ public class SummaryService {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	private int TIMEOUT = 3*1000;
 	
+	@Cacheable(value="smallTalkCache", key="#url")
 	public SiteSummary findOneThumbnail(String url) {
 		try {
 			if (StringUtils.isBlank(url)) {

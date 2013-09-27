@@ -11,7 +11,6 @@ import net.slipp.service.summary.SummaryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -36,14 +35,15 @@ public class SmallTalkService {
 		smallTalkRepository.save(smallTalk);
 	}
 
-	@Cacheable(value="smallTalkCache")
 	public List<SmallTalk> getLastTalks() {
 		Page<SmallTalk> page = smallTalkRepository.findAll(getPager());
 		List<SmallTalk> orgSmallTalks = page.getContent();
 		
 		List<SmallTalk> smallTalks = Lists.newArrayList();
 		for (SmallTalk smallTalk : orgSmallTalks) {
-			smallTalk.setSiteSummary(summaryService.findOneThumbnail(smallTalk.getUrlInTalk()));
+		    if (smallTalk.hasUrl()) {
+		        smallTalk.setSiteSummary(summaryService.findOneThumbnail(smallTalk.getUrlInTalk()));
+		    }
 			smallTalks.add(smallTalk);
 		}
 		return smallTalks;

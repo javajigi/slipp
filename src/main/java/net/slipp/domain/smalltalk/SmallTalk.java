@@ -21,6 +21,7 @@ import net.slipp.support.jpa.HasCreatedAndUpdatedDate;
 import net.slipp.support.utils.SlippStringUtils;
 import net.slipp.support.utils.TimeUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.validator.constraints.Length;
 
 @Entity
@@ -100,6 +101,10 @@ public class SmallTalk implements HasCreatedAndUpdatedDate {
 
 	public String getUrlInTalk() {
 		return SlippStringUtils.getUrlInText(getTalk());
+	}
+	
+	public boolean hasUrl() {
+	    return !StringUtils.isBlank(getUrlInTalk());
 	}
 
 	@Override
