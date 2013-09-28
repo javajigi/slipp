@@ -4,9 +4,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class ImageFromLinkTag extends ImageFromTag{
+public class ImageFromMetaTag extends ImageFromTag{
 
-	private TagType tagType = TagType.link;
+	private TagType tagType = TagType.meta;	// to do inject?
 	
 	public String image(Document doc) {
 		Element element = doc.head();

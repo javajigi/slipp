@@ -48,8 +48,8 @@ public class HomeController {
 	}
 
 	private void productionMode(Model model) {
-		List<SmallTalk> smallTalks = smallTalkService.getLastTalks().getContent();
-		model.addAttribute("smallTalks", smallTalks);
+//		List<SmallTalk> smallTalks = smallTalkService.getLastTalks();
+//		model.addAttribute("smallTalks", smallTalks);
 		if (isProductionMode()) {
 			model.addAttribute("pages", wikiService.findWikiPages());			
 		}else{
