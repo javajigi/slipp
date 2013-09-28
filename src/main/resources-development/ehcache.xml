@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ehcache>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd" updateCheck="false">
     <defaultCache eternal="false" 
             overflowToDisk="false"
             maxElementsInMemory="50000" 
@@ -38,6 +39,15 @@
 	<cache
 	    name="fbgroups"	
 	    maxElementsInMemory="1000"
+	    eternal="false"
+	    timeToIdleSeconds="3600"
+	    timeToLiveSeconds="3600"
+	    overflowToDisk="false"
+	/>
+	
+	<cache
+	    name="smallTalkCache"	
+	    maxElementsInMemory="100"
 	    eternal="false"
 	    timeToIdleSeconds="3600"
 	    timeToLiveSeconds="3600"

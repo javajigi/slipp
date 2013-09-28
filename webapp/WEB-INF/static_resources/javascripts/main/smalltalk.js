@@ -6,53 +6,55 @@ var smalltalkService = {
 		var $talk = $(that.messageField);
 		var $fail = $(that.failMessageField);
 
-		that.makeUrlToLink();
+		//that.makeUrlToLink();
+		that.ajaxLoad();
 
-		$('.smalltalk-form').on('submit', function(evt){
+		$( document ).on( "submit", ".smalltalk-form", function(evt){
 			evt.preventDefault();
+			$('.btn-smalltalk-form-util-submit').attr("disabled", true).text('저장중...');
 			that.save();
 		});
-		$('.btn-smalltalk-list-expand').on('click', function(evt) {
+
+		$( document ).on( "click", ".btn-smalltalk-list-expand", function(evt){
 			var smalltalkCount = $(this).data('smalltalk-count');
 			if( typeof( smalltalkCount ) == "undefined" || smalltalkCount === 0 ) {
 				return false;
 			}
 			that.expand();
 		});
-		$talk.on('keydown', function(){
+		$( document ).on( "keydown", $talk, function(){
 			$fail.hide();
+		});
+	},
+	ajaxLoad: function() {
+		var waitingHtml = '<li style="text-align: center;"><img src="/resources/images/ajax-document-loader.gif" width="100px" height="100px"></li>';
+		$('.smalltalk-list').html(waitingHtml);
+		$.get('/ajax/smalltalks', function(data){
+			$('.smalltalk-list').html(data);
+			$('.btn-smalltalk-form-util-submit').attr("disabled", false).text('나도 한마디');
 		});
 	},
 	save: function() {
 		var that = this;
 		var $talk = $(that.messageField);
 		var $fail = $(that.failMessageField);
-
 		$.post('/smalltalks', { 'talk' : $talk.val() }, function(data) {
 			if (data == 'OK') {
-				that.get();
 				$talk.val('');
+				that.ajaxLoad();
 			}else{
 				$fail.html("수다는 간단하게 100글자까지만~");
 				$fail.show();
+				$('.btn-smalltalk-form-util-submit').attr("disabled", false).text('나도 한마디');
 			}
 		});
-		that.expand();
-	},
-	get: function() {
-		var that = this;
-		var $talk = $(that.messageField);
-		
-		$.get('/smalltalks', function(data) {
-			$('.smalltalk-list').html( tmpl('tmpl-smalltalk-list', data) );
-			that.makeUrlToLink();
-		});
+		//that.expand();
 	},
 	expand: function() {
 		$('.smalltalk').removeClass('ui-smalltalk-list-collapse');
 	},
 	makeUrlToLink: function() {
-		var $items = $('.smalltalk-list-item-cont');
+		var $items = $('.smalltalk-item-cont');
 
 		$items.each(function() {
 			var cont = $(this).html();
