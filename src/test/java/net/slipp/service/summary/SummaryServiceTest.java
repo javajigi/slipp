@@ -25,6 +25,18 @@ public class SummaryServiceTest {
 	}
 
 	@Test
+	public final void testFindOneThumnail_Image() throws Exception {
+		SiteSummary siteSummary = summaryService
+				.findOneThumbnail("http://cfile22.uf.tistory.com/image/167615394F33699B201C10");
+		//assertThat(siteSummary.getTitle(), is("SLiPP"));
+		logger.debug("\ntestFindOneThumnail_Image-------------------------------------------------------------------------------------");
+		logger.debug(siteSummary.getTitle());
+		logger.debug(siteSummary.getThumbnailImage());
+		logger.debug(siteSummary.getContents());
+		logger.debug("\ntestFindOneThumnail_Image-------------------------------------------------------------------------------------");
+	}
+	
+	@Test
 	public final void testFindOneThumnail_Okjsp() throws Exception {
 		SiteSummary siteSummary = summaryService
 				.findOneThumbnail("http://www.okjsp.net");
