@@ -53,4 +53,13 @@
 	    timeToLiveSeconds="3600"
 	    overflowToDisk="false"
 	/>
+	
+	<cache
+	    name="blogPages"	
+	    maxElementsInMemory="10"
+	    eternal="false"
+	    timeToIdleSeconds="300"
+	    timeToLiveSeconds="300"
+	    overflowToDisk="false"
+	/>	
 </ehcache>
