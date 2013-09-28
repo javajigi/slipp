@@ -2,6 +2,7 @@
 <!DOCTYPE decorators>
 <decorators defaultdir="/WEB-INF/jsp/decorators">
 	<excludes>
+		<pattern>/ajax/*</pattern>
 		<pattern>/api/*</pattern>
 		<pattern>/popup/*</pattern>
 		<pattern>/blank</pattern>

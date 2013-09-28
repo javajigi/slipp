@@ -66,23 +66,11 @@
 						<label for="smallTalkMessage" class="smalltalk-form-fail-msg error" style="display: none"></label>
 						<div class="smalltalk-form-util">
 							<p class="smalltalk-form-util-msg"><i class="icon-smalltalk-msg"></i> 요즘 어떠세요?</p>
-							<button type="submit " class="btn-smalltalk-form-util-submit">나도 한마디</button>
+							<button type="submit" class="btn-smalltalk-form-util-submit">나도 한마디</button>
 						</div>
 				</form>
 			</sec:authorize>
-			<ul class="smalltalk-list">
-				<c:forEach items="${smallTalks}" var="smallTalk" varStatus="status">
-				<li class="smalltalk-list-item smalltalk-list-item-${status.count}">
-					<div class="smalltalk-list-item-info">
-						<strong class="smalltalk-list-item-info-author">${smallTalk.writer.userId}</strong>
-						<span class="smalltalk-list-item-info-time">${smallTalk.time}</span>
-					</div>
-					<div class="smalltalk-list-item-cont">${smallTalk.talk}</div>
-				</li>
-				</c:forEach>
-				<li class="smalltalk-list-expand">
-					<button class="btn-smalltalk-list-expand" data-smalltalk-count="${fn:length(smallTalks)}">more <i class="icon-smalltalk-expand"></i></button>
-				</li>
+			<ul class='smalltalk-list'>
 			</ul>
 			<p class="smalltalk-notice">* 최근 10개까지만 보여집니다.</p>
 		</section>
@@ -94,9 +82,7 @@
 					<strong class="notice-item-title"><a href="/wiki/pages/viewpage.action?pageId=${page.pageId}">${page.title}</a></strong>
 					<div class="notice-list-item-time">${page.creationDate}</div>
 					<c:if test="${status.index == 0}">
-					<div class="notice-list-item-cont">
-						${page.shortContents}
-					</div>
+						<div class="notice-list-item-cont">${page.shortContents}</div>
 					</c:if>
 				</li>
 				</c:forEach>
@@ -113,15 +99,4 @@
 	$(document).ready(function(){
 		smalltalkService.init();
 	});
-</script>
-<script type="text/x-tmpl" id="tmpl-smalltalk-list">
-{% for (var i=0; i<o.length; i++) { %}
-	<li class="smalltalk-list-item smalltalk-list-item-${status.count}">
-		<div class="smalltalk-list-item-info">
-			<strong class="smalltalk-list-item-info-author">{%=o[i].writer.userId%}</strong>
-			<span class="smalltalk-list-item-info-time">{%=o[i].time%}</span>
-		</div>
-		<div class="smalltalk-list-item-cont">{%=o[i].talk%}</div>
-	</li>
-{% } %}
 </script>

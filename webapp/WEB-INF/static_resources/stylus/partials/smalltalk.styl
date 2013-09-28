@@ -56,7 +56,7 @@ smalltalk-theme-color = #8FB4B9;
   .ui-smalltalk-list-collapse &
     box-shadow: none;
     margin-bottom: 3em;
-.smalltalk-list-item
+.smalltalk-item
   position: relative;
   box-sizing: border-box;
   width: 100%;
@@ -73,10 +73,42 @@ smalltalk-theme-color = #8FB4B9;
     // z-index: -1;
     box-shadow: 0 0 4px rgba(0, 0, 0, .2);
     padding-bottom: 0;
-
+.smalltalk-item-summary
+  @extend $clearfix;
+  position: relative;
+  margin: .4em -.2em .8em;
+  padding: .6em;
+  border-width: 3px;
+  border-style: dashed;
+  border-color: #fff;
+  background-color: #f5f5f5;
+  &:hover
+    .smalltalk-item-summary-title
+      background-color: #F8FFC5;
+.smalltalk-item-summary-thumb
+  float: left;
+  margin-right: .4em;
+.smalltalk-item-summary-text
+  overflow: hidden;
+.smalltalk-item-summary-title
+  display: block;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+.smalltalk-item-summary-cont
+  color: #999;
+.smalltalk-item-summary-link
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  text-indent: -9999px;
+  overflow: hidden;
 // for smalltalk-list-collapse ui
 for i in (1..10)
-  .smalltalk-list-item-{i}
+  .smalltalk-item-{i}
     z-index: 11 - i;
     if i > 1
       .ui-smalltalk-list-collapse &
@@ -88,32 +120,32 @@ for i in (1..10)
         if i > 3
           height: 1px;
           box-shadow: none;
-.smalltalk-list-item-1
+.smalltalk-item-1
   .ui-smalltalk-list-collapse &
     padding-bottom: .5em;
     // z-index: 1;
-.smalltalk-list-item-2
+.smalltalk-item-2
   .ui-smalltalk-list-collapse &
     left: 8px;
     bottom: -1.6em;
     transform: rotate(-1.2deg);
     width: 98%;
     background-color: #f9f9f9;
-.smalltalk-list-item-3
+.smalltalk-item-3
   .ui-smalltalk-list-collapse &
     bottom: -1.8em;
     transform: rotate(1.6deg);
     width: 94%;
     box-shadow: 0 3px 4px rgba(0, 0, 0, .2);
     background-color: #f3f3f3;
-.smalltalk-list-item-info
+.smalltalk-item-info
   margin-bottom: .4em;
   border-bottom: 1px dashed #dfdfdf;
-.smalltalk-list-item-info-time
+.smalltalk-item-info-time
   padding-left: .8em;
   color: #999;
   font-size: .8em;
-.smalltalk-list-item-cont
+.smalltalk-item-cont
   word-break: break-all;
   font-size: 1.2em;
   a

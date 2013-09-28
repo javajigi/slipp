@@ -1,9 +1,12 @@
 package net.slipp.service.smalltalk;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import net.slipp.domain.smalltalk.SmallTalk;
 import net.slipp.repository.smalltalk.SmallTalkRepository;
+import net.slipp.service.summary.SummaryService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +15,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.google.common.collect.Lists;
+
 @Service("smallTalkService")
 public class SmallTalkService {
 
@@ -19,14 +24,27 @@ public class SmallTalkService {
 
 	@Resource (name = "smallTalkRepository")
 	private SmallTalkRepository smallTalkRepository;
+	
+	@Resource (name = "summaryService")
+	private SummaryService summaryService;
 
 	public void save(SmallTalk smallTalk) {
 		logger.debug("SmallTalk : {}", smallTalk);
 		smallTalkRepository.save(smallTalk);
 	}
 
-	public Page<SmallTalk> getLastTalks() {
-		return smallTalkRepository.findAll(getPager());
+	public List<SmallTalk> getLastTalks() {
+		Page<SmallTalk> page = smallTalkRepository.findAll(getPager());
+		List<SmallTalk> orgSmallTalks = page.getContent();
+		
+		List<SmallTalk> smallTalks = Lists.newArrayList();
+		for (SmallTalk smallTalk : orgSmallTalks) {
+		    if (smallTalk.hasUrl()) {
+		        smallTalk.setSiteSummary(summaryService.findOneThumbnail(smallTalk.getUrlInTalk()));
+		    }
+			smallTalks.add(smallTalk);
+		}
+		return smallTalks;
 	}
 
 	private PageRequest getPager() {
