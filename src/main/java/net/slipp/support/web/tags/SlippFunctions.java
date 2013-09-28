@@ -55,6 +55,17 @@ public class SlippFunctions {
 	}
 
 	/**
+	 * 문자열에 있는 링크를 a 태그로 변환한다.
+	 *
+	 * @param str
+	 * @param title
+	 * @return
+	 */
+	public static String linksToTitle(String str, String title) {
+		return SlippStringUtils.populateLinks(str, title);
+	}
+	
+	/**
 	 * 일반 문자열을 범용적인 형태로 화면상에 출력한다. HTML Escape를 수행하고, 새줄 기호를 &lt;br&gt; 태그로 바꾸고,
 	 * 링크 문자열(http://... 등)에 &lt;a&gt; 태그를 지정해준다.
 	 *
@@ -184,5 +195,9 @@ public class SlippFunctions {
 		}
 		
 		return url.replaceAll("http:", "");
+	}
+	
+	public static String removeLink(String str){
+		return StringUtils.defaultIfEmpty(SlippStringUtils.removeLinks(str).trim(), "내용이 없어요~");
 	}
 }

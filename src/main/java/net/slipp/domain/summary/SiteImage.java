@@ -5,15 +5,20 @@ import org.jsoup.nodes.Document;
 
 public class SiteImage {
 
-	public static String getImage(Document doc) {
-		ImageFromLinkTag imageFromLinkTag = new ImageFromLinkTag();
-		ImageFromImgTag imageFromImgTag = new ImageFromImgTag();
-
-		String imageUrl = imageFromLinkTag.image(doc);
+	public static String getImage(String targetUrl, Document doc) {
+		ImageFromTag imageFromMetaTag = new ImageFromMetaTag();
+		ImageFromTag imageFromLinkTag = new ImageFromLinkTag();
+		ImageFromTag imageFromImgTag = new ImageFromImgTag();
+		
+		String imageUrl = imageFromMetaTag.getImagePath(targetUrl, doc);
 		if (!StringUtils.isBlank(imageUrl)) {
 			return imageUrl;
 		}
-		return imageFromImgTag.image(doc);
+		imageUrl = imageFromImgTag.getImagePath(targetUrl, doc);
+		if (!StringUtils.isBlank(imageUrl)) {
+			return imageUrl;
+		}
+		return imageFromLinkTag.getImagePath(targetUrl, doc);
 	}
 
 }
