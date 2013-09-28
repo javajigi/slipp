@@ -15,7 +15,7 @@ taglib prefix="slipp" tagdir="/WEB-INF/tags" %>
 			<strong class="smalltalk-item-info-author">${smallTalk.writer.userId}</strong>
 			<span class="smalltalk-item-info-time">${smallTalk.time}</span>
 		</div>
-		<div class="smalltalk-item-cont">${sf:removeLink(smallTalk.talk)}</div>
+		<div class="smalltalk-item-cont">${sf:plainText(sf:removeLink(smallTalk.talk))}</div>
 		<c:if test="${not empty smallTalk.siteSummary.targetUrl}">
 			<div class="smalltalk-item-summary">
 				<c:if test="${not empty smallTalk.siteSummary.thumbnailImage}">

@@ -198,6 +198,6 @@ public class SlippFunctions {
 	}
 	
 	public static String removeLink(String str){
-		return SlippStringUtils.removeLinks(str);
+		return StringUtils.defaultIfEmpty(SlippStringUtils.removeLinks(str).trim(), "내용이 없어요~");
 	}
 }
