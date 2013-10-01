@@ -3,6 +3,7 @@ package net.slipp.domain.fb;
 import java.util.Date;
 
 import net.slipp.domain.tag.Tag;
+import net.slipp.support.web.tags.SlippFunctions;
 
 import com.restfb.types.CategorizedFacebookType;
 import com.restfb.types.Comment;
@@ -45,7 +46,7 @@ public class FacebookComment implements Comparable<FacebookComment> {
     }
 
     public String getMessage() {
-        return message;
+        return SlippFunctions.hbr(message);
     }
 
     public String getUserId() {
