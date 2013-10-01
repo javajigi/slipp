@@ -202,7 +202,7 @@ body{overflow-y:scroll}
 }.home-content .content-sub{width:32%;}
 @media (max-width: 979px){.home-content .content-sub{width:100%}
 }.content-sub .floating{position:fixed;margin-left:2em;padding-left:1em;padding-bottom:1em;}
-@media (max-width: 979px){.content-sub .floating{position:static}
+@media (max-width: 979px){.content-sub .floating{border-top:1px solid #dadada;position:static;margin-left:0;padding-left:0;padding-bottom:0}
 }.pager{height:36px;margin:18px 0;text-align:center;}
 .pager ul{display:inline-block;*display:inline;*zoom:1;margin:0;padding:0;-webkit-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 2px rgba(0,0,0,0.05);box-shadow:0 1px 2px rgba(0,0,0,0.05)}
 .pager li{display:inline;}
@@ -235,21 +235,23 @@ body{overflow-y:scroll}
 @media (max-width: 979px){.qna-list .list .reply .icon-reply{left:.5em}
 }.qna-list .list .reply .point{position:relative;z-index:1;color:#aaa;font-size:2em;line-height:2em;letter-spacing:-.2em}
 .view-content .article-title{margin-bottom:0;padding-bottom:.67em;border-bottom:1px solid #dadada}
-.view-content .article-count{margin-bottom:0;font-weight:bold;font-size:1.2em}
+.view-content .article-count{margin:0;padding:1em 0 0;font-weight:bold;font-size:1.2em}
 .view-content .msg-to-login a{text-decoration:underline}
 .view-content .best-article-label{margin-bottom:1em;}
 .view-content .best-article-label strong{border-bottom:1px solid #daa9a9;font-size:1.2em}
-.view-content .article{position:relative;padding:.6em 0 .8em;border-bottom:1px solid #dadada;}
-.view-content .article.best-article{border-bottom-width:3px;}
-.view-content .article.best-article .btn-like-article{top:108px}
+.view-content .article{position:relative;padding:.6em 0 .8em;border-bottom:2px solid #dadada}
+.view-content .qna-comment .article{border-bottom-width:1px;}
+.view-content .qna-comment .article.best-article{border-bottom-width:2px;}
+.view-content .qna-comment .article.best-article .btn-like-article{top:108px}
 .view-content .article-header{display:table;width:100%;padding-bottom:.6em;border-bottom:1px dashed #dadada}
 .view-content .article-header-text,.view-content .article-header-thumb{display:table-cell;vertical-align:middle}
 .view-content .article-header-thumb{width:48px}
 .view-content .article-author-thumb{width:40px;height:40px;-webkit-border-radius:3px;border-radius:3px}
 .view-content .article-author-name{font-weight:bold;font-size:1.1em}
-.view-content .article-author-fbgroup{display:inline-block;margin-left:.8em;font-style:italic;font-size:.8em;color:#666;}
-.view-content .article-author-fbgroup a{display:inline-block;overflow:hidden;max-width:8em;white-space:nowrap;-o-text-overflow:ellipsis;text-overflow:ellipsis;color:#333;font-weight:bold}
-.view-content .article-header-time{display:block;font-size:.8em;color:#666;}
+.view-content .article-author-fbgroup{display:inline-block;margin-left:.8em;font-style:italic;font-size:1em;color:#666;}
+.view-content .article-author-fbgroup a{display:inline-block;color:#333;font-weight:bold;}
+@media (max-width: 480px){.view-content .article-author-fbgroup a{overflow:hidden;max-width:8em;white-space:nowrap;-o-text-overflow:ellipsis;text-overflow:ellipsis}
+}.view-content .article-header-time{display:block;font-size:.8em;color:#666;}
 .view-content .article-header-time:hover{text-decoration:none;}
 .view-content .article-header-time:hover .icon-link{color:#3aa}
 .view-content .btn-like-article{position:absolute;top:60px;width:40px;padding:0;margin:0;border:0;background-color:transparent;opacity:.4;-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=40)";filter:alpha(opacity=40);-webkit-transition:opacity .4s;-moz-transition:opacity .4s;-o-transition:opacity .4s;-ms-transition:opacity .4s;transition:opacity .4s;}
@@ -277,7 +279,7 @@ body{overflow-y:scroll}
 .view-content .floating .link-back-to-list:hover{text-decoration:none;color:#fff;background-color:#005580}
 .article-title{border-bottom:1px solid #dadada}
 .form-write{margin:1em 0;}
-.form-write .title-write{margin-bottom:.5em;font-weight:bold;font-size:1.2em}
+.form-write .title-write{margin-bottom:.5em;padding-top:.4em;font-weight:bold;font-size:1.2em}
 .form-write .box-input-line{margin:1em 0;}
 .form-write .box-input-line input[type='text']{width:100%}
 .form-write .inp-title{font-weight:bold;font-size:1.25em}

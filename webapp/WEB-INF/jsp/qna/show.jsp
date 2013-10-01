@@ -18,24 +18,27 @@
 	<div class="content-main">
 		<slipp:show question="${question}"/>
 		<div class="qna-comment">
-			<c:if test="${!empty question.bestAnswer}">
-				<slipp:answer each="${question.bestAnswer}" isBest="true"/>
-			</c:if>
-			<p class="article-count"><strong>${question.answerCount}</strong>개의 의견</p>
-			<c:forEach items="${question.answers}" var="each">
-				<slipp:answer each="${each}" isBest="false"/>
-			</c:forEach>
-			</form>
-
-			<c:if test="${question.snsConnected}">
-			<p class="article-count">
-				페이스북으로 공유된 글에 달린 댓글<br />
-				<strong>${question.snsAnswerCount}</strong>개의 의견
-			</p>
-			<div class="qna-facebook-comment">
+			<div class="qna-comment-slipp">
+				<c:if test="${!empty question.bestAnswer}">
+					<slipp:answer each="${question.bestAnswer}" isBest="true"/>
+				</c:if>
+				<p class="article-count"><strong>${question.answerCount}</strong>개의 의견 from SLiPP</p>
+				<div class="qna-comment-slipp-articles">
+					<c:forEach items="${question.answers}" var="each">
+						<slipp:answer each="${each}" isBest="false"/>
+					</c:forEach>
+				</div>
 			</div>
+			<c:if test="${question.snsConnected}">
+				<div class="qna-comment-fb">
+					<p class="article-count">
+						<strong>${question.snsAnswerCount}</strong>개의 의견 from FB
+					</p>
+					<div class="qna-comment-fb-articles">
+						<div class="qna-facebook-comment"></div>
+					</div>
+				</div>
 			</c:if>
-
 			<sec:authorize access="!hasRole('ROLE_USER')">
 				<p class="msg-to-login">
 					<b><a href="/users/login">SLiPP계정</a></b>으로 의견을 나누세요!
