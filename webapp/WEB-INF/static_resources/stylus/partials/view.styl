@@ -4,7 +4,8 @@
 		padding-bottom: .67em;
 		border-bottom: 1px solid #dadada;
 	.article-count
-		margin-bottom: 0;
+		margin: 0;
+		padding: 1em 0 0;
 		font-weight: bold;
 		font-size: 1.2em;
 	.msg-to-login
@@ -18,11 +19,14 @@
 	.article
 		position: relative;
 		padding: .6em 0 .8em;
-		border-bottom: 1px solid #dadada;
-		&.best-article
-			border-bottom-width: 3px;
-			.btn-like-article
-				top: 108px;
+		border-bottom: 2px solid #dadada;
+	.qna-comment
+		.article
+			border-bottom-width: 1px;
+			&.best-article
+				border-bottom-width: 2px;
+				.btn-like-article
+					top: 108px;
 	.article-header
 		display: table;
 		width: 100%;
@@ -45,16 +49,17 @@
 		display: inline-block;
 		margin-left: .8em;
 		font-style: italic;
-		font-size: .8em;
+		font-size: 1em;
 		color: #666;
 		a
 			display: inline-block;
-			overflow: hidden;
-			max-width: 8em;
-			white-space: nowrap;
-			text-overflow: ellipsis;
 			color: #333;
 			font-weight: bold;
+			@media phone
+				overflow: hidden;
+				max-width: 8em;
+				white-space: nowrap;
+				text-overflow: ellipsis;
 	.article-header-time
 		display: block;
 		font-size: .8em;
