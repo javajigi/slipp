@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import net.slipp.domain.smalltalk.SmallTalk;
+import net.slipp.domain.summary.SiteSummary;
 import net.slipp.repository.smalltalk.SmallTalkRepository;
 import net.slipp.service.summary.SummaryService;
 
@@ -40,11 +41,15 @@ public class SmallTalkService {
 		List<SmallTalk> smallTalks = Lists.newArrayList();
 		for (SmallTalk smallTalk : orgSmallTalks) {
 		    if (smallTalk.hasUrl()) {
-		        smallTalk.setSiteSummary(summaryService.findOneThumbnail(smallTalk.getUrlInTalk()));
+		        smallTalk.setSiteSummary(findSummary(smallTalk));
 		    }
 			smallTalks.add(smallTalk);
 		}
 		return smallTalks;
+	}
+
+	private SiteSummary findSummary(SmallTalk smallTalk) {
+		return summaryService.findOneThumbnail(smallTalk.getUrlInTalk());
 	}
 
 	private PageRequest getPager() {
