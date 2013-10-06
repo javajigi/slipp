@@ -7,7 +7,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class ImageFromImgTag extends ImageFromTag {
+public class ImageFromImgTag extends AbstractImageFromTag {
 
 	public static final List<String> excludes = Arrays.asList("feeds");
 
