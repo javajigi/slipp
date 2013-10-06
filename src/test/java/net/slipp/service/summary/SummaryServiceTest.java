@@ -24,6 +24,19 @@ public class SummaryServiceTest {
 	public void setUp() {
 	}
 
+	
+	@Test
+	public final void testFindOneThumnail_Dzone() throws Exception {
+		SiteSummary siteSummary = summaryService
+				.findOneThumbnail("http://java.dzone.com/articles/webinar-replay-spring-boot");
+		//assertThat(siteSummary.getTitle(), is("SLiPP"));
+		logger.debug("\testFindOneThumnail_Dzone-------------------------------------------------------------------------------------");
+		logger.debug(siteSummary.getTitle());
+		logger.debug(siteSummary.getThumbnailImage());
+		logger.debug(siteSummary.getContents());
+		logger.debug("\testFindOneThumnail_Dzone-------------------------------------------------------------------------------------");
+	}
+	
 	@Test
 	public final void testFindOneThumnail_Image() throws Exception {
 		SiteSummary siteSummary = summaryService

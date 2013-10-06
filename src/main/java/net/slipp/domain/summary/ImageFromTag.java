@@ -1,35 +1,29 @@
 package net.slipp.domain.summary;
 
-import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang.StringUtils;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
-public abstract class ImageFromTag {
+public class ImageFromTag extends AbstractImageFromTag{
 
-	public abstract String image(Document doc);
-
-	public String getImagePath(String targetUrl, Document doc) {
-		String imageSrcUrl = image(doc);
-		if (hasNotImageUrl(imageSrcUrl)) {
-			return null;
+	private TagType tagType;
+	
+	public ImageFromTag(TagType tagType){
+		this.tagType = tagType;
+	}
+	
+	public String image(Document doc) {
+		Element element = doc.head();
+		Elements imgElements = element.getElementsByTag(tagType.getTag());
+		for (Element imgElement : imgElements) {
+			if (hasImage(imgElement)) {
+				return imgElement.attr(tagType.getAttrName());
+			}
 		}
-		return getPath(targetUrl, imageSrcUrl, doc);
+		return null;
 	}
 
-	private boolean hasNotImageUrl(String imageSrcUrl) {
-		return StringUtils.isBlank(imageSrcUrl);
-	}
-
-	private String getPath(String targetUrl, String imageSrcUrl, Document doc) {
-		if ( StringUtils.startsWith(imageSrcUrl, "http") || hasNotImageUrl(imageSrcUrl)) {
-			return imageSrcUrl;
-		}
-		if ( StringUtils.startsWith(imageSrcUrl, "//") ) {
-			return "http:" + imageSrcUrl;
-		}
-		if (StringUtils.startsWith(imageSrcUrl, ".") ){
-			return targetUrl + FilenameUtils.getName(imageSrcUrl);
-		}
-		return targetUrl+imageSrcUrl;
+	private boolean hasImage(Element imgElement) {
+		return tagType.matchResource(imgElement.attr(tagType.getAttrResource()));
 	}
 }
