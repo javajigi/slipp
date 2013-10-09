@@ -35,7 +35,7 @@ public enum SiteDefaultLogo {
 		}
 		SiteDefaultLogo[] siteDefaultLogos = SiteDefaultLogo.values();
 		for (SiteDefaultLogo siteDefaultLogo : siteDefaultLogos) {
-			if( siteDefaultLogo.getDomain().indexOf(baseUrl) > 0){
+			if( StringUtils.contains(siteDefaultLogo.getDomain(), baseUrl)){
 				return siteDefaultLogo.getLogoPath();
 			}
 		}
