@@ -116,13 +116,24 @@ public class SocialUserService {
         return socialUser;
     }
     
-    public void updateSlippUser(SocialUser loginUser, String email, String userId) {
+    public SocialUser updateSlippUser(SocialUser loginUser, String email, String userId) throws ExistedUserException {
         Assert.notNull(loginUser, "loginUser can't be null!");
         Assert.notNull(email, "email can't be null!");
         Assert.notNull(userId, "userId can't be null!");
         
         SocialUser socialUser = socialUserRepository.findOne(loginUser.getId());
+        SocialUser socialUserByEmail = socialUserRepository.findByEmail(email);
+        if (socialUserByEmail != null && !socialUser.isSameUser(socialUserByEmail)) {
+            throw new ExistedUserException(String.format("%s 이메일은 다른 사용자가 이미 사용하고 있는 이메일입니다." , email));
+        }
+        
+        SocialUser socialUserByUserId = findByUserId(userId);
+        if (socialUserByUserId != null && !socialUser.isSameUser(socialUserByUserId)) {
+            throw new ExistedUserException(String.format("%s 닉네임은 다른 사용자가 이미 사용하고 있는 닉네임입니다." , userId));
+        }
+        
         socialUser.update(email, userId);
+        return socialUser;
     }
 
     private String encodePassword(String rawPass) {
