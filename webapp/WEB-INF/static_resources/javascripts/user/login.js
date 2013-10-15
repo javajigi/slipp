@@ -41,7 +41,7 @@ $(document).ready(function() {
     
     $("#user").validate(createJoinOptions());
     
-    $("#modifyUser").validate(createModifyUserOptions());
+    $("#modifyUser").validate(createJoinOptions());
 	
 	$("#authentication").validate({
 		rules: {

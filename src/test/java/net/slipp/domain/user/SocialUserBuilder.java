@@ -4,6 +4,8 @@ import net.slipp.domain.ProviderType;
 import net.slipp.user.MockPasswordEncoder;
 
 public class SocialUserBuilder {
+    private long id;
+    
     private String userId;
 
     private String providerUserId;
@@ -25,9 +27,14 @@ public class SocialUserBuilder {
     private String email;
 
     private ProviderType providerType = ProviderType.facebook;
-    
+
     public static SocialUserBuilder aSocialUser() {
     	return new SocialUserBuilder();
+    }
+    
+    public SocialUserBuilder withId(long id) {
+        this.id = id;
+        return this;
     }
 
     public SocialUserBuilder withUserId(String userId) {
@@ -76,6 +83,7 @@ public class SocialUserBuilder {
     
     public SocialUser build() {
         SocialUser socialUser = new SocialUser();
+        socialUser.setId(id);
         socialUser.setUserId(userId);
         socialUser.setProviderId(providerType.name());
         socialUser.setProviderUserId(providerUserId);

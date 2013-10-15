@@ -3,6 +3,7 @@ package net.slipp.domain.summary;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -26,7 +27,7 @@ public class ImageFromImgTag extends AbstractImageFromTag {
 	private String ifEmptyDefaultImage(Elements imgs) {
 		for (Element img : imgs) {
 			for (String exclude : excludes) {
-				if( img.attr("src").indexOf(exclude) < 0) {
+				if(!StringUtils.contains(img.attr("src"), exclude)) {
 					return img.attr("src");
 				}
 			}
