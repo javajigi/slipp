@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd" updateCheck="false">
+    <diskStore path="/usr/apps/caches" />
+    
     <defaultCache eternal="false" 
             overflowToDisk="false"
             maxElementsInMemory="50000" 
@@ -45,14 +47,15 @@
 	    overflowToDisk="false"
 	/>
 	
-	<cache
-	    name="smallTalkCache"	
-	    maxElementsInMemory="100"
-	    eternal="false"
-	    timeToIdleSeconds="3600"
-	    timeToLiveSeconds="3600"
-	    overflowToDisk="false"
-	/>	
+	<cache name="smallTalkCache" 
+		maxElementsInMemory="1000" 
+		eternal="true"
+		overflowToDisk="true" 
+		timeToIdleSeconds="300" 
+		timeToLiveSeconds="600"
+		diskPersistent="true" 
+		diskExpiryThreadIntervalSeconds="1"
+		memoryStoreEvictionPolicy="LFU" />	
 	
 	<cache
 	    name="blogPages"	
