@@ -82,7 +82,11 @@ public class QuestionController {
 
 	@RequestMapping("{id}")
 	public String show(@PathVariable Long id, Model model) {
-		model.addAttribute("question", qnaService.showQuestion(id));
+	    Question question = qnaService.showQuestion(id);
+	    if (question.isDeleted()) {
+	        throw new AccessDeniedException(id + " question is deleted.");
+	    }
+		model.addAttribute("question", question);
 		model.addAttribute("answer", new Answer());
 		model.addAttribute("tags", tagService.findPooledTags());
 		return "qna/show";
