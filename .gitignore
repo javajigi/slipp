@@ -5,3 +5,4 @@
 /chromedriver.log
 /.gradle
 /bin
+/tomcat.8080
