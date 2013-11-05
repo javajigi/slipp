@@ -22,8 +22,6 @@
         
 	<import resource="applicationContext-social.xml" />
 	<import resource="applicationContext-cache.xml" />
-	<import resource="applicationContext-social.xml" />
-	
 	<import resource="applicationContext-profile.xml" />
 	
 	<bean id="applicationProperties" class="net.slipp.support.utils.ConvenientProperties">
