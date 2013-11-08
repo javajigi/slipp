@@ -63,13 +63,18 @@ public class TagServiceTest {
     @Test
     public void processGroupTags() throws Exception {
         FacebookGroup groupTag1 = new FacebookGroup("1234", "생활코딩");
-        FacebookGroup groupTag2 = new FacebookGroup("5678", "SLiPP스터디");
+        FacebookGroup groupTag2 = new FacebookGroup("5678", "slipp");
+        FacebookGroup groupTag3 = new FacebookGroup("9123", "Na우리Next");
         Tag tag1 = Tag.groupedTag(groupTag1.getName(), groupTag1.getGroupId());
-        Tag tag2 = Tag.groupedTag(groupTag2.getName(), groupTag2.getGroupId());
+        Tag tag2 = Tag.pooledTag(groupTag2.getName());
+        Tag tag3 = Tag.groupedTag(groupTag3.getName(), groupTag3.getGroupId());
         
-        Set<FacebookGroup> newTags = Sets.newHashSet(groupTag1, groupTag2);
-        when(tagRepository.findByGroupId(tag1.getTagInfo().getGroupId())).thenReturn(tag1);
-        when(tagRepository.save(tag2)).thenReturn(tag2);
+        Set<FacebookGroup> newTags = Sets.newHashSet(groupTag1, groupTag2, groupTag3);
+        when(tagRepository.findByGroupId(groupTag1.getGroupId())).thenReturn(tag1);
+        when(tagRepository.findByGroupId(groupTag2.getGroupId())).thenReturn(null);
+        when(tagRepository.findByName(groupTag2.getName())).thenReturn(Tag.pooledTag(groupTag2.getName()));
+        when(tagRepository.findByGroupId(groupTag3.getGroupId())).thenReturn(null);
+        when(tagRepository.save(tag3)).thenReturn(tag3);
         
         // when
         Set<Tag> tags = dut.processGroupTags(newTags);
@@ -77,6 +82,7 @@ public class TagServiceTest {
         // then
         assertThat(tags.contains(tag1), is(true));
         assertThat(tags.contains(tag2), is(true));
+        assertThat(tags.contains(tag3), is(true));
     }
     
     @Test

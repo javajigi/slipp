@@ -59,12 +59,20 @@ public class TagService {
             }
             
             Tag tag = tagRepository.findByGroupId(each.getGroupId());
-            if (tag == null) {
-                Tag newTag = Tag.groupedTag(each.getName(), each.getGroupId());
-                tags.add(tagRepository.save(newTag));
-            } else {
+            if (tag != null) {
                 tags.add(tag);
+                continue;
             }
+            
+            tag = tagRepository.findByName(each.getName());
+            if (tag != null) {
+                tag.moveGroupTag(each.getGroupId());
+                tags.add(tag);
+                continue;
+            }
+            
+            Tag newTag = Tag.groupedTag(each.getName(), each.getGroupId());
+            tags.add(tagRepository.save(newTag));
         }
         return tags;
     }
