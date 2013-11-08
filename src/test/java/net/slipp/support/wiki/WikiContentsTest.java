@@ -1,7 +1,7 @@
 package net.slipp.support.wiki;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -24,11 +24,20 @@ public class WikiContentsTest {
     public void parse_code() throws Exception {
         String source = "{code:title=java}\n WikiContents wikiContents = new WikiContents(); {code}";
         logger.debug("html : {}", WikiContents.parse(source));
+        
+        source = "{code}\n WikiContents wikiContents = new WikiContents(); {code}";
+        logger.debug("html : {}", WikiContents.parse(source));
     }
 
     @Test
     public void mention() throws Exception {
         String source = "나는 @자바지기 가 쓴 글이 참 좋더라.";
+        logger.debug("html : {}", WikiContents.parse(source));
+    }
+    
+    @Test
+    public void quote() throws Exception {
+        String source = "나는 이런 글 좋아.\n {quote}신은 죽었다.\n여러 줄의 컨텐츠는 어떤가?{quote}";
         logger.debug("html : {}", WikiContents.parse(source));
     }
     

@@ -15,8 +15,9 @@ mySettings = {
 		{separator:'---------------' },
 		{name:'Upload',
 			key:'M',
-			beforeInsert:function(markItUp){InlineUpload.display(markItUp)}}, 
-		{name:'Code', closeWith:'{code}', openWith:'{code}', placeHolder:'소스 코드는 여기에...'},
+			beforeInsert:function(markItUp){InlineUpload.display(markItUp)}},
+		{name:'Quotes', closeWith:'{quote}', openWith:'{quote}'},
+		{name:'Code', closeWith:'{code}', openWith:'{code}'},
 		{separator:'---------------' },
 		{name:'Preview', key:'P', call:'preview', className:'preview'}
 	]
