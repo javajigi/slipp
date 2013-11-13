@@ -22,6 +22,16 @@ $(document).ready(function(){
 	setImgRealSizeLink();
 	setFloatingBtnLike();
 	setFloatingContentSub();
+	setCommentToSession();
+	
+	function setCommentToSession() {
+		$('.choose-login-type button[type="submit"]').click(function(e) {
+			$.post(
+				"/api/questions/answers/tosession",
+				{contents:$('#contents').val()}
+			)
+		});
+	}
 
 	function addAnswerTo() {
 		var orgUserId = $(this).data('answer-user-id');

@@ -4,6 +4,7 @@ import static net.slipp.web.QnAPageableHelper.createPageableByQuestionUpdatedDat
 import static net.slipp.web.QnAPageableHelper.revisedPage;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import net.slipp.domain.qna.Answer;
 import net.slipp.domain.qna.Question;
@@ -12,6 +13,7 @@ import net.slipp.domain.user.SocialUser;
 import net.slipp.service.qna.QnaService;
 import net.slipp.service.tag.TagService;
 import net.slipp.support.web.argumentresolver.LoginUser;
+import net.slipp.web.UserForm;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -81,14 +83,21 @@ public class QuestionController {
 	}
 
 	@RequestMapping("{id}")
-	public String show(@PathVariable Long id, Model model) {
+	public String show(@PathVariable Long id, Model model, HttpSession session) {
 	    Question question = qnaService.showQuestion(id);
 	    if (question.isDeleted()) {
 	        throw new AccessDeniedException(id + " question is deleted.");
 	    }
+	    
+	    Object value = session.getAttribute(ApiQuestionController.TEMPORARY_ANSWER_KEY);
+	    if (value != null) {
+	        model.addAttribute("answer", new Answer((String)value));
+	    } else {
+	        model.addAttribute("answer", new Answer());
+	    }
 		model.addAttribute("question", question);
-		model.addAttribute("answer", new Answer());
 		model.addAttribute("tags", tagService.findPooledTags());
+		model.addAttribute("user", new UserForm());
 		return "qna/show";
 	}
 	
