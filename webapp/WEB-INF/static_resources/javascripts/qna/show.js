@@ -26,10 +26,12 @@ $(document).ready(function(){
 	
 	function setCommentToSession() {
 		$('.choose-login-type button[type="submit"]').click(function(e) {
+			e.preventDefault();
 			$.post(
 				"/api/questions/answers/tosession",
 				{contents:$('#contents').val()}
 			)
+			$(this).closest('form').submit();
 		});
 	}
 

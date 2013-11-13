@@ -22,6 +22,6 @@ public class SlippSecuritySignInAdapter implements SignInAdapter {
 		SocialUser socialUser = socialUserService.findByUserIdAndConnectionKey(localUserId, connectionKey);
 		nativeWebRequest.setAttribute(SIGN_IN_DETAILS_SESSION_ATTRIBUTE_NAME, socialUser,
 				RequestAttributes.SCOPE_SESSION);
-		return null;
+		return SlippSecurityAuthenticationFilter.DEFAULT_AUTHENTICATION_URL + "?redirect=/questions/191";
 	}
 }

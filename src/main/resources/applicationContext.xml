@@ -50,11 +50,6 @@
 		<security:authentication-provider ref="daoAuthenticationProvider" />
 	</security:authentication-manager>
 	
-	<bean id="slippSecurityAuthenticationFilter" 
-		class="net.slipp.social.security.SlippSecurityAuthenticationFilter"
-		p:rememberMeServices-ref="springSocialSecurityRememberMeServices" 
-	/>
-		
 	<bean id="slippRememberMeServices"
 		class="net.slipp.social.security.SlippTokenBasedRememberMeServices">
 		<property name="userDetailsService" ref="slippUserDetailsService" />
@@ -124,8 +119,15 @@
 		<remember-me services-ref="slippRememberMeServices" />
 	</security:http>
 	
+	<bean id="slippSecurityAuthenticationFilter" 
+		class="net.slipp.social.security.SlippSecurityAuthenticationFilter"
+		p:rememberMeServices-ref="springSocialSecurityRememberMeServices"
+		p:authenticationSuccessHandler-ref="authenticationSuccessHandler"
+	/>
+	
 	<bean id="authenticationSuccessHandler" 
 		class="org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler"
+		p:defaultTargetUrl="/"
 		p:targetUrlParameter="redirect"
 	/>
 	

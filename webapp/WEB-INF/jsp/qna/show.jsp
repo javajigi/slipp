@@ -51,6 +51,7 @@
 	            <div class="login-with-slipp">
 	                <p class="login-with-slipp-text">SLiPP 계정으로 로그인하세요.</p>
 	                <form id="authentication" action="/users/authenticate" method="POST">
+	                	<input type="hidden" name="redirect" value="/questions/${question.questionId}" />
 	                    <input id="authenticationId" name="authenticationId" class="inp-email" placeholder="이메일" type="text" value=""/>
 	                    <input id="authenticationPassword"  name="authenticationPassword" class="inp-title" placeholder="비밀번호" type="password" value=""/>
 	                    <c:if test="${not empty param.login_error}">
