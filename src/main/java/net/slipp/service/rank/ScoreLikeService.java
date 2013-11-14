@@ -16,18 +16,32 @@ import org.springframework.stereotype.Service;
 @Service
 public class ScoreLikeService {
 
-	@Autowired
-	private ScoreLikeRepository scoreLikeRepository;
+    @Autowired
+    private ScoreLikeRepository scoreLikeRepository;
 
-	public boolean alreadyLikedAnswer(Long answerId, Long socialUserId) {
-		ScoreLike scoreLike = scoreLikeRepository.findBySocialUserIdAnds(ScoreLikeType.ANSWER, answerId,socialUserId);
-		if (scoreLike == null) {
-			return false;
-		}
-		return true;
-	}
+    public boolean alreadyLikedAnswer(Long answerId, Long socialUserId) {
+        ScoreLike scoreLike = scoreLikeRepository.findBySocialUserIdAndLike(ScoreLikeType.ANSWER, answerId,
+                socialUserId);
+        if (scoreLike == null) {
+            return false;
+        }
+        return true;
+    }
+    
+    public boolean alreadyDisLikedAnswer(Long answerId, Long socialUserId) {
+        ScoreLike scoreLike = scoreLikeRepository.findBySocialUserIdAndDisLike(ScoreLikeType.ANSWER, answerId,
+                socialUserId);
+        if (scoreLike == null) {
+            return false;
+        }
+        return true;
+    }
 
-	public void saveLikeAnswer(Long answerId, Long socialUserId) {
-		scoreLikeRepository.save(new ScoreLike(ScoreLikeType.ANSWER, socialUserId, answerId));
-	}
+    public void saveLikeAnswer(Long answerId, Long socialUserId) {
+        scoreLikeRepository.save(ScoreLike.createLikedScoreLike(ScoreLikeType.ANSWER, socialUserId, answerId));
+    }
+    
+    public void saveDisLikeAnswer(Long answerId, Long socialUserId) {
+        scoreLikeRepository.save(ScoreLike.createDisLikedScoreLike(ScoreLikeType.ANSWER, socialUserId, answerId));
+    }
 }

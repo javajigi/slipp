@@ -168,6 +168,10 @@ public class Answer implements HasCreatedAndUpdatedDate, Comparable<Answer> {
 		this.sumLike += 1;
 	}
 	
+    public void downRank() {
+        this.sumLike -= 1;
+    }
+	
 	boolean likedMoreThan(int totalLiked) {
 		if (getSumLike() >= totalLiked) {
 			return true;

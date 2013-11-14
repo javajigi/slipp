@@ -11,6 +11,7 @@ $(document).ready(function(){
 	$('.link-answer-article').on('click', addAnswerTo);
 
 	$('.btn-like-article').on('click', likeAnswerTo);
+	$('.btn-dislike-article').on('click', dislikeAnswerTo);
 
 	$('.form-delete').on('submit', function() {
 		if ( !confirm('정말 삭제하시겠습니까?') ) {
@@ -50,6 +51,17 @@ $(document).ready(function(){
 		$.post($likeAnswerBtn.attr('href'), {},
 			function(result) {
 				$likeAnswerBtn.find('.like-count').html(result);
+			}, 'json'
+		);
+		return false;
+	}
+	
+	function dislikeAnswerTo(e) {
+		e.preventDefault();
+		$dislikeAnswerBtn = $(this).parent();
+		$.post($dislikeAnswerBtn.attr('href'), {},
+			function(result) {
+				$dislikeAnswerBtn.find('.like-count').html(result);
 			}, 'json'
 		);
 		return false;

@@ -34,6 +34,13 @@ attribute name="isBest" required="true" rtexprvalue="true" type="java.lang.Boole
 			<span class="txt">공감</span>
 		</button>
 	</a>
+	<a class="form-like dislikeAnswerBtn" href="/questions/${question.questionId}/answers/${each.answerId}/dislike">
+		<button type="submit" class="btn-dislike-article" title="비공감하기">
+			<i class="icon-star"></i>
+			<strong class="like-count">${each.sumLike}</strong>
+			<span class="txt">비공감</span>
+		</button>
+	</a>	
 	<div class="article-doc comment-doc">
 		${sf:wiki(each.contents)}
 	</div>

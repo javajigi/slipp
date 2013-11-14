@@ -74,4 +74,12 @@ public class AnswerController {
 		Answer answer = qnaService.findAnswerById(answerId);
 		return answer.getSumLike();
 	}
+	
+	@RequestMapping(value = "/{answerId}/dislike", method = RequestMethod.POST)
+    public @ResponseBody Integer dislike(@LoginUser SocialUser loginUser, @PathVariable Long questionId, @PathVariable Long answerId)
+            throws Exception {
+        qnaService.dislikeAnswer(loginUser, answerId);
+        Answer answer = qnaService.findAnswerById(answerId);
+        return answer.getSumLike();
+    }
 }

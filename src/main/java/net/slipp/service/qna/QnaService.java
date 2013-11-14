@@ -181,4 +181,13 @@ public class QnaService {
 		}
 	}
 
+    public void dislikeAnswer(SocialUser loginUser, Long answerId) {
+        if (!scoreLikeService.alreadyDisLikedAnswer(answerId, loginUser.getId())) {
+            scoreLikeService.saveDisLikeAnswer(answerId, loginUser.getId());
+            Answer answer = answerRepository.findOne(answerId);
+            answer.downRank();
+            answerRepository.save(answer);
+        }        
+    }
+
 }
