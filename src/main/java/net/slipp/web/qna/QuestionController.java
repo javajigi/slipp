@@ -6,9 +6,9 @@ import static net.slipp.web.QnAPageableHelper.revisedPage;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
-import net.slipp.domain.qna.Answer;
 import net.slipp.domain.qna.Question;
 import net.slipp.domain.qna.QuestionDto;
+import net.slipp.domain.qna.TemporaryAnswer;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.service.qna.QnaService;
 import net.slipp.service.tag.TagService;
@@ -89,16 +89,20 @@ public class QuestionController {
 	        throw new AccessDeniedException(id + " question is deleted.");
 	    }
 	    
-	    Object value = session.getAttribute(ApiQuestionController.TEMPORARY_ANSWER_KEY);
-	    if (value != null) {
-	        model.addAttribute("answer", new Answer((String)value));
-	    } else {
-	        model.addAttribute("answer", new Answer());
-	    }
+        model.addAttribute("answer", getTemporaryAnswer(session).createAnswer());
 		model.addAttribute("question", question);
 		model.addAttribute("tags", tagService.findPooledTags());
 		model.addAttribute("user", new UserForm());
 		return "qna/show";
+	}
+	
+	private TemporaryAnswer getTemporaryAnswer(HttpSession session) {
+	    Object value = session.getAttribute(TemporaryAnswer.TEMPORARY_ANSWER_KEY);
+	    if (value == null) {
+	        return TemporaryAnswer.EMPTY_ANSWER;
+	    }
+	    
+        return (TemporaryAnswer)value;
 	}
 	
 	@RequestMapping(value="{id}", method=RequestMethod.DELETE)

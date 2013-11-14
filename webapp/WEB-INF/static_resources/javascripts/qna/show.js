@@ -22,19 +22,18 @@ $(document).ready(function(){
 	setImgRealSizeLink();
 	setFloatingBtnLike();
 	setFloatingContentSub();
-	setCommentToSession();
+	showFacebookComments();
 	
-	function setCommentToSession() {
-		$('.choose-login-type button[type="submit"]').click(function(e) {
-			e.preventDefault();
-			$.post(
-				"/api/questions/answers/tosession",
-				{contents:$('#contents').val()}
-			)
-			$(this).closest('form').submit();
-		});
-	}
-
+	function showFacebookComments() {
+		var url = '/api/facebooks/' + questionId + '/comments';
+		$.get(url,
+			function(response) {
+				$('.qna-facebook-comment').html(response);
+				return false;
+			}, 'html'
+		);
+	}	
+	
 	function addAnswerTo() {
 		var orgUserId = $(this).data('answer-user-id');
 		var $contents = $('#contents');

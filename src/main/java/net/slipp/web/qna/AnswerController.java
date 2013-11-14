@@ -1,8 +1,10 @@
 package net.slipp.web.qna;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import net.slipp.domain.qna.Answer;
+import net.slipp.domain.qna.TemporaryAnswer;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.service.qna.QnaService;
 import net.slipp.service.tag.TagService;
@@ -30,13 +32,14 @@ public class AnswerController {
 	private TagService tagService;
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public String create(@LoginUser SocialUser loginUser, @PathVariable Long questionId, Answer answer)
+	public String create(@LoginUser SocialUser loginUser, @PathVariable Long questionId, Answer answer, HttpSession session)
 			throws Exception {
 		logger.debug("questionId :{}, answer : {}", questionId, answer);
 		qnaService.createAnswer(loginUser, questionId, answer);
+		session.removeAttribute(TemporaryAnswer.TEMPORARY_ANSWER_KEY);
 		return String.format("redirect:/questions/%d", questionId);
 	}
-
+	
 	@RequestMapping(value = "{answerId}", method = RequestMethod.DELETE)
 	public String delete(@LoginUser SocialUser loginUser, @PathVariable Long questionId, @PathVariable Long answerId)
 			throws Exception {
