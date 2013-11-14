@@ -18,7 +18,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/questions/{questionId}/answers")
@@ -66,20 +65,4 @@ public class AnswerController {
 		qnaService.updateAnswer(loginUser, answer);
 		return String.format("redirect:/questions/%d#answer-%d", questionId, answerId);
 	}
-		
-	@RequestMapping(value = "/{answerId}/like", method = RequestMethod.POST)
-	public @ResponseBody Integer like(@LoginUser SocialUser loginUser, @PathVariable Long questionId, @PathVariable Long answerId)
-			throws Exception {
-		qnaService.likeAnswer(loginUser, answerId);
-		Answer answer = qnaService.findAnswerById(answerId);
-		return answer.getSumLike();
-	}
-	
-	@RequestMapping(value = "/{answerId}/dislike", method = RequestMethod.POST)
-    public @ResponseBody Integer dislike(@LoginUser SocialUser loginUser, @PathVariable Long questionId, @PathVariable Long answerId)
-            throws Exception {
-        qnaService.dislikeAnswer(loginUser, answerId);
-        Answer answer = qnaService.findAnswerById(answerId);
-        return answer.getSumLike();
-    }
 }

@@ -11,6 +11,7 @@ $(document).ready(function(){
 	$('.link-answer-article').on('click', addAnswerTo);
 
 	$('.btn-like-article').on('click', likeAnswerTo);
+	$('.btn-like-question').on('click', likeQuestionTo);
 	$('.btn-dislike-article').on('click', dislikeAnswerTo);
 
 	$('.form-delete').on('submit', function() {
@@ -33,7 +34,7 @@ $(document).ready(function(){
 				return false;
 			}, 'html'
 		);
-	}	
+	}
 	
 	function addAnswerTo() {
 		var orgUserId = $(this).data('answer-user-id');
@@ -51,6 +52,16 @@ $(document).ready(function(){
 		$.post($likeAnswerBtn.attr('href'), {},
 			function(result) {
 				$likeAnswerBtn.find('.like-count').html(result);
+			}, 'json'
+		);
+		return false;
+	}
+	
+	function likeQuestionTo() {
+		$likeQuestionBtn = $(this).parent();
+		$.post($likeQuestionBtn.attr('href'), {},
+			function(result) {
+				$likeQuestionBtn.find('.like-count').html(result);
 			}, 'json'
 		);
 		return false;

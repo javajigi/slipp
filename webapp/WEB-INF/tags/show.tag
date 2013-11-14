@@ -16,6 +16,15 @@ attribute name="question" required="true" rtexprvalue="true" type="net.slipp.dom
 				<i class="icon-link"></i>
 			</a>
 		</div>
+		<div class="article-header-like">
+			<a class="form-like likeQuestionBtn" href="/api/questions/${question.questionId}/like">
+				<button type="submit" class="btn-like-question" title="공감하기">
+					<i class="icon-star"></i>
+					<strong class="like-count">${question.sumLike}</strong>
+					<span class="txt">공감</span>
+				</button>
+			</a>		
+		</div>
 	</div>
 	<div class="article-doc">
 		${sf:wiki(question.contents)}
