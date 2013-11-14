@@ -20,7 +20,7 @@ public class RankingUtilsTest {
 		standard.set(1970, 0, 1);
 		
 		logger.debug("score : {}", RankingUtils.calculateHotScore(10, 0, standard, createCalendar(0)));
-		logger.debug("score : {}", RankingUtils.calculateHotScore(10, 0, standard, createCalendar(-5)));
+		logger.debug("score : {}", RankingUtils.calculateHotScore(10, 1, standard, createCalendar(-5)));
 		logger.debug("score : {}", RankingUtils.calculateHotScore(10, 0, standard, createCalendar(-10)));	
 		logger.debug("score : {}", RankingUtils.calculateHotScore(10, 0, standard, createCalendar(-11)));	
 		logger.debug("score : {}", RankingUtils.calculateHotScore(10, 0, standard, createCalendar(-12)));	
@@ -29,7 +29,7 @@ public class RankingUtilsTest {
 		logger.debug("score : {}", RankingUtils.calculateHotScore(10, 0, standard, createCalendar(-100)));
 		logger.debug("score : {}", RankingUtils.calculateHotScore(10, 0, standard, createCalendar(-1000)));
 	}
-
+	
 	private Calendar createCalendar(int amount) {
 		Calendar date = Calendar.getInstance();
 		date.add(Calendar.HOUR_OF_DAY, amount);

@@ -1,5 +1,6 @@
 package net.slipp.domain.qna;
 
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -31,6 +32,7 @@ import net.slipp.domain.tag.Tags;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.support.jpa.CreatedDateEntityListener;
 import net.slipp.support.jpa.HasCreatedDate;
+import net.slipp.support.utils.RankingUtils;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
@@ -104,6 +106,9 @@ public class Question implements HasCreatedDate {
 
     @Column(name = "deleted", nullable = false)
     private boolean deleted = false;
+    
+    @Column(name = "score", precision=10, scale=2, nullable = false)
+    private double score = 0.0;
 
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "question_sns_connections", joinColumns = @JoinColumn(name = "question_id"))
@@ -335,7 +340,7 @@ public class Question implements HasCreatedDate {
     public boolean isSnsConnected() {
         return !snsConnetions.isEmpty();
     }
-
+    
     /**
      * 베스트 댓글 하나를 반환한다.
      * 
@@ -367,6 +372,18 @@ public class Question implements HasCreatedDate {
     
     public Set<Tag> getConnectedGroupTag() {
         return new Tags(tags).getConnectedGroupTags();
+    }
+    
+    public double getScore() {
+        return score;
+    }
+    
+    public void updateScore() {
+        Calendar standard = Calendar.getInstance();
+        standard.set(1970, 0, 1);
+        Calendar date = Calendar.getInstance();
+        date.setTime(this.createdDate);
+        this.score = RankingUtils.calculateHotScore(this.answerCount, this.sumLike, standard, date);
     }
     
     @Override
