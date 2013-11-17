@@ -1,7 +1,5 @@
 package net.slipp.web.smalltalk;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
 import net.slipp.domain.smalltalk.SmallTalk;
@@ -20,8 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.google.common.collect.Lists;
-
 @Controller
 public class SmallTalkContoller {
 
@@ -31,17 +27,16 @@ public class SmallTalkContoller {
 	private SmallTalkService smallTalkService;
 
 	@RequestMapping(value = "/smalltalks", method = RequestMethod.POST)
-	public @ResponseBody
-	String save(@LoginUser SocialUser loginUser, @Validated SmallTalk smallTalk, BindingResult result) {
-		if (result.hasErrors()) {
-			log.error("SmallTalk 를 저장할 수 없습니다. {}", smallTalk);
-			return "FAIL";
-		}
+	@ResponseBody
+	public String save(@LoginUser SocialUser loginUser, @Validated SmallTalk smallTalk, BindingResult result) {
 		try {
+			if (result.hasErrors()) {
+				throw new Exception();
+			}
 			smallTalk.setWriter(loginUser);
-			smallTalkService.save(smallTalk);
+			smallTalkService.create(smallTalk);
 		} catch (Exception e) {
-			log.error("SmallTalk 데이터를 저장하는 중 오류.", e);
+			log.error("SmallTalk 데이터를 저장하는 중 오류. [Form] : {}", smallTalk, e);
 			return "FAIL";
 		}
 		return "OK";
@@ -49,13 +44,7 @@ public class SmallTalkContoller {
 
 	@RequestMapping(value = "/ajax/smalltalks", method = RequestMethod.GET)
 	public String finds(Model model) {
-		List<SmallTalk> smallTalks = Lists.newArrayList();
-		try {
-			smallTalks = smallTalkService.getLastTalks();
-		} catch (Exception e) {
-			log.error("SmallTalk 데이터를 가져오는 중 오류.", e);
-		}
-		model.addAttribute("smallTalks", smallTalks);
+		model.addAttribute("smallTalks", smallTalkService.getLastTalks());
 		return "async/smalltalk";
 	}
 }

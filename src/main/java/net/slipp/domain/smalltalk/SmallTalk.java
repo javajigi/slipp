@@ -1,14 +1,17 @@
 package net.slipp.domain.smalltalk;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
@@ -51,6 +54,9 @@ public class SmallTalk implements HasCreatedAndUpdatedDate {
 
 	@Transient
 	private SiteSummary siteSummary;
+
+	@OneToMany(mappedBy="smallTalk", fetch=FetchType.LAZY)
+	private List<SmallTalkComment> smallTalkComments;
 
 	public Date getCreatedDate() {
 		return createdDate;
@@ -102,9 +108,9 @@ public class SmallTalk implements HasCreatedAndUpdatedDate {
 	public String getUrlInTalk() {
 		return SlippStringUtils.getUrlInText(getTalk());
 	}
-	
+
 	public boolean hasUrl() {
-	    return !StringUtils.isBlank(getUrlInTalk());
+		return !StringUtils.isBlank(getUrlInTalk());
 	}
 
 	@Override
@@ -124,5 +130,13 @@ public class SmallTalk implements HasCreatedAndUpdatedDate {
 		builder.append(siteSummary);
 		builder.append("]");
 		return builder.toString();
+	}
+
+	public List<SmallTalkComment> getSmallTalkComments() {
+		return smallTalkComments;
+	}
+
+	public void setSmallTalkComments(List<SmallTalkComment> smallTalkComments) {
+		this.smallTalkComments = smallTalkComments;
 	}
 }
