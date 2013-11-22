@@ -13,6 +13,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.validator.constraints.Length;
 
 import net.slipp.domain.user.SocialUser;
@@ -76,5 +77,29 @@ public class SmallTalkComment implements HasCreatedAndUpdatedDate {
 	public void commentTo(SmallTalk smallTalk){
 		setSmallTalk(smallTalk);
 		
+	}
+
+	public SocialUser getWriter() {
+		return writer;
+	}
+
+	public void setWriter(SocialUser writer) {
+		this.writer = writer;
+	}
+
+	public String getComments() {
+		return StringUtils.trim(comments);
+	}
+
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
+
+	public Long getSmallTalkCommentId() {
+		return smallTalkCommentId;
+	}
+
+	public void setSmallTalkCommentId(Long smallTalkCommentId) {
+		this.smallTalkCommentId = smallTalkCommentId;
 	}
 }

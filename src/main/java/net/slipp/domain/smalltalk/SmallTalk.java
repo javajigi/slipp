@@ -117,7 +117,7 @@ public class SmallTalk implements HasCreatedAndUpdatedDate {
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("SmallTalk [smallTalkId=");
-		builder.append(smallTalkId);
+		builder.append(getSmallTalkId());
 		builder.append(", talk=");
 		builder.append(talk);
 		builder.append(", writer=");
@@ -138,5 +138,13 @@ public class SmallTalk implements HasCreatedAndUpdatedDate {
 
 	public void setSmallTalkComments(List<SmallTalkComment> smallTalkComments) {
 		this.smallTalkComments = smallTalkComments;
+	}
+
+	public Long getSmallTalkId() {
+		return smallTalkId;
+	}
+
+	public void setSmallTalkId(Long smallTalkId) {
+		this.smallTalkId = smallTalkId;
 	}
 }

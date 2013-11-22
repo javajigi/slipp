@@ -3,6 +3,7 @@ package net.slipp.web.smalltalk;
 import javax.annotation.Resource;
 
 import net.slipp.domain.smalltalk.SmallTalk;
+import net.slipp.domain.smalltalk.SmallTalkComment;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.service.MailService;
 import net.slipp.service.smalltalk.SmallTalkService;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -46,5 +48,19 @@ public class SmallTalkContoller {
 	public String finds(Model model) {
 		model.addAttribute("smallTalks", smallTalkService.getLastTalks());
 		return "async/smalltalk";
+	}
+	
+	@RequestMapping(value = "/smalltalks/{id}/comments", method = RequestMethod.POST)
+	@ResponseBody
+	public String saveComment(@LoginUser SocialUser loginUser, @PathVariable Long id, SmallTalkComment smallTalkComment) {
+		try {
+			log.debug("Comments : {}", smallTalkComment);
+			smallTalkComment.setWriter(loginUser);
+			smallTalkService.createComment(id, smallTalkComment);
+		} catch (Exception e) {
+			log.error("SmallTalkComment 데이터를 저장하는 중 오류. [Form] : {}", smallTalkComment, e);
+			return "FAIL";
+		}
+		return "OK";
 	}
 }
