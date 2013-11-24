@@ -73,6 +73,10 @@ public class Answer implements HasCreatedAndUpdatedDate, Comparable<Answer> {
 	public Answer(Long answerId) {
 		this.answerId = answerId;
 	}
+	
+	public Answer(String contents) {
+	    setContents(contents);
+	}
 
 	public Question getQuestion() {
 		return this.question;
@@ -163,6 +167,10 @@ public class Answer implements HasCreatedAndUpdatedDate, Comparable<Answer> {
 	public void upRank() {
 		this.sumLike += 1;
 	}
+	
+    public void downRank() {
+        this.sumLike -= 1;
+    }
 	
 	boolean likedMoreThan(int totalLiked) {
 		if (getSumLike() >= totalLiked) {

@@ -4,8 +4,8 @@ import java.util.HashMap;
 import org.hibernate.ejb.Ejb3Configuration;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 
+@SuppressWarnings("deprecation")
 public class JPASchemaExport {
-	@SuppressWarnings("deprecation")
     public static void main(String[] args) {
 		Ejb3Configuration cfg = new Ejb3Configuration();
 		HashMap<String, String> props = new HashMap<String, String>();

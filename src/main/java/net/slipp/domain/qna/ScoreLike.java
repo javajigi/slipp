@@ -12,60 +12,65 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "score_like")
 public class ScoreLike {
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-	@Id
-	@Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-	
-	@Enumerated(EnumType.STRING)
-	@Column(name = "like_type", nullable = false, columnDefinition = ScoreLikeType.COLUMN_DEFINITION)
-	private ScoreLikeType scoreLikeType;
-	
-	@Column(name = "social_user_id")
-	private Long socialUserId;
-	
-	@Column(name = "target_id")
-	private Long targetId;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "like_type", nullable = false, columnDefinition = ScoreLikeType.COLUMN_DEFINITION)
+    private ScoreLikeType scoreLikeType;
 
-	public Long getId() {
-		return id;
-	}
+    @Column(name = "social_user_id")
+    private Long socialUserId;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    @Column(name = "target_id")
+    private Long targetId;
 
-	public Long getSocialUserId() {
-		return socialUserId;
-	}
+    @Column(name = "liked")
+    private boolean liked;
 
-	public void setSocialUserId(Long socialUserId) {
-		this.socialUserId = socialUserId;
-	}
+    public ScoreLike() {
+    }
+    
+    private ScoreLike(ScoreLikeType scoreLikeType, Long socialUserId, Long targetId, boolean liked) {
+        this.scoreLikeType = scoreLikeType;
+        this.socialUserId = socialUserId;
+        this.targetId = targetId;
+        this.liked = liked;
+    }
 
-	public ScoreLikeType getScoreLikeType() {
-		return scoreLikeType;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setScoreLikeType(ScoreLikeType scoreLikeType) {
-		this.scoreLikeType = scoreLikeType;
-	}
+    public Long getSocialUserId() {
+        return socialUserId;
+    }
 
-	public Long getTargetId() {
-		return targetId;
-	}
+    public ScoreLikeType getScoreLikeType() {
+        return scoreLikeType;
+    }
 
-	public void setTargetId(Long targetId) {
-		this.targetId = targetId;
-	}
+    public Long getTargetId() {
+        return targetId;
+    }
 
-	public ScoreLike() {
-	}
-	
-	public ScoreLike(ScoreLikeType scoreLikeType, Long socialUserId, Long targetId) {
-		this.scoreLikeType = scoreLikeType;
-		this.socialUserId = socialUserId;
-		this.targetId = targetId;
-	}
+    public boolean isLiked() {
+        return liked;
+    }
+    
+    public static ScoreLike createLikedScoreLike(ScoreLikeType scoreLikeType, Long socialUserId, Long targetId) {
+        return new ScoreLike(scoreLikeType, socialUserId, targetId, true);
+    }
+    
+    public static ScoreLike createDisLikedScoreLike(ScoreLikeType scoreLikeType, Long socialUserId, Long targetId) {
+        return new ScoreLike(scoreLikeType, socialUserId, targetId, false);
+    }
+
+    @Override
+    public String toString() {
+        return "ScoreLike [id=" + id + ", scoreLikeType=" + scoreLikeType + ", socialUserId=" + socialUserId
+                + ", targetId=" + targetId + ", liked=" + liked + "]";
+    }
 }

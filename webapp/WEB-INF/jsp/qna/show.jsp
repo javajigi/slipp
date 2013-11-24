@@ -12,7 +12,6 @@
 	<link rel="stylesheet" href="${url:resource('/stylesheets/wiki-textile-style.css')}">
 </head>
 
-
 <section class="view-content">
 	<h1 class="article-title">${sf:h(question.title)}</h1>
 	<div class="content-main">
@@ -29,6 +28,27 @@
 					</c:forEach>
 				</div>
 			</div>
+			<form:form modelAttribute="answer" action="/questions/${question.questionId}/answers" method="POST" cssClass="form-write">
+				<fieldset>
+					<legend class="title-write">의견 추가하기</legend>
+					<div class="box-write">
+						<form:textarea path="contents" cols="80" rows="15"/>
+					</div>
+					<div class="submit-write">
+						<sec:authorize access="hasRole('ROLE_USER')">
+						<c:if test="${loginUser.facebookUser}">
+						<label class="msg-send-to-facebook">
+							<form:checkbox path="connected" /> 페이스북으로 전송하려면 체크하세요
+						</label>
+						</c:if>
+						<button type="submit" class="btn-submit"><i class="icon-submit"></i> 작성완료</button>
+						</sec:authorize>
+					</div>
+				</fieldset>
+			</form:form>
+			<sec:authorize access="!hasRole('ROLE_USER')">
+			<slipp:loginform redirectUrl="/questions/${question.questionId}"/>
+			</sec:authorize>
 			<c:if test="${question.snsConnected}">
 				<div class="qna-comment-fb">
 					<p class="qna-comment-count">
@@ -39,29 +59,6 @@
 					</div>
 				</div>
 			</c:if>
-			<sec:authorize access="!hasRole('ROLE_USER')">
-				<p class="msg-to-login">
-					<b><a href="/users/login">SLiPP계정</a></b>으로 의견을 나누세요!
-				</p>
-			</sec:authorize>
-			<sec:authorize access="hasRole('ROLE_USER')">
-				<form:form modelAttribute="answer" action="/questions/${question.questionId}/answers" method="POST" cssClass="form-write">
-					<fieldset>
-						<legend class="title-write">의견 추가하기</legend>
-						<div class="box-write">
-							<form:textarea path="contents"  cols="80" rows="15"/>
-						</div>
-						<div class="submit-write">
-							<c:if test="${loginUser.facebookUser}">
-							<label class="msg-send-to-facebook">
-								<form:checkbox path="connected" /> 페이스북으로 전송하려면 체크하세요
-							</label>
-							</c:if>
-							<button type="submit" class="btn-submit"><i class="icon-submit"></i> 작성완료</button>
-						</div>
-					</fieldset>
-				</form:form>
-			</sec:authorize>
 		</div>
 	</div>
 	<div class="content-sub">
@@ -102,6 +99,7 @@
 <script src="${url:resource('/javascripts/highlight.pack.js')}"></script>
 <script>
 hljs.initHighlightingOnLoad();
+questionId = ${question.questionId};
 </script>
 <script src="${url:resource('/javascripts/qna/tagparser.js')}"></script>
 <script src="${url:resource('/javascripts/qna/show.js')}"></script>
@@ -109,20 +107,12 @@ hljs.initHighlightingOnLoad();
 <script src="${url:resource('/javascripts/qna/qna-set.js')}"></script>
 <script src="${url:resource('/javascripts/qna/image.upload.js')}"></script>
 <script src="${url:resource('/javascripts/jquery.markitup.js')}"></script>
+<script src="${url:resource('/javascripts/support/slipp.validate.js')}"></script>
+<script src="${url:resource('/javascripts/user/login.js')}"></script>
+<sec:authorize access="!hasRole('ROLE_USER')">
+<script src="${url:resource('/javascripts/qna/loginForm.js')}"></script>
+</sec:authorize>
 <script>
-$(document).ready(function(){
-	function showFacebookComments(questionId) {
-		var url = '/api/facebooks/' + questionId + '/comments';
-		$.get(url,
-			function(response) {
-				$('.qna-facebook-comment').html(response);
-				return false;
-			}, 'html'
-		);
-	}
-
-	showFacebookComments(${question.questionId});
-});
 $('#contents').markItUp(mySettings);
 </script>
 

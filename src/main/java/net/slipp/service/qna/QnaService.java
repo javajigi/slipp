@@ -172,13 +172,31 @@ public class QnaService {
 		question.deAnswered(answer);
 	}
 
-	public void likeAnswer(SocialUser loginUser, Long answerId) {
+	public Answer likeAnswer(SocialUser loginUser, Long answerId) {
+	    Answer answer = answerRepository.findOne(answerId);
 		if (!scoreLikeService.alreadyLikedAnswer(answerId, loginUser.getId())) {
 			scoreLikeService.saveLikeAnswer(answerId, loginUser.getId());
-			Answer answer = answerRepository.findOne(answerId);
 			answer.upRank();
-			answerRepository.save(answer);
 		}
+		return answer;
 	}
+
+    public Answer dislikeAnswer(SocialUser loginUser, Long answerId) {
+        Answer answer = answerRepository.findOne(answerId);
+        if (!scoreLikeService.alreadyDisLikedAnswer(answerId, loginUser.getId())) {
+            scoreLikeService.saveDisLikeAnswer(answerId, loginUser.getId());
+            answer.downRank();
+        }
+        return answer;
+    }
+
+    public Question likeQuestion(SocialUser loginUser, Long questionId) {
+        Question question = questionRepository.findOne(questionId);
+        if (!scoreLikeService.alreadyLikedQuestion(questionId, loginUser.getId())) {
+            scoreLikeService.saveLikeQuestion(questionId, loginUser.getId());
+            question.upRank();
+        }
+        return question;
+    }
 
 }

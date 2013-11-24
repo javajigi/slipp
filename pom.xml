@@ -11,8 +11,8 @@
 		<org.slf4j.version>1.6.1</org.slf4j.version>
 		<jpa.version>2.0.0</jpa.version>
 		<hibernate.version>4.2.0.Final</hibernate.version>
-		<org.springframework.version>3.1.2.RELEASE</org.springframework.version>
-		<org.springframework.social.version>1.0.2.RELEASE</org.springframework.social.version>
+		<org.springframework.version>3.1.4.RELEASE</org.springframework.version>
+		<org.springframework.social.version>1.0.3.RELEASE</org.springframework.social.version>
 		<org.springframework.security.version>3.1.0.RELEASE</org.springframework.security.version>
 		<jpametamodel.generated.dir>${basedir}/target/generated-sources/jpametamodel</jpametamodel.generated.dir>
 		<acceptance.test.dir>${basedir}/src/acceptance-test/java</acceptance.test.dir>

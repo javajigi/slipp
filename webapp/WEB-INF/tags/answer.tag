@@ -27,13 +27,20 @@ attribute name="isBest" required="true" rtexprvalue="true" type="java.lang.Boole
 			</a>
 		</div>
 	</div>
-	<a class="form-like likeAnswerBtn" href="/questions/${question.questionId}/answers/${each.answerId}/like">
-		<button type="submit" class="btn-like-article" title="공감하기">
+	<a class="form-like likeAnswerBtn" href="/api/questions/${question.questionId}/answers/${each.answerId}/like">
+		<button type="submit" class="btn-like-article" title="도움이 된 답변">
 			<i class="icon-star"></i>
 			<strong class="like-count">${each.sumLike}</strong>
-			<span class="txt">공감</span>
+			<span class="txt">도움이 된 답변</span>
 		</button>
 	</a>
+	<a class="form-like dislikeAnswerBtn" href="/api/questions/${question.questionId}/answers/${each.answerId}/dislike">
+		<button type="submit" class="btn-dislike-article" title="도움이 되지 않는 답변">
+			<i class="icon-star"></i>
+			<strong class="like-count">${each.sumLike}</strong>
+			<span class="txt">도움이 되지 않는 답변</span>
+		</button>
+	</a>	
 	<div class="article-doc comment-doc">
 		${sf:wiki(each.contents)}
 	</div>
