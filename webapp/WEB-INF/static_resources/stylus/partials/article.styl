@@ -1,0 +1,87 @@
+.article
+	position: relative;
+	padding: .6em 0 .8em;
+	border-bottom: 2px solid #dadada;
+.article-title
+	margin-bottom: 0;
+	padding-bottom: .67em;
+	border-bottom: 1px solid #dadada;
+.article-header
+	display: table;
+	width: 100%;
+	padding-bottom: .6em;
+	border-bottom: 1px dashed #dadada;
+.article-header-text,
+.article-header-thumb
+	display: table-cell;
+	vertical-align: middle;
+.article-header-thumb
+	width: 48px;
+.article-author-thumb
+	width: 40px;
+	height: 40px;
+	border-radius: 3px;
+.article-author-name
+	font-weight: bold;
+	font-size: 1.1em;
+.article-author-fbgroup
+	display: inline-block;
+	margin-left: .8em;
+	font-style: italic;
+	font-size: 1em;
+	color: #666;
+	a
+		display: inline-block;
+		color: #333;
+		font-weight: bold;
+		@media phone
+			overflow: hidden;
+			max-width: 8em;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+.article-header-time
+	display: block;
+	font-size: .8em;
+	color: #666;
+	&:hover
+		text-decoration: none;
+		.icon-link
+			color: #3aa;
+
+$for-likebtn-space
+	padding-left: 48px;
+	@media phone
+		padding-left: 0;
+
+.article-doc
+	@extend $for-likebtn-space;
+	img
+		max-width: 100%;
+.article-util
+	@extend $for-likebtn-space;
+	.list-util
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		color: #999;
+		li
+			display: inline-block;
+			&:before
+				content: '•';
+				margin: 0 -.4em;
+			&:first-child
+				&:before
+					display: none;
+		a,
+		button
+			color: #999;
+			padding: .4em;
+			border-radius: 3px;
+			border: 0;
+			background-color: transparent;
+			white-space: nowrap;
+			&:hover
+				text-decoration: none;
+				background-color: #dadada;
+	form
+		display: inline-block;

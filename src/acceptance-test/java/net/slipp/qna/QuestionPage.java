@@ -58,7 +58,7 @@ public class QuestionPage {
     }
 
     public void verifyAnswerCount(String answerCount) {
-        String actual = driver.findElement(By.cssSelector("div.qna-comment > p.article-count > strong")).getText();
+        String actual = driver.findElement(By.cssSelector(".qna-comment-count > strong")).getText();
         assertThat(actual, is(answerCount));
     }
 

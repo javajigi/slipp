@@ -38,15 +38,15 @@
 				</form>
 			</div>
 			<div class="divide-bar right"></div>
-			<div class="sign-in-to-slipp">
-				<p class="sign-in-to-slipp-text">계정이 없다면 간단히 만들어보세요.</p>
+			<div class="signin-to-slipp">
+				<p class="signin-to-slipp-text">계정이 없다면 간단히 만들어보세요.</p>
 				<form:form modelAttribute="user" cssClass="form-write" action="/users" method="post">
 						<form:input path="email" class="inp_email" placeholder="이메일" />
 						<form:input path="userId" class="inp_pw" placeholder="닉네임" />
-						<p class="sign-in-to-slipp-notice">
+						<p class="signin-to-slipp-notice">
 							- 등록한 메일로 임시 비밀번호를 보내드립니다. <br />
 							- 개인공간에서 비밀번호를 변경할 수 있습니다.</p>
-						<button type="submit" class="sign-in-to-slipp-btn"><i class="icon-signin"></i> 회원가입</button>
+						<button type="submit" class="signin-to-slipp-btn"><i class="icon-signin"></i> 회원가입</button>
 				</form:form>
 			</div>
 		</div>

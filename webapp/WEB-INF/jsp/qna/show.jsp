@@ -22,7 +22,7 @@
 				<c:if test="${!empty question.bestAnswer}">
 					<slipp:answer each="${question.bestAnswer}" isBest="true"/>
 				</c:if>
-				<p class="article-count"><strong>${question.answerCount}</strong>개의 의견 from SLiPP</p>
+				<p class="qna-comment-count"><strong>${question.answerCount}</strong>개의 의견 from SLiPP</p>
 				<div class="qna-comment-slipp-articles">
 					<c:forEach items="${question.answers}" var="each">
 						<slipp:answer each="${each}" isBest="false"/>
@@ -31,7 +31,7 @@
 			</div>
 			<c:if test="${question.snsConnected}">
 				<div class="qna-comment-fb">
-					<p class="article-count">
+					<p class="qna-comment-count">
 						<strong>${question.snsAnswerCount}</strong>개의 의견 from FB
 					</p>
 					<div class="qna-comment-fb-articles">
