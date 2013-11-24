@@ -233,6 +233,7 @@ body{overflow-y:scroll}
 .article-doc,.article-util{padding-left:48px;}
 @media (max-width: 480px){.article-doc,.article-util,.article-doc,.article-util{padding-left:0}
 }.article-doc img{max-width:100%}
+.article-doc blockquote{margin-left:0;margin-right:0;border-left:4px solid #efefef;padding-left:.5em}
 .article-util .list-util{margin:0;padding:0;list-style:none;color:#999;}
 .article-util .list-util li{display:inline-block;}
 .article-util .list-util li:before{content:'•';margin:0 -.4em}
