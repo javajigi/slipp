@@ -1,14 +1,5 @@
 .login-content
 	text-align: center;
-	[class*='foundicon-']
-		position: relative;
-		top: 3px;
-		font-size: 1.2em;
-	input[type='text'],
-	input[type='password']
-		@extend $normalinput;
-		width: 100%;
-		margin: .5em 0;
 .login-content-title
 	@media phone
 		display: none;
@@ -23,6 +14,15 @@
 	@extend $clearfix;
 	position: relative;
 	text-align: left;
+	[class*='foundicon-']
+		position: relative;
+		top: 3px;
+		font-size: 1.2em;
+	input[type='text'],
+	input[type='password']
+		@extend $normalinput;
+		width: 100%;
+		margin: .5em 0;
 	.divide-bar
 		position: absolute;
 		width: 0;

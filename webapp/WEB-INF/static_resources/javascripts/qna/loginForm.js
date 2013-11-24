@@ -4,12 +4,12 @@ $(document).ready(function(){
 	answerLogoutUserTo();
 	
 	function hideLoginForm() {
-		$('.choose-login-type').hide();
+		$('.qna-login-for-comment').hide();
 	}
 	
 	function showLoginForm() {
 		$('#contents').focusin(function() {
-			$('.choose-login-type').slideDown('slow');
+			$('.qna-login-for-comment').slideDown();
 		});
 	}
 	

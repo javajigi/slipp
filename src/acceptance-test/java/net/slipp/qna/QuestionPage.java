@@ -26,7 +26,7 @@ public class QuestionPage {
     }
 
     public void verify(String title, String contents, String plainTags) {
-        WebElement titleElement = driver.findElement(By.cssSelector(".article-title"));
+        WebElement titleElement = driver.findElement(By.cssSelector(".qna-title"));
         assertThat(titleElement.getText(), is(title));
 
         List<String> tags = Arrays.asList(plainTags.split(" "));
@@ -84,7 +84,7 @@ public class QuestionPage {
     }
 
     public void verifyBestAnswer() {
-        String answerBest = driver.findElement(By.cssSelector("div.best-article-label > strong")).getText();
+        String answerBest = driver.findElement(By.cssSelector(".qna-best-comment-label > strong")).getText();
         assertThat(answerBest, is("BEST 의견"));
     }
 

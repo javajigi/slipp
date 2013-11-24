@@ -13,10 +13,30 @@
 </head>
 
 <section class="view-content">
-	<h1 class="article-title">${sf:h(question.title)}</h1>
+	<header class="qna-header">
+		<h1 class="qna-title">${sf:h(question.title)}</h1>
+		<div class="qna-nav">
+			<a href="#qna-comment-form">의견 추가하기&darr;</a>
+			<span class="divider"> / </span>
+			<a href="#qna-recently-slipp-comment">SLiPP 최신의견&darr;</a>
+			<span class="divider"> / </span>
+			<a href="#qna-recently-fb-comment">페북 최신의견&darr;</a>
+		</div>
+	</header>
 	<div class="content-main">
 		<slipp:show question="${question}"/>
 		<div class="qna-comment">
+			<c:if test="${question.snsConnected}">
+				<div class="qna-comment-fb">
+					<p class="qna-comment-count">
+						<strong>${question.snsAnswerCount}</strong>개의 의견 from FB
+					</p>
+					<div class="qna-comment-fb-articles">
+						<div class="qna-facebook-comment"></div>
+						<div id="qna-recently-fb-comment"></div>
+					</div>
+				</div>
+			</c:if>
 			<div class="qna-comment-slipp">
 				<c:if test="${!empty question.bestAnswer}">
 					<slipp:answer each="${question.bestAnswer}" isBest="true"/>
@@ -26,10 +46,11 @@
 					<c:forEach items="${question.answers}" var="each">
 						<slipp:answer each="${each}" isBest="false"/>
 					</c:forEach>
+					<div id="qna-recently-slipp-comment"></div>
 				</div>
 			</div>
 			<form:form modelAttribute="answer" action="/questions/${question.questionId}/answers" method="POST" cssClass="form-write">
-				<fieldset>
+				<fieldset id="qna-comment-form">
 					<legend class="title-write">의견 추가하기</legend>
 					<div class="box-write">
 						<form:textarea path="contents" cols="80" rows="15"/>
@@ -47,18 +68,12 @@
 				</fieldset>
 			</form:form>
 			<sec:authorize access="!hasRole('ROLE_USER')">
-			<slipp:loginform redirectUrl="/questions/${question.questionId}"/>
-			</sec:authorize>
-			<c:if test="${question.snsConnected}">
-				<div class="qna-comment-fb">
-					<p class="qna-comment-count">
-						<strong>${question.snsAnswerCount}</strong>개의 의견 from FB
-					</p>
-					<div class="qna-comment-fb-articles">
-						<div class="qna-facebook-comment"></div>
-					</div>
+				<div class="qna-login-for-comment">
+					<p class="qna-login-for-comment-msg">의견을 남기기 위해서는 SLiPP 계정이 필요합니다.<br />
+					안심하세요! <b>회원가입/로그인 후에도 작성하시던 내용은 안전하게 보존됩니다.</b></p>
+					<slipp:loginform redirectUrl="/questions/${question.questionId}"/>
 				</div>
-			</c:if>
+			</sec:authorize>
 		</div>
 	</div>
 	<div class="content-sub">

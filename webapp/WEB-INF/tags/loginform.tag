@@ -43,7 +43,7 @@ attribute name="redirectUrl" required="true" rtexprvalue="true" type="java.lang.
 				<p class="signin-to-slipp-notice">
 					- 등록한 메일로 임시 비밀번호를 보내드립니다. <br />
 					- 개인공간에서 비밀번호를 변경할 수 있습니다.</p>
-				<button type="submit" class="sign-in-to-slipp-btn"><i class="icon-signin"></i> 회원가입</button>
+				<button type="submit" class="signin-to-slipp-btn"><i class="icon-signin"></i> 회원가입</button>
 		</form:form>
 	</div>
 </div>
