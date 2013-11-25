@@ -73,7 +73,7 @@
 					안심하세요! <b>회원가입/로그인 후에도 작성하시던 내용은 안전하게 보존됩니다.</b></p>
 					<slipp:loginform redirectUrl="/questions/${question.questionId}"/>
 				</div>
-			</c:if>
+			</sec:authorize>
 		</div>
 	</div>
 	<div class="content-sub">
