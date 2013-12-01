@@ -48,21 +48,23 @@ $(document).ready(function(){
 		return false;
 	}
 
-	function likeAnswerTo() {
-		$likeAnswerBtn = $(this).parent();
+	function likeAnswerTo(e) {
+		e.preventDefault();
+		$likeAnswerBtn = $(this);
 		$.post($likeAnswerBtn.attr('href'), {},
 			function(result) {
-				$likeAnswerBtn.find('.like-count').html(result);
+				$likeAnswerBtn.find('.like-article-count').html(result);
 			}, 'json'
 		);
 		return false;
 	}
 	
-	function likeQuestionTo() {
-		$likeQuestionBtn = $(this).parent();
+	function likeQuestionTo(e) {
+		e.preventDefault();
+		$likeQuestionBtn = $(this);
 		$.post($likeQuestionBtn.attr('href'), {},
 			function(result) {
-				$likeQuestionBtn.find('.like-count').html(result);
+				$likeQuestionBtn.find('.like-question-count').html(result);
 			}, 'json'
 		);
 		return false;
@@ -70,10 +72,10 @@ $(document).ready(function(){
 	
 	function dislikeAnswerTo(e) {
 		e.preventDefault();
-		$dislikeAnswerBtn = $(this).parent();
+		$dislikeAnswerBtn = $(this);
 		$.post($dislikeAnswerBtn.attr('href'), {},
 			function(result) {
-				$dislikeAnswerBtn.find('.like-count').html(result);
+				$dislikeAnswerBtn.find('.dislike-article-count').html(result);
 			}, 'json'
 		);
 		return false;

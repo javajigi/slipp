@@ -78,6 +78,14 @@
 	</div>
 	<div class="content-sub">
 		<div class="floating">
+			<section class="like-question">
+				<h1>관심두기</h1>
+				<a class="btn-like-question" href="/api/questions/${question.questionId}/like" title="관심글 등록">
+					<i class="icon-like-question"></i>
+					<strong class="like-question-count">${question.sumLike}</strong>
+					<span class="like-question-txt">관심글</span>
+				</a>		
+			</section>
 			<section class="share">
 				<h1>SNS공유</h1>
 				<div class="share-facebook">

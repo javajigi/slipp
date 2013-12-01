@@ -118,6 +118,7 @@ h2,h3{page-break-after:avoid}
 .icon-key:before{content:'\F0C0'}
 .icon-smalltalk-expand:before{content:'\F149'}
 .icon-smalltalk-msg:before{content:'\F075'}
+.icon-like-question:before{content:'\F049'}
 [class*='foundicon-']{display:inline;width:auto;height:auto;line-height:inherit;vertical-align:baseline;background-image:none;background-position:0 0;background-repeat:repeat;}
 [class*='foundicon-']:before{font-family:'SocialFoundicons';font-weight:normal;font-style:normal;text-decoration:inherit}
 .foundicon-thumb-up:before{content:'\f000'}
@@ -231,13 +232,26 @@ body{overflow-y:scroll}
 @media (max-width: 480px){.article-doc,.article-util,.article-doc,.article-util{padding-left:0}
 }.article-doc img{max-width:100%}
 .article-doc blockquote{margin-left:0;margin-right:0;border-left:4px solid #efefef;padding-left:.5em}
-.article-util .list-util{margin:0;padding:0;list-style:none;color:#999;}
-.article-util .list-util li{display:inline-block;}
-.article-util .list-util li:before{content:'•';margin:0 -.4em}
-.article-util .list-util li:first-child:before{display:none}
-.article-util .list-util a,.article-util .list-util button{color:#999;padding:.4em;-webkit-border-radius:3px;border-radius:3px;border:0;background-color:transparent;white-space:nowrap;}
-.article-util .list-util a:hover,.article-util .list-util button:hover{text-decoration:none;background-color:#dadada}
 .article-util form{display:inline-block}
+.article-util-list a,.article-util-list button{color:#999;padding:.4em;-webkit-border-radius:3px;border-radius:3px;border:0;background-color:transparent;white-space:nowrap;}
+.article-util-list a:hover,.article-util-list button:hover{text-decoration:none;background-color:#dadada}
+.article-util-list{margin:0;padding:0;list-style:none;color:#999;}
+.article-util-list li{display:inline-block;}
+.article-util-list li:before{content:'•';margin:0 -.4em}
+.article-util-list li:first-child:before{display:none}
+.article-util-list .btn-like-article{color:#44ca7f;}
+.article-util-list .btn-like-article:hover{background-color:#e3f7ec}
+.article-util-list .btn-dislike-article{color:#be6060;}
+.article-util-list .btn-dislike-article:hover{background-color:#f9f1f1}
+.article-util-list .link-answer-article{color:#5989b6;}
+.article-util-list .link-answer-article:hover{background-color:#e7eef4}
+.article-util-list .foundicon-thumb-up,.article-util-list .foundicon-thumb-down{position:relative;top:2px}
+.like-question-txt,.like-article-txt,.dislike-article-txt{font-size:0}
+.btn-like-question{display:inline-block;margin-top:.2em;padding:.3em .4em 0;border:1px solid #efefef;-webkit-border-radius:3px;border-radius:3px;font-size:1.6em;line-height:1em;}
+.btn-like-question:hover{border-color:#bebebe;background-color:#fff4f4;text-decoration:none;}
+.btn-like-question:hover .icon-like-question{color:#f89595}
+.icon-like-question{color:#f6c9c9}
+.like-question-count{color:#000}
 .qna-list h1 small{font-size:.4em}
 .qna-list .list{list-style:none;margin:0;padding:0;border-top:1px solid #dadada;font-size:14px;}
 @media (max-width: 979px){.qna-list .list{margin:0 -1em}
@@ -268,14 +282,6 @@ body{overflow-y:scroll}
 .qna-best-comment-label{margin-bottom:1em;}
 .qna-best-comment-label strong{border-bottom:1px solid #daa9a9;font-size:1.2em}
 .qna-login-for-comment-msg{padding:1.2em;background:#c7e8f7}
-.btn-like-article{position:absolute;top:60px;width:40px;padding:0;margin:0;border:0;background-color:transparent;opacity:.4;-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=40)";filter:alpha(opacity=40);-webkit-transition:opacity 0.4s;-moz-transition:opacity 0.4s;-o-transition:opacity 0.4s;-ms-transition:opacity 0.4s;transition:opacity 0.4s;}
-.btn-like-article:hover{opacity:1;-ms-filter:none;filter:none}
-.btn-like-article.fixed{position:fixed;}
-@media (max-width: 480px){.btn-like-article.fixed{position:absolute}
-}@media (max-width: 480px){.btn-like-article{top:10px !important;right:0}
-}.btn-like-article .icon-star{position:absolute;left:0;top:0;font-size:3em;color:#ebe164}
-.btn-like-article .like-count{position:relative;z-index:1;text-align:right;padding-top:1em;display:block;text-align:center;text-shadow:0 0 3px #fff;color:#000}
-.btn-like-article .txt{font-size:0}
 .link-back-to-list{padding:.4em .8em;-webkit-border-radius:4px;border-radius:4px;}
 .link-back-to-list:hover{text-decoration:none;color:#fff;background-color:#005580}
 .floating{position:fixed;margin-left:2em;padding-left:1em;padding-bottom:1em;}

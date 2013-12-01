@@ -27,40 +27,40 @@ attribute name="isBest" required="true" rtexprvalue="true" type="java.lang.Boole
 			</a>
 		</div>
 	</div>
-	<a class="form-like likeAnswerBtn" href="/api/questions/${question.questionId}/answers/${each.answerId}/like">
-		<button type="submit" class="btn-like-article" title="도움이 된 답변">
-			<i class="icon-star"></i>
-			<strong class="like-count">${each.sumLike}</strong>
-			<span class="txt">도움이 된 답변</span>
-		</button>
-	</a>
-	<a class="form-like dislikeAnswerBtn" href="/api/questions/${question.questionId}/answers/${each.answerId}/dislike">
-		<button type="submit" class="btn-dislike-article" title="도움이 되지 않는 답변">
-			<i class="icon-star"></i>
-			<strong class="like-count">${each.sumLike}</strong>
-			<span class="txt">도움이 되지 않는 답변</span>
-		</button>
-	</a>	
 	<div class="article-doc comment-doc">
 		${sf:wiki(each.contents)}
 	</div>
+	<div class="article-value">
+	</div>
 	<div class="article-util">
-		<ul class="list-util">
+		<ul class="article-util-list">
+			<li>
+				<a class="btn-like-article" href="/api/questions/${question.questionId}/answers/${each.answerId}/like" title="좋아요">
+					<i class="foundicon-thumb-up"></i>
+					<span class="like-article-txt">좋아요</span>
+					<strong class="like-article-count">${each.sumLike}</strong>
+				</a>
+				<a class="btn-dislike-article" href="/api/questions/${question.questionId}/answers/${each.answerId}/dislike" title="싫어요">
+					<i class="foundicon-thumb-down"></i>
+					<span class="dislike-article-txt">싫어요</span>
+					<strong class="dislike-article-count">${each.sumLike}</strong>
+				</a>
+			</li>
 			<c:if test="${sf:isWriter(each.writer, loginUser)}">
-			<li>
-				<a class="link-modify-article" href="/questions/${question.questionId}/answers/${each.answerId}/form">수정</a>
-			</li>
-			<li>
-				<form class="form-delete" action="/questions/${question.questionId}/answers/${each.answerId}" method="POST">
-					<input type="hidden" name="_method" value="DELETE" />
-					<button type="submit" class="link-delete-article">삭제</button>
-				</form>
-			</li>
+				<li>
+					<a class="link-modify-article" href="/questions/${question.questionId}/answers/${each.answerId}/form">수정</a>
+				</li>
+				<li>
+					<form class="form-delete" action="/questions/${question.questionId}/answers/${each.answerId}" method="POST">
+						<input type="hidden" name="_method" value="DELETE" />
+						<button type="submit" class="link-delete-article">삭제</button>
+					</form>
+				</li>
 			</c:if>
 			<sec:authorize access="hasRole('ROLE_USER')">
-			<li>
-				<button type="button" class="link-answer-article" data-answer-id="${each.answerId}" data-answer-user-id="@${each.writer.userId}">언급&darr;</button>
-			</li>
+				<li>
+					<button type="button" class="link-answer-article" data-answer-id="${each.answerId}" data-answer-user-id="@${each.writer.userId}">언급&darr;</button>
+				</li>
 			</sec:authorize>
 		</ul>
 	</div>
