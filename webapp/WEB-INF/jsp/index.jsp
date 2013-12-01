@@ -95,8 +95,10 @@
 </div>
 <script src="${url:resource('/javascripts/jquery.tmpl.min.js')}"></script>
 <script src="${url:resource('/javascripts/main/smalltalk.js')}"></script>
+<script src="${url:resource('/javascripts/main/smalltalkcomment.js')}"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 		smalltalkService.init();
+		commentService.init();
 	});
 </script>
