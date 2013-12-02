@@ -19,8 +19,10 @@
 			<a href="#qna-comment-form">의견 추가하기&darr;</a>
 			<span class="divider"> / </span>
 			<a href="#qna-recently-slipp-comment">SLiPP 최신의견&darr;</a>
+			<c:if test="${question.snsConnected}">
 			<span class="divider"> / </span>
 			<a href="#qna-recently-fb-comment">페북 최신의견&darr;</a>
+			</c:if>
 		</div>
 	</header>
 	<div class="content-main">
