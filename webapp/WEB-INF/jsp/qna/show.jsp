@@ -34,8 +34,8 @@
 						<strong>${question.snsAnswerCount}</strong>개의 의견 from FB
 					</p>
 					<div class="qna-comment-fb-articles">
-						<div class="qna-facebook-comment"></div>
 						<div id="qna-recently-fb-comment"></div>
+						<div class="qna-facebook-comment"></div>
 					</div>
 				</div>
 			</c:if>
@@ -45,10 +45,10 @@
 				</c:if>
 				<p class="qna-comment-count"><strong>${question.answerCount}</strong>개의 의견 from SLiPP</p>
 				<div class="qna-comment-slipp-articles">
+					<div id="qna-recently-slipp-comment"></div>
 					<c:forEach items="${question.answers}" var="each">
 						<slipp:answer each="${each}" isBest="false"/>
 					</c:forEach>
-					<div id="qna-recently-slipp-comment"></div>
 				</div>
 			</div>
 			<form:form modelAttribute="answer" action="/questions/${question.questionId}/answers" method="POST" cssClass="form-write">

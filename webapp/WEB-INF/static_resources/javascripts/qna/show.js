@@ -25,7 +25,6 @@ $(document).ready(function(){
 	setFloatingBtnLike();
 	setFloatingContentSub();
 	showFacebookComments();
-	setRecentlyCommentPosition();
 	
 	function showFacebookComments() {
 		var url = '/api/facebooks/' + questionId + '/comments';
@@ -163,13 +162,5 @@ $(document).ready(function(){
 				$floating.css({top:'', position: 'relative'})
 			}
 		});
-	}
-
-	function setRecentlyCommentPosition() {
-		var $recentlySlippComment = $('.qna-comment-slipp-articles .article').last();
-		var $recentlyFbComment = $('.qna-comment-fb-articles .article').last();
-
-		$('#qna-recently-slipp-comment').insertBefore($recentlySlippComment);
-		$('#qna-recently-fb-comment').insertBefore($recentlyFbComment);
 	}
 });
