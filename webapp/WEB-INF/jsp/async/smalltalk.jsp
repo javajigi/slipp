@@ -16,7 +16,10 @@ taglib prefix="slipp" tagdir="/WEB-INF/tags" %>
 			<span class="smalltalk-item-info-time">${smallTalk.time}</span>
 		</div>
 		<div class="smalltalk-item-cont">${sf:plainText(sf:removeLink(smallTalk.talk))}
-		 댓글 : ${fn:length(smallTalk.smallTalkComments) } / <a href="#" class="write-form-button" data-small-talk-id="${smallTalk.smallTalkId}">[쓰기]</a>
+		<sec:authorize access="hasRole('ROLE_USER')">
+		댓글 : <a href="#" class="show-comments-button" data-small-talk-id="${smallTalk.smallTalkId}">${fn:length(smallTalk.smallTalkComments) }</a> 
+		/ <a href="#" class="write-form-button" data-small-talk-id="${smallTalk.smallTalkId}">[쓰기]</a>
+		</sec:authorize>
 		</div>
 		<c:if test="${not empty smallTalk.siteSummary.targetUrl}">
 			<div class="smalltalk-item-summary">
@@ -35,10 +38,12 @@ taglib prefix="slipp" tagdir="/WEB-INF/tags" %>
 <li class="smalltalk-list-expand">
 	<button class="btn-smalltalk-list-expand" data-smalltalk-count="${fn:length(smallTalks)}">more <i class="icon-smalltalk-expand"></i></button>
 </li>
-<div id="id_commentFormDiv" style="width: 400px;height: 400px;position: absolute; left: 300px;">
-	<form id="id_commentForm" name="commentForm">
+<div id="id_commentFormDiv" style="width: 400px;height: 400px;position: absolute; left: 300px; display: none;">
+	<form id="id_commentForm" name="commentForm" method="post">
 		<input type="text" name="smallTalkId" id="id_smallTalkId" value=""/>
 		<textarea rows="" cols="" id="comments" name="comments"></textarea>
 		<a href="#" class="write-submit-button">저장하기</a>
 	</form>
+</div>
+<div id="id_commentShowDiv" style="width: 400px;height: 400px;position: absolute; left: 300px; top: 100px; background-color: #efefef; display: none;">
 </div>
