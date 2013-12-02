@@ -43,7 +43,7 @@ attribute name="isBest" required="true" rtexprvalue="true" type="java.lang.Boole
 				<a class="btn-dislike-article" href="/api/questions/${question.questionId}/answers/${each.answerId}/dislike" title="싫어요">
 					<i class="foundicon-thumb-down"></i>
 					<span class="dislike-article-txt">싫어요</span>
-					<strong class="dislike-article-count">${each.sumLike}</strong>
+					<strong class="dislike-article-count">${each.sumDislike}</strong>
 				</a>
 			</li>
 			<c:if test="${sf:isWriter(each.writer, loginUser)}">

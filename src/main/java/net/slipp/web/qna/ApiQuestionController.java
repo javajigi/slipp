@@ -52,6 +52,6 @@ public class ApiQuestionController {
     public @ResponseBody Integer dislikeAnswer(@LoginUser SocialUser loginUser, @PathVariable Long questionId, @PathVariable Long answerId)
             throws Exception {
         Answer answer = qnaService.dislikeAnswer(loginUser, answerId);
-        return answer.getSumLike();
+        return answer.getSumDislike();
     }
 }

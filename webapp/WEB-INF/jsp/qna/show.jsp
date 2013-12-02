@@ -78,20 +78,22 @@
 	</div>
 	<div class="content-sub">
 		<div class="floating">
+			<%--  
 			<section class="like-question">
 				<h1>관심두기</h1>
 				<a class="btn-like-question" href="/api/questions/${question.questionId}/like" title="관심글 등록">
 					<i class="icon-like-question"></i>
 					<strong class="like-question-count">${question.sumLike}</strong>
 					<span class="like-question-txt">관심글</span>
-				</a>		
+				</a>	
 			</section>
+			--%>
 			<section class="share">
 				<h1>SNS공유</h1>
 				<div class="share-facebook">
 					<div id="fb-root"></div>
 					<script src="https://connect.facebook.net/en_US/all.js#xfbml=1"></script>
-					<fb:like href="${slippUrl}/questions/${question.questionId}"
+					<fb:like href="${facebookSlippUrl}/questions/${question.questionId}"
 					git	send="true" layout="button_count" width="100" show_faces="true" font=""></fb:like>
 				</div>
 				<div class="share-googleplus">
@@ -118,11 +120,13 @@
 	</div>
 </section>
 
+<script src="https://apis.google.com/js/plusone.js"></script>
 <script src="${url:resource('/javascripts/jquery.validate.min.js')}"></script>
 <script src="${url:resource('/javascripts/highlight.pack.js')}"></script>
 <script>
 hljs.initHighlightingOnLoad();
 questionId = ${question.questionId};
+guestUser = ${loginUser.guest};
 </script>
 <script src="${url:resource('/javascripts/qna/tagparser.js')}"></script>
 <script src="${url:resource('/javascripts/qna/show.js')}"></script>

@@ -49,6 +49,10 @@ $(document).ready(function(){
 	}
 
 	function likeAnswerTo(e) {
+		if (guestUser) {
+			$(location).attr('href', '/users/login');
+			return false;
+		}
 		e.preventDefault();
 		$likeAnswerBtn = $(this);
 		$.post($likeAnswerBtn.attr('href'), {},
@@ -71,6 +75,10 @@ $(document).ready(function(){
 	}
 	
 	function dislikeAnswerTo(e) {
+		if (guestUser) {
+			$(location).attr('href', '/users/login');
+			return false;
+		}
 		e.preventDefault();
 		$dislikeAnswerBtn = $(this);
 		$.post($dislikeAnswerBtn.attr('href'), {},

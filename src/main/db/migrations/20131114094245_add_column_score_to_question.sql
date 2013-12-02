@@ -1,1 +1,0 @@
-alter table question add column score double precision not null default 0 after sum_like;

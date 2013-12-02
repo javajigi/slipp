@@ -60,6 +60,9 @@ public class Answer implements HasCreatedAndUpdatedDate, Comparable<Answer> {
 	@Column(name = "sum_like", nullable = true, columnDefinition="integer DEFAULT 0")
 	private Integer sumLike = 0;
 	
+    @Column(name = "sum_dislike", nullable = true, columnDefinition="integer DEFAULT 0")
+    private Integer sumDislike = 0;	
+	
 	@ManyToOne
 	@org.hibernate.annotations.ForeignKey(name = "fk_answer_parent_id")
 	private Question question;
@@ -163,13 +166,17 @@ public class Answer implements HasCreatedAndUpdatedDate, Comparable<Answer> {
 	public Integer getSumLike() {
 		return sumLike;
 	}
+	
+	public Integer getSumDislike() {
+        return sumDislike;
+    }
 
 	public void upRank() {
 		this.sumLike += 1;
 	}
 	
     public void downRank() {
-        this.sumLike -= 1;
+        this.sumDislike += 1;
     }
 	
 	boolean likedMoreThan(int totalLiked) {
