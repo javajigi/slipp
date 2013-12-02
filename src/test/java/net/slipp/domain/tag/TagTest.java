@@ -76,4 +76,17 @@ public class TagTest {
 		assertThat(newTag.isPooled(), is(true));
 		assertThat(newTag.getParent(), is(parent));
 	}
+    
+    @Test
+    public void moveGroupTag() throws Exception {
+        String name = "newTag";
+        String groupId = "1234";
+        Tag newTag = Tag.newTag(name);
+        newTag.moveGroupTag(groupId);
+        assertThat(newTag, is(Tag.groupedTag(name, groupId)));
+        
+        Tag pooledTag = Tag.pooledTag(name);
+        pooledTag.moveGroupTag(groupId);
+        assertThat(pooledTag, is(Tag.groupedTag(name, groupId)));
+    }
 }    

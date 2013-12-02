@@ -31,7 +31,7 @@ public class LoginPage {
     public IndexPage loginSlipp(final String userName) {
         driver.findElement(By.id("userId")).clear();
         driver.findElement(By.id("userId")).sendKeys(userName);
-        driver.findElement(By.cssSelector(".sign-in-with-sns-submit-btn")).click();
+        driver.findElement(By.cssSelector(".signin-with-sns-submit-btn")).click();
         return new IndexPage(driver);
     }
 
@@ -51,7 +51,7 @@ public class LoginPage {
         driver.findElement(By.id("email")).sendKeys(email);
         driver.findElement(By.id("userId")).clear();
         driver.findElement(By.id("userId")).sendKeys(userId);
-        driver.findElement(By.cssSelector(".sign-in-to-slipp-btn")).click();
+        driver.findElement(By.cssSelector(".signin-to-slipp-btn")).click();
         return new IndexPage(driver);
 
     }

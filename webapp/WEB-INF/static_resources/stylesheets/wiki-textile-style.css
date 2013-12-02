@@ -30,9 +30,12 @@
 	background-image:url(/resources/images/markitup/picture.png);
 }
 .markItUp .markItUpButton10 a {
-	background-image:url(/resources/images/markitup/code.png);
+	background-image:url(/resources/images/markitup/quotes.png);
 }
 .markItUp .markItUpButton11 a {
+	background-image:url(/resources/images/markitup/code.png);
+}
+.markItUp .markItUpButton12 a {
 	background-image:url(/resources/images/markitup/preview.png);	
 }
 .markItUp .preview a {

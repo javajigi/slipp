@@ -9,7 +9,6 @@ import org.eclipse.mylyn.internal.wikitext.confluence.core.block.ExtendedQuoteBl
 import org.eclipse.mylyn.internal.wikitext.confluence.core.block.HeadingBlock;
 import org.eclipse.mylyn.internal.wikitext.confluence.core.block.TableOfContentsBlock;
 import org.eclipse.mylyn.internal.wikitext.confluence.core.block.TextBoxBlock;
-import org.eclipse.mylyn.internal.wikitext.confluence.core.phrase.ConfluenceWrappedPhraseModifier;
 import org.eclipse.mylyn.internal.wikitext.confluence.core.phrase.EmphasisPhraseModifier;
 import org.eclipse.mylyn.internal.wikitext.confluence.core.phrase.SimplePhraseModifier;
 import org.eclipse.mylyn.internal.wikitext.confluence.core.phrase.SimpleWrappedPhraseModifier;
@@ -62,7 +61,6 @@ public class SlippLanguage extends AbstractMarkupLanguage {
 		blocks.add(noformatBlock);
 		paragraphBreakingBlocks.add(noformatBlock);
 
-		blocks.add(new TextBoxBlock(BlockType.PANEL, "panel")); //$NON-NLS-1$
 		blocks.add(new TextBoxBlock(BlockType.NOTE, "note")); //$NON-NLS-1$
 		blocks.add(new TextBoxBlock(BlockType.INFORMATION, "info")); //$NON-NLS-1$
 		blocks.add(new TextBoxBlock(BlockType.WARNING, "warning")); //$NON-NLS-1$
@@ -70,6 +68,9 @@ public class SlippLanguage extends AbstractMarkupLanguage {
 		CodeBlock codeBlock = new CodeBlock();
 		blocks.add(codeBlock);
 		paragraphBreakingBlocks.add(codeBlock);
+		QuoteBlock quoteBlock = new QuoteBlock();
+        blocks.add(quoteBlock);
+        paragraphBreakingBlocks.add(quoteBlock);		
 		blocks.add(new TableOfContentsBlock());
 		ColorBlock colorBlock = new ColorBlock();
 		blocks.add(colorBlock);
@@ -87,8 +88,6 @@ public class SlippLanguage extends AbstractMarkupLanguage {
 		phraseModifierSyntax.add(new SimplePhraseModifier("^", SpanType.SUPERSCRIPT, false)); //$NON-NLS-1$
 		phraseModifierSyntax.add(new SimplePhraseModifier("~", SpanType.SUBSCRIPT, false)); //$NON-NLS-1$
 		phraseModifierSyntax.add(new SimpleWrappedPhraseModifier("{{", "}}", SpanType.MONOSPACE, false)); //$NON-NLS-1$ //$NON-NLS-2$
-		phraseModifierSyntax.add(new ConfluenceWrappedPhraseModifier("{quote}", SpanType.QUOTE, true)); //$NON-NLS-1$ 
-		// phraseModifierSyntax.add(new SlippImagePhraseModifier());
 		phraseModifierSyntax.endGroup(")(?=\\W|$)", 0); //$NON-NLS-1$
 	}
 
@@ -107,7 +106,6 @@ public class SlippLanguage extends AbstractMarkupLanguage {
 		tokenSyntax.add(new PatternLiteralReplacementToken("(----)", "<hr/>")); // horizontal rule //$NON-NLS-1$ //$NON-NLS-2$
 		tokenSyntax.add(new ImpliedHyperlinkReplacementToken());
 		tokenSyntax.add(new AnchorReplacementToken());
-		// tokenSyntax.add(new MentionReplacementToken());
 	}
 
 	@Override

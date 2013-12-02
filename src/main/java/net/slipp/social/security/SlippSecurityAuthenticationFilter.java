@@ -50,6 +50,8 @@ public class SlippSecurityAuthenticationFilter extends AbstractAuthenticationPro
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException, IOException, ServletException {
+		log.debug("redirect url : {}", request.getAttribute("redirect"));
+		
 		if(sessionService.isAuthenticated()) {
 		    log.debug("already authentication userId is : {}", sessionService.getAuthentication().getPrincipal());
 			return sessionService.getAuthentication();

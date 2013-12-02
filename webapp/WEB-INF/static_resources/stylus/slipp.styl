@@ -5,6 +5,7 @@
 @import "utils/icon";
 @import "utils/units";
 @import "partials/layout";
+@import "partials/article";
 @import "partials/list";
 @import "partials/view";
 @import "partials/write";
@@ -29,14 +30,13 @@ label.error
 		margin-right: .2em;
 		content:'\F15A';
 .link-more
+	display: block;
+	padding: .4em 1em;
+	text-align: right;
+	color: #333;
+	background-color: #eaeaea;
+	background-image: linear-gradient(#f5f5f5, #fafafa);
 	@media not-desktop
 		margin:0 -1em;
-		display: block;
-		padding: .4em 1em;
-		text-align: right;
+	a
 		color: #333;
-		background-color: #eaeaea;
-		background-image: linear-gradient(#f5f5f5, #fafafa);
-		a
-			color: #333;
-

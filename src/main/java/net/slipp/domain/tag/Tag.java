@@ -117,6 +117,11 @@ public class Tag {
 			each.tagsToDenormalizedTags();
 		}
 	}
+	
+    public void moveGroupTag(String groupId) {
+        this.pooled = true;
+        this.tagInfo = new TagInfo(groupId, this.name);
+    }
 
 	public boolean isConnectGroup() {
 	    if (tagInfo == null) {
@@ -152,7 +157,7 @@ public class Tag {
 	public static Tag groupedTag(String name, String groupId) {
 		return new Tag(name.toLowerCase(), null, true, new TagInfo(groupId, name));
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

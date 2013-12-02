@@ -22,8 +22,6 @@
         
 	<import resource="applicationContext-social.xml" />
 	<import resource="applicationContext-cache.xml" />
-	<import resource="applicationContext-social.xml" />
-	
 	<import resource="applicationContext-profile.xml" />
 	
 	<bean id="applicationProperties" class="net.slipp.support.utils.ConvenientProperties">
@@ -52,11 +50,6 @@
 		<security:authentication-provider ref="daoAuthenticationProvider" />
 	</security:authentication-manager>
 	
-	<bean id="slippSecurityAuthenticationFilter" 
-		class="net.slipp.social.security.SlippSecurityAuthenticationFilter"
-		p:rememberMeServices-ref="springSocialSecurityRememberMeServices" 
-	/>
-		
 	<bean id="slippRememberMeServices"
 		class="net.slipp.social.security.SlippTokenBasedRememberMeServices">
 		<property name="userDetailsService" ref="slippUserDetailsService" />
@@ -101,6 +94,7 @@
 		<intercept-url pattern="/questions/*/answers/*/form" method="GET" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/questions/*/answers/*" method="PUT" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/questions/*/answers/*/like" method="POST" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/questions/*/answers/*/dislike" method="POST" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/questions" method="PUT" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/questions/*" method="DELETE" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/smalltalks/*" method="POST" access="hasRole('ROLE_USER')" />
@@ -108,13 +102,13 @@
 		<intercept-url pattern="/migrations/**" access="hasRole('ROLE_ADMINISTRATOR')" />
 		<intercept-url pattern="/mails/**" access="hasRole('ROLE_ADMINISTRATOR')" />
 
-	    <form-login login-page="/users/login" 
-	            default-target-url='/'
-	            always-use-default-target='true'
+	    <form-login login-page="/users/login"
+	            always-use-default-target='false'
 	            authentication-failure-url = "/users/login?login_error=1"
 	            login-processing-url="/users/authenticate"
 	            username-parameter="authenticationId"
 	            password-parameter="authenticationPassword"
+	            authentication-success-handler-ref="authenticationSuccessHandler"
 	    />
 
 		<security:logout logout-url="/logout" />
@@ -125,6 +119,18 @@
 
 		<remember-me services-ref="slippRememberMeServices" />
 	</security:http>
+	
+	<bean id="slippSecurityAuthenticationFilter" 
+		class="net.slipp.social.security.SlippSecurityAuthenticationFilter"
+		p:rememberMeServices-ref="springSocialSecurityRememberMeServices"
+		p:authenticationSuccessHandler-ref="authenticationSuccessHandler"
+	/>
+	
+	<bean id="authenticationSuccessHandler" 
+		class="org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler"
+		p:defaultTargetUrl="/"
+		p:targetUrlParameter="redirect"
+	/>
 	
 	<bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder">
 	    <constructor-arg index="0" value="256"/>

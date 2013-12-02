@@ -1,0 +1,134 @@
+.article
+	position: relative;
+	padding: .6em 0 .8em;
+.article-header
+	display: table;
+	width: 100%;
+	padding-bottom: .6em;
+	border-bottom: 1px dashed #dadada;
+.article-header-text,
+.article-header-thumb
+	display: table-cell;
+	vertical-align: middle;
+.article-header-thumb
+	width: 48px;
+.article-author-thumb
+	width: 40px;
+	height: 40px;
+	border-radius: 3px;
+.article-author-name
+	font-weight: bold;
+	font-size: 1.1em;
+.article-author-fbgroup
+	display: inline-block;
+	margin-left: .8em;
+	font-style: italic;
+	font-size: 1em;
+	color: #666;
+	a
+		display: inline-block;
+		color: #333;
+		font-weight: bold;
+		@media phone
+			overflow: hidden;
+			max-width: 8em;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+.article-header-time
+	display: block;
+	font-size: .8em;
+	color: #666;
+	&:hover
+		text-decoration: none;
+		.icon-link
+			color: #3aa;
+
+$for-likebtn-space
+	padding-left: 48px;
+	@media phone
+		padding-left: 0;
+
+.article-doc
+	@extend $for-likebtn-space;
+	img
+		max-width: 100%;
+	blockquote
+		margin-left: 0;
+		margin-right: 0;
+		border-left: 4px solid #efefef;
+		padding-left: .5em;
+
+.article-util
+	@extend $for-likebtn-space;
+	form
+		display: inline-block;
+
+$article-util-link
+	color: #999;
+	padding: .4em;
+	border-radius: 3px;
+	border: 0;
+	background-color: transparent;
+	white-space: nowrap;
+	&:hover
+		text-decoration: none;
+		background-color: #dadada;
+
+.article-util-list
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	color: #999;
+	li
+		display: inline-block;
+		&:before
+			content: '•';
+			margin: 0 -.4em;
+		&:first-child
+			&:before
+				display: none;
+	a,
+	button
+		@extend $article-util-link;
+	.btn-like-article
+		color: #44CA7F;
+		&:hover
+			background-color: lighten(@color, 40);
+	.btn-dislike-article
+		color: #BE6060;
+		&:hover
+			background-color: lighten(@color, 40);
+	.link-answer-article
+		color: #5989B6;
+		&:hover
+			background-color: lighten(@color, 40);
+
+	.foundicon-thumb-up,
+	.foundicon-thumb-down
+		position: relative;
+		top: 2px;
+
+.like-question-txt,
+.like-article-txt,
+.dislike-article-txt
+	font-size: 0;
+
+// .like-question
+.btn-like-question
+	display: inline-block;
+	margin-top: .2em;
+	padding: .3em .4em 0;
+	border: 1px solid #efefef;
+	border-radius: 3px;
+	font-size: 1.6em;
+	line-height: 1em;
+	&:hover
+		border-color: #bebebe;
+		background-color: #FFF4F4;
+		text-decoration: none;
+		.icon-like-question
+			color: #F89595;
+.icon-like-question
+	color: #F6C9C9;
+.like-question-count
+	color: #000;

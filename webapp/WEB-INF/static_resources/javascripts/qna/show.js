@@ -11,6 +11,8 @@ $(document).ready(function(){
 	$('.link-answer-article').on('click', addAnswerTo);
 
 	$('.btn-like-article').on('click', likeAnswerTo);
+	$('.btn-like-question').on('click', likeQuestionTo);
+	$('.btn-dislike-article').on('click', dislikeAnswerTo);
 
 	$('.form-delete').on('submit', function() {
 		if ( !confirm('정말 삭제하시겠습니까?') ) {
@@ -22,7 +24,18 @@ $(document).ready(function(){
 	setImgRealSizeLink();
 	setFloatingBtnLike();
 	setFloatingContentSub();
-
+	showFacebookComments();
+	
+	function showFacebookComments() {
+		var url = '/api/facebooks/' + questionId + '/comments';
+		$.get(url,
+			function(response) {
+				$('.qna-facebook-comment').html(response);
+				return false;
+			}, 'html'
+		);
+	}
+	
 	function addAnswerTo() {
 		var orgUserId = $(this).data('answer-user-id');
 		var $contents = $('#contents');
@@ -34,11 +47,42 @@ $(document).ready(function(){
 		return false;
 	}
 
-	function likeAnswerTo() {
-		$likeAnswerBtn = $(this).parent();
+	function likeAnswerTo(e) {
+		if (guestUser) {
+			$(location).attr('href', '/users/login');
+			return false;
+		}
+		e.preventDefault();
+		$likeAnswerBtn = $(this);
 		$.post($likeAnswerBtn.attr('href'), {},
 			function(result) {
-				$likeAnswerBtn.find('.like-count').html(result);
+				$likeAnswerBtn.find('.like-article-count').html(result);
+			}, 'json'
+		);
+		return false;
+	}
+	
+	function likeQuestionTo(e) {
+		e.preventDefault();
+		$likeQuestionBtn = $(this);
+		$.post($likeQuestionBtn.attr('href'), {},
+			function(result) {
+				$likeQuestionBtn.find('.like-question-count').html(result);
+			}, 'json'
+		);
+		return false;
+	}
+	
+	function dislikeAnswerTo(e) {
+		if (guestUser) {
+			$(location).attr('href', '/users/login');
+			return false;
+		}
+		e.preventDefault();
+		$dislikeAnswerBtn = $(this);
+		$.post($dislikeAnswerBtn.attr('href'), {},
+			function(result) {
+				$dislikeAnswerBtn.find('.dislike-article-count').html(result);
 			}, 'json'
 		);
 		return false;

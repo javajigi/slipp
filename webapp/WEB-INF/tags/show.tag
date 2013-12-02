@@ -22,7 +22,7 @@ attribute name="question" required="true" rtexprvalue="true" type="net.slipp.dom
 	</div>
 	<c:if test="${sf:isWriter(question.writer, loginUser)}">
 		<div class="article-util">
-			<ul class="list-util">
+			<ul class="article-util-list">
 				<li>
 					<a class="link-modify-article" href="/questions/${question.questionId}/form">수정</a>
 				</li>

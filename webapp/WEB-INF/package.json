@@ -1,0 +1,7 @@
+{
+  "name": "slipp",
+  "private": true,
+  "dependencies": {
+    "nib": "1.x"
+  }
+}
