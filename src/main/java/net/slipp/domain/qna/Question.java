@@ -94,6 +94,9 @@ public class Question implements HasCreatedDate {
 
     @Column(name = "denormalized_tags", length = 100)
     private String denormalizedTags; // 역정규화한 태그를 저장
+    
+    @Column(name = "sum_like", nullable = true, columnDefinition="integer DEFAULT 0")
+    private Integer sumLike = 0;    
 
     @OneToMany(mappedBy = "question", fetch = FetchType.LAZY)
     @OrderBy("answerId ASC")
@@ -101,7 +104,7 @@ public class Question implements HasCreatedDate {
 
     @Column(name = "deleted", nullable = false)
     private boolean deleted = false;
-
+    
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "question_sns_connections", joinColumns = @JoinColumn(name = "question_id"))
     @org.hibernate.annotations.ForeignKey(name = "fk_question_sns_connection_question_id")
@@ -216,6 +219,10 @@ public class Question implements HasCreatedDate {
     public int getShowCount() {
         return showCount;
     }
+    
+    public Integer getSumLike() {
+        return sumLike;
+    }
 
     public String getPlainTags() {
         String displayTags = "";
@@ -328,7 +335,7 @@ public class Question implements HasCreatedDate {
     public boolean isSnsConnected() {
         return !snsConnetions.isEmpty();
     }
-
+    
     /**
      * 베스트 댓글 하나를 반환한다.
      * 
@@ -345,6 +352,10 @@ public class Question implements HasCreatedDate {
         }
 
         return answer;
+    }
+    
+    public void upRank() {
+        this.sumLike += 1;
     }
 
     private Answer getTopLikeAnswer() {

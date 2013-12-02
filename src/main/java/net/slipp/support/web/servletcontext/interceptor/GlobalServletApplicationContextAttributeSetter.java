@@ -33,6 +33,7 @@ public class GlobalServletApplicationContextAttributeSetter implements ServletCo
 
 	private void addApplicationUrl() {
 		servletContext.setAttribute("slippUrl", applicationProperties.get("application.url"));
+		servletContext.setAttribute("facebookSlippUrl", applicationProperties.get("facebook.application.url"));
 	}
 
 	private void populateApplicationContextAttributes() {

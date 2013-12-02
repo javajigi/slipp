@@ -1,156 +1,72 @@
-.view-content
-	.article-title
-		margin-bottom: 0;
-		padding-bottom: .67em;
-		border-bottom: 1px solid #dadada;
-	.article-count
-		margin: 0;
-		padding: 1em 0 0;
-		font-weight: bold;
-		font-size: 1.2em;
-	.msg-to-login
-		a
-			text-decoration: underline;
-	.best-article-label
-		margin-bottom: 1em;
-		strong
-			border-bottom: 1px solid #daa9a9;
-			font-size: 1.2em;
-	.article
-		position: relative;
-		padding: .6em 0 .8em;
-		border-bottom: 2px solid #dadada;
-	.qna-comment
-		.article
-			border-bottom-width: 1px;
-			&.best-article
-				border-bottom-width: 2px;
-				.btn-like-article
-					top: 108px;
-	.article-header
-		display: table;
-		width: 100%;
-		padding-bottom: .6em;
-		border-bottom: 1px dashed #dadada;
-	.article-header-text,
-	.article-header-thumb
-		display: table-cell;
-		vertical-align: middle;
-	.article-header-thumb
-		width: 48px;
-	.article-author-thumb
-		width: 40px;
-		height: 40px;
-		border-radius: 3px;
-	.article-author-name
-		font-weight: bold;
-		font-size: 1.1em;
-	.article-author-fbgroup
-		display: inline-block;
-		margin-left: .8em;
-		font-style: italic;
-		font-size: 1em;
-		color: #666;
-		a
-			display: inline-block;
-			color: #333;
-			font-weight: bold;
-			@media phone
-				overflow: hidden;
-				max-width: 8em;
-				white-space: nowrap;
-				text-overflow: ellipsis;
-	.article-header-time
-		display: block;
+.qna-header
+	border-bottom: 4px solid #efefef;
+
+.qna-title
+	margin-bottom: 0;
+
+.qna-nav
+	padding-bottom: .67em;
+	.divider
+		padding-left: .4em;
+		padding-right: .4em;
 		font-size: .8em;
-		color: #666;
-		&:hover
-			text-decoration: none;
-			.icon-link
-				color: #3aa;
-	.btn-like-article
-		position: absolute;
-		top: 60px;
-		width: 40px;
-		padding: 0;
-		margin: 0;
-		border: 0;
-		background-color: transparent;
-		opacity: .4;
-		transition: opacity .4s;
-		&:hover
-			opacity: 1;
-		&.fixed
-			position: fixed;
-			@media phone
-				position: absolute;
-		@media phone
-			top: 10px !important;
-			right: 0;
-		.icon-star
-			position: absolute;
-			left: 0;
-			top: 0;
-			font-size: 3em;
-			color: darken(#F1EA91, 10);
-		.like-count
-			position: relative;
-			z-index: 1;
-			text-align: right;
-			padding-top: 1em;
-			display: block;
-			text-align: center;
-			text-shadow: 0 0px 3px white;
-			color: #000;
-		.txt
-			font-size: 0;
-	.article-doc,
-	.article-util
-		padding-left: 48px;
-		@media phone
-			padding-left: 0;
-	.article-doc
-		img
-			max-width: 100%;
-	.article-util
-		.list-util
-			margin: 0;
-			padding: 0;
-			list-style: none;
-			color: #999;
-			li
-				display: inline-block;
-				&:before
-					content: '•';
-					margin: 0 -.4em;
-				&:first-child
-					&:before
-						display: none;
-			a,
-			button
-				color: #999;
-				padding: .4em;
-				border-radius: 3px;
-				border: 0;
-				background-color: transparent;
-				white-space: nowrap;
-				&:hover
-					text-decoration: none;
-					background-color: #dadada;
-		form
-			display: inline-block;
-	.floating
-		> section
-			margin-bottom: 2em;
-			> h1
-				margin-bottom: 0;
-				font-size: 1.2em;
-			> div
-				margin: .5em 0;
-		.link-back-to-list
-			padding: .4em .8em;
-			border-radius: 4px;
-			&:hover
-				text-decoration: none;
-				color: #fff;
-				background-color: #005580;
+		color: #dadada;
+
+.qna-comment
+	.article
+		&:first-child
+			border-top: 1px solid #dfdfdf;
+		border-bottom: 1px solid #dfdfdf;
+		&.best-article
+			border-bottom-width: 4px;
+			.btn-like-article
+				top: 108px;
+
+.qna-comment-slipp,
+.qna-comment-fb
+	margin-top: 2em;
+	border-top: 4px solid #efefef;
+
+.qna-comment-count
+	margin: 0;
+	padding: 1em 0 0;
+	font-weight: bold;
+	font-size: 1.2em;
+
+.qna-best-comment-label
+	margin-bottom: 1em;
+	strong
+		border-bottom: 1px solid #daa9a9;
+		font-size: 1.2em;
+
+.qna-login-for-comment-msg
+	padding: 1.2em;
+	background: #c7e8f7;
+
+.link-back-to-list
+	padding: .4em .8em;
+	border-radius: 4px;
+	&:hover
+		text-decoration: none;
+		color: #fff;
+		background-color: #005580;
+
+
+.floating
+	position: fixed;
+	margin-left: 2em;
+	padding-left: 1em;
+	padding-bottom: 1em;
+	@media not-desktop
+		border-top: 4px solid #efefef;
+		position: static;
+		margin-left: 0;
+		padding-left: 0;
+		padding-bottom: 0;
+	> section
+		margin-bottom: 2em;
+		> h1
+			margin-bottom: 0;
+			font-size: 1.2em;
+		> div
+			margin: .5em 0;

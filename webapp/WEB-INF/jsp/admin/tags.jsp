@@ -5,7 +5,7 @@
 </head>
 
 <section class="taglist-content">
-	<h1 class="article-title">태그 목록</h1>
+	<h1>태그 목록</h1>
 	<div class="content-main">
 		<slipp:tags tags="${tags}" admin="true"/>
 		<nav class="pager">

@@ -8,8 +8,6 @@ import static net.slipp.web.QnAPageableHelper.revisedPage;
 import java.net.URLEncoder;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import net.slipp.domain.user.PasswordDto;
 import net.slipp.domain.user.SocialUser;
@@ -48,10 +46,10 @@ public class UsersController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public String create(UserForm user, HttpServletRequest request, HttpServletResponse response) {
+    public String create(UserForm user, String redirect) {
         SocialUser socialUser = userService.createSlippUser(user.getUserId(), user.getEmail());
         autoLoginAuthenticator.login(socialUser.getEmail(), socialUser.getRawPassword());
-        return "redirect:/";
+        return "redirect:" + redirect;
     }
 
     @RequestMapping("/fblogout")

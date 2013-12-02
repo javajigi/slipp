@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import net.slipp.domain.smalltalk.SmallTalk;
 import net.slipp.domain.wiki.WikiPage;
 import net.slipp.service.qna.QnaService;
 import net.slipp.service.smalltalk.SmallTalkService;
@@ -48,8 +47,6 @@ public class HomeController {
 	}
 
 	private void productionMode(Model model) {
-//		List<SmallTalk> smallTalks = smallTalkService.getLastTalks();
-//		model.addAttribute("smallTalks", smallTalks);
 		if (isProductionMode()) {
 			model.addAttribute("pages", wikiService.findWikiPages());			
 		}else{

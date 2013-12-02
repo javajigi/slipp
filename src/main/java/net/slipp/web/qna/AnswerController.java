@@ -1,8 +1,10 @@
 package net.slipp.web.qna;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import net.slipp.domain.qna.Answer;
+import net.slipp.domain.qna.TemporaryAnswer;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.service.qna.QnaService;
 import net.slipp.service.tag.TagService;
@@ -16,7 +18,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/questions/{questionId}/answers")
@@ -30,13 +31,14 @@ public class AnswerController {
 	private TagService tagService;
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public String create(@LoginUser SocialUser loginUser, @PathVariable Long questionId, Answer answer)
+	public String create(@LoginUser SocialUser loginUser, @PathVariable Long questionId, Answer answer, HttpSession session)
 			throws Exception {
 		logger.debug("questionId :{}, answer : {}", questionId, answer);
 		qnaService.createAnswer(loginUser, questionId, answer);
+		session.removeAttribute(TemporaryAnswer.TEMPORARY_ANSWER_KEY);
 		return String.format("redirect:/questions/%d", questionId);
 	}
-
+	
 	@RequestMapping(value = "{answerId}", method = RequestMethod.DELETE)
 	public String delete(@LoginUser SocialUser loginUser, @PathVariable Long questionId, @PathVariable Long answerId)
 			throws Exception {
@@ -62,13 +64,5 @@ public class AnswerController {
 	public String update(@LoginUser SocialUser loginUser, @PathVariable Long questionId, @PathVariable Long answerId, Answer answer) throws Exception {
 		qnaService.updateAnswer(loginUser, answer);
 		return String.format("redirect:/questions/%d#answer-%d", questionId, answerId);
-	}
-		
-	@RequestMapping(value = "/{answerId}/like", method = RequestMethod.POST)
-	public @ResponseBody Integer like(@LoginUser SocialUser loginUser, @PathVariable Long questionId, @PathVariable Long answerId)
-			throws Exception {
-		qnaService.likeAnswer(loginUser, answerId);
-		Answer answer = qnaService.findAnswerById(answerId);
-		return answer.getSumLike();
 	}
 }
