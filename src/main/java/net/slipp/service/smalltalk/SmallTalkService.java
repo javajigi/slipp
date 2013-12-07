@@ -70,4 +70,10 @@ public class SmallTalkService {
 	private Sort sortByIdDesc() {
 		return new Sort(Sort.Direction.DESC, "smallTalkId");
 	}
+
+	public List<SmallTalkComment> findCommnetsBySmallTalkId(Long smallTalkId) {
+		SmallTalk smallTalk = new SmallTalk();
+		smallTalk.setSmallTalkId(smallTalkId);
+		return smallTalkCommentRepository.findBySmallTalk(smallTalk);
+	}
 }

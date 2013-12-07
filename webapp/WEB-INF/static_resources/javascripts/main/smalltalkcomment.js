@@ -1,20 +1,29 @@
 var commentService = {
 	init : function(){
 		var service = this;
-		service.show();
+		service.showWriteForm();
+		service.showComments();
 		service.save();
 	},
-	show : function(){
+	showComments : function(){
+		var service = this;
+		$(document).on('click', '.show-comments-button', function(evt){
+			evt.preventDefault();
+			var smallTalkId = $(this).data('small-talk-id');
+			$.get('/ajax/smalltalks/'+smallTalkId+'/comments', function(data){
+				$('#id_commentShowDiv').html(data);
+				$('#id_commentShowDiv').toggle();
+			});
+		});
+	},
+	showWriteForm : function(){
 		var service = this;
 		$(document).on('click', '.write-form-button', function(evt){
 			evt.preventDefault();
 			var smallTalkId = $(this).data('small-talk-id');
-			service.form(smallTalkId);
+			$('#id_smallTalkId').val(smallTalkId);
+			$('#id_commentFormDiv').toggle();
 		});
-	},
-	form : function(smallTalkId){
-		$('#id_smallTalkId').val(smallTalkId);
-		$('#id_commentForm').show();
 	},
 	save : function(){
 		$(document).on('click', '.write-submit-button', function(evt){
