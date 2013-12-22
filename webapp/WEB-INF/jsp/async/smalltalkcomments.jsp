@@ -9,8 +9,11 @@ taglib prefix="url" uri="http://www.slipp.net/url"%><%@
 taglib prefix="sf" uri="http://slipp.net/functions"%><%@
 taglib prefix="sl" uri="http://www.slipp.net/tags"%><%@
 taglib prefix="slipp" tagdir="/WEB-INF/tags" %>
-<ul>
+<ul class="smalltalk-replylist">
 <c:forEach items="${smalltalkComments}" var="smalltalkComment" varStatus="status">
-	<li>${smalltalkComment.writer.userId}: ${smalltalkComment.comments}</li>
+	<li>
+        <strong class="smalltalk-replylist-author">${smalltalkComment.writer.userId}</strong>: 
+        <span class="smalltalk-replylist-cont">${smalltalkComment.comments}</span>
+    </li>
 </c:forEach>
 </ul>

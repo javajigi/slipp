@@ -3,6 +3,8 @@ smalltalk-theme-color = #8FB4B9;
 .smalltalk
   position: relative;
   z-index: 0;
+.smalltalk-replyform-fragment
+  display: none;
 .smalltalk-form
   position: relative;
   z-index: 1;
@@ -140,7 +142,7 @@ for i in (1..10)
     background-color: #f3f3f3;
 .smalltalk-item-info
   margin-bottom: .4em;
-  border-bottom: 1px dashed #dfdfdf;
+  border-bottom: 2px dashed #dfdfdf;
 .smalltalk-item-info-time
   padding-left: .8em;
   color: #999;
@@ -188,5 +190,39 @@ for i in (1..10)
     display: none;
 
 .btn-smalltalk-reply
+  display: none;
+  padding: 3px;
+  border-bottom: none !important;
+  border-radius: 3px;
+  background: #eaeaea;
   font-size: .7em;
-  
+  vertical-align: middle;
+  &:hover
+    background-color: #d1d1d1;
+  .smalltalk-item:hover &
+    display: inline-block;
+
+.smalltalk-item-replylist
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px dashed #dfdfdf;
+
+.smalltalk-replyform-submit
+  width: 100%;
+  margin: 0 0 .4em;
+  padding: .4em;
+  border: 0 none;
+  border-radius: 0 0 3px 3px;
+  background-color: #aaa;
+  color: #fff;
+  &:hover
+    background-color: darken(@background-color, 10);
+
+.smalltalk-replylist
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  text-indent: -2em;
+  margin-left: 2em;
+// .smalltalk-replylist-author
+// .smalltalk-replylist-cont

@@ -8,8 +8,8 @@ var commentService = {
 			service.showWriteForm(evt);
 		});
 		
-		$('#id_commentForm').on('submit', function(evt){
-			service.save(evt);
+		$('#id_commentForm').on('submit', function(){
+			service.save();
 		});
 	},
 	showComments : function(evt){
@@ -30,15 +30,15 @@ var commentService = {
 		var actionUrl = '/smalltalks/'+smallTalkId+'/comments';
 		$('#id_commentForm').attr('action', actionUrl);
 
-		$item.find('.smalltalk-item-replyform').append($('#id_commentFormDiv'))
+		$item.find('.smalltalk-item-replyform').append($('#id_commentFormDiv'));
+		$('.tf-smalltalk-replyform-msg').focus();
 	},
-	save : function(evt){
-		evt.preventDefault();
+	save : function(){
 		var smallTalkId = $('#id_smallTalkId').val();
 		var comment = $('#comments').val();
 		if( typeof(smallTalkId) == 'undefined' || smallTalkId.length == 0 || comment == ''){
 			return false;
 		}
-		return false;
+		return true;
 	}
 }
