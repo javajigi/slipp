@@ -91,9 +91,9 @@ h2,h3{page-break-after:avoid}
 }.container,.box-write .markItUpHeader,.home-content,.choose-login-type,.login-with-slipp-submit,.person-info,.person-articles,.smalltalk-form-util,.smalltalk-item-summary{*zoom:1;}
 .container:before,.box-write .markItUpHeader:before,.home-content:before,.choose-login-type:before,.login-with-slipp-submit:before,.person-info:before,.person-articles:before,.smalltalk-form-util:before,.smalltalk-item-summary:before,.container:after,.box-write .markItUpHeader:after,.home-content:after,.choose-login-type:after,.login-with-slipp-submit:after,.person-info:after,.person-articles:after,.smalltalk-form-util:after,.smalltalk-item-summary:after{content:'';display:table;line-height:0}
 .container:after,.box-write .markItUpHeader:after,.home-content:after,.choose-login-type:after,.login-with-slipp-submit:after,.person-info:after,.person-articles:after,.smalltalk-form-util:after,.smalltalk-item-summary:after{clear:both}
-.form-write .box-input-line input[type='text'],.choose-login-type input[type='text'],.choose-login-type input[type='password'],.person-content input[type='text'],.person-content input[type='password']{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;border:1px solid #dadada;-webkit-border-radius:4px;border-radius:4px;padding:.5em}
-.form-write .submit-write .btn-submit,.login-with-slipp-submit-btn,.signin-to-slipp-btn,.signin-with-sns-submit-btn,.person-change-account-setting-submit,.person-change-pw-submit{padding:.5em .8em;border:0 none;-webkit-border-radius:4px;border-radius:4px;color:#fff;background-color:#005580;}
-.form-write .submit-write .btn-submit:hover,.login-with-slipp-submit-btn:hover,.signin-to-slipp-btn:hover,.signin-with-sns-submit-btn:hover,.person-change-account-setting-submit:hover,.person-change-pw-submit:hover{background-color:#0077b3}
+.form-write .box-input-line input[type='text'],.login-content input[type='text'],.login-content input[type='password'],.person-content input[type='text'],.person-content input[type='password']{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;border:1px solid #dadada;-webkit-border-radius:4px;border-radius:4px;padding:.5em}
+.form-write .submit-write .btn-submit,.login-with-slipp-submit-btn,.sign-in-to-slipp-btn,.sign-in-with-sns-submit-btn,.person-change-account-setting-submit,.person-change-pw-submit{padding:.5em .8em;border:0 none;-webkit-border-radius:4px;border-radius:4px;color:#fff;background-color:#005580;}
+.form-write .submit-write .btn-submit:hover,.login-with-slipp-submit-btn:hover,.sign-in-to-slipp-btn:hover,.sign-in-with-sns-submit-btn:hover,.person-change-account-setting-submit:hover,.person-change-pw-submit:hover{background-color:#0077b3}
 @font-face{font-family:'batch-icons';src:url("/resources/webfonts/batch-icons-webfont.eot");src:url("/resources/webfonts/batch-icons-webfont.eot?#iefix") format('embedded-opentype'),url("/resources/webfonts/batch-icons-webfont.woff") format('woff'),url("/resources/webfonts/batch-icons-webfont.ttf") format('truetype'),url("/resources/webfonts/batch-icons-webfont.svg#hi") format('svg');font-weight:normal;font-style:normal}
 @font-face{font-family:'SocialFoundicons';src:url("/resources/webfonts/social_foundicons.eot");src:url("/resources/webfonts/social_foundicons.eot?#iefix") format("embedded-opentype"),url("/resources/webfonts/social_foundicons.woff") format("woff"),url("/resources/webfonts/social_foundicons.ttf") format("truetype"),url("/resources/webfonts/social_foundicons.svg#SocialFoundicons") format("svg");font-weight:normal;font-style:normal}
 [class*='icon-']{line-height:1em;}
@@ -118,7 +118,7 @@ h2,h3{page-break-after:avoid}
 .icon-key:before{content:'\F0C0'}
 .icon-smalltalk-expand:before{content:'\F149'}
 .icon-smalltalk-msg:before{content:'\F075'}
-.icon-like-question:before{content:'\F049'}
+.icon-smalltalk-reply:before{content:'\F158'}
 [class*='foundicon-']{display:inline;width:auto;height:auto;line-height:inherit;vertical-align:baseline;background-image:none;background-position:0 0;background-repeat:repeat;}
 [class*='foundicon-']:before{font-family:'SocialFoundicons';font-weight:normal;font-style:normal;text-decoration:inherit}
 .foundicon-thumb-up:before{content:'\f000'}
@@ -480,6 +480,7 @@ body{overflow-y:scroll}
 .btn-smalltalk-list-expand:hover:after{border-top-color:#709fa5}
 .smalltalk-notice{margin:0;padding-top:.4em;text-align:right;}
 .ui-smalltalk-list-collapse .smalltalk-notice{display:none}
+.btn-smalltalk-reply{font-size:.7em}
 label.error{display:block;color:#f88;}
 label.error:before{font-family:'batch-icons';speak:none;font-style:normal;font-weight:normal;line-height:1;-webkit-font-smoothing:antialiased;margin-right:.2em;content:'\F15A'}
 .link-more{display:block;padding:.4em 1em;text-align:right;color:#333;background-color:#eaeaea;background-image:-webkit-linear-gradient(#f5f5f5, #fafafa);background-image:-moz-linear-gradient(#f5f5f5, #fafafa);background-image:-o-linear-gradient(#f5f5f5, #fafafa);background-image:-ms-linear-gradient(#f5f5f5, #fafafa);background-image:linear-gradient(#f5f5f5, #fafafa);}
