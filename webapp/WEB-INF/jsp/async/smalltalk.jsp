@@ -10,16 +10,18 @@ taglib prefix="sf" uri="http://slipp.net/functions"%><%@
 taglib prefix="sl" uri="http://www.slipp.net/tags"%><%@
 taglib prefix="slipp" tagdir="/WEB-INF/tags" %>
 <c:forEach items="${smallTalks}" var="smallTalk" varStatus="status">
-	<li class="smalltalk-item smalltalk-item-${status.count}">
+	<li class="smalltalk-item smalltalk-item-${status.count}" data-smalltalk-id="${smallTalk.smallTalkId}">
 		<div class="smalltalk-item-info">
 			<strong class="smalltalk-item-info-author">${smallTalk.writer.userId}</strong>
 			<span class="smalltalk-item-info-time">${smallTalk.time}</span>
 		</div>
-		<div class="smalltalk-item-cont">${sf:plainText(sf:removeLink(smallTalk.talk))}
-		<sec:authorize access="hasRole('ROLE_USER')">
-		댓글 : <a href="#" class="show-comments-button" data-small-talk-id="${smallTalk.smallTalkId}">${fn:length(smallTalk.smallTalkComments) }</a> 
-		/ <a href="#" class="write-form-button" data-small-talk-id="${smallTalk.smallTalkId}">[쓰기]</a>
-		</sec:authorize>
+		<div class="smalltalk-item-cont">
+			${sf:plainText(sf:removeLink(smallTalk.talk))}
+			<sec:authorize access="hasRole('ROLE_USER')">
+				<a class="btn-smalltalk-reply" href="javacript:;" role="button" data-smalltalk-id="${smallTalk.smallTalkId}">
+					<i class="icon-smalltalk-reply"></i> 답글
+				</a>
+			</sec:authorize>
 		</div>
 		<c:if test="${not empty smallTalk.siteSummary.targetUrl}">
 			<div class="smalltalk-item-summary">
@@ -33,17 +35,12 @@ taglib prefix="slipp" tagdir="/WEB-INF/tags" %>
 				<a class="smalltalk-item-summary-link" href="${smallTalk.siteSummary.targetUrl}" target="_blank" title="링크로 이동">더보기</a>
 			</div>
 		</c:if>
+		<div class="smalltalk-item-replylist">
+			댓글 : <a href="#" class="smalltalk-item-show-comments">${fn:length(smallTalk.smallTalkComments) }</a> 
+		</div>
+		<div class="smalltalk-item-replyform"></div>
 	</li>
 </c:forEach>
 <li class="smalltalk-list-expand">
 	<button class="btn-smalltalk-list-expand" data-smalltalk-count="${fn:length(smallTalks)}">more <i class="icon-smalltalk-expand"></i></button>
 </li>
-<div id="id_commentFormDiv" style="width: 400px;height: 400px;position: absolute; left: 300px; display: none;">
-	<form id="id_commentForm" name="commentForm" method="post">
-		<input type="text" name="smallTalkId" id="id_smallTalkId" value=""/>
-		<textarea rows="" cols="" id="comments" name="comments"></textarea>
-		<a href="#" class="write-submit-button">저장하기</a>
-	</form>
-</div>
-<div id="id_commentShowDiv" style="width: 400px;height: 400px;position: absolute; left: 300px; top: 100px; background-color: #efefef; display: none;">
-</div>

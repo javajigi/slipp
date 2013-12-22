@@ -70,8 +70,14 @@
 						</div>
 				</form>
 			</sec:authorize>
-			<ul class='smalltalk-list'>
-			</ul>
+			<ul class='smalltalk-list'></ul>
+			<div id="id_commentFormDiv" style="position: relative;z-index: 1000;">
+				<form class="smalltalk-replyform" id="id_commentForm" name="commentForm" method="post">
+					<input type="hidden" name="smallTalkId" id="id_smallTalkId" value=""/>
+					<textarea class="tf-smalltalk-replyform-msg" id="comments" name="comments"></textarea>
+					<button class="smalltalk-replyform-submit" type="submit">한마디 보태기</button>
+				</form>
+			</div>
 			<p class="smalltalk-notice">* 최근 10개까지만 보여집니다.</p>
 		</section>
 		<section class="notice">

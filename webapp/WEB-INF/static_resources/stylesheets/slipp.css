@@ -118,6 +118,7 @@ h2,h3{page-break-after:avoid}
 .icon-key:before{content:'\F0C0'}
 .icon-smalltalk-expand:before{content:'\F149'}
 .icon-smalltalk-msg:before{content:'\F075'}
+.icon-smalltalk-reply:before{content:'\F158'}
 [class*='foundicon-']{display:inline;width:auto;height:auto;line-height:inherit;vertical-align:baseline;background-image:none;background-position:0 0;background-repeat:repeat;}
 [class*='foundicon-']:before{font-family:'SocialFoundicons';font-weight:normal;font-style:normal;text-decoration:inherit}
 .foundicon-thumb-up:before{content:'\f000'}
@@ -469,6 +470,7 @@ body{overflow-y:scroll}
 .btn-smalltalk-list-expand:hover:after{border-top-color:#709fa5}
 .smalltalk-notice{margin:0;padding-top:.4em;text-align:right;}
 .ui-smalltalk-list-collapse .smalltalk-notice{display:none}
+.btn-smalltalk-reply{font-size:.7em}
 label.error{display:block;color:#f88;}
 label.error:before{font-family:'batch-icons';speak:none;font-style:normal;font-weight:normal;line-height:1;-webkit-font-smoothing:antialiased;margin-right:.2em;content:'\F15A'}
 @media (max-width: 979px){.link-more{margin:0 -1em;display:block;padding:.4em 1em;text-align:right;color:#333;background-color:#eaeaea;background-image:-webkit-linear-gradient(#f5f5f5, #fafafa);background-image:-moz-linear-gradient(#f5f5f5, #fafafa);background-image:-o-linear-gradient(#f5f5f5, #fafafa);background-image:-ms-linear-gradient(#f5f5f5, #fafafa);background-image:linear-gradient(#f5f5f5, #fafafa)}

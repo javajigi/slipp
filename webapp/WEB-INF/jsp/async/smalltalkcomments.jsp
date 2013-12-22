@@ -11,6 +11,6 @@ taglib prefix="sl" uri="http://www.slipp.net/tags"%><%@
 taglib prefix="slipp" tagdir="/WEB-INF/tags" %>
 <ul>
 <c:forEach items="${smalltalkComments}" var="smalltalkComment" varStatus="status">
-	<li>${smalltalkComment.comments }</li>
+	<li>${smalltalkComment.writer.userId}: ${smalltalkComment.comments}</li>
 </c:forEach>
 </ul>
