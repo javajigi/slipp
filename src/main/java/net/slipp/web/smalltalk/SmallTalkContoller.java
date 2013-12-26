@@ -50,20 +50,8 @@ public class SmallTalkContoller {
 		return "async/smalltalk";
 	}
 	
-	@RequestMapping(value = "/smalltalks/{id}/comments", method = RequestMethod.POST)
-	public String saveComment(@LoginUser SocialUser loginUser, @PathVariable Long id, SmallTalkComment smallTalkComment) {
-		try {
-			log.debug("Comments : {}", smallTalkComment);
-			smallTalkComment.setWriter(loginUser);
-			smallTalkService.createComment(id, smallTalkComment);
-		} catch (Exception e) {
-			log.error("SmallTalkComment 데이터를 저장하는 중 오류. [Form] : {}", smallTalkComment, e);
-		}
-		return "redirect:/";
-	}
-	
     @RequestMapping(value = "/ajax/smalltalks/{id}/comments", method = RequestMethod.POST)
-    public @ResponseBody SmallTalkComment saveComment2(@LoginUser SocialUser loginUser, @PathVariable Long id, SmallTalkComment smallTalkComment) {
+    public @ResponseBody SmallTalkComment saveComment(@LoginUser SocialUser loginUser, @PathVariable Long id, SmallTalkComment smallTalkComment) {
         try {
             log.debug("Comments : {}", smallTalkComment);
             smallTalkComment.setWriter(loginUser);

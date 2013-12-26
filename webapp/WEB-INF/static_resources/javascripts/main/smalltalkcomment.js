@@ -27,18 +27,26 @@ var commentService = {
 		var smallTalkId = $item.data('smalltalk-id');
 
 		$('#id_smallTalkId').val(smallTalkId);
-		var actionUrl = '/smalltalks/'+smallTalkId+'/comments';
+		var actionUrl = '/ajax/smalltalks/'+smallTalkId+'/comments';
 		$('#id_commentForm').attr('action', actionUrl);
 
 		$item.find('.smalltalk-item-replyform').append($('#id_commentFormDiv'));
 		$('.tf-smalltalk-replyform-msg').focus();
-	},
-	save : function(){
-		var smallTalkId = $('#id_smallTalkId').val();
-		var comment = $('#comments').val();
-		if( typeof(smallTalkId) == 'undefined' || smallTalkId.length == 0 || comment == ''){
-			return false;
-		}
-		return true;
+		
+		$('#id_commentFormDiv').on('click', 'button.smalltalk-replyform-submit', function(evt){
+			evt.preventDefault();
+			var smallTalkId = $('#id_smallTalkId').val();
+			var comment = $('#comments').val();
+			if( typeof(smallTalkId) == 'undefined' || smallTalkId.length == 0 || comment == ''){
+				return false;
+			}
+			var actionUrl = $('#id_commentForm').attr('action');
+			$.post(actionUrl, 
+				{comments:comment},
+				function(data){
+					commentService.showComments(evt);
+					$('.tf-smalltalk-replyform-msg').val('');
+				});
+		})
 	}
 }

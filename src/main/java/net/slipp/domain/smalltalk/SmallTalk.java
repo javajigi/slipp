@@ -25,6 +25,7 @@ import net.slipp.support.utils.SlippStringUtils;
 import net.slipp.support.utils.TimeUtils;
 
 import org.apache.commons.lang.StringUtils;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.validator.constraints.Length;
 
 @Entity
@@ -55,6 +56,7 @@ public class SmallTalk implements HasCreatedAndUpdatedDate {
 	@Transient
 	private SiteSummary siteSummary;
 
+	@JsonIgnore
 	@OneToMany(mappedBy="smallTalk", fetch=FetchType.LAZY)
 	private List<SmallTalkComment> smallTalkComments;
 
