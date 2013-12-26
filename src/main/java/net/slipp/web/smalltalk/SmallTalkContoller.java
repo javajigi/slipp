@@ -63,7 +63,7 @@ public class SmallTalkContoller {
 	}
 	
 	@RequestMapping(value = "/ajax/smalltalks/{id}/comments", method = RequestMethod.GET)
-	public String getComments(@LoginUser SocialUser loginUser, @PathVariable Long id, SmallTalkComment smallTalkComment, Model model) {
+	public String getComments(@PathVariable Long id, SmallTalkComment smallTalkComment, Model model) {
 		try {
 			log.debug("Comments : {}", smallTalkComment);
 			model.addAttribute("smalltalkComments" ,smallTalkService.findCommnetsBySmallTalkId(id));
