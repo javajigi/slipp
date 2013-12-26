@@ -62,6 +62,18 @@ public class SmallTalkContoller {
 		return "redirect:/";
 	}
 	
+    @RequestMapping(value = "/ajax/smalltalks/{id}/comments", method = RequestMethod.POST)
+    public @ResponseBody SmallTalkComment saveComment2(@LoginUser SocialUser loginUser, @PathVariable Long id, SmallTalkComment smallTalkComment) {
+        try {
+            log.debug("Comments : {}", smallTalkComment);
+            smallTalkComment.setWriter(loginUser);
+            return smallTalkService.createComment(id, smallTalkComment);
+        } catch (Exception e) {
+            log.error("SmallTalkComment 데이터를 저장하는 중 오류. [Form] : {}", smallTalkComment, e);
+            return new SmallTalkComment();
+        }
+    }
+	
 	@RequestMapping(value = "/ajax/smalltalks/{id}/comments", method = RequestMethod.GET)
 	public String getComments(@PathVariable Long id, SmallTalkComment smallTalkComment, Model model) {
 		try {

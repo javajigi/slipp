@@ -39,10 +39,10 @@ public class SmallTalkService {
 		smallTalkRepository.save(smallTalk);
 	}
 
-	public void createComment(Long smallTalkId, SmallTalkComment smallTalkComment){
+	public SmallTalkComment createComment(Long smallTalkId, SmallTalkComment smallTalkComment){
 		SmallTalk smallTalk = smallTalkRepository.findOne(smallTalkId);
 		smallTalkComment.commentTo(smallTalk);
-		smallTalkCommentRepository.save(smallTalkComment);
+		return smallTalkCommentRepository.save(smallTalkComment);
 	}
 	
 	public List<SmallTalk> getLastTalks() {
