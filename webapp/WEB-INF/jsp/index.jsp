@@ -61,7 +61,7 @@
 		<section class="smalltalk ui-smalltalk-list-collapse">
 			<h1>수다양!</h1>
 			<sec:authorize access="hasRole('ROLE_USER')">
-				<form action="" class="smalltalk-form">
+				<form action="/smalltalks" class="smalltalk-form">
 						<textarea id="smallTalkMessage" name="smallTalkMessage" class="tf-smalltalk-form-msg" style="resize: none"></textarea>
 						<label for="smallTalkMessage" class="smalltalk-form-fail-msg error" style="display: none"></label>
 						<div class="smalltalk-form-util">
@@ -70,8 +70,16 @@
 						</div>
 				</form>
 			</sec:authorize>
-			<ul class='smalltalk-list'>
-			</ul>
+			<ul class='smalltalk-list'></ul>
+			<div class="smalltalk-replyform-fragment">
+				<div id="id_commentFormDiv">
+					<form class="smalltalk-replyform" id="id_commentForm" name="commentForm" method="post" action="/smalltalks/comments">
+						<input type="hidden" name="smallTalkId" id="id_smallTalkId" value=""/>
+						<textarea class="tf-smalltalk-form-msg tf-smalltalk-replyform-msg" id="comments" name="comments"></textarea>
+						<button class="smalltalk-replyform-submit" type="submit">한마디 보태기</button>
+					</form>
+				</div>
+			</div>
 			<p class="smalltalk-notice">* 최근 10개까지만 보여집니다.</p>
 		</section>
 		<section class="notice">
@@ -95,8 +103,10 @@
 </div>
 <script src="${url:resource('/javascripts/jquery.tmpl.min.js')}"></script>
 <script src="${url:resource('/javascripts/main/smalltalk.js')}"></script>
+<script src="${url:resource('/javascripts/main/smalltalkcomment.js')}"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 		smalltalkService.init();
+		commentService.init();
 	});
 </script>

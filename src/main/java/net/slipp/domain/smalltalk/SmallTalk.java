@@ -1,14 +1,17 @@
 package net.slipp.domain.smalltalk;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
@@ -22,6 +25,7 @@ import net.slipp.support.utils.SlippStringUtils;
 import net.slipp.support.utils.TimeUtils;
 
 import org.apache.commons.lang.StringUtils;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.validator.constraints.Length;
 
 @Entity
@@ -51,6 +55,10 @@ public class SmallTalk implements HasCreatedAndUpdatedDate {
 
 	@Transient
 	private SiteSummary siteSummary;
+
+	@JsonIgnore
+	@OneToMany(mappedBy="smallTalk", fetch=FetchType.LAZY)
+	private List<SmallTalkComment> smallTalkComments;
 
 	public Date getCreatedDate() {
 		return createdDate;
@@ -102,16 +110,16 @@ public class SmallTalk implements HasCreatedAndUpdatedDate {
 	public String getUrlInTalk() {
 		return SlippStringUtils.getUrlInText(getTalk());
 	}
-	
+
 	public boolean hasUrl() {
-	    return !StringUtils.isBlank(getUrlInTalk());
+		return !StringUtils.isBlank(getUrlInTalk());
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("SmallTalk [smallTalkId=");
-		builder.append(smallTalkId);
+		builder.append(getSmallTalkId());
 		builder.append(", talk=");
 		builder.append(talk);
 		builder.append(", writer=");
@@ -124,5 +132,21 @@ public class SmallTalk implements HasCreatedAndUpdatedDate {
 		builder.append(siteSummary);
 		builder.append("]");
 		return builder.toString();
+	}
+
+	public List<SmallTalkComment> getSmallTalkComments() {
+		return smallTalkComments;
+	}
+
+	public void setSmallTalkComments(List<SmallTalkComment> smallTalkComments) {
+		this.smallTalkComments = smallTalkComments;
+	}
+
+	public Long getSmallTalkId() {
+		return smallTalkId;
+	}
+
+	public void setSmallTalkId(Long smallTalkId) {
+		this.smallTalkId = smallTalkId;
 	}
 }
