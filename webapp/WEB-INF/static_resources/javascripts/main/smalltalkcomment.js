@@ -2,7 +2,7 @@ var commentService = {
 	init : function(){
 		var service = this;
 
-		$('.smalltalk').on('click', '.smalltalk-item-show-comments', function(evt){
+		$('.smalltalk').off('click').on('click', '.smalltalk-item-show-comments', function(evt){
 			service.showComments(evt);
 		}).on('click', '.btn-smalltalk-reply', function(evt){
 			service.showWriteForm(evt);
@@ -33,7 +33,7 @@ var commentService = {
 		$item.find('.smalltalk-item-replyform').append($('#id_commentFormDiv'));
 		$('.tf-smalltalk-replyform-msg').focus();
 		
-		$('#id_commentFormDiv').on('click', 'button.smalltalk-replyform-submit', function(evt){
+		$('#id_commentFormDiv').off('click').on('click', 'button.smalltalk-replyform-submit', function(evt){
 			evt.preventDefault();
 			var smallTalkId = $('#id_smallTalkId').val();
 			var comment = $('#comments').val();
