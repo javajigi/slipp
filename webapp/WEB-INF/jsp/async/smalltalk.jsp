@@ -36,9 +36,10 @@ taglib prefix="slipp" tagdir="/WEB-INF/tags" %>
 			</div>
 		</c:if>
 		<div class="smalltalk-item-replylist">
-			<a href="#" class="smalltalk-item-show-comments">댓글 : ${fn:length(smallTalk.smallTalkComments) }</a> 
+			<a href="#" class="smalltalk-item-show-comments">댓글 : ${fn:length(smallTalk.smallTalkComments) }</a>
 		</div>
-		<div class="smalltalk-item-replyform"></div>
+		<div class="smalltalk-item-replyform">
+		</div>
 	</li>
 </c:forEach>
 <li class="smalltalk-list-expand">
