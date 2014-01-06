@@ -27,11 +27,17 @@ var smalltalkService = {
 		});
 	},
 	ajaxLoad: function() {
+		var $commentForm = $('#id_commentFormDiv');
 		var waitingHtml = '<li style="text-align: center;"><img src="/resources/images/ajax-document-loader.gif" width="100px" height="100px"></li>';
 		$('.smalltalk-list').html(waitingHtml);
 		$.get('/ajax/smalltalks', function(data){
 			$('.smalltalk-list').html(data);
 			$('.btn-smalltalk-form-util-submit').attr("disabled", false).text('나도 한마디');
+			
+			var $item = $('.smalltalk-item').first();
+			$item.find('.smalltalk-item-replyform').append( $commentForm );
+			
+			commentService.fireShowCommentsAndForm();
 		});
 	},
 	save: function() {

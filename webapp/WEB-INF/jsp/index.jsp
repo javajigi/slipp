@@ -58,6 +58,15 @@
 		<slipp:side-tags tags="${tags}"/>
 	</div>
 	<div class="content-sub">
+		<div class="smalltalk-replyform-fragment">
+			<div id="id_commentFormDiv">
+				<form class="smalltalk-replyform" id="id_commentForm" name="commentForm" method="post" action="/smalltalks/comments">
+					<input type="hidden" name="smallTalkId" id="id_smallTalkId" value=""/>
+					<textarea class="tf-smalltalk-form-msg tf-smalltalk-replyform-msg" id="comments" name="comments"></textarea>
+					<button class="smalltalk-replyform-submit" type="submit">한마디 보태기</button>
+				</form>
+			</div>
+		</div>
 		<section class="smalltalk ui-smalltalk-list-collapse">
 			<h1>수다양!</h1>
 			<sec:authorize access="hasRole('ROLE_USER')">
@@ -71,15 +80,6 @@
 				</form>
 			</sec:authorize>
 			<ul class='smalltalk-list'></ul>
-			<div class="smalltalk-replyform-fragment">
-				<div id="id_commentFormDiv">
-					<form class="smalltalk-replyform" id="id_commentForm" name="commentForm" method="post" action="/smalltalks/comments">
-						<input type="hidden" name="smallTalkId" id="id_smallTalkId" value=""/>
-						<textarea class="tf-smalltalk-form-msg tf-smalltalk-replyform-msg" id="comments" name="comments"></textarea>
-						<button class="smalltalk-replyform-submit" type="submit">한마디 보태기</button>
-					</form>
-				</div>
-			</div>
 			<p class="smalltalk-notice">* 최근 10개까지만 보여집니다.</p>
 		</section>
 		<section class="notice">

@@ -1,16 +1,20 @@
 var commentService = {
 	init : function(){
 		var service = this;
-
-		$('.smalltalk').off('click').on('click', '.smalltalk-item-show-comments', function(evt){
+		$('body').on('click', '.smalltalk-item-show-comments', function(evt){
 			service.showComments(evt);
-		}).on('click', '.btn-smalltalk-reply', function(evt){
+		});
+		$('body').on('click', '.btn-smalltalk-reply', function(evt){
 			service.showWriteForm(evt);
 		});
 		
-		$('#id_commentForm').on('submit', function(){
+		$('body').on('submit', '#id_commentForm', function(){
 			service.save();
 		});
+	},
+	fireShowCommentsAndForm : function(){
+		$('.smalltalk-item-show-comments').first().trigger('click');
+		$('.btn-smalltalk-reply').first().trigger('click');
 	},
 	showComments : function(evt){
 		evt.preventDefault();
@@ -29,10 +33,10 @@ var commentService = {
 		$('#id_smallTalkId').val(smallTalkId);
 		var actionUrl = '/ajax/smalltalks/'+smallTalkId+'/comments';
 		$('#id_commentForm').attr('action', actionUrl);
-
-		$item.find('.smalltalk-item-replyform').append($('#id_commentFormDiv'));
-		$('.tf-smalltalk-replyform-msg').focus();
 		
+		var $formHtml = $('#id_commentFormDiv');
+		$item.find('.smalltalk-item-replyform').append( $formHtml );
+		$('.tf-smalltalk-replyform-msg').focus();
 		$('#id_commentFormDiv').off('click').on('click', 'button.smalltalk-replyform-submit', function(evt){
 			evt.preventDefault();
 			var smallTalkId = $('#id_smallTalkId').val();
