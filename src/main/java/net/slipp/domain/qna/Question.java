@@ -32,8 +32,8 @@ import net.slipp.domain.user.SocialUser;
 import net.slipp.support.jpa.CreatedDateEntityListener;
 import net.slipp.support.jpa.HasCreatedDate;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.security.access.AccessDeniedException;

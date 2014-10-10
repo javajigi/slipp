@@ -9,7 +9,7 @@ import java.net.URLConnection;
 import net.slipp.domain.summary.SiteSummary;
 
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.slf4j.Logger;

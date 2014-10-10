@@ -20,8 +20,8 @@ import net.slipp.support.jpa.CreatedDateEntityListener;
 import net.slipp.support.jpa.HasCreatedDate;
 
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity

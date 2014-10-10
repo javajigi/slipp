@@ -3,7 +3,7 @@ package net.slipp.domain.summary;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public enum SiteDefaultLogo {
 	dzone("http://java.dzone.com", "http://java.dzone.com/sites/all/themes/dzone2012/images/mh_dzone_logo.png"), 

@@ -24,7 +24,7 @@ import net.slipp.support.jpa.HasCreatedAndUpdatedDate;
 import net.slipp.support.utils.SlippStringUtils;
 import net.slipp.support.utils.TimeUtils;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;

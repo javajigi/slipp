@@ -9,7 +9,7 @@ import javax.servlet.jsp.tagext.SimpleTagSupport;
 import net.slipp.support.wiki.SlippLanguage;
 import net.slipp.support.wiki.WikiContents;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.ObjectFactory;
 
 /**

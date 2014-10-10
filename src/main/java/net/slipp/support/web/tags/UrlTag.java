@@ -9,7 +9,7 @@ import net.slipp.support.utils.ClasspathResourceUtils;
 import net.slipp.support.utils.SlippStringUtils;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.Assert;
 
 /**
