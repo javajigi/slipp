@@ -13,6 +13,8 @@ import net.slipp.repository.user.SocialUserRepository;
 import net.slipp.service.MailService;
 import net.slipp.support.utils.MD5Util;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionKey;
@@ -57,6 +59,10 @@ public class SocialUserService {
         List<SocialUser> socialUsers = socialUserRepository.findsByUserId(userId);
         return socialUsers.isEmpty();
     }
+    
+	public Page<SocialUser> findsUser(Pageable pageable) {
+		return socialUserRepository.findAll(pageable);
+	}
 
     public SocialUser findById(Long id) {
         Assert.notNull(id, "id can't be null!");
@@ -149,5 +155,12 @@ public class SocialUserService {
         user.changePassword(passwordEncoder, password.getOldPassword(), password.getNewPassword());
 
         return user;
+    }
+    
+    public SocialUser resetPassword(SocialUser socialUser) {
+    	String rawPassword = passwordGenerator.generate();
+    	socialUser.resetPassword(passwordEncoder, rawPassword);
+    	mailService.sendPasswordInformation(socialUser);
+        return socialUser;
     }
 }

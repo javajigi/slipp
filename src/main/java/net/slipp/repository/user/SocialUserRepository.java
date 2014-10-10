@@ -6,10 +6,10 @@ import java.util.Set;
 import net.slipp.domain.user.SocialUser;
 
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
-public interface SocialUserRepository extends CrudRepository<SocialUser, Long>,
+public interface SocialUserRepository extends PagingAndSortingRepository<SocialUser, Long>,
         SocialUserRepositoryCustom {
     @Query("SELECT u FROM SocialUser u WHERE u.userId = :userId ORDER BY u.providerId DESC, u.rank DESC")
     List<SocialUser> findsByUserId(@Param("userId") String userId);

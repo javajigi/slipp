@@ -1,4 +1,4 @@
-package net.slipp.web.qna;
+package net.slipp.web.tag;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -10,6 +10,7 @@ import java.util.List;
 
 import net.slipp.domain.tag.Tag;
 import net.slipp.service.tag.TagService;
+import net.slipp.web.tag.AdminTagController;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,12 +23,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.ui.ModelMap;
 
 @RunWith(MockitoJUnitRunner.class)
-public class AdminControllerTest {
+public class AdminTagControllerTest {
 	@Mock
 	private TagService tagService;
 	
 	@InjectMocks
-	private AdminController dut = new AdminController();
+	private AdminTagController dut = new AdminTagController();
 
 	@Test
 	public void tags_페이지없음() throws Exception {

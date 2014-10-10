@@ -1,4 +1,4 @@
-package net.slipp.web.qna;
+package net.slipp.web.tag;
 
 import javax.annotation.Resource;
 
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @RequestMapping("/admin")
-public class AdminController {
+public class AdminTagController {
 	private static final int DEFAULT_PAGE_NO = 1;
 	private static final int DEFAULT_PAGE_SIZE = 20;
 
