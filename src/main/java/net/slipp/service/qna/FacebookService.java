@@ -163,7 +163,7 @@ public class FacebookService {
 	public List<FacebookGroup> findFacebookGroups(SocialUser loginUser) {
 		FacebookClient facebookClient = new DefaultFacebookClient(loginUser.getAccessToken());
 		String query = "SELECT gid, name FROM group WHERE gid IN "
-				+ "(SELECT gid FROM group_member WHERE uid = me() AND bookmark_order <= 10 order by bookmark_order ASC)";
+				+ "(SELECT gid FROM group_member WHERE uid = me() AND bookmark_order <= 15 order by bookmark_order ASC)";
 		List<FacebookGroup> groups = facebookClient.executeFqlQuery(query, FacebookGroup.class);
 		log.debug("groups size : {}", groups.size());
 		return groups;
