@@ -15,7 +15,6 @@ import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -55,7 +54,6 @@ public class SummaryService {
 	}
 
 	private boolean isContentTypeImage(String contentType) {
-		MediaType mediaType = MediaType.parseMediaType(contentType);
-		return CONTENT_TYPE_IMAGE.equals(mediaType.getType());
+		return contentType.contains(CONTENT_TYPE_IMAGE);
 	}
 }
