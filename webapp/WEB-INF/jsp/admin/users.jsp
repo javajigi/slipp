@@ -12,6 +12,7 @@
 				<tr>
 					<th>사용자 아이디</th>
 					<th>이메일</th>
+					<th>provider</th>
 					<th>Display Name</th>
 					<th>회원가입일</th>
 					<th></th>
@@ -22,6 +23,7 @@
 				<tr>
 					<td>${each.userId}</td>
 					<td>${each.email}</td>
+					<td>${each.providerId}</td>
 					<td>${each.displayName}</td>
 					<td>${each.createDate}</td>
 					<td>
