@@ -10,7 +10,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<org.slf4j.version>1.6.1</org.slf4j.version>
 		<jpa.version>2.0.0</jpa.version>
-		<hibernate.version>4.2.0.Final</hibernate.version>
+		<hibernate.version>4.3.6.Final</hibernate.version>
 		<org.springframework.version>4.1.1.RELEASE</org.springframework.version>
 		<org.springframework.social.version>1.1.0.RELEASE</org.springframework.social.version>
 		<org.springframework.security.version>3.2.5.RELEASE</org.springframework.security.version>
@@ -71,26 +71,38 @@
 			<artifactId>spring-test</artifactId>
 		</dependency>
 
+		<!-- spring security -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+		</dependency>
+
+		<!-- spring social -->
 		<dependency>
 			<groupId>org.springframework.social</groupId>
 			<artifactId>spring-social-twitter</artifactId>
-			<version>${org.springframework.social.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.social</groupId>
 			<artifactId>spring-social-facebook</artifactId>
-			<version>${org.springframework.social.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.social</groupId>
 			<artifactId>spring-social-core</artifactId>
-			<version>${org.springframework.social.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.social</groupId>
 			<artifactId>spring-social-web</artifactId>
-			<version>${org.springframework.social.version}</version>
 		</dependency>
+
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
@@ -107,21 +119,7 @@
 			<artifactId>cglib-nodep</artifactId>
 			<version>2.2</version>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-config</artifactId>
-			<version>${org.springframework.security.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-web</artifactId>
-			<version>${org.springframework.security.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-taglibs</artifactId>
-			<version>${org.springframework.security.version}</version>
-		</dependency>
+
 		<dependency>
 			<groupId>commons-dbcp</groupId>
 			<artifactId>commons-dbcp</artifactId>
@@ -139,8 +137,8 @@
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate.javax.persistence</groupId>
-			<artifactId>hibernate-jpa-2.0-api</artifactId>
-			<version>1.0.0.Final</version>
+			<artifactId>hibernate-jpa-2.1-api</artifactId>
+			<version>1.0.0.Draft-16</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -155,7 +153,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>${hibernate.version}</version>
+			<version>5.1.2.Final</version>
 		</dependency>
 
 		<dependency>
@@ -388,6 +386,45 @@
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-test</artifactId>
 				<version>${org.springframework.version}</version>
+			</dependency>
+
+			<!-- spring security -->
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-config</artifactId>
+				<version>${org.springframework.security.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-web</artifactId>
+				<version>${org.springframework.security.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-taglibs</artifactId>
+				<version>${org.springframework.security.version}</version>
+			</dependency>
+
+			<!-- spring social -->
+			<dependency>
+				<groupId>org.springframework.social</groupId>
+				<artifactId>spring-social-twitter</artifactId>
+				<version>${org.springframework.social.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.social</groupId>
+				<artifactId>spring-social-facebook</artifactId>
+				<version>${org.springframework.social.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.social</groupId>
+				<artifactId>spring-social-core</artifactId>
+				<version>${org.springframework.social.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.social</groupId>
+				<artifactId>spring-social-web</artifactId>
+				<version>${org.springframework.social.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
