@@ -25,8 +25,9 @@ import net.slipp.support.utils.SlippStringUtils;
 import net.slipp.support.utils.TimeUtils;
 
 import org.apache.commons.lang.StringUtils;
-import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.validator.constraints.Length;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @EntityListeners({ CreatedAndUpdatedDateEntityListener.class })

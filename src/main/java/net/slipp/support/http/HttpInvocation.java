@@ -3,8 +3,9 @@ package net.slipp.support.http;
 import java.io.InputStream;
 import java.util.List;
 
-import org.apache.commons.httpclient.Header;
-import org.apache.commons.httpclient.NameValuePair;
+import org.apache.http.Header;
+import org.apache.http.NameValuePair;
+
 
 public interface HttpInvocation<T> {
 	void addParameter(String name, Object value);
