@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:security="http://www.springframework.org/schema/security"
 	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
 	xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:util="http://www.springframework.org/schema/util"
-	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
-		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
-		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
-		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
 		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.1.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
     <import resource="infrastructure.xml" />
     
 	<jpa:repositories base-package="net.slipp.repository" factory-class="net.slipp.support.jpa.SlippRepositoryFactoryBean" />
@@ -37,10 +35,11 @@
 	</bean>	
 	
 	<util:list id="connectionFactories">
-		<ref local="facebookConnectionFactory"/>
-		<ref local="twitterConnectionFactory"/>
-		<ref local="googleConnectionFactory"/>
+		<ref bean="facebookConnectionFactory"/>
+		<ref bean="twitterConnectionFactory"/>
+		<ref bean="googleConnectionFactory"/>	
 	</util:list>
+	
 	
 	<bean id="connectionFactoryRegistry" class="org.springframework.social.connect.support.ConnectionFactoryRegistry"
 		p:connectionFactories-ref="connectionFactories"
