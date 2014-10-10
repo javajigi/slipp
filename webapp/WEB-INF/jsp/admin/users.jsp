@@ -27,7 +27,7 @@
 					<td>${each.displayName}</td>
 					<td>${each.createDate}</td>
 					<td>
-						<c:if test="${not empty each.email}">
+						<c:if test="${each.providerId eq 'slipp'}">
 						<form class="form-search" action="/admin/users/${each.id}/resetpassword?page=${users.number}" method="post">
 							<button type="submit">비밀번호 재설정</button>
 						</form>
