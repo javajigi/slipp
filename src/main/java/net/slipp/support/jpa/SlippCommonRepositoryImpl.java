@@ -1,12 +1,9 @@
 package net.slipp.support.jpa;
 
-import static org.springframework.data.jpa.repository.query.QueryUtils.*;
-
 import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.LockModeType;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -25,10 +22,8 @@ import org.springframework.data.domain.Sort.Order;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
-import org.springframework.data.jpa.repository.support.LockMetadataProvider;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
-import org.springframework.util.Assert;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Iterables;
@@ -45,18 +40,11 @@ public class SlippCommonRepositoryImpl<T, ID extends Serializable> extends Simpl
 
 	private EntityManager em;
 	private JpaEntityInformation<T, ?> entityInformation;
-	private LockMetadataProvider lockMetadataProvider;
 
 	public SlippCommonRepositoryImpl(JpaEntityInformation<T, ?> entityInformation, EntityManager entityManager) {
 		super(entityInformation, entityManager);
 		this.em = entityManager;
 		this.entityInformation = entityInformation;
-	}
-
-	@Override
-	public void setLockMetadataProvider(LockMetadataProvider lockMetadataProvider) {
-		this.lockMetadataProvider = lockMetadataProvider;
-		super.setLockMetadataProvider(lockMetadataProvider);
 	}
 
 	@Override
@@ -111,56 +99,6 @@ public class SlippCommonRepositoryImpl<T, ID extends Serializable> extends Simpl
 	public List<T> findMore(Specification<T> spec, Pageable pageable) {
 		TypedQuery<T> query = getQuery(spec, pageable);
 		return pageable == null ? query.getResultList() : readMorePage(query, pageable, spec);
-	}
-
-	private TypedQuery<T> getQuery(Specification<T> spec, Pageable pageable) {
-
-		Sort sort = pageable == null ? null : pageable.getSort();
-		return getQuery(spec, sort);
-	}
-
-	private TypedQuery<T> getQuery(Specification<T> spec, Sort sort) {
-
-		CriteriaBuilder builder = em.getCriteriaBuilder();
-		CriteriaQuery<T> query = builder.createQuery(getDomainClass());
-
-		Root<T> root = applySpecificationToCriteria(spec, query);
-		query.select(root);
-
-		if (sort != null) {
-			query.orderBy(toOrders(sort, root, builder));
-		}
-
-		return applyLockMode(em.createQuery(query));
-	}
-
-	private Class<T> getDomainClass() {
-		return entityInformation.getJavaType();
-	}
-
-	private <S> Root<T> applySpecificationToCriteria(Specification<T> spec, CriteriaQuery<S> query) {
-
-		Assert.notNull(query);
-		Root<T> root = query.from(getDomainClass());
-
-		if (spec == null) {
-			return root;
-		}
-
-		CriteriaBuilder builder = em.getCriteriaBuilder();
-		Predicate predicate = spec.toPredicate(root, query, builder);
-
-		if (predicate != null) {
-			query.where(predicate);
-		}
-
-		return root;
-	}
-
-	private TypedQuery<T> applyLockMode(TypedQuery<T> query) {
-
-		LockModeType type = lockMetadataProvider == null ? null : lockMetadataProvider.getLockModeType();
-		return type == null ? query : query.setLockMode(type);
 	}
 
 	private List<T> readMorePage(TypedQuery<T> query, Pageable pageable, Specification<T> spec) {
