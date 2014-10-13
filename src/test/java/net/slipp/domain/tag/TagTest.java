@@ -58,7 +58,7 @@ public class TagTest {
 	public void createNewTagFromQuestion() throws Exception {
 		String name = "newTag";
 		Tag dut = Tag.newTag(name);
-		assertThat(dut.isPooled(), is(false));
+		assertThat(dut.isPooled(), is(true));
 		assertThat(dut.getName(), is(name.toLowerCase()));
 		assertThat(dut.getParent(), is(nullValue()));
 	}

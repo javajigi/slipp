@@ -153,7 +153,7 @@ public class Tag {
 	}
 
 	public static Tag newTag(String name) {
-		return new Tag(name.toLowerCase(), null, false, null);
+		return new Tag(name.toLowerCase(), null, true, null);
 	}
 
 	public static Tag groupedTag(String name, String groupId) {

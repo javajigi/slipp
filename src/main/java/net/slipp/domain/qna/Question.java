@@ -289,6 +289,10 @@ public class Question implements HasCreatedDate {
         this.tags = newTags;
         this.denormalizedTags = tagsToDenormalizedTags(getPooledTags());
     }
+    
+	public Set<Tag> differentTags(Set<Tag> newTags) {
+		return Sets.difference(newTags, this.tags);
+	}
 
     static void detaggedTags(Set<Tag> originalTags) {
         for (Tag tag : originalTags) {

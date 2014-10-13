@@ -8,8 +8,11 @@ import javax.annotation.Resource;
 import javax.inject.Inject;
 
 import net.slipp.domain.fb.FacebookGroup;
+import net.slipp.domain.qna.Question;
 import net.slipp.domain.tag.Tag;
+import net.slipp.domain.tag.TaggedHistory;
 import net.slipp.repository.tag.TagRepository;
+import net.slipp.repository.tag.TaggedHistoryRepository;
 import net.slipp.service.MailService;
 
 import org.springframework.data.domain.Page;
@@ -27,7 +30,10 @@ public class TagService {
     private MailService mailService;
     
     private TagRepository tagRepository;
-
+    
+    @Resource(name="taggedHistoryRepository")
+    private TaggedHistoryRepository taggedHistoryRepository;
+    
     public TagService() {
     }
 
@@ -128,5 +134,11 @@ public class TagService {
 
     public List<Tag> findsBySearch(String keyword) {
         return tagRepository.findByNameLike(keyword + "%");
+    }
+    
+    public void saveTaggedHistorys(Question question, Set<Tag> tags) {
+    	for (Tag tag : tags) {
+    		taggedHistoryRepository.save(new TaggedHistory(tag.getTagId(), question.getQuestionId()));
+		}
     }
 }

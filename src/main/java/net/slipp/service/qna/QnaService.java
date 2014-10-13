@@ -64,6 +64,7 @@ public class QnaService {
 
 		Question newQuestion = new Question(loginUser, questionDto.getTitle(), questionDto.getContents(), tags);
 		final Question savedQuestion = questionRepository.save(newQuestion);
+		tagService.saveTaggedHistorys(savedQuestion, tags);
 
 		TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
 			public void afterCommit() {
@@ -83,12 +84,13 @@ public class QnaService {
 		Assert.notNull(loginUser, "loginUser should be not null!");
 		Assert.notNull(questionDto, "question should be not null!");
 
-		Question question = questionRepository.findOne(questionDto.getQuestionId());
+		Question savedQuestion = questionRepository.findOne(questionDto.getQuestionId());
 
 		final Set<Tag> tags = tagService.processTags(questionDto.getPlainTags());
-		
-		question.update(loginUser, questionDto.getTitle(), questionDto.getContents(), tags);
-		return question;
+		final Set<Tag> newTags = savedQuestion.differentTags(tags);
+		savedQuestion.update(loginUser, questionDto.getTitle(), questionDto.getContents(), tags);
+		tagService.saveTaggedHistorys(savedQuestion, newTags);
+		return savedQuestion;
 	}
 
 	public void deleteQuestion(SocialUser loginUser, Long questionId) {
