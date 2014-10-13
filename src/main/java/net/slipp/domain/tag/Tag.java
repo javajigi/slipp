@@ -83,6 +83,10 @@ public class Tag {
 	public boolean isPooled() {
 		return pooled;
 	}
+	
+	public boolean isTagged() {
+		return taggedCount > 0;
+	}
 
 	public void tagged() {
 		taggedCount += 1;

@@ -39,6 +39,15 @@
 	/>
 	
 	<cache
+	    name="latestTags"	
+	    maxElementsInMemory="50"
+	    eternal="false"
+	    timeToIdleSeconds="300"
+	    timeToLiveSeconds="300"
+	    overflowToDisk="false"
+	/>
+	
+	<cache
 	    name="fbgroups"	
 	    maxElementsInMemory="1000"
 	    eternal="false"

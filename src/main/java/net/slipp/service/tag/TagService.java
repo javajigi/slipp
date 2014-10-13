@@ -1,5 +1,6 @@
 package net.slipp.service.tag;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.StringTokenizer;
@@ -15,7 +16,9 @@ import net.slipp.repository.tag.TagRepository;
 import net.slipp.repository.tag.TaggedHistoryRepository;
 import net.slipp.service.MailService;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -108,16 +111,26 @@ public class TagService {
         return tagRepository.findOne(parentTagId);
     }
 
-    public Page<Tag> findPooledTags(Pageable page) {
-        return tagRepository.findByPooledTag(page);
-    }
-
     public Page<Tag> findAllTags(Pageable page) {
         return tagRepository.findAll(page);
     }
 
-    public Iterable<Tag> findPooledTags() {
+    public Iterable<Tag> findPooledParentTags() {
         return tagRepository.findPooledParents();
+    }
+    
+    @Cacheable(value="latestTags")
+    public Iterable<Tag> findLatestTags() {
+    	PageRequest pageable = new PageRequest(0, 30);
+    	Page<Object[]> page = taggedHistoryRepository.findsLatest(pageable);
+    	List<Tag> latestTags = new ArrayList<Tag>();
+    	for (Object[] objects : page) {
+    		Tag tag = findTagById((Long)objects[0]);
+    		if (tag.isTagged()) {
+    			latestTags.add(tag);
+    		}
+		}
+    	return latestTags;
     }
 
     public Tag saveTag(Tag tag) {
@@ -138,7 +151,7 @@ public class TagService {
     
     public void saveTaggedHistorys(Question question, Set<Tag> tags) {
     	for (Tag tag : tags) {
-    		taggedHistoryRepository.save(new TaggedHistory(tag.getTagId(), question.getQuestionId()));
+    		taggedHistoryRepository.save(new TaggedHistory(tag.getTagId(), question.getQuestionId(), question.getWriter().getId()));
 		}
     }
 }

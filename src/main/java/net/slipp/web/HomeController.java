@@ -42,7 +42,7 @@ public class HomeController {
 	public String home(Model model) {
 		productionMode(model);
 		model.addAttribute("questions", qnaService.findsQuestion(createPageableByQuestionUpdatedDate(DEFAULT_PAGE_NO, DEFAULT_PAGE_SIZE)));
-		model.addAttribute("tags", tagService.findPooledTags());		
+		model.addAttribute("tags", tagService.findLatestTags());		
 		return "index";
 	}
 

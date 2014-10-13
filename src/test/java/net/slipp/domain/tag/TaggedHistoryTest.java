@@ -11,8 +11,9 @@ public class TaggedHistoryTest {
 	public void create() {
 		Long tagId = 1L;
 		Long questionId = 2L;
-		TaggedHistory actual = new TaggedHistory(tagId, questionId);
-		assertThat(actual, is(new TaggedHistory(tagId, questionId)));
+		Long userId = 3L;
+		TaggedHistory actual = new TaggedHistory(tagId, questionId, userId);
+		assertThat(actual, is(new TaggedHistory(tagId, questionId, userId)));
 	}
 
 }

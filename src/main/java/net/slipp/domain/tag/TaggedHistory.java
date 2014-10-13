@@ -33,13 +33,18 @@ public class TaggedHistory implements HasCreatedDate {
 	@Column(name = "question_id", nullable = false, updatable = false)
 	private Long questionId;
 	
+	@Column(name = "user_id", nullable = false, updatable = false)
+	private Long userId;
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "created_date", nullable = false, updatable = false)
 	private Date createdDate;
+
 	
-	public TaggedHistory(Long tagId, Long questionId) {
+	public TaggedHistory(Long tagId, Long questionId, Long userId) {
 		this.tagId = tagId;
 		this.questionId = questionId;
+		this.userId = userId;
 	}
 
 	@Override
@@ -59,16 +64,19 @@ public class TaggedHistory implements HasCreatedDate {
 	public Long getQuestionId() {
 		return questionId;
 	}
+	
+	public Long getUserId() {
+		return userId;
+	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((historyId == null) ? 0 : historyId.hashCode());
-		result = prime * result
-				+ ((questionId == null) ? 0 : questionId.hashCode());
+		result = prime * result + ((historyId == null) ? 0 : historyId.hashCode());
+		result = prime * result + ((questionId == null) ? 0 : questionId.hashCode());
 		result = prime * result + ((tagId == null) ? 0 : tagId.hashCode());
+		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
 		return result;
 	}
 
@@ -96,13 +104,17 @@ public class TaggedHistory implements HasCreatedDate {
 				return false;
 		} else if (!tagId.equals(other.tagId))
 			return false;
+		if (userId == null) {
+			if (other.userId != null)
+				return false;
+		} else if (!userId.equals(other.userId))
+			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "TaggedHistory [historyId=" + historyId + ", tagId=" + tagId
-				+ ", questionId=" + questionId + ", createdDate=" + createdDate
-				+ "]";
+		return "TaggedHistory [historyId=" + historyId + ", tagId=" + tagId + ", questionId=" + questionId + ", userId=" + userId + ", createdDate="
+				+ createdDate + "]";
 	}
 }
