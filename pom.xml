@@ -522,11 +522,10 @@
 					</execution>
 				</executions>
 				<dependencies>
-
 					<dependency>
 						<groupId>org.hibernate</groupId>
 						<artifactId>hibernate-jpamodelgen</artifactId>
-						<version>1.1.1.Final</version>
+						<version>4.3.6.Final</version>
 					</dependency>
 				</dependencies>
 			</plugin>
