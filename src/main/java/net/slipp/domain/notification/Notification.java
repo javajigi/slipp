@@ -4,9 +4,11 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 import net.slipp.domain.qna.Question;
@@ -21,15 +23,15 @@ public class Notification implements Serializable {
 	private Long notificationId;
 
     @OneToOne
-    @org.hibernate.annotations.ForeignKey(name = "fk_notification_notifier")
+    @JoinColumn(foreignKey=@ForeignKey(name = "fk_notification_notifier"))
 	private SocialUser notifier;
 	
     @OneToOne
-    @org.hibernate.annotations.ForeignKey(name = "fk_notification_notifiee")
+    @JoinColumn(foreignKey=@ForeignKey(name = "fk_notification_notifiee"))
 	private SocialUser notifiee;
     
     @OneToOne
-    @org.hibernate.annotations.ForeignKey(name = "fk_notification_question")
+    @JoinColumn(foreignKey=@ForeignKey(name = "fk_notification_question"))
 	private Question question;
 
     @Column(name = "readed", nullable=false)

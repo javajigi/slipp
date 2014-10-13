@@ -10,6 +10,7 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,7 +37,7 @@ public class Answer implements HasCreatedAndUpdatedDate, Comparable<Answer> {
 	private Long answerId;
 	
 	@ManyToOne
-	@org.hibernate.annotations.ForeignKey(name = "fk_answer_writer")
+	@JoinColumn(foreignKey=@ForeignKey(name = "fk_answer_writer"))
 	private SocialUser writer;
 	
 	@ElementCollection(fetch = FetchType.LAZY)
@@ -64,7 +65,7 @@ public class Answer implements HasCreatedAndUpdatedDate, Comparable<Answer> {
     private Integer sumDislike = 0;	
 	
 	@ManyToOne
-	@org.hibernate.annotations.ForeignKey(name = "fk_answer_parent_id")
+	@JoinColumn(foreignKey=@ForeignKey(name = "fk_answer_parent_id"))
 	private Question question;
 	
     @Embedded

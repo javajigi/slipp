@@ -6,9 +6,11 @@ import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
@@ -35,7 +37,7 @@ public class Tag {
 	private boolean pooled;
 
 	@OneToOne
-	@org.hibernate.annotations.ForeignKey(name = "fk_tag_parent_id")
+	@JoinColumn(foreignKey=@ForeignKey(name = "fk_tag_parent_id"))
 	private Tag parent;
 
 	@Embedded

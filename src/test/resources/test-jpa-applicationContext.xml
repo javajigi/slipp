@@ -11,6 +11,8 @@
 		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.1.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+	<context:property-placeholder location="classpath*:application-properties.xml" />	
+	
 	<bean id="jpaDialect" class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
 
 	<bean id="entityManagerFactory"
@@ -20,26 +22,10 @@
 		p:dataSource-ref="dataSource"
 		p:jpaDialect-ref="jpaDialect" />	
 		
-	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-		<property name="entityManagerFactory" ref="entityManagerFactory" />
-	</bean>
-
 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close"
 		p:driverClassName="${database.driverClassName}"
 		p:url="${database.url}"
 		p:username="${database.username}"
 		p:password="${database.password}"
 	/>
-
-	<tx:annotation-driven transaction-manager="transactionManager"/>
-	
-	<jpa:repositories base-package="net.slipp.repository" factory-class="net.slipp.support.jpa.SlippRepositoryFactoryBean" />
-	
-	<context:property-placeholder location="classpath*:application-properties.xml" />
-	
-	<bean id="applicationProperties" class="net.slipp.support.utils.ConvenientProperties">
-		<constructor-arg index="0">
-			<util:properties location="classpath:application-properties.xml" />
-		</constructor-arg>
-	</bean>  
 </beans>

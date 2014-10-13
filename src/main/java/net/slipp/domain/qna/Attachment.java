@@ -8,8 +8,10 @@ import java.util.Map;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -38,7 +40,7 @@ public class Attachment implements HasCreatedDate {
 	private String id;
 
 	@ManyToOne
-	@org.hibernate.annotations.ForeignKey(name = "fk_attachment_writer")
+	@JoinColumn(foreignKey=@ForeignKey(name = "fk_attachment_writer"))
 	private SocialUser uploader;
 	
 	@Column(name = "original_filename", length = 255, nullable = false, updatable = false)

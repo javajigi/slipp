@@ -12,6 +12,7 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -56,18 +57,20 @@ public class Question implements HasCreatedDate {
     private Long questionId;
 
     @ManyToOne
-    @org.hibernate.annotations.ForeignKey(name = "fk_question_writer")
+    @JoinColumn(foreignKey=@ForeignKey(name = "fk_question_writer"))
     private SocialUser writer;
 
     @ManyToOne
-    @org.hibernate.annotations.ForeignKey(name = "fk_question_latest_participant")
+    @JoinColumn(foreignKey=@ForeignKey(name = "fk_question_latest_participant"))
     private SocialUser latestParticipant;
 
     @Column(name = "title", length = 100, nullable = false)
     private String title;
 
     @ElementCollection(fetch = FetchType.LAZY)
-    @CollectionTable(name = "question_content_holder", joinColumns = @JoinColumn(name = "question_id", unique = true))
+    @CollectionTable(
+    	name = "question_content_holder", 
+    	joinColumns = @JoinColumn(name = "question_id", unique = true))
     @org.hibernate.annotations.ForeignKey(name = "fk_question_content_holder_question_id")
     @Lob
     @Column(name = "contents", nullable = false)
