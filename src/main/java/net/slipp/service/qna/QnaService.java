@@ -57,7 +57,7 @@ public class QnaService {
 		Assert.notNull(loginUser, "loginUser should be not null!");
 		Assert.notNull(questionDto, "question should be not null!");
 
-		Set<Tag> tags = tagService.processTags(questionDto.getPlainTags());
+		final Set<Tag> tags = tagService.processTags(questionDto.getPlainTags());
 		final Set<Tag> groupTags = tagService.processGroupTags(questionDto.getFacebookGroups());
 		log.debug("group tag size : {}", groupTags.size());
 		tags.addAll(groupTags);
@@ -85,7 +85,8 @@ public class QnaService {
 
 		Question question = questionRepository.findOne(questionDto.getQuestionId());
 
-		Set<Tag> tags = tagService.processTags(questionDto.getPlainTags());
+		final Set<Tag> tags = tagService.processTags(questionDto.getPlainTags());
+		
 		question.update(loginUser, questionDto.getTitle(), questionDto.getContents(), tags);
 		return question;
 	}

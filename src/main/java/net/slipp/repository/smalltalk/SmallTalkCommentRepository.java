@@ -4,8 +4,9 @@ import java.util.List;
 
 import net.slipp.domain.smalltalk.SmallTalk;
 import net.slipp.domain.smalltalk.SmallTalkComment;
-import net.slipp.support.jpa.SlippCommonRepository;
 
-public interface SmallTalkCommentRepository extends SlippCommonRepository<SmallTalkComment, Long> {
+import org.springframework.data.repository.CrudRepository;
+
+public interface SmallTalkCommentRepository extends CrudRepository<SmallTalkComment, Long> {
 	List<SmallTalkComment> findBySmallTalk(SmallTalk smallTalk);
 }
