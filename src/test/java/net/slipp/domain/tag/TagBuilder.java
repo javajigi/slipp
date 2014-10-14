@@ -5,7 +5,6 @@ public class TagBuilder {
 	private Long id;
 	private String name;
 	private int taggedCount;
-	private boolean pooled;
 	private Tag parentTag;
     private String groupId;
 
@@ -20,11 +19,6 @@ public class TagBuilder {
 	
 	public TagBuilder withName(String name) {
 		this.name = name;
-		return this;
-	}
-	
-	public TagBuilder withPooled(boolean pooled) {
-		this.pooled = pooled;
 		return this;
 	}
 	
@@ -45,7 +39,7 @@ public class TagBuilder {
 	
 	public Tag build() {
 		TagInfo tagInfo = new TagInfo(groupId, null);
-		Tag tag = new Tag(name, parentTag, pooled, tagInfo) {
+		Tag tag = new Tag(name, parentTag, tagInfo) {
 			public Long getTagId() {
 				return id;
 			}

@@ -18,9 +18,9 @@ public interface TagRepository extends PagingAndSortingRepository<Tag, Long>{
 
 	List<Tag> findByNameLike(String name);
 
-	@Query("SELECT t FROM Tag t WHERE t.parent IS NULL AND t.pooled = true ORDER BY t.taggedCount DESC, t.tagId ASC")
+	@Query("SELECT t FROM Tag t WHERE t.parent IS NULL ORDER BY t.taggedCount DESC, t.tagId ASC")
 	List<Tag> findPooledParents();
 
-	@Query("SELECT t FROM Tag t WHERE t.pooled = true ORDER BY t.taggedCount DESC, t.tagId ASC")
+	@Query("SELECT t FROM Tag t ORDER BY t.taggedCount DESC, t.tagId ASC")
 	Page<Tag> findByPooledTag(Pageable page);
 }

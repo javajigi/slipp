@@ -34,7 +34,7 @@ public class TagServiceTest {
 	@Test
 	public void moveToTag_부모_태그_ID_is_null() throws Exception {
 		Long parentTagId = null;
-		Tag newTag = aTag().withId(1L).withName("newTag").withPooled(false).build();
+		Tag newTag = aTag().withId(1L).withName("newTag").build();
 		when(tagRepository.findOne(parentTagId)).thenReturn(null);
 		when(tagRepository.findOne(newTag.getTagId())).thenReturn(newTag);
 		

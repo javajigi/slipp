@@ -25,7 +25,6 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 			</td>
 			<c:if test="${admin}">
 			<td>
-				<c:if test="${not each.pooled}">
 				<form class="form-search" action="/admin/moveNewTag" method="post">
 					<input type="hidden" name="tagId" value="${each.tagId}" />
 		      		<select id="parentTag" name="parentTag" style="width:50%;">
@@ -36,7 +35,6 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 		      		</select>							
 					<button id="moveToPoolTagBtn" type="submit">태그로 추가</button>
 				</form>
-				</c:if>			
 			</td>
 			</c:if>
 		</tr>

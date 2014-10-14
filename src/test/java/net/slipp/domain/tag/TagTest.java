@@ -15,8 +15,8 @@ public class TagTest {
 	
 	@Test
 	public void equalsAndContainsTag() throws Exception {
-		Tag java1 = aTag().withName("java").withPooled(true).build();
-		Tag java2 = aTag().withName("java").withPooled(true).build();
+		Tag java1 = aTag().withName("java").build();
+		Tag java2 = aTag().withName("java").build();
 		assertThat(java1.equals(java2), is(true));
 	}
 	

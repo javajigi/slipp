@@ -154,21 +154,11 @@ public class Question implements HasCreatedDate {
         return tags;
     }
 
-    public Set<Tag> getPooledTags() {
-        Set<Tag> pooledTags = Sets.newHashSet();
-        for (Tag tag : getTags()) {
-            if (tag.isPooled()) {
-                pooledTags.add(tag);
-            }
-        }
-        return pooledTags;
-    }
-
     public String getDenormalizedTags() {
         return this.denormalizedTags;
     }
 
-    private String tagsToDenormalizedTags(Set<Tag> tags) {
+    public String tagsToDenormalizedTags(Set<Tag> tags) {
         if (tags == null) {
             return null;
         }
@@ -229,7 +219,7 @@ public class Question implements HasCreatedDate {
 
     public String getPlainTags() {
         String displayTags = "";
-        for (Tag tag : getPooledTags()) {
+        for (Tag tag : getTags()) {
             displayTags += tag.getName() + " ";
         }
         return displayTags;
@@ -276,7 +266,7 @@ public class Question implements HasCreatedDate {
     }
 
     public void tagsToDenormalizedTags() {
-        this.denormalizedTags = tagsToDenormalizedTags(getPooledTags());
+        this.denormalizedTags = tagsToDenormalizedTags(getTags());
     }
 
     public boolean hasTag(Tag tag) {
@@ -287,7 +277,7 @@ public class Question implements HasCreatedDate {
         detaggedTags(tags);
         taggedTags(newTags);
         this.tags = newTags;
-        this.denormalizedTags = tagsToDenormalizedTags(getPooledTags());
+        this.denormalizedTags = tagsToDenormalizedTags(getTags());
     }
     
 	public Set<Tag> differentTags(Set<Tag> newTags) {

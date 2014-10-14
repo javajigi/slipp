@@ -49,10 +49,10 @@ public class Tag {
 	public Tag() {
 	}
 
-	Tag(String name, Tag parent, boolean pooled, TagInfo tagInfo) {
+	Tag(String name, Tag parent, TagInfo tagInfo) {
 		this.name = name;
 		this.parent = parent;
-		this.pooled = pooled;
+		this.pooled = true;
 		this.tagInfo = tagInfo;
 	}
 
@@ -153,15 +153,15 @@ public class Tag {
 	}
 
 	public static Tag pooledTag(String name, Tag parent) {
-		return new Tag(name.toLowerCase(), parent, true, null);
+		return new Tag(name.toLowerCase(), parent, null);
 	}
 
 	public static Tag newTag(String name) {
-		return new Tag(name.toLowerCase(), null, true, null);
+		return new Tag(name.toLowerCase(), null, null);
 	}
 
 	public static Tag groupedTag(String name, String groupId) {
-		return new Tag(name.toLowerCase(), null, true, new TagInfo(groupId, name));
+		return new Tag(name.toLowerCase(), null, new TagInfo(groupId, name));
 	}
 	
 	@Override

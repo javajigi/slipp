@@ -17,4 +17,10 @@ public class MigrationsController {
 	public String index() {
 		return "redirect:/";
 	}
+	
+	@RequestMapping("/tags")
+	public String tags() throws Exception {
+		migrationService.migration();
+		return "redirect:/admin/tags";
+	}
 }
