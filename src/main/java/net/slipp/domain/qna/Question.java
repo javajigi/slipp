@@ -30,6 +30,7 @@ import net.slipp.domain.ProviderType;
 import net.slipp.domain.tag.Tag;
 import net.slipp.domain.tag.Tags;
 import net.slipp.domain.user.SocialUser;
+import net.slipp.service.tag.TagHelper;
 import net.slipp.support.jpa.CreatedDateEntityListener;
 import net.slipp.support.jpa.HasCreatedDate;
 
@@ -39,9 +40,6 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.security.access.AccessDeniedException;
 
-import com.google.common.base.Function;
-import com.google.common.base.Joiner;
-import com.google.common.collect.Collections2;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -158,21 +156,6 @@ public class Question implements HasCreatedDate {
         return this.denormalizedTags;
     }
 
-    public String tagsToDenormalizedTags(Set<Tag> tags) {
-        if (tags == null) {
-            return null;
-        }
-
-        Function<Tag, String> tagToString = new Function<Tag, String>() {
-            @Override
-            public String apply(Tag input) {
-                return input.getName();
-            }
-        };
-
-        return Joiner.on(",").join(Collections2.transform(tags, tagToString));
-    }
-
     private boolean isEmptyContentsHolder() {
         return contentsHolder == null || contentsHolder.isEmpty();
     }
@@ -266,7 +249,7 @@ public class Question implements HasCreatedDate {
     }
 
     public void tagsToDenormalizedTags() {
-        this.denormalizedTags = tagsToDenormalizedTags(getTags());
+        this.denormalizedTags = TagHelper.denormalizedTags(getTags());
     }
 
     public boolean hasTag(Tag tag) {
@@ -277,13 +260,14 @@ public class Question implements HasCreatedDate {
         detaggedTags(tags);
         taggedTags(newTags);
         this.tags = newTags;
-        this.denormalizedTags = tagsToDenormalizedTags(getTags());
+        tagsToDenormalizedTags();
     }
     
-	public Set<Tag> differentTags(Set<Tag> newTags) {
-		return Sets.difference(newTags, this.tags);
+	public DifferenceTags differenceTags(Set<Tag> newTags) {
+		Set<Tag> oldTags = Collections.unmodifiableSet(this.tags);
+		return new DifferenceTags(oldTags, newTags);
 	}
-
+    
     static void detaggedTags(Set<Tag> originalTags) {
         for (Tag tag : originalTags) {
             tag.deTagged();

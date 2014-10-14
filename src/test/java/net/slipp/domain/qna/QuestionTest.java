@@ -5,8 +5,9 @@ import static net.slipp.domain.qna.QuestionBuilder.aQuestion;
 import static net.slipp.domain.tag.TagBuilder.aTag;
 import static net.slipp.domain.tag.TagTest.JAVA;
 import static net.slipp.domain.tag.TagTest.JAVASCRIPT;
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
 
 import java.util.Set;
 
@@ -150,23 +151,6 @@ public class QuestionTest {
 		dut.delete(writer);
 		assertThat(dut.isDeleted(), is(true));
 		assertThat(java.getTaggedCount(), is(0));
-	}
-
-	@Test
-	public void differentTags() throws Exception {
-		// given
-		Tag java = aTag().withName("java").withTaggedCount(3).build();
-		Tag javascript = aTag().withName("javascript").withTaggedCount(2).build();
-		Tag newTag = aTag().withName("newTag").build();
-		
-		Question question = aQuestion().withTag(java).withTag(javascript).build();
-		
-		// when
-		Set<Tag> differentTags = question.differentTags(Sets.newHashSet(javascript, newTag));
-		
-		// then
-		assertThat(differentTags.size(), is(1));
-		assertTrue(differentTags.contains(newTag));
 	}
 
 	@Test

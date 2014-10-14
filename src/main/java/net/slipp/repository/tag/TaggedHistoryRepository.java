@@ -8,8 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 public interface TaggedHistoryRepository extends CrudRepository<TaggedHistory, Long> {
-	@Query(
-		"SELECT th.tagId, MAX(th.historyId) as highestId from TaggedHistory th " + 
+	@Query("SELECT th.tagId, MAX(th.historyId) as highestId from TaggedHistory th " + 
 			"group by th.tagId order by highestId desc")
 	Page<Object[]> findsLatest(Pageable pageable);
 }

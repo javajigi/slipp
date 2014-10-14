@@ -149,7 +149,7 @@ public class TagService {
         return tagRepository.findByNameLike(keyword + "%");
     }
     
-    public void saveTaggedHistorys(Question question, Set<Tag> tags) {
+    public void saveTaggedHistories(Question question, Set<Tag> tags) {
     	for (Tag tag : tags) {
     		taggedHistoryRepository.save(new TaggedHistory(tag.getTagId(), question.getQuestionId(), question.getWriter().getId()));
 		}

@@ -14,7 +14,7 @@ attribute name="each" required="true" rtexprvalue="true" type="net.slipp.domain.
 					<i class="icon-tag" title="태그"></i>
 					<span class="tag-list">
 						<c:forEach items="${each.denormalizedTags}" var="tag">
-							<span class="tag">${tag}</span>
+							<span class="tag"><a href="/questions/tagged/${tag}">${tag}</a></span>
 						</c:forEach>
 					</span>
 				</div>

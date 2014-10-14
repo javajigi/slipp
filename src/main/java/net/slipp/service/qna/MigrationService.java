@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import net.slipp.domain.qna.Question;
 import net.slipp.domain.tag.Tag;
 import net.slipp.repository.qna.QuestionRepository;
+import net.slipp.service.tag.TagHelper;
 import net.slipp.web.tag.AdminTagController;
 
 import org.slf4j.Logger;
@@ -27,7 +28,7 @@ public class MigrationService {
 		List<Question> questions = questionRepository.findAll();
 		for (Question question : questions) {
 			Set<Tag> tags = question.getTags();
-			String denormalizedTags = question.tagsToDenormalizedTags(tags);
+			String denormalizedTags = TagHelper.denormalizedTags(tags);
 			questionRepository.updateDenormalizedTags(question.getQuestionId(), denormalizedTags);
 			log.debug("migration : questionId : {}, denormalizedTags {}", question.getQuestionId(), denormalizedTags);
 		}

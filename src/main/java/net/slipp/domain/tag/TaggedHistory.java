@@ -39,7 +39,6 @@ public class TaggedHistory implements HasCreatedDate {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "created_date", nullable = false, updatable = false)
 	private Date createdDate;
-
 	
 	public TaggedHistory(Long tagId, Long questionId, Long userId) {
 		this.tagId = tagId;

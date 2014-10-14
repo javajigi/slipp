@@ -5,6 +5,7 @@ import java.util.Set;
 import javax.annotation.Resource;
 
 import net.slipp.domain.qna.Answer;
+import net.slipp.domain.qna.DifferenceTags;
 import net.slipp.domain.qna.QnaSpecifications;
 import net.slipp.domain.qna.Question;
 import net.slipp.domain.qna.QuestionDto;
@@ -64,7 +65,7 @@ public class QnaService {
 
 		Question newQuestion = new Question(loginUser, questionDto.getTitle(), questionDto.getContents(), tags);
 		final Question savedQuestion = questionRepository.save(newQuestion);
-		tagService.saveTaggedHistorys(savedQuestion, tags);
+		tagService.saveTaggedHistories(savedQuestion, tags);
 
 		TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
 			public void afterCommit() {
@@ -87,9 +88,10 @@ public class QnaService {
 		Question savedQuestion = questionRepository.findOne(questionDto.getQuestionId());
 
 		final Set<Tag> tags = tagService.processTags(questionDto.getPlainTags());
-		final Set<Tag> newTags = savedQuestion.differentTags(tags);
+		final DifferenceTags differenceTags = savedQuestion.differenceTags(tags);
+		final Set<Tag> newTags = differenceTags.taggedNewTags();
 		savedQuestion.update(loginUser, questionDto.getTitle(), questionDto.getContents(), tags);
-		tagService.saveTaggedHistorys(savedQuestion, newTags);
+		tagService.saveTaggedHistories(savedQuestion, newTags);
 		return savedQuestion;
 	}
 
