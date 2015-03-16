@@ -17,7 +17,7 @@
 		<jpametamodel.generated.dir>${basedir}/target/generated-sources/jpametamodel</jpametamodel.generated.dir>
 		<acceptance.test.dir>${basedir}/src/acceptance-test/java</acceptance.test.dir>
 		<maven.test.failure.ignore>true</maven.test.failure.ignore>
-		<tomcat.version>8.0.14</tomcat.version>
+		<tomcat.version>8.0.20</tomcat.version>
 
 		<!-- SONAR -->
 		<sonar.language>java</sonar.language>
@@ -106,7 +106,7 @@
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-jpa</artifactId>
-			<version>1.7.0.RELEASE</version>
+			<version>1.7.2.RELEASE</version>
 		</dependency>
 
 		<dependency>
@@ -418,6 +418,11 @@
 			<!-- spring social -->
 			<dependency>
 				<groupId>org.springframework.social</groupId>
+				<artifactId>spring-social-config</artifactId>
+				<version>${org.springframework.social.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.social</groupId>
 				<artifactId>spring-social-twitter</artifactId>
 				<version>${org.springframework.social.version}</version>
 			</dependency>
@@ -483,8 +488,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.3.2</version>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>1.8</source>
+					<target>1.8</target>
 				</configuration>
 			</plugin>
 			<plugin>
