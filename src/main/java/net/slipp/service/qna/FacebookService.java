@@ -33,6 +33,7 @@ import com.google.common.collect.Lists;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.Parameter;
+import com.restfb.Version;
 import com.restfb.exception.FacebookGraphException;
 import com.restfb.types.Comment;
 import com.restfb.types.FacebookType;
@@ -74,7 +75,7 @@ public class FacebookService {
 	private String sendMessageToFacebook(SocialUser loginUser, String link, String receiverId, String message) {
 		String postId = null;
 		try {
-			FacebookClient facebookClient = new DefaultFacebookClient(loginUser.getAccessToken());
+			FacebookClient facebookClient = createFacebookClient(loginUser);
 			int i = 0;
 			do {
 				if (i > 2) {
@@ -92,6 +93,10 @@ public class FacebookService {
 			log.error("Facebook Connection Failed : {}", e.getMessage());
 		}
 		return postId;
+	}
+
+	private FacebookClient createFacebookClient(SocialUser socialUser) {
+		return new DefaultFacebookClient(socialUser.getAccessToken(), Version.VERSION_2_2);
 	}
 
 	@Async
@@ -137,7 +142,7 @@ public class FacebookService {
 		}
 
 		SocialUser socialUser = question.getWriter();
-		FacebookClient facebookClient = new DefaultFacebookClient(socialUser.getAccessToken());
+		FacebookClient facebookClient = createFacebookClient(socialUser);
 		Collection<SnsConnection> snsConnections = question.getSnsConnection();
 		List<FacebookComment> fbComments = Lists.newArrayList();
 		for (SnsConnection snsConnection : snsConnections) {
@@ -161,7 +166,7 @@ public class FacebookService {
 
 	@Cacheable(value="fbgroups", key="#loginUser.id")
 	public List<FacebookGroup> findFacebookGroups(SocialUser loginUser) {
-		FacebookClient facebookClient = new DefaultFacebookClient(loginUser.getAccessToken());
+		FacebookClient facebookClient = createFacebookClient(loginUser);
 		String query = "SELECT gid, name FROM group WHERE gid IN "
 				+ "(SELECT gid FROM group_member WHERE uid = me() AND bookmark_order <= 10 order by bookmark_order ASC)";
 		List<FacebookGroup> groups = facebookClient.executeFqlQuery(query, FacebookGroup.class);
