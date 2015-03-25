@@ -288,7 +288,7 @@
 		<dependency>
 			<groupId>com.restfb</groupId>
 			<artifactId>restfb</artifactId>
-			<version>1.6.12</version>
+			<version>1.8.0</version>
 		</dependency>
 
 		<dependency>
