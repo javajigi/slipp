@@ -101,7 +101,7 @@
 						<a href="https://github.com/javajigi/slipp/issues" target="_blank">Ideas&amp;Bugs</a>
 					</li>
 					<li>
-						<a href="/wiki">SLiPP-Wiki</a>
+						<a href="/wiki/dashboard.action">SLiPP-Wiki</a>
 					</li>
 				</ul>
 			</nav>

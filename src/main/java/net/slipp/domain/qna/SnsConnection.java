@@ -64,6 +64,24 @@ public class SnsConnection {
     public void updateAnswerCount(int answerCount) {
         this.snsAnswerCount = answerCount;
     }
+    
+    public void removeId() {
+    	if (StringUtils.isBlank(getPostId())) {
+    		return;
+    	}
+    	
+    	if (!getPostId().contains("_")) {
+    		return;
+    	}
+    	
+    	String[] postIds = postId.split("_");
+    	
+    	if (postIds.length != 2) {
+    		return;
+    	}
+    	
+    	this.postId = postIds[1];
+	}
 
     @Override
     public int hashCode() {

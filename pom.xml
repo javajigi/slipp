@@ -293,7 +293,7 @@
 		<dependency>
 			<groupId>com.restfb</groupId>
 			<artifactId>restfb</artifactId>
-			<version>1.6.12</version>
+			<version>1.8.0</version>
 		</dependency>
 
 		<dependency>
@@ -498,8 +498,6 @@
 				<version>2.9</version>
 				<configuration>
 					<downloadSources>true</downloadSources>
-					<wtpversion>2.0</wtpversion>
-					<wtpContextName>/</wtpContextName>
 				</configuration>
 			</plugin>
 			<plugin>

@@ -8,7 +8,7 @@
 	<h2>내 그룹에 게시</h2>
 	<#list groups as each>
 	<label class="qna-connect-facebook-item">
-	<input type="checkbox" name="plainFacebookGroups" value="${each.groupId}::${each.name}" />
+	<input type="checkbox" name="plainFacebookGroups" value="${each.id}::${each.name}" />
 	<span>${each.name}</span>
 	</label>
 	</#list>

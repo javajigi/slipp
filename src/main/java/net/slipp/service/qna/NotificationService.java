@@ -22,6 +22,7 @@ import org.springframework.util.Assert;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.Parameter;
+import com.restfb.Version;
 import com.restfb.types.FacebookType;
 
 @Service
@@ -50,7 +51,7 @@ public class NotificationService {
             return;
         }
 
-        FacebookClient facebookClient = new DefaultFacebookClient(accessToken);
+        FacebookClient facebookClient = new DefaultFacebookClient(accessToken, Version.VERSION_2_2);
         for (SocialUser notifiee : notifieeUsers) {
             String uri = String.format("/%s/notifications", notifiee.getProviderUserId());
             String template = String.format("%s님이 \"%s\" 글에 답변을 달았습니다.", loginUser.getUserId(), question.getTitle());

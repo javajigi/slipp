@@ -1,11 +1,13 @@
 package net.slipp.service.qna;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Resource;
 
 import net.slipp.domain.qna.Question;
+import net.slipp.domain.qna.SnsConnection;
 import net.slipp.domain.tag.Tag;
 import net.slipp.repository.qna.QuestionRepository;
 import net.slipp.service.tag.TagHelper;
@@ -31,6 +33,16 @@ public class MigrationService {
 			String denormalizedTags = TagHelper.denormalizedTags(tags);
 			questionRepository.updateDenormalizedTags(question.getQuestionId(), denormalizedTags);
 			log.debug("migration : questionId : {}, denormalizedTags {}", question.getQuestionId(), denormalizedTags);
+		}
+	}
+	
+	public void removeIdSnsConnection() {
+		List<Question> questions = questionRepository.findAll();
+		for (Question question : questions) {
+			Collection<SnsConnection> connections = question.getSnsConnection();
+			for (SnsConnection snsConnection : connections) {
+				snsConnection.removeId();
+			}
 		}
 	}
 }
