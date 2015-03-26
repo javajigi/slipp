@@ -9,7 +9,6 @@ import java.util.Set;
 import javax.annotation.Resource;
 
 import net.slipp.domain.fb.FacebookComment;
-import net.slipp.domain.fb.FacebookGroup;
 import net.slipp.domain.qna.Answer;
 import net.slipp.domain.qna.Question;
 import net.slipp.domain.qna.SnsConnection;
@@ -30,6 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import com.google.common.collect.Lists;
+import com.restfb.Connection;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.Parameter;
@@ -37,6 +37,7 @@ import com.restfb.Version;
 import com.restfb.exception.FacebookGraphException;
 import com.restfb.types.Comment;
 import com.restfb.types.FacebookType;
+import com.restfb.types.Group;
 import com.restfb.types.Post;
 import com.restfb.types.Post.Comments;
 
@@ -165,13 +166,21 @@ public class FacebookService {
 	}
 
 	@Cacheable(value="fbgroups", key="#loginUser.id")
-	public List<FacebookGroup> findFacebookGroups(SocialUser loginUser) {
+	public List<Group> findFacebookGroups(SocialUser loginUser) {
+		int groupLimit = 10;
 		FacebookClient facebookClient = createFacebookClient(loginUser);
-		String query = "SELECT gid, name FROM group WHERE gid IN "
-				+ "(SELECT gid FROM group_member WHERE uid = me() AND bookmark_order <= 10 order by bookmark_order ASC)";
-		List<FacebookGroup> groups = facebookClient.executeFqlQuery(query, FacebookGroup.class);
-		log.debug("groups size : {}", groups.size());
-		return groups;
+		Connection<Group> myGroups = facebookClient.fetchConnection("/me/groups", Group.class,
+				Parameter.with("limit", groupLimit));
+		List<Group> allGroups = Lists.newArrayList();
+		for (List<Group> groups : myGroups) {
+			allGroups.addAll(groups);
+		}
+		
+		if (allGroups.size() < groupLimit) {
+			groupLimit = allGroups.size();
+		}
+		
+		return allGroups.subList(0, groupLimit);
 	}
 
 	private Post findPost(FacebookClient facebookClient, String postId) {

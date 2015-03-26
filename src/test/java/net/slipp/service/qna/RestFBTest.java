@@ -3,7 +3,6 @@ package net.slipp.service.qna;
 import java.util.List;
 
 import net.slipp.domain.fb.FacebookComment;
-import net.slipp.domain.fb.FacebookGroup;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,6 +13,7 @@ import com.restfb.Connection;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.Parameter;
+import com.restfb.Version;
 import com.restfb.types.Comment;
 import com.restfb.types.FacebookType;
 import com.restfb.types.Group;
@@ -28,7 +28,7 @@ public class RestFBTest {
 	@Before
 	public void setup() {
 		String accessToken = "ACCESS_TOKEN";
-		dut = new DefaultFacebookClient(accessToken);
+		dut = new DefaultFacebookClient(accessToken, Version.VERSION_2_2);
 	}
 
 	@Test
@@ -51,7 +51,7 @@ public class RestFBTest {
 
 	@Test
 	public void fetchPost() throws Exception {
-		Post post = dut.fetchObject("1324855987_390710267709840", Post.class);
+		Post post = dut.fetchObject("390710267709840", Post.class);
 		logger.debug("Post: " + post.getId() + " : " + post.getMessage());
 		Comments comments = post.getComments();
 		List<Comment> commentData = comments.getData();
@@ -68,16 +68,8 @@ public class RestFBTest {
 		logger.debug("group size : {}", myGroups.getData());
 		for (List<Group> groups : myGroups) {
 			for (Group group : groups) {
-				logger.debug("group name : {}", group.getName());
+				logger.debug("groupId : {}, group name : {}", group.getId(), group.getName());
 			}
 		}
-	}
-	
-	@Test
-	public void findGroupsByFql() throws Exception {
-		String query = "SELECT gid, name FROM group WHERE gid IN " + 
-				"(SELECT gid FROM group_member WHERE uid = me() AND bookmark_order <= 10 order by bookmark_order ASC)";
-		List<FacebookGroup> myGroups = dut.executeFqlQuery(query, FacebookGroup.class);
-		logger.debug("group size : {}", myGroups);
 	}
 }

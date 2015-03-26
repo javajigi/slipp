@@ -17,4 +17,10 @@ public class MigrationsController {
 	public String index() {
 		return "redirect:/";
 	}
+	
+	@RequestMapping("/removeSnsConnections")
+	public String removeSnsConnections() {
+		migrationService.removeIdSnsConnection();
+		return "redirect:/";
+	}
 }
