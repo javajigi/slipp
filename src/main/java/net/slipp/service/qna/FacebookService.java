@@ -97,7 +97,7 @@ public class FacebookService {
 	}
 
 	private FacebookClient createFacebookClient(SocialUser socialUser) {
-		return new DefaultFacebookClient(socialUser.getAccessToken(), Version.VERSION_2_0);
+		return new DefaultFacebookClient(socialUser.getAccessToken(), Version.VERSION_2_2);
 	}
 
 	@Async
