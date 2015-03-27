@@ -50,9 +50,10 @@
 
 	<bean id="servletDownloadManager" class="net.slipp.support.web.ServletDownloadManager" />
 
-	<bean class="org.springframework.social.connect.web.ProviderSignInController"
+	<bean class="net.slipp.social.security.MyProviderSignInController"
 		p:signUpUrl="/signup"
 		p:postSignInUrl="/authenticate"
+		p:applicationUrl="${application.url}"
 	/>
 
 	<bean class="net.slipp.social.security.SlippSecuritySignUpController" />
