@@ -1,17 +1,10 @@
 package net.slipp.web.tag;
 
-import java.util.List;
-import java.util.Set;
-
 import javax.annotation.Resource;
 
-import net.slipp.domain.qna.Question;
 import net.slipp.domain.tag.Tag;
-import net.slipp.repository.qna.QuestionRepository;
 import net.slipp.service.tag.TagService;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

@@ -23,6 +23,12 @@ public class MigrationsController {
 		migrationService.migration();
 		return "redirect:/admin/tags";
 	}
+	
+	@RequestMapping("/tagHistories")
+	public String tagHistories() throws Exception {
+		migrationService.updateTagHistory();
+		return "redirect:/";
+	}
 
 	@RequestMapping("/removeSnsConnections")
 	public String removeSnsConnections() {

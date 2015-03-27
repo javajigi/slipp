@@ -11,10 +11,12 @@ import net.slipp.domain.qna.SnsConnection;
 import net.slipp.domain.tag.Tag;
 import net.slipp.repository.qna.QuestionRepository;
 import net.slipp.service.tag.TagHelper;
+import net.slipp.service.tag.TagService;
 import net.slipp.web.tag.AdminTagController;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +28,9 @@ public class MigrationService {
 	@Resource(name = "questionRepository")
 	private QuestionRepository questionRepository;
 	
+	@Resource(name = "tagService")
+	private TagService tagService;
+	
 	public void migration() {
 		List<Question> questions = questionRepository.findAll();
 		for (Question question : questions) {
@@ -33,6 +38,13 @@ public class MigrationService {
 			String denormalizedTags = TagHelper.denormalizedTags(tags);
 			questionRepository.updateDenormalizedTags(question.getQuestionId(), denormalizedTags);
 			log.debug("migration : questionId : {}, denormalizedTags {}", question.getQuestionId(), denormalizedTags);
+		}
+	}
+	
+	public void updateTagHistory() {
+		List<Question> questions = questionRepository.findAll(new Sort(Sort.Direction.ASC, "questionId"));
+		for (Question question : questions) {
+			tagService.saveTaggedHistories(question, question.getTags());
 		}
 	}
 	
