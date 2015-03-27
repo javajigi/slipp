@@ -10,14 +10,14 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<org.slf4j.version>1.7.7</org.slf4j.version>
 		<jpa.version>2.0.0</jpa.version>
-		<hibernate.version>4.3.6.Final</hibernate.version>
-		<org.springframework.version>4.1.1.RELEASE</org.springframework.version>
+		<hibernate.version>4.3.8.Final</hibernate.version>
+		<org.springframework.version>4.1.6.RELEASE</org.springframework.version>
 		<org.springframework.social.version>1.1.0.RELEASE</org.springframework.social.version>
 		<org.springframework.security.version>3.2.5.RELEASE</org.springframework.security.version>
 		<jpametamodel.generated.dir>${basedir}/target/generated-sources/jpametamodel</jpametamodel.generated.dir>
 		<acceptance.test.dir>${basedir}/src/acceptance-test/java</acceptance.test.dir>
 		<maven.test.failure.ignore>true</maven.test.failure.ignore>
-		<tomcat.version>8.0.20</tomcat.version>
+		<tomcat.version>7.0.34</tomcat.version>
 
 		<!-- SONAR -->
 		<sonar.language>java</sonar.language>
@@ -124,7 +124,7 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.33</version>
+			<version>5.1.34</version>
 		</dependency>
 		<dependency>
 			<groupId>net.sf.ehcache</groupId>
@@ -445,7 +445,7 @@
 			<dependency>
 				<groupId>org.hibernate.javax.persistence</groupId>
 				<artifactId>hibernate-jpa-2.1-api</artifactId>
-				<version>1.0.0.Draft-16</version>
+				<version>1.0.0.Final</version>
 			</dependency>
 
 			<dependency>
@@ -488,8 +488,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.3.2</version>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+					<source>1.6</source>
+					<target>1.6</target>
 				</configuration>
 			</plugin>
 			<plugin>
