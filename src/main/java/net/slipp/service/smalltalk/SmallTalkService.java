@@ -5,7 +5,9 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import net.slipp.domain.smalltalk.SmallTalk;
+import net.slipp.domain.smalltalk.SmallTalkComment;
 import net.slipp.domain.summary.SiteSummary;
+import net.slipp.repository.smalltalk.SmallTalkCommentRepository;
 import net.slipp.repository.smalltalk.SmallTalkRepository;
 import net.slipp.service.summary.SummaryService;
 
@@ -26,14 +28,23 @@ public class SmallTalkService {
 	@Resource (name = "smallTalkRepository")
 	private SmallTalkRepository smallTalkRepository;
 	
+	@Resource (name = "smallTalkCommentRepository")
+	private SmallTalkCommentRepository smallTalkCommentRepository;
+	
 	@Resource (name = "summaryService")
 	private SummaryService summaryService;
 
-	public void save(SmallTalk smallTalk) {
+	public void create(SmallTalk smallTalk) {
 		logger.debug("SmallTalk : {}", smallTalk);
 		smallTalkRepository.save(smallTalk);
 	}
 
+	public SmallTalkComment createComment(Long smallTalkId, SmallTalkComment smallTalkComment){
+		SmallTalk smallTalk = smallTalkRepository.findOne(smallTalkId);
+		smallTalkComment.commentTo(smallTalk);
+		return smallTalkCommentRepository.save(smallTalkComment);
+	}
+	
 	public List<SmallTalk> getLastTalks() {
 		Page<SmallTalk> page = smallTalkRepository.findAll(getPager());
 		List<SmallTalk> orgSmallTalks = page.getContent();
@@ -58,5 +69,11 @@ public class SmallTalkService {
 
 	private Sort sortByIdDesc() {
 		return new Sort(Sort.Direction.DESC, "smallTalkId");
+	}
+
+	public List<SmallTalkComment> findCommnetsBySmallTalkId(Long smallTalkId) {
+		SmallTalk smallTalk = new SmallTalk();
+		smallTalk.setSmallTalkId(smallTalkId);
+		return smallTalkCommentRepository.findBySmallTalk(smallTalk);
 	}
 }

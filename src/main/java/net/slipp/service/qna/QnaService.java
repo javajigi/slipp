@@ -5,6 +5,7 @@ import java.util.Set;
 import javax.annotation.Resource;
 
 import net.slipp.domain.qna.Answer;
+import net.slipp.domain.qna.DifferenceTags;
 import net.slipp.domain.qna.QnaSpecifications;
 import net.slipp.domain.qna.Question;
 import net.slipp.domain.qna.QuestionDto;
@@ -57,13 +58,14 @@ public class QnaService {
 		Assert.notNull(loginUser, "loginUser should be not null!");
 		Assert.notNull(questionDto, "question should be not null!");
 
-		Set<Tag> tags = tagService.processTags(questionDto.getPlainTags());
+		final Set<Tag> tags = tagService.processTags(questionDto.getPlainTags());
 		final Set<Tag> groupTags = tagService.processGroupTags(questionDto.getFacebookGroups());
 		log.debug("group tag size : {}", groupTags.size());
 		tags.addAll(groupTags);
 
 		Question newQuestion = new Question(loginUser, questionDto.getTitle(), questionDto.getContents(), tags);
 		final Question savedQuestion = questionRepository.save(newQuestion);
+		tagService.saveTaggedHistories(savedQuestion, tags);
 
 		TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
 			public void afterCommit() {
@@ -83,11 +85,14 @@ public class QnaService {
 		Assert.notNull(loginUser, "loginUser should be not null!");
 		Assert.notNull(questionDto, "question should be not null!");
 
-		Question question = questionRepository.findOne(questionDto.getQuestionId());
+		Question savedQuestion = questionRepository.findOne(questionDto.getQuestionId());
 
-		Set<Tag> tags = tagService.processTags(questionDto.getPlainTags());
-		question.update(loginUser, questionDto.getTitle(), questionDto.getContents(), tags);
-		return question;
+		final Set<Tag> tags = tagService.processTags(questionDto.getPlainTags());
+		final DifferenceTags differenceTags = savedQuestion.differenceTags(tags);
+		final Set<Tag> newTags = differenceTags.taggedNewTags();
+		savedQuestion.update(loginUser, questionDto.getTitle(), questionDto.getContents(), tags);
+		tagService.saveTaggedHistories(savedQuestion, newTags);
+		return savedQuestion;
 	}
 
 	public void deleteQuestion(SocialUser loginUser, Long questionId) {

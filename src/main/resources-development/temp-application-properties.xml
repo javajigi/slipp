@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <comment>application-properties</comment>
+
+    <!-- net.slipp.service.qna.FacebookService.java -->
+    <entry key="facebook.application.url">test</entry>
+
+    <!-- slipp-servlet.xml -->
+    <entry key="application.url">test</entry>
+    <entry key="resources.cache.seconds">300</entry>
+
+
+    <!-- applicationContext-social.xml -->
+    <entry key="facebook.clientId">test</entry>
+    <entry key="facebook.clientSecret">test</entry>
+    <entry key="twitter.consumerKey">test</entry>
+    <entry key="twitter.consumerSecret">test</entry>
+    <entry key="google.clientId">test</entry>
+    <entry key="google.clientSecret">test</entry>
+
+
+
+    <!-- applicationContext.xml -->
+    <entry key="slipp.remember.token.key">test</entry>
+    <entry key="slipp.remember.token.key">test</entry>
+
+
+
+    <!-- infrastructure.xml -->
+    <entry key="wiki.database.url">jdbc:mysql://127.0.0.1/slipp?uniCode=true&amp;characterEncoding=utf8</entry>
+    <entry key="wiki.database.username">root</entry>
+    <entry key="wiki.database.password"></entry>
+    <entry key="wiki.database.driverClassName">com.mysql.jdbc.Driver</entry>
+    <entry key="mail.server.host">test</entry>
+    <entry key="mail.server.port">12312</entry>
+    <entry key="mail.server.username">test</entry>
+    <entry key="mail.server.password">test</entry>
+</properties>

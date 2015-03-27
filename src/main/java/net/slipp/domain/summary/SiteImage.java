@@ -1,6 +1,6 @@
 package net.slipp.domain.summary;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jsoup.nodes.Document;
 
 public class SiteImage {

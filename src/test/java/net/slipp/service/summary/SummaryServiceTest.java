@@ -104,7 +104,7 @@ public class SummaryServiceTest {
 	@Test
 	public final void testFindOneThumnail_WindtaleNet() throws Exception {
 		SiteSummary siteSummary = summaryService.findOneThumbnail("http://windtale.net/blog/sublime-text-tip/");
-		assertThat(siteSummary.getTitle(), is("Sublime Text 2 유용한 기능과 단축키 정리 - WindTale"));
+		assertThat(siteSummary.getTitle(), is("Sublime Text 유용한 기능과 단축키 - WindTale"));
 		logger.debug("\ntestFindOneThumnail_Tistory-------------------------------------------------------------------------------------");
 		logger.debug(siteSummary.getTitle());
 		logger.debug(siteSummary.getThumbnailImage());

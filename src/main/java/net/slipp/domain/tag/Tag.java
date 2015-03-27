@@ -6,9 +6,11 @@ import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
@@ -35,7 +37,7 @@ public class Tag {
 	private boolean pooled;
 
 	@OneToOne
-	@org.hibernate.annotations.ForeignKey(name = "fk_tag_parent_id")
+	@JoinColumn(foreignKey=@ForeignKey(name = "fk_tag_parent_id"))
 	private Tag parent;
 
 	@Embedded
@@ -47,10 +49,10 @@ public class Tag {
 	public Tag() {
 	}
 
-	Tag(String name, Tag parent, boolean pooled, TagInfo tagInfo) {
+	Tag(String name, Tag parent, TagInfo tagInfo) {
 		this.name = name;
 		this.parent = parent;
-		this.pooled = pooled;
+		this.pooled = true;
 		this.tagInfo = tagInfo;
 	}
 
@@ -80,6 +82,10 @@ public class Tag {
 
 	public boolean isPooled() {
 		return pooled;
+	}
+	
+	public boolean isTagged() {
+		return taggedCount > 0;
 	}
 
 	public void tagged() {
@@ -147,15 +153,15 @@ public class Tag {
 	}
 
 	public static Tag pooledTag(String name, Tag parent) {
-		return new Tag(name.toLowerCase(), parent, true, null);
+		return new Tag(name.toLowerCase(), parent, null);
 	}
 
 	public static Tag newTag(String name) {
-		return new Tag(name.toLowerCase(), null, false, null);
+		return new Tag(name.toLowerCase(), null, null);
 	}
 
 	public static Tag groupedTag(String name, String groupId) {
-		return new Tag(name.toLowerCase(), null, true, new TagInfo(groupId, name));
+		return new Tag(name.toLowerCase(), null, new TagInfo(groupId, name));
 	}
 	
 	@Override

@@ -110,7 +110,7 @@
 			<section class="qna-tags">
 				<h1>연관태그</h1>
 				<ul>
-				<c:forEach items="${question.pooledTags}" var="tag">
+				<c:forEach items="${question.tags}" var="tag">
 					<li>
 						<a href="/questions/tagged/${tag.name}" class="tag">${tag.name}</a>
 					</li>

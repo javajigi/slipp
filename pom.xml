@@ -8,16 +8,16 @@
 	<name>slipp-qna</name>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<org.slf4j.version>1.6.1</org.slf4j.version>
+		<org.slf4j.version>1.7.7</org.slf4j.version>
 		<jpa.version>2.0.0</jpa.version>
-		<hibernate.version>4.2.0.Final</hibernate.version>
-		<org.springframework.version>3.1.4.RELEASE</org.springframework.version>
-		<org.springframework.social.version>1.0.3.RELEASE</org.springframework.social.version>
-		<org.springframework.security.version>3.1.0.RELEASE</org.springframework.security.version>
+		<hibernate.version>4.3.8.Final</hibernate.version>
+		<org.springframework.version>4.1.6.RELEASE</org.springframework.version>
+		<org.springframework.social.version>1.1.0.RELEASE</org.springframework.social.version>
+		<org.springframework.security.version>3.2.5.RELEASE</org.springframework.security.version>
 		<jpametamodel.generated.dir>${basedir}/target/generated-sources/jpametamodel</jpametamodel.generated.dir>
 		<acceptance.test.dir>${basedir}/src/acceptance-test/java</acceptance.test.dir>
 		<maven.test.failure.ignore>true</maven.test.failure.ignore>
-		<tomcat.version>8.0.20</tomcat.version>
+		<tomcat.version>7.0.34</tomcat.version>
 
 		<!-- SONAR -->
 		<sonar.language>java</sonar.language>
@@ -29,117 +29,114 @@
 		<sonar.exclusions>**/net/slipp/domain/**/*_.java</sonar.exclusions>
 	</properties>
 	<dependencies>
-		<dependency>
-			<groupId>org.springframework.social</groupId>
-			<artifactId>spring-social-twitter</artifactId>
-			<version>1.0.3.RELEASE</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.social</groupId>
-			<artifactId>spring-social-facebook</artifactId>
-			<version>${org.springframework.social.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.social</groupId>
-			<artifactId>spring-social-core</artifactId>
-			<version>${org.springframework.social.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.social</groupId>
-			<artifactId>spring-social-web</artifactId>
-			<version>${org.springframework.social.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.17</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-jpa</artifactId>
-			<version>1.1.0.RELEASE</version>
-		</dependency>
+		<!-- Spring Framework -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
-			<version>${org.springframework.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-			<version>${org.springframework.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
-			<version>${org.springframework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aop</artifactId>
-			<version>${org.springframework.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-tx</artifactId>
-			<version>${org.springframework.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
-			<version>${org.springframework.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-beans</artifactId>
-			<version>${org.springframework.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
-			<version>${org.springframework.version}</version>
+		</dependency>
+
+		<!-- spring security -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+		</dependency>
+
+		<!-- spring social -->
+		<dependency>
+			<groupId>org.springframework.social</groupId>
+			<artifactId>spring-social-twitter</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.social</groupId>
+			<artifactId>spring-social-facebook</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.social</groupId>
+			<artifactId>spring-social-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.social</groupId>
+			<artifactId>spring-social-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-jpa</artifactId>
+			<version>1.7.2.RELEASE</version>
 		</dependency>
 
 		<dependency>
 			<groupId>cglib</groupId>
 			<artifactId>cglib-nodep</artifactId>
-			<version>2.2</version>
+			<version>3.1</version>
 		</dependency>
+
 		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-config</artifactId>
-			<version>${org.springframework.security.version}</version>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-dbcp2</artifactId>
+			<version>2.0.1</version>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-web</artifactId>
-			<version>${org.springframework.security.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-taglibs</artifactId>
-			<version>${org.springframework.security.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-dbcp</groupId>
-			<artifactId>commons-dbcp</artifactId>
-			<version>1.4</version>
-		</dependency>
+
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.18</version>
+			<version>5.1.34</version>
 		</dependency>
 		<dependency>
 			<groupId>net.sf.ehcache</groupId>
 			<artifactId>ehcache-core</artifactId>
-			<version>2.6.6</version>
+			<version>2.6.9</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.hibernate.javax.persistence</groupId>
-			<artifactId>hibernate-jpa-2.0-api</artifactId>
-			<version>1.0.0.Final</version>
+			<artifactId>hibernate-jpa-2.1-api</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
@@ -153,7 +150,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>${hibernate.version}</version>
+			<version>5.1.2.Final</version>
 		</dependency>
 
 		<dependency>
@@ -161,28 +158,25 @@
 			<artifactId>mail</artifactId>
 			<version>1.4.7</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.freemarker</groupId>
 			<artifactId>freemarker</artifactId>
-			<version>2.3.16</version>
+			<version>2.3.20</version>
 		</dependency>
 
 
-		<!-- Log - slf4j -->
+		<!-- Logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>${org.slf4j.version}</version>
 		</dependency>
+
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>${org.slf4j.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>jcl-over-slf4j</artifactId>
-			<version>${org.slf4j.version}</version>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.1.2</version>
 		</dependency>
 
 		<!-- Servlet, JSP, JSTL -->
@@ -206,29 +200,29 @@
 
 		<!-- Apache Commons -->
 		<dependency>
-			<groupId>commons-io</groupId>
+			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-io</artifactId>
-			<version>1.4</version>
+			<version>1.3.2</version>
 		</dependency>
 		<dependency>
-			<groupId>commons-lang</groupId>
-			<artifactId>commons-lang</artifactId>
-			<version>2.5</version>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.3.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.3.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-collections4</artifactId>
+			<version>4.0</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>
-			<version>1.2.1</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-httpclient</groupId>
-			<artifactId>commons-httpclient</artifactId>
-			<version>3.1</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-collections</groupId>
-			<artifactId>commons-collections</artifactId>
-			<version>3.2.1</version>
+			<version>1.3.1</version>
 		</dependency>
 
 
@@ -242,28 +236,39 @@
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>11.0.1</version>
+			<version>18.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>xml-apis</groupId>
+			<artifactId>xml-apis</artifactId>
 		</dependency>
 
 		<!-- Test -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.8.1</version>
+			<version>4.11</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-java</artifactId>
-			<version>2.25.0</version>
+			<version>2.43.1</version>
 			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.seleniumhq.selenium</groupId>
+					<artifactId>selenium-htmlunit-driver</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-all</artifactId>
-			<version>1.8.5</version>
+			<version>1.10.7</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -282,7 +287,7 @@
 		<dependency>
 			<groupId>org.springframework.social</groupId>
 			<artifactId>spring-social-google</artifactId>
-			<version>1.0.0.M1</version>
+			<version>1.0.0.RELEASE</version>
 		</dependency>
 
 		<dependency>
@@ -294,7 +299,7 @@
 		<dependency>
 			<groupId>org.jsoup</groupId>
 			<artifactId>jsoup</artifactId>
-			<version>1.7.1</version>
+			<version>1.8.1</version>
 		</dependency>
 
 		<dependency>
@@ -334,6 +339,122 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+	<dependencyManagement>
+		<dependencies>
+			<!-- Spring Framework -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-orm</artifactId>
+				<version>${org.springframework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-core</artifactId>
+				<version>${org.springframework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context</artifactId>
+				<version>${org.springframework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context-support</artifactId>
+				<version>${org.springframework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-webmvc</artifactId>
+				<version>${org.springframework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-aop</artifactId>
+				<version>${org.springframework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-tx</artifactId>
+				<version>${org.springframework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-web</artifactId>
+				<version>${org.springframework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-beans</artifactId>
+				<version>${org.springframework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-expression</artifactId>
+				<version>${org.springframework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-test</artifactId>
+				<version>${org.springframework.version}</version>
+			</dependency>
+
+			<!-- spring security -->
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-config</artifactId>
+				<version>${org.springframework.security.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-web</artifactId>
+				<version>${org.springframework.security.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-taglibs</artifactId>
+				<version>${org.springframework.security.version}</version>
+			</dependency>
+
+			<!-- spring social -->
+			<dependency>
+				<groupId>org.springframework.social</groupId>
+				<artifactId>spring-social-config</artifactId>
+				<version>${org.springframework.social.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.social</groupId>
+				<artifactId>spring-social-twitter</artifactId>
+				<version>${org.springframework.social.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.social</groupId>
+				<artifactId>spring-social-facebook</artifactId>
+				<version>${org.springframework.social.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.social</groupId>
+				<artifactId>spring-social-core</artifactId>
+				<version>${org.springframework.social.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.social</groupId>
+				<artifactId>spring-social-web</artifactId>
+				<version>${org.springframework.social.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.hibernate.javax.persistence</groupId>
+				<artifactId>hibernate-jpa-2.1-api</artifactId>
+				<version>1.0.0.Final</version>
+			</dependency>
+
+			<dependency>
+				<groupId>xml-apis</groupId>
+				<artifactId>xml-apis</artifactId>
+				<version>2.0.2</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 	<build>
 		<finalName>slipp</finalName>
 		<resources>
@@ -367,8 +488,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.3.2</version>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+					<source>1.6</source>
+					<target>1.6</target>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -404,11 +525,10 @@
 					</execution>
 				</executions>
 				<dependencies>
-
 					<dependency>
 						<groupId>org.hibernate</groupId>
 						<artifactId>hibernate-jpamodelgen</artifactId>
-						<version>1.1.1.Final</version>
+						<version>4.3.6.Final</version>
 					</dependency>
 				</dependencies>
 			</plugin>
@@ -487,7 +607,7 @@
 					<dependency>
 						<groupId>mysql</groupId>
 						<artifactId>mysql-connector-java</artifactId>
-						<version>5.1.18</version>
+						<version>5.1.33</version>
 					</dependency>
 				</dependencies>
 			</plugin>
@@ -500,30 +620,6 @@
 						<include>**/*AT.java</include>
 					</includes>
 				</configuration>
-				<!-- <executions> <execution> <goals> <goal>integration-test</goal> <goal>verify</goal> 
-					</goals> </execution> </executions> -->
-			</plugin>
-			<plugin>
-				<groupId>org.mortbay.jetty</groupId>
-				<artifactId>maven-jetty-plugin</artifactId>
-				<configuration>
-					<webAppSourceDirectory>${basedir}/webapp</webAppSourceDirectory>
-					<contextPath>/</contextPath>
-					<scanIntervalSeconds>10</scanIntervalSeconds>
-					<connectors>
-						<connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
-							<port>8080</port>
-							<maxIdleTime>60000</maxIdleTime>
-						</connector>
-					</connectors>
-					<stopKey>slipp</stopKey>
-					<stopPort>9999</stopPort>
-				</configuration>
-				<!-- <executions> <execution> <id>start-jetty</id> <phase>pre-integration-test</phase> 
-					<goals> <goal>run-exploded</goal> </goals> <configuration> <scanIntervalSeconds>0</scanIntervalSeconds> 
-					<daemon>true</daemon> </configuration> </execution> <execution> <id>stop-jetty</id> 
-					<phase>post-integration-test</phase> <goals> <goal>stop</goal> </goals> </execution> 
-					</executions> -->
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>

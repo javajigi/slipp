@@ -12,12 +12,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MigrationsController {
 	@Resource(name = "migrationService")
 	private MigrationService migrationService;
-	
+
 	@RequestMapping("")
 	public String index() {
 		return "redirect:/";
 	}
+
+	@RequestMapping("/tags")
+	public String tags() throws Exception {
+		migrationService.migration();
+		return "redirect:/admin/tags";
+	}
 	
+	@RequestMapping("/tagHistories")
+	public String tagHistories() throws Exception {
+		migrationService.updateTagHistory();
+		return "redirect:/";
+	}
+
 	@RequestMapping("/removeSnsConnections")
 	public String removeSnsConnections() {
 		migrationService.removeIdSnsConnection();

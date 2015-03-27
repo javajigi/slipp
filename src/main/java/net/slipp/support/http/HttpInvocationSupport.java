@@ -4,9 +4,11 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.httpclient.Header;
-import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.io.IOUtils;
+import org.apache.http.Header;
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicHeader;
+import org.apache.http.message.BasicNameValuePair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,13 +38,13 @@ public abstract class HttpInvocationSupport<T> implements HttpInvocation<T> {
 	@Override
 	public void addParameter(String name, Object value) {
 		if (value != null) {
-			parameters.add(new NameValuePair(name, value.toString()));
+			parameters.add(new BasicNameValuePair(name, value.toString()));
 		}
 	}
 
 	@Override
 	public void addRequestHeader(String name, String value) {
-		requestHeaders.add(new Header(name, value));
+		requestHeaders.add(new BasicHeader(name, value));
 	}
 
 	@Override
@@ -89,7 +91,7 @@ public abstract class HttpInvocationSupport<T> implements HttpInvocation<T> {
 
 	@Override
 	public void onResponseHeader(String name, String value) {
-		this.responseHeaders.add(new Header(name, value));
+		this.responseHeaders.add(new BasicHeader(name, value));
 	}
 
 	@Override

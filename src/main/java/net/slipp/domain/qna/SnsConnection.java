@@ -7,7 +7,7 @@ import javax.persistence.Enumerated;
 
 import net.slipp.domain.ProviderType;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 @Embeddable
 public class SnsConnection {

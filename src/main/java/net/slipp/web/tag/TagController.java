@@ -17,7 +17,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -47,12 +46,6 @@ public class TagController {
             tags.add(new TagForm(tag.getName()));
         }
 		return tags;
-	}
-	
-	public String tags(Integer page, ModelMap model) throws Exception {
-		model.addAttribute("tags", tagService.findPooledTags(createPageable(page)));
-		model.addAttribute("parentTags", tagService.findPooledTags());
-		return "tags/tags";
 	}
 	
 	Pageable createPageable(Integer page) {

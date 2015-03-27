@@ -1,4 +1,4 @@
-package net.slipp.web.qna;
+package net.slipp.web.tag;
 
 import javax.annotation.Resource;
 
@@ -16,17 +16,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @RequestMapping("/admin")
-public class AdminController {
+public class AdminTagController {
 	private static final int DEFAULT_PAGE_NO = 1;
 	private static final int DEFAULT_PAGE_SIZE = 20;
 
 	@Resource(name = "tagService")
 	private TagService tagService;
-
+	
 	@RequestMapping(value = "/tags", method = RequestMethod.GET)
 	public String tags(Integer page, ModelMap model) throws Exception {
 		model.addAttribute("tags", tagService.findAllTags(createPageable(page)));
-		model.addAttribute("parentTags", tagService.findPooledTags());
+		model.addAttribute("parentTags", tagService.findPooledParentTags());
 		return "admin/tags";
 	}
 

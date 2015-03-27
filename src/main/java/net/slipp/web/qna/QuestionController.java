@@ -42,7 +42,7 @@ public class QuestionController {
 		page = revisedPage(page);
 		logger.debug("currentPage : {}", page);
 		model.addAttribute("questions", qnaService.findsQuestion(createPageableByQuestionUpdatedDate(page, DEFAULT_PAGE_SIZE)));
-		model.addAttribute("tags", tagService.findPooledTags());
+		model.addAttribute("tags", tagService.findLatestTags());
 		return "qna/list";
 	}
 
@@ -51,7 +51,6 @@ public class QuestionController {
 	    logger.debug("currentTag : {}", currentTag);
 	    
 		model.addAttribute("question", new QuestionDto());
-		model.addAttribute("tags", tagService.findPooledTags());
 		return "qna/form";
 	}
 
@@ -70,7 +69,6 @@ public class QuestionController {
 			throw new AccessDeniedException(loginUser.getUserId() + " is not owner!");
 		}
 		model.addAttribute("question", question);
-		model.addAttribute("tags", tagService.findPooledTags());
 		return "qna/form";
 	}
 
@@ -91,7 +89,7 @@ public class QuestionController {
 	    
         model.addAttribute("answer", getTemporaryAnswer(session).createAnswer());
 		model.addAttribute("question", question);
-		model.addAttribute("tags", tagService.findPooledTags());
+		model.addAttribute("tags", tagService.findLatestTags());
 		model.addAttribute("user", new UserForm());
 		return "qna/show";
 	}
@@ -116,7 +114,7 @@ public class QuestionController {
 		page = revisedPage(page);
 		model.addAttribute("currentTag", tagService.findTagByName(name));
 		model.addAttribute("questions", qnaService.findsByTag(name, createPageableByQuestionUpdatedDate(page, DEFAULT_PAGE_SIZE)));
-		model.addAttribute("tags", tagService.findPooledTags());
+		model.addAttribute("tags", tagService.findLatestTags());
 		return "qna/list";
 	}
 }

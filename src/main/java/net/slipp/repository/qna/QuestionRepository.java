@@ -16,4 +16,8 @@ public interface QuestionRepository extends SlippCommonRepository<Question, Long
 	@Modifying
 	@Query("UPDATE Question q set q.showCount = q.showCount + 1 where q.questionId = :questionId")
 	void updateShowCount(@Param("questionId") Long questionId);
+	
+	@Modifying
+	@Query("UPDATE Question q set q.denormalizedTags = :denormalizedTags where q.questionId = :questionId")
+	void updateDenormalizedTags(@Param("questionId") Long questionId, @Param("denormalizedTags")String denormalizedTags);
 }

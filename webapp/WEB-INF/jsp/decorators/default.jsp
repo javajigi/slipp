@@ -35,6 +35,9 @@
 					<li>
 						<a href="/admin/tags" id="tagManagement"><i class="icon-list"></i> <span class="text">태그관리</span></a>
 					</li>
+					<li>
+						<a href="/admin/users" id="userManagement"><i class="icon-list"></i> <span class="text">회원관리</span></a>
+					</li>					
 					</sec:authorize>
 					<li class="site-search">
 						<a href="#siteSearchArea" id="siteSearchButton" class="site-search-button"><i class="icon-search"></i></a>

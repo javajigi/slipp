@@ -5,6 +5,7 @@ import java.util.List;
 import net.slipp.domain.fb.FacebookComment;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,7 @@ import com.restfb.types.Group;
 import com.restfb.types.Post;
 import com.restfb.types.Post.Comments;
 
+@Ignore
 public class RestFBTest {
 	private static Logger logger = LoggerFactory.getLogger(RestFBTest.class);
 

@@ -238,6 +238,11 @@ public class SocialUser {
         this.password = encoder.encodePassword(newPassword, null);
     }
     
+	public void resetPassword(PasswordEncoder encoder, String newPassword) {
+		this.rawPassword = newPassword;
+		this.password = encoder.encodePassword(newPassword, null);
+	}
+    
 	public void update(String email, String userId) {
 		this.email = email;
 		this.userId = userId;

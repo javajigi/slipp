@@ -154,25 +154,6 @@ public class QuestionTest {
 	}
 
 	@Test
-	public void newTags() throws Exception {
-		// given
-		Tag java = aTag().withName("java").withPooled(true).withTaggedCount(3).build();
-		Tag javascript = aTag().withName("javascript").withPooled(true).withTaggedCount(2).build();
-		Tag newTag = aTag().withName("newTag").withPooled(false).build();
-		Question question = aQuestion().withTag(java).withTag(javascript).withTag(newTag).build();
-		
-		// when
-		Set<Tag> tags = question.getTags();
-		Set<Tag> pooledTags = question.getPooledTags();
-		String denormalizedTags = question.getDenormalizedTags();
-		
-		// then
-		assertThat(tags.size(), is(3));
-		assertThat(pooledTags.size(), is(2));
-		assertThat(denormalizedTags.split(",").length, is(2));
-	}
-
-	@Test
 	public void detaggedTags() throws Exception {
 		Tag java = aTag().withName("java").withTaggedCount(3).build();
 		Tag javascript = aTag().withName("javascript").withTaggedCount(2).build();

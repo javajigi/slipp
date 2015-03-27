@@ -56,7 +56,7 @@ public class AnswerController {
 		
 		model.addAttribute("question", qnaService.findByQuestionId(questionId));
 		model.addAttribute("answer", answer);
-		model.addAttribute("tags", tagService.findPooledTags());
+		model.addAttribute("tags", tagService.findLatestTags());
 		return "qna/answer";
 	}
 	

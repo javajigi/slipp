@@ -12,6 +12,7 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,18 +30,16 @@ import net.slipp.domain.ProviderType;
 import net.slipp.domain.tag.Tag;
 import net.slipp.domain.tag.Tags;
 import net.slipp.domain.user.SocialUser;
+import net.slipp.service.tag.TagHelper;
 import net.slipp.support.jpa.CreatedDateEntityListener;
 import net.slipp.support.jpa.HasCreatedDate;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.security.access.AccessDeniedException;
 
-import com.google.common.base.Function;
-import com.google.common.base.Joiner;
-import com.google.common.collect.Collections2;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -56,18 +55,20 @@ public class Question implements HasCreatedDate {
     private Long questionId;
 
     @ManyToOne
-    @org.hibernate.annotations.ForeignKey(name = "fk_question_writer")
+    @JoinColumn(foreignKey=@ForeignKey(name = "fk_question_writer"))
     private SocialUser writer;
 
     @ManyToOne
-    @org.hibernate.annotations.ForeignKey(name = "fk_question_latest_participant")
+    @JoinColumn(foreignKey=@ForeignKey(name = "fk_question_latest_participant"))
     private SocialUser latestParticipant;
 
     @Column(name = "title", length = 100, nullable = false)
     private String title;
 
     @ElementCollection(fetch = FetchType.LAZY)
-    @CollectionTable(name = "question_content_holder", joinColumns = @JoinColumn(name = "question_id", unique = true))
+    @CollectionTable(
+    	name = "question_content_holder", 
+    	joinColumns = @JoinColumn(name = "question_id", unique = true))
     @org.hibernate.annotations.ForeignKey(name = "fk_question_content_holder_question_id")
     @Lob
     @Column(name = "contents", nullable = false)
@@ -151,33 +152,8 @@ public class Question implements HasCreatedDate {
         return tags;
     }
 
-    public Set<Tag> getPooledTags() {
-        Set<Tag> pooledTags = Sets.newHashSet();
-        for (Tag tag : getTags()) {
-            if (tag.isPooled()) {
-                pooledTags.add(tag);
-            }
-        }
-        return pooledTags;
-    }
-
     public String getDenormalizedTags() {
         return this.denormalizedTags;
-    }
-
-    private String tagsToDenormalizedTags(Set<Tag> tags) {
-        if (tags == null) {
-            return null;
-        }
-
-        Function<Tag, String> tagToString = new Function<Tag, String>() {
-            @Override
-            public String apply(Tag input) {
-                return input.getName();
-            }
-        };
-
-        return Joiner.on(",").join(Collections2.transform(tags, tagToString));
     }
 
     private boolean isEmptyContentsHolder() {
@@ -226,7 +202,7 @@ public class Question implements HasCreatedDate {
 
     public String getPlainTags() {
         String displayTags = "";
-        for (Tag tag : getPooledTags()) {
+        for (Tag tag : getTags()) {
             displayTags += tag.getName() + " ";
         }
         return displayTags;
@@ -273,7 +249,7 @@ public class Question implements HasCreatedDate {
     }
 
     public void tagsToDenormalizedTags() {
-        this.denormalizedTags = tagsToDenormalizedTags(getPooledTags());
+        this.denormalizedTags = TagHelper.denormalizedTags(getTags());
     }
 
     public boolean hasTag(Tag tag) {
@@ -284,9 +260,14 @@ public class Question implements HasCreatedDate {
         detaggedTags(tags);
         taggedTags(newTags);
         this.tags = newTags;
-        this.denormalizedTags = tagsToDenormalizedTags(getPooledTags());
+        tagsToDenormalizedTags();
     }
-
+    
+	public DifferenceTags differenceTags(Set<Tag> newTags) {
+		Set<Tag> oldTags = Collections.unmodifiableSet(this.tags);
+		return new DifferenceTags(oldTags, newTags);
+	}
+    
     static void detaggedTags(Set<Tag> originalTags) {
         for (Tag tag : originalTags) {
             tag.deTagged();

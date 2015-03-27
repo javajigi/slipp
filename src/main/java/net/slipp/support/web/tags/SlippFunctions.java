@@ -7,7 +7,7 @@ import net.slipp.support.utils.SlippStringUtils;
 import net.slipp.support.wiki.SlippWikiUtils;
 import net.slipp.support.wiki.WikiContents;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * JSP EL Functions

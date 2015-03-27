@@ -6,7 +6,7 @@ import java.util.Set;
 
 import net.slipp.domain.fb.FacebookGroup;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.collect.Sets;
 

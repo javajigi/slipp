@@ -15,8 +15,8 @@ public class TagTest {
 	
 	@Test
 	public void equalsAndContainsTag() throws Exception {
-		Tag java1 = aTag().withName("java").withPooled(true).build();
-		Tag java2 = aTag().withName("java").withPooled(true).build();
+		Tag java1 = aTag().withName("java").build();
+		Tag java2 = aTag().withName("java").build();
 		assertThat(java1.equals(java2), is(true));
 	}
 	
@@ -58,7 +58,7 @@ public class TagTest {
 	public void createNewTagFromQuestion() throws Exception {
 		String name = "newTag";
 		Tag dut = Tag.newTag(name);
-		assertThat(dut.isPooled(), is(false));
+		assertThat(dut.isPooled(), is(true));
 		assertThat(dut.getName(), is(name.toLowerCase()));
 		assertThat(dut.getParent(), is(nullValue()));
 	}
