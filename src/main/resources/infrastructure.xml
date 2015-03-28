@@ -5,31 +5,6 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
-	<context:property-placeholder location="classpath*:application-properties.xml" />
-
-	<bean id="jpaDialect" class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
-
-	<bean id="entityManagerFactory"
-		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
-		p:persistenceXmlLocation="classpath:META-INF/persistence.xml"
-		p:persistenceUnitName="slipp.qna" p:dataSource-ref="dataSource"
-		p:jpaDialect-ref="jpaDialect" />
-
-	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-		<property name="entityManagerFactory" ref="entityManagerFactory" />
-	</bean>
-
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-		destroy-method="close" p:driverClassName="${database.driverClassName}"
-		p:url="${database.url}" p:username="${database.username}" p:password="${database.password}" />
-
-	<tx:annotation-driven transaction-manager="transactionManager" />
-
-	<bean id="wikiDataSource" class="org.apache.commons.dbcp.BasicDataSource"
-		destroy-method="close" p:driverClassName="${wiki.database.driverClassName}"
-		p:url="${wiki.database.url}" p:username="${wiki.database.username}"
-		p:password="${wiki.database.password}" />
-
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl"
 		p:host="${mail.server.host}"
 		p:port="${mail.server.port}"
