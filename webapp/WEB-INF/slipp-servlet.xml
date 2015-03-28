@@ -54,12 +54,10 @@
 
 	<bean id="servletDownloadManager" class="net.slipp.support.web.ServletDownloadManager" />
 
-	<bean class="net.slipp.social.security.MyProviderSignInController"
+	<bean class="net.slipp.social.security.FixedProviderSignInController"
 		p:signUpUrl="/signup"
 		p:postSignInUrl="/authenticate"
-		p:applicationUrl="${application.url}">
-		<constructor-arg value="${application.url}" />
-	</bean>
+		p:applicationUrl="${application.url}" />
 
 	<bean class="net.slipp.social.security.SlippSecuritySignUpController" />
 
