@@ -5,6 +5,8 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -35,15 +37,20 @@ public class TaggedHistory implements HasCreatedDate {
 	
 	@Column(name = "user_id", nullable = false, updatable = false)
 	private Long userId;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name = "tagged_type", nullable = false, updatable = false, columnDefinition = TaggedType.COLUMN_DEFINITION)
+	private TaggedType taggedType;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "created_date", nullable = false, updatable = false)
 	private Date createdDate;
 	
-	public TaggedHistory(Long tagId, Long questionId, Long userId) {
+	public TaggedHistory(Long tagId, Long questionId, Long userId, TaggedType taggedType) {
 		this.tagId = tagId;
 		this.questionId = questionId;
 		this.userId = userId;
+		this.taggedType = taggedType;
 	}
 
 	@Override
@@ -67,14 +74,20 @@ public class TaggedHistory implements HasCreatedDate {
 	public Long getUserId() {
 		return userId;
 	}
+	
+	public TaggedType getTaggedType() {
+		return taggedType;
+	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((createdDate == null) ? 0 : createdDate.hashCode());
 		result = prime * result + ((historyId == null) ? 0 : historyId.hashCode());
 		result = prime * result + ((questionId == null) ? 0 : questionId.hashCode());
 		result = prime * result + ((tagId == null) ? 0 : tagId.hashCode());
+		result = prime * result + ((taggedType == null) ? 0 : taggedType.hashCode());
 		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
 		return result;
 	}
@@ -88,6 +101,11 @@ public class TaggedHistory implements HasCreatedDate {
 		if (getClass() != obj.getClass())
 			return false;
 		TaggedHistory other = (TaggedHistory) obj;
+		if (createdDate == null) {
+			if (other.createdDate != null)
+				return false;
+		} else if (!createdDate.equals(other.createdDate))
+			return false;
 		if (historyId == null) {
 			if (other.historyId != null)
 				return false;
@@ -103,6 +121,8 @@ public class TaggedHistory implements HasCreatedDate {
 				return false;
 		} else if (!tagId.equals(other.tagId))
 			return false;
+		if (taggedType != other.taggedType)
+			return false;
 		if (userId == null) {
 			if (other.userId != null)
 				return false;
@@ -113,7 +133,7 @@ public class TaggedHistory implements HasCreatedDate {
 
 	@Override
 	public String toString() {
-		return "TaggedHistory [historyId=" + historyId + ", tagId=" + tagId + ", questionId=" + questionId + ", userId=" + userId + ", createdDate="
-				+ createdDate + "]";
+		return "TaggedHistory [historyId=" + historyId + ", tagId=" + tagId + ", questionId=" + questionId
+				+ ", userId=" + userId + ", taggedType=" + taggedType + ", createdDate=" + createdDate + "]";
 	}
 }

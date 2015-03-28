@@ -91,6 +91,7 @@
 		<intercept-url pattern="/questions/form" method="GET" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/questions" method="POST" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/questions/*/form" method="GET" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/questions/*/tagged" method="POST" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/questions/*/answers/*/form" method="GET" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/questions/*/answers/*" method="PUT" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/questions/*/answers/*/like" method="POST" access="hasRole('ROLE_USER')" />
@@ -101,6 +102,10 @@
 		<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMINISTRATOR')" />
 		<intercept-url pattern="/migrations/**" access="hasRole('ROLE_ADMINISTRATOR')" />
 		<intercept-url pattern="/mails/**" access="hasRole('ROLE_ADMINISTRATOR')" />
+		<intercept-url pattern="/api/questions/*/detagged/*" method="POST" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/api/questions/*/like" method="POST" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/api/questions/*/answers/*/like" method="POST" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/api/questions/*/answers/*/dislike" method="POST" access="hasRole('ROLE_USER')" />
 
 	    <form-login login-page="/users/login"
 	            always-use-default-target='false'

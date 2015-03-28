@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.restfb.util.StringUtils;
+
 @Controller
 @RequestMapping("/questions")
 public class QuestionController {
@@ -59,7 +61,7 @@ public class QuestionController {
 		logger.debug("Question : {}", newQuestion);
 
 		Question question = qnaService.createQuestion(loginUser, newQuestion);
-		return String.format("redirect:/questions/%s", question.getQuestionId());
+		return String.format("redirect:/questions/%d", question.getQuestionId());
 	}
 
 	@RequestMapping("/{id}/form")
@@ -77,10 +79,10 @@ public class QuestionController {
 		logger.debug("Question : {}", updatedQuestion);
 
 		Question question = qnaService.updateQuestion(loginUser, updatedQuestion);
-		return String.format("redirect:/questions/%s", question.getQuestionId());
+		return String.format("redirect:/questions/%d", question.getQuestionId());
 	}
 
-	@RequestMapping("{id}")
+	@RequestMapping("/{id}")
 	public String show(@PathVariable Long id, Model model, HttpSession session) {
 	    Question question = qnaService.showQuestion(id);
 	    if (question.isDeleted()) {
@@ -103,12 +105,21 @@ public class QuestionController {
         return (TemporaryAnswer)value;
 	}
 	
-	@RequestMapping(value="{id}", method=RequestMethod.DELETE)
+	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
 	public String delete(@LoginUser SocialUser loginUser, @PathVariable Long id) {
 		qnaService.deleteQuestion(loginUser, id);
 		return "redirect:/questions";
 	}
-
+	
+	@RequestMapping(value="/{id}/tagged", method=RequestMethod.POST)
+	public String tagged(@LoginUser SocialUser loginUser, @PathVariable Long id, String taggedName) {
+		if (StringUtils.isBlank(taggedName)) {
+			throw new NullPointerException("Tag name should not null.");
+		}
+		qnaService.tagged(loginUser, id, taggedName);
+		return String.format("redirect:/questions/%d", id);
+	}
+	
 	@RequestMapping("/tagged/{name}")
 	public String listByTagged(@PathVariable String name, Integer page, Model model) {
 		page = revisedPage(page);
