@@ -24,7 +24,7 @@
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
 
-	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close"
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"
 		p:driverClassName="${database.driverClassName}"
 		p:url="${database.url}"
 		p:username="${database.username}"

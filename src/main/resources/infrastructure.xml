@@ -19,13 +19,13 @@
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
 
-	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close" p:driverClassName="${database.driverClassName}"
 		p:url="${database.url}" p:username="${database.username}" p:password="${database.password}" />
 
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
-	<bean id="wikiDataSource" class="org.apache.commons.dbcp2.BasicDataSource"
+	<bean id="wikiDataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close" p:driverClassName="${wiki.database.driverClassName}"
 		p:url="${wiki.database.url}" p:username="${wiki.database.username}"
 		p:password="${wiki.database.password}" />
