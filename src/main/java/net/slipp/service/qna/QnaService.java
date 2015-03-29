@@ -10,6 +10,7 @@ import net.slipp.domain.qna.QnaSpecifications;
 import net.slipp.domain.qna.Question;
 import net.slipp.domain.qna.QuestionDto;
 import net.slipp.domain.tag.Tag;
+import net.slipp.domain.tag.TaggedType;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.repository.qna.AnswerRepository;
 import net.slipp.repository.qna.QuestionRepository;
@@ -204,4 +205,29 @@ public class QnaService {
         return question;
     }
 
+	public void tagged(SocialUser loginUser, Long id, String taggedName) {
+		Question question = questionRepository.findOne(id);
+		Tag newTag = tagService.findTagByName(taggedName);
+		if (newTag == null) {
+			newTag = tagService.newTag(taggedName);
+		}
+		if (question.hasTag(newTag)) {
+			return;
+		}
+		question.taggedTag(newTag);
+		tagService.saveTaggedHistory(loginUser, question, newTag, TaggedType.TAGGED);
+	}
+
+	public void detagged(SocialUser loginUser, Long id, String taggedName) {
+		Question question = questionRepository.findOne(id);
+		Tag tag = tagService.findTagByName(taggedName);
+		if (tag == null) {
+			throw new NullPointerException(String.format("%s tag does not exist.", taggedName));
+		}
+		if (!question.hasTag(tag)) {
+			return;
+		}
+		question.detaggedTag(tag);
+		tagService.saveTaggedHistory(loginUser, question, tag, TaggedType.DETAGGED);
+	}
 }

@@ -1,13 +1,11 @@
 package net.slipp.domain.qna;
 
-import static net.slipp.domain.qna.AnswerBuilder.anAnswer;
-import static net.slipp.domain.qna.QuestionBuilder.aQuestion;
-import static net.slipp.domain.tag.TagBuilder.aTag;
-import static net.slipp.domain.tag.TagTest.JAVA;
-import static net.slipp.domain.tag.TagTest.JAVASCRIPT;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
+import static net.slipp.domain.qna.AnswerBuilder.*;
+import static net.slipp.domain.qna.QuestionBuilder.*;
+import static net.slipp.domain.tag.TagBuilder.*;
+import static net.slipp.domain.tag.TagTest.*;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
 
 import java.util.Set;
 
@@ -173,6 +171,32 @@ public class QuestionTest {
 
 		assertThat(java.getTaggedCount(), is(4));
 		assertThat(javascript.getTaggedCount(), is(3));
+	}
+	
+	@Test
+	public void taggedTag() throws Exception {
+		Tag java = aTag().withName("java").withTaggedCount(3).build();
+		Tag javascript = aTag().withName("javascript").withTaggedCount(2).build();
+		SocialUser writer = new SocialUser();
+		Question dut = aQuestion().withWriter(writer).withTag(java).build();
+		dut.taggedTag(javascript);
+
+		assertThat(dut.getTags().size(), is(2));
+		assertThat(javascript.getTaggedCount(), is(3));
+		assertTrue(dut.getDenormalizedTags().contains("javascript"));
+	}
+	
+	@Test
+	public void deTaggedTag() throws Exception {
+		Tag java = aTag().withName("java").build();
+		Tag javascript = aTag().withName("javascript").build();
+		SocialUser writer = new SocialUser();
+		Question dut = aQuestion().withWriter(writer).withTag(java).withTag(javascript).build();
+		dut.detaggedTag(javascript);
+
+		assertThat(dut.getTags().size(), is(1));
+		assertThat(javascript.getTaggedCount(), is(0));
+		assertTrue(!dut.getDenormalizedTags().contains("javascript"));
 	}
 	
     @Test

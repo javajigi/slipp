@@ -256,7 +256,7 @@ public class Question implements HasCreatedDate {
         return tags.contains(tag);
     }
 
-    void newTags(Set<Tag> newTags) {
+    public void newTags(Set<Tag> newTags) {
         detaggedTags(tags);
         taggedTags(newTags);
         this.tags = newTags;
@@ -279,6 +279,18 @@ public class Question implements HasCreatedDate {
             tag.tagged();
         }
     }
+    
+	public void taggedTag(Tag newTag) {
+		newTag.tagged();
+		tags.add(newTag);
+		tagsToDenormalizedTags();
+	}
+	
+	public void detaggedTag(Tag tag) {
+		tag.deTagged();
+		tags.remove(tag);
+		tagsToDenormalizedTags();
+	}
 
     public void update(SocialUser loginUser, String title, String contents, Set<Tag> newTags) {
         if (!isWritedBy(loginUser)) {

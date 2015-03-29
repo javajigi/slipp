@@ -113,10 +113,19 @@
 				<c:forEach items="${question.tags}" var="tag">
 					<li>
 						<a href="/questions/tagged/${tag.name}" class="tag">${tag.name}</a>
+						<sec:authorize access="hasRole('ROLE_USER')">
+						&nbsp;<a class="link-detagged" href="/api/questions/${question.questionId}/detagged/${tag.name}">X</a>
+						</sec:authorize>
 					</li>
 				</c:forEach>
 				</ul>
 			</section>
+			<sec:authorize access="hasRole('ROLE_USER')">
+			<form id="taggedForm" action="/questions/${question.questionId}/tagged" method="post" cssClass="signin-with-sns">
+				<input type="text" name="taggedName" class="inp_nickname focused"><br/>
+				<button class="signin-with-sns-submit-btn" type="submit">태그추가</button>
+			</form><br/>
+			</sec:authorize>
 			<a class="link-back-to-list" href="/questions">&larr; 목록으로</a>
 		</div>
 	</div>

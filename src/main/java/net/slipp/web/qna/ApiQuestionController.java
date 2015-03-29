@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.restfb.util.StringUtils;
+
 @Controller
 @RequestMapping("/api/questions/{questionId}")
 public class ApiQuestionController {
@@ -39,7 +41,16 @@ public class ApiQuestionController {
             throws Exception {
         Question question = qnaService.likeQuestion(loginUser, questionId);
         return question.getSumLike();
-    }    
+    }  
+    
+	@RequestMapping(value="/detagged/{name}", method=RequestMethod.POST)
+	public @ResponseBody boolean detagged(@LoginUser SocialUser loginUser, @PathVariable Long questionId, @PathVariable String name) {
+		if (StringUtils.isBlank(name)) {
+			return false;
+		}
+		qnaService.detagged(loginUser, questionId, name);
+		return true;
+	}
     
     @RequestMapping(value = "/answers/{answerId}/like", method = RequestMethod.POST)
     public @ResponseBody Integer likeAnswer(@LoginUser SocialUser loginUser, @PathVariable Long questionId, @PathVariable Long answerId)
