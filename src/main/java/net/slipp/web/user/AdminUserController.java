@@ -3,6 +3,7 @@ package net.slipp.web.user;
 import javax.annotation.Resource;
 
 import net.slipp.domain.user.SocialUser;
+import net.slipp.service.qna.BlockService;
 import net.slipp.service.user.SocialUserService;
 
 import org.slf4j.Logger;
@@ -27,6 +28,9 @@ public class AdminUserController {
 	
     @Resource(name = "socialUserService")
     private SocialUserService userService;
+    
+    @Resource(name = "blockService")
+    private BlockService blockService;
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String users(Integer page, ModelMap model) throws Exception {
@@ -48,6 +52,13 @@ public class AdminUserController {
 		log.debug("Id : {}, Page Number : {}", id, page);
 		SocialUser socialUser = userService.findById(id);
 		userService.resetPassword(socialUser);
+		return String.format("redirect:/admin/users?page=%d", page + 1);
+	}
+	
+	@RequestMapping(value="/{id}/block", method = RequestMethod.POST)
+	public String block(@PathVariable Long id, Integer page) throws Exception {
+		log.debug("Id : {}, Page Number : {}", id, page);
+		blockService.block(id);
 		return String.format("redirect:/admin/users?page=%d", page + 1);
 	}
 }

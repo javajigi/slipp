@@ -1,5 +1,6 @@
 package net.slipp.service.qna;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Resource;
@@ -177,6 +178,10 @@ public class QnaService {
 		Question question = questionRepository.findOne(questionId);
 		question.deAnswered(answer);
 	}
+	
+	private void deleteAnswer(SocialUser loginUser, Question question, Answer answer) {
+		deleteAnswer(loginUser, question.getQuestionId(), answer.getAnswerId());
+	}
 
 	public Answer likeAnswer(SocialUser loginUser, Long answerId) {
 	    Answer answer = answerRepository.findOne(answerId);
@@ -229,5 +234,17 @@ public class QnaService {
 		}
 		question.detaggedTag(tag);
 		tagService.saveTaggedHistory(loginUser, question, tag, TaggedType.DETAGGED);
+	}
+
+	public void deleteToBlock(SocialUser user) {
+		List<Answer> answers = answerRepository.findByWriter(user);
+		for (Answer answer : answers) {
+			deleteAnswer(user, answer.getQuestion(), answer);
+		}
+		
+		List<Question> questions = questionRepository.findByWriter(user);
+		for (Question question : questions) {
+			question.delete(user);
+		}
 	}
 }

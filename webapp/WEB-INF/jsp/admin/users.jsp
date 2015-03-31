@@ -6,7 +6,7 @@
 
 <section class="taglist-content">
 	<h1>회원 목록</h1>
-	<div class="content-main">
+	<div>
 		<table id="users">
 			<thead>
 				<tr>
@@ -20,13 +20,18 @@
 			</thead>
 			<tbody>
 				<c:forEach items="${users.content}" var="each">
-				<tr>
-					<td>${each.userId}</td>
+				<tr <c:if test="${each.blocked}">style="background-color:orange"</c:if>>
+					<td><a href="/users/${each.id}/${each.userId}">${each.userId}</a></td>
 					<td>${each.email}</td>
 					<td>${each.providerId}</td>
 					<td>${each.displayName}</td>
 					<td>${each.createDate}</td>
 					<td>
+						<c:if test="${not each.blocked}">
+						<form class="form-search" action="/admin/users/${each.id}/block?page=${users.number}" method="post">
+							<button type="submit">계정 징계</button>
+						</form>
+						</c:if>
 						<c:if test="${each.providerId eq 'slipp'}">
 						<form class="form-search" action="/admin/users/${each.id}/resetpassword?page=${users.number}" method="post">
 							<button type="submit">비밀번호 재설정</button>

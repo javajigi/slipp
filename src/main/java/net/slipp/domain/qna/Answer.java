@@ -193,7 +193,7 @@ public class Answer implements HasCreatedAndUpdatedDate, Comparable<Answer> {
         this.snsConnection = new SnsConnection(ProviderType.valueOf(writer.getProviderId()), postId); 
         return this.snsConnection;
     }
-	
+    
 	@Override
 	public int compareTo(Answer o) {
 		return o.getSumLike().compareTo(getSumLike());

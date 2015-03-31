@@ -68,6 +68,8 @@ public class SocialUser {
     private Long expireTime;
 
     private Date createDate = new Date();
+    
+    private boolean blocked = false;
 
     public SocialUser() {
     }
@@ -229,6 +231,14 @@ public class SocialUser {
         return ProviderType.slipp == getProviderIdBySnsType();
     }
     
+    public boolean isBlocked() {
+		return blocked;
+	}
+    
+    public void blocked() {
+    	this.blocked = true;
+    }
+    
     public void changePassword(PasswordEncoder encoder, String oldPassword, String newPassword) {
         String oldEncodedPassword = encoder.encodePassword(oldPassword, null);
         if (!password.equals(oldEncodedPassword)) {
@@ -251,7 +261,7 @@ public class SocialUser {
 			this.imageUrl = DEFAULT_SLIPP_USER_PROFILE_SUFFIX + MD5Util.md5Hex(email);
 		}
 	}
-
+	
     static class GuestSocialUser extends SocialUser {
         @Override
         public boolean isGuest() {

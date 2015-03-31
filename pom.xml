@@ -17,12 +17,12 @@
 		<jpametamodel.generated.dir>${basedir}/target/generated-sources/jpametamodel</jpametamodel.generated.dir>
 		<acceptance.test.dir>${basedir}/src/acceptance-test/java</acceptance.test.dir>
 		<maven.test.failure.ignore>true</maven.test.failure.ignore>
-<!--
 		<jdk.compiler.version>1.6</jdk.compiler.version>
 		<tomcat.version>7.0.34</tomcat.version>
---> 
+<!--
  		<jdk.compiler.version>1.8</jdk.compiler.version>
 		<tomcat.version>8.0.20</tomcat.version>
+--> 
 		
 		<!-- SONAR -->
 		<sonar.language>java</sonar.language>
