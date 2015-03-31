@@ -58,7 +58,7 @@
 	
 	<cache name="smallTalkCache" 
 		maxElementsInMemory="1000" 
-		eternal="true"
+		eternal="false"
 		overflowToDisk="true" 
 		timeToIdleSeconds="300" 
 		timeToLiveSeconds="600"

@@ -68,8 +68,9 @@ public class Question implements HasCreatedDate {
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(
     	name = "question_content_holder", 
-    	joinColumns = @JoinColumn(name = "question_id", unique = true))
-    @org.hibernate.annotations.ForeignKey(name = "fk_question_content_holder_question_id")
+    	joinColumns = @JoinColumn(
+    					name = "question_id", unique = true,
+    					foreignKey = @ForeignKey(name="fk_question_content_holder_question_id")))
     @Lob
     @Column(name = "contents", nullable = false)
     private Collection<String> contentsHolder;
@@ -89,8 +90,11 @@ public class Question implements HasCreatedDate {
     private int showCount = 0;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "question_tag", joinColumns = @JoinColumn(name = "question_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    @org.hibernate.annotations.ForeignKey(name = "fk_question_tag_question_id", inverseName = "fk_question_tag_tag_id")
+    @JoinTable(name = "question_tag", 
+    	joinColumns = @JoinColumn(name = "question_id",
+				foreignKey = @ForeignKey(name="fk_question_tag_question_id")), 
+    	inverseJoinColumns = @JoinColumn(name = "tag_id", 
+    			foreignKey = @ForeignKey(name="fk_question_tag_tag_id")))
     private Set<Tag> tags = Sets.newHashSet();
 
     @Column(name = "denormalized_tags", length = 100)
@@ -107,8 +111,9 @@ public class Question implements HasCreatedDate {
     private boolean deleted = false;
     
     @ElementCollection(fetch = FetchType.LAZY)
-    @CollectionTable(name = "question_sns_connections", joinColumns = @JoinColumn(name = "question_id"))
-    @org.hibernate.annotations.ForeignKey(name = "fk_question_sns_connection_question_id")
+    @CollectionTable(name = "question_sns_connections", 
+    	joinColumns = @JoinColumn(name = "question_id", 
+    							foreignKey = @ForeignKey(name="fk_question_sns_connection_question_id")))
     private Collection<SnsConnection> snsConnetions = Sets.newHashSet();    
     
     public Question() {

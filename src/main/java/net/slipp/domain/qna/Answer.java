@@ -41,8 +41,10 @@ public class Answer implements HasCreatedAndUpdatedDate, Comparable<Answer> {
 	private SocialUser writer;
 	
 	@ElementCollection(fetch = FetchType.LAZY)
-	@CollectionTable(name = "answer_content_holder", joinColumns = @JoinColumn(name = "answer_id", unique = true))
-	@org.hibernate.annotations.ForeignKey(name = "fk_answer_content_holder_answer_id")
+	@CollectionTable(name = "answer_content_holder", 
+		joinColumns = @JoinColumn(
+							name = "answer_id", unique = true, 
+	    					foreignKey = @ForeignKey(name="fk_answer_content_holder_answer_id")))
 	@Lob
 	@Column(name = "contents", nullable = false)
 	private Collection<String> contentsHolder;
