@@ -17,13 +17,10 @@
 		<jpametamodel.generated.dir>${basedir}/target/generated-sources/jpametamodel</jpametamodel.generated.dir>
 		<acceptance.test.dir>${basedir}/src/acceptance-test/java</acceptance.test.dir>
 		<maven.test.failure.ignore>true</maven.test.failure.ignore>
-		<jdk.compiler.version>1.6</jdk.compiler.version>
-		<tomcat.version>7.0.34</tomcat.version>
-<!--
- 		<jdk.compiler.version>1.8</jdk.compiler.version>
+		<!-- <jdk.compiler.version>1.6</jdk.compiler.version> <tomcat.version>7.0.34</tomcat.version> -->
+		<jdk.compiler.version>1.8</jdk.compiler.version>
 		<tomcat.version>8.0.20</tomcat.version>
---> 
-		
+
 		<!-- SONAR -->
 		<sonar.language>java</sonar.language>
 		<sonar.jdbc.url>jdbc:mysql://localhost:3306/sonar?useUnicode=true&amp;characterEncoding=utf8</sonar.jdbc.url>
@@ -120,15 +117,9 @@
 			<version>3.1</version>
 		</dependency>
 
-<!-- 	
-		java를 1.8로 업그레이드하는 시점에 반영	
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-dbcp2</artifactId>
-			<version>2.0.1</version>
-		</dependency> 
--->
-		
+		<!-- java를 1.8로 업그레이드하는 시점에 반영 <dependency> <groupId>org.apache.commons</groupId> 
+			<artifactId>commons-dbcp2</artifactId> <version>2.0.1</version> </dependency> -->
+
 		<dependency>
 			<groupId>commons-dbcp</groupId>
 			<artifactId>commons-dbcp</artifactId>
@@ -314,6 +305,12 @@
 			<groupId>org.jsoup</groupId>
 			<artifactId>jsoup</artifactId>
 			<version>1.8.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.pegdown</groupId>
+			<artifactId>pegdown</artifactId>
+			<version>1.5.0</version>
 		</dependency>
 
 		<dependency>
