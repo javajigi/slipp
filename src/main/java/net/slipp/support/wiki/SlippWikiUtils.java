@@ -58,4 +58,17 @@ public class SlippWikiUtils {
 		String imageUrl = "/attachments/" + attachmentId;
 		return "<img src=\"" + imageUrl + "\"/>";
 	}
+	
+	public static String convertWiki(String contents) {
+		contents = contents.replace("h1.", "#");
+		contents = contents.replace("h2.", "##");
+		contents = contents.replace("h3.", "###");
+		contents = contents.replace("h4.", "####");
+		contents = contents.replace("h5.", "#####");
+		contents = contents.replace("h6.", "######");
+		
+		contents = contents.replace("{code}", "```");
+		contents = contents.replace("{code:java}", "```");
+		return contents;
+	}
 }

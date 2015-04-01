@@ -31,4 +31,12 @@ public class ComponentNode extends AbstractNode {
 	public String getName() {
 		return name;
 	}
+	
+	public Map<String, String> getParams() {
+		return params;
+	}
+	
+	public String getBody() {
+		return body;
+	}
 }

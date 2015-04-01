@@ -1,7 +1,7 @@
 package net.slipp.support.wiki;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 import java.util.List;
 
@@ -39,5 +39,15 @@ public class SlippWikiUtilsTest {
 		String contents = TestFileReader.read(this, "text.txt");
 		String actual = WikiContents.parse(contents);
 		logger.debug("convert contents : {}", actual);
+	}
+	
+	@Test
+	public void convertHeaderTagToSharp() throws Exception {
+		assertThat(SlippWikiUtils.convertWiki("h1. 제목"), is("# 제목"));
+		assertThat(SlippWikiUtils.convertWiki("h2. 제목"), is("## 제목"));
+		assertThat(SlippWikiUtils.convertWiki("h3. 제목"), is("### 제목"));
+		assertThat(SlippWikiUtils.convertWiki("h4. 제목"), is("#### 제목"));
+		assertThat(SlippWikiUtils.convertWiki("h5. 제목"), is("##### 제목"));
+		assertThat(SlippWikiUtils.convertWiki("h6. 제목"), is("###### 제목"));
 	}
 }

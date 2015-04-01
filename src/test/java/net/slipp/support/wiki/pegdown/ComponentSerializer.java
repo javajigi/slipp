@@ -12,7 +12,7 @@ public class ComponentSerializer implements ToHtmlSerializerPlugin {
 		if (node instanceof ComponentNode) {
 			ComponentNode cNode = (ComponentNode) node;
 
-			printer.print("This gets dumped into the final HTML");
+			printer.print("\nThis gets dumped into the final HTML.\n");
 			printer.print(cNode.getName());
 			printer.println();
 

@@ -17,4 +17,10 @@ public class MigrationsController {
 	public String index() {
 		return "redirect:/";
 	}
+	
+	@RequestMapping("/wiki")
+	public String migrateWiki() {
+		migrationService.convertConfluenceToMarkdown();
+		return "redirect:/";
+	}
 }

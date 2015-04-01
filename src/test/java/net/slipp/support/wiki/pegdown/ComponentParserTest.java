@@ -20,7 +20,8 @@ public class ComponentParserTest {
 	public void parse() throws Exception {
 		PegDownPlugins plugins = new PegDownPlugins.Builder().withPlugin(ComponentParser.class).build();
 
-		String markdown = "%%% someMethod(someParam=someValue)\r" 
+		String markdown = "## 제목\r* 리스트1\r* 리스트2\r\r" 
+				+ "%%% someMethod(someParam=someValue)\r" 
 				+ "body goes here\r" 
 				+ "%%%";
 		PegDownProcessor processor = new PegDownProcessor(0, plugins);

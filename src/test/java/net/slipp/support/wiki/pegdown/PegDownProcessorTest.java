@@ -36,4 +36,16 @@ public class PegDownProcessorTest {
 		result = dut.markdownToHtml("- 리스트1");
 		log.debug("result: {}", result);
 	}
+	
+	@Test
+	public void quote() throws Exception {
+		String result = dut.markdownToHtml("> 인용1\r> 인용2");
+		log.debug("result: {}", result);
+	}
+	
+	@Test
+	public void code() throws Exception {
+		String result = dut.markdownToHtml("```\rpublic class Test{}\r```");
+		log.debug("result: {}", result);
+	}
 }
