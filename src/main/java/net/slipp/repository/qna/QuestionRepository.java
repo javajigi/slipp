@@ -25,4 +25,7 @@ public interface QuestionRepository extends SlippCommonRepository<Question, Long
 	@Modifying
 	@Query("UPDATE Question q set q.denormalizedTags = :denormalizedTags where q.questionId = :questionId")
 	void updateDenormalizedTags(@Param("questionId") Long questionId, @Param("denormalizedTags")String denormalizedTags);
+	
+	@Query("SELECT q from Question q JOIN q.contentsHolder c where c LIKE %:searchTerm%")
+	Page<Question> findsBySearch(@Param("searchTerm") String searchTerm, Pageable pageable);
 }

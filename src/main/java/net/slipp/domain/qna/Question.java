@@ -309,6 +309,10 @@ public class Question implements HasCreatedDate {
         this.updatedDate = new Date();
         this.latestParticipant = getWriter();
     }
+    
+    public void updateContentsByAdmin(String contents) {
+        this.contentsHolder = Lists.newArrayList(contents);
+    }
 
     public Set<SocialUser> findNotificationUser(SocialUser loginUser) {
         Answers newAnswers = new Answers(this.answers);

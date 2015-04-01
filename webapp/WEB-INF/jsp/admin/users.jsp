@@ -6,6 +6,7 @@
 
 <section class="taglist-content">
 	<h1>회원 목록</h1>
+	<%@include file="/WEB-INF/jsp/include/admin_header.jspf"%>
 	<div>
 		<table id="users">
 			<thead>

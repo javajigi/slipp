@@ -6,6 +6,7 @@
 
 <section class="taglist-content">
 	<h1>태그 목록</h1>
+	<%@include file="/WEB-INF/jsp/include/admin_header.jspf"%>
 	<div class="content-main">
 		<slipp:tags tags="${tags}" admin="true"/>
 		<nav class="pager">

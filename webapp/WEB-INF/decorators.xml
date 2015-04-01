@@ -12,7 +12,7 @@
 		<pattern>/robots.txt</pattern>
 		<pattern>/google528d99e4fd7e1630.html</pattern>
 	</excludes>
-
+	
 	<decorator name="default" page="default.jsp">
 		<pattern>/*</pattern>
 	</decorator>

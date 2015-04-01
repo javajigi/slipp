@@ -19,6 +19,7 @@ import net.slipp.service.rank.ScoreLikeService;
 import net.slipp.service.tag.TagService;
 import net.slipp.service.user.SocialUserService;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -96,6 +97,15 @@ public class QnaService {
 		tagService.saveTaggedHistories(savedQuestion, newTags);
 		return savedQuestion;
 	}
+	
+	public Question updateQuestionByAdmin(SocialUser loginUser, QuestionDto questionDto) {
+		Assert.notNull(loginUser, "loginUser should be not null!");
+		Assert.notNull(questionDto, "question should be not null!");
+
+		Question savedQuestion = questionRepository.findOne(questionDto.getQuestionId());
+		savedQuestion.updateContentsByAdmin(questionDto.getContents());
+		return savedQuestion;
+	}
 
 	public void deleteQuestion(SocialUser loginUser, Long questionId) {
 		Assert.notNull(loginUser, "loginUser should be not null!");
@@ -116,6 +126,13 @@ public class QnaService {
 
 	public Page<Question> findsQuestion(Pageable pageable) {
 		return questionRepository.findAll(QnaSpecifications.equalsIsDeleteToQuestion(false), pageable);
+	}
+	
+	public Page<Question> findsAllQuestion(String searchTerm, Pageable pageable) {
+		if (StringUtils.isBlank(searchTerm)) {
+			return questionRepository.findAll(pageable);
+		}
+		return questionRepository.findsBySearch(searchTerm, pageable);
 	}
 
 	public Page<Question> findsQuestionByWriter(Long writerId, Pageable pageable) {
