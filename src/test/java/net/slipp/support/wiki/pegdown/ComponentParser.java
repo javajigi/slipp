@@ -21,7 +21,6 @@ public class ComponentParser extends Parser implements BlockPluginParser {
 	}
 
 	public Rule component() {
-
 		// stack ends up like this:
 		//
 		// body

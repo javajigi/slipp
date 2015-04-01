@@ -44,8 +44,20 @@ public class PegDownProcessorTest {
 	}
 	
 	@Test
+	public void bold() throws Exception {
+		String result = dut.markdownToHtml("테스트 **강조** 음냐하.");
+		log.debug("result: {}", result);
+	}
+	
+	@Test
+	public void italic() throws Exception {
+		String result = dut.markdownToHtml("테스트 *이태리* 음냐하.");
+		log.debug("result: {}", result);
+	}
+	
+	@Test
 	public void code() throws Exception {
-		String result = dut.markdownToHtml("```\rpublic class Test{}\r```");
+		String result = dut.markdownToHtml("```\r@Test\rpublic void 시간을돌린다2() throws Exception{```");
 		log.debug("result: {}", result);
 	}
 }

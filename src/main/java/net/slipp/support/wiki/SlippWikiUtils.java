@@ -66,6 +66,7 @@ public class SlippWikiUtils {
 		contents = contents.replace("h4.", "####");
 		contents = contents.replace("h5.", "#####");
 		contents = contents.replace("h6.", "######");
+		contents = contents.replace("\n\r", "\r\n");
 		
 		contents = contents.replace("{code}", "```");
 		contents = contents.replace("{code:java}", "```");

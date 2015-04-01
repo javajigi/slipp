@@ -4,10 +4,10 @@ import javax.transaction.Transactional;
 
 import net.slipp.domain.qna.Question;
 import net.slipp.domain.qna.Question_;
-import net.slipp.support.wiki.WikiContents;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.pegdown.Extensions;
 import org.pegdown.PegDownProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +40,7 @@ public class QuestionRepositoryIT {
 	public void findById() throws Exception {
 		Question question = dut.findOne(270L);
 		logger.debug("contents : {}", question.getContents());
-		String html = new PegDownProcessor().markdownToHtml(question.getContents());
+		String html = new PegDownProcessor(Extensions.FENCED_CODE_BLOCKS).markdownToHtml(question.getContents());
 		logger.debug("html : {}", html);
 	}
 }
