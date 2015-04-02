@@ -5,6 +5,8 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.slipp.support.utils.SlippStringUtils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -72,6 +74,7 @@ public class SlippWikiUtils {
 		contents = contents.replace("{code}", "```");
 		contents = contents.replace("{code:java}", "```");
 		contents = contents.replace("{code:bash}", "```");
-		return contents;
+
+		return SlippStringUtils.convertMarkdownLinks(contents);
 	}
 }
