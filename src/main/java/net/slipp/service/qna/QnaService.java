@@ -181,7 +181,7 @@ public class QnaService {
 		}
 		answer.updateAnswer(answerDto);
 	}
-
+	
 	public void deleteAnswer(SocialUser loginUser, Long questionId, Long answerId) {
 		Assert.notNull(loginUser, "loginUser should be not null!");
 		Assert.notNull(questionId, "questionId should be not null!");

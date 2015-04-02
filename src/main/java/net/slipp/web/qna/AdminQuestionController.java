@@ -1,15 +1,20 @@
 package net.slipp.web.qna;
 
-import static net.slipp.web.QnAPageableHelper.*;
+import static net.slipp.web.QnAPageableHelper.createPageableByQuestionUpdatedDate;
+import static net.slipp.web.QnAPageableHelper.revisedPage;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import net.slipp.domain.qna.Question;
 import net.slipp.domain.qna.QuestionDto;
 import net.slipp.service.qna.QnaService;
+import net.slipp.service.tag.TagService;
+import net.slipp.web.UserForm;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,8 +27,12 @@ public class AdminQuestionController {
 	private static final Logger log = LoggerFactory.getLogger(AdminQuestionController.class);
 	
 	private static final int DEFAULT_PAGE_SIZE = 30;
+	
 	@Resource(name = "qnaService")
 	private QnaService qnaService;
+	
+	@Resource(name = "tagService")
+	private TagService tagService;
 	
 	@RequestMapping("")
 	public String index(Integer page, String searchTerm, Model model) {
@@ -34,11 +43,25 @@ public class AdminQuestionController {
 		return "admin/qna/list";
 	}
 	
+	@RequestMapping("/{id}")
+	public String show(@PathVariable Long id, String searchTerm, Model model, HttpSession session) {
+	    Question question = qnaService.showQuestion(id);
+	    if (question.isDeleted()) {
+	        throw new AccessDeniedException(id + " question is deleted.");
+	    }
+	    
+		model.addAttribute("question", question);
+		model.addAttribute("tags", tagService.findLatestTags());
+		model.addAttribute("user", new UserForm());
+		model.addAttribute("searchTerm", searchTerm);
+		return "admin/qna/show";
+	}	
+	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public String delete(@PathVariable Long id) {
+	public String delete(@PathVariable Long id, String searchTerm) {
 		Question question = qnaService.findByQuestionId(id);
 		qnaService.deleteQuestion(question.getWriter(), id);
-		return "redirect:/admin/questions";
+		return String.format("redirect:/admin/questions?searchTerm=%s", searchTerm);
 	}
 	
 	@RequestMapping("/{id}/form")
@@ -55,6 +78,6 @@ public class AdminQuestionController {
 
 		Question originalQuestion = qnaService.findByQuestionId(id);
 		qnaService.updateQuestionByAdmin(originalQuestion.getWriter(), updatedQuestion);
-		return String.format("redirect:/admin/questions?searchTerm=%s", searchTerm);
+		return String.format("redirect:/admin/questions/%d?searchTerm=%s", id, searchTerm);
 	}
 }

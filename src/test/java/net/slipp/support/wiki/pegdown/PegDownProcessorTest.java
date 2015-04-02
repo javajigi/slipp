@@ -35,6 +35,9 @@ public class PegDownProcessorTest {
 		
 		result = dut.markdownToHtml("- 리스트1");
 		log.debug("result: {}", result);
+		
+		result = dut.markdownToHtml("* 리스트1\r    * 리스트2");
+		log.debug("result: {}", result);
 	}
 	
 	@Test

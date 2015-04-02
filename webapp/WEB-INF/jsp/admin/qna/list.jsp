@@ -26,7 +26,7 @@
 			<tbody>
 				<c:forEach items="${questions.content}" var="each">
 				<tr <c:if test="${each.deleted}">style="background-color:orange"</c:if>>
-					<td><a href="/questions/${each.questionId}">${each.title}</a></td>
+					<td><a href="/admin/questions/${each.questionId}?searchTerm=${searchTerm}">${each.title}</a></td>
 					<td><fmt:formatDate value="${each.createdDate}" pattern="yyyy-MM-dd HH:mm" /></td>
 					<td><a href="${each.writer.url}" class="author">${each.writer.userId}</a></td>
 					<td>${each.showCount}</td>
@@ -35,6 +35,7 @@
 						<c:if test="${not each.deleted}">
 						<form class="form-search" action="/admin/questions/${each.questionId}" method="post">
 							<input type="hidden" name="_method" value="DELETE"/>
+							<input type="hidden" name="searchTerm" value="${searchTerm}" />
 							<button type="submit">삭제</button>
 						</form>
 						</c:if>
