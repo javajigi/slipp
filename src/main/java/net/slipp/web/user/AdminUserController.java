@@ -1,5 +1,7 @@
 package net.slipp.web.user;
 
+import java.net.URLEncoder;
+
 import javax.annotation.Resource;
 
 import net.slipp.domain.user.SocialUser;
@@ -33,8 +35,9 @@ public class AdminUserController {
     private BlockService blockService;
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public String users(Integer page, ModelMap model) throws Exception {
-		model.addAttribute("users", userService.findsUser(createPageable(page)));
+	public String users(Integer page, String searchTerm, ModelMap model) throws Exception {
+		model.addAttribute("users", userService.findsUser(searchTerm, createPageable(page)));
+		model.addAttribute("searchTerm", searchTerm);
 		return "admin/users";
 	}
 
@@ -56,9 +59,9 @@ public class AdminUserController {
 	}
 	
 	@RequestMapping(value="/{id}/block", method = RequestMethod.POST)
-	public String block(@PathVariable Long id, Integer page) throws Exception {
-		log.debug("Id : {}, Page Number : {}", id, page);
+	public String block(@PathVariable Long id, Integer page, String searchTerm) throws Exception {
+		log.debug("Id : {}, Page Number : {}, Search Term : {}", id, page, searchTerm);
 		blockService.block(id);
-		return String.format("redirect:/admin/users?page=%d", page + 1);
+		return String.format("redirect:/admin/users?page=%d&searchTerm=%s", page + 1, URLEncoder.encode(searchTerm, "UTF-8"));
 	}
 }
