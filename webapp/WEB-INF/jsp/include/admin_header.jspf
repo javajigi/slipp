@@ -1,5 +1,5 @@
 <%@ page pageEncoding="UTF-8" %>
-	<ul>
+	<nav class="site-nav">
 		<li>
 			<a href="/admin/users" id="userManagement"><span class="text">회원관리</span></a>
 		</li>

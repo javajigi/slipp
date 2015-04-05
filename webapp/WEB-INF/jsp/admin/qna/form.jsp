@@ -28,6 +28,9 @@
 		</form:form>
 	</div>
 	<div class="content-sub">
+		<div class="floating">
+			<a class="link-back-to-list" href="/admin/questions?searchTerm=${searchTerm}">&larr; 목록으로</a>
+		</div>
 	</div>
 </div>
 

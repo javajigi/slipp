@@ -28,6 +28,11 @@
 			</sec:authorize>
 		</div>
 	</div>
+	<div class="content-sub">
+		<div class="floating">
+			<a class="link-back-to-list" href="/admin/questions?searchTerm=${searchTerm}">&larr; 목록으로</a>
+		</div>
+	</div>
 </section>
 <script src="${url:resource('/javascripts/jquery.validate.min.js')}"></script>
 <script src="${url:resource('/javascripts/highlight.pack.js')}"></script>

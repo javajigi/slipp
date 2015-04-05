@@ -5,8 +5,7 @@
 </head>
 
 <section class="taglist-content">
-	<h1>질문 목록</h1>
-	<%@include file="/WEB-INF/jsp/include/admin_header.jspf"%>
+	<h1>질문 관리</h1>
 	<div>
 		<form class="form-search" action="/admin/questions" method="get">
 			<input type="text" name="searchTerm" size="70"/>
@@ -19,6 +18,7 @@
 					<th>제목</th>
 					<th>생성일시</th>
 					<th>작성자</th>
+					<th>댓글수</th>
 					<th>조회수</th>
 					<th></th>
 				</tr>
@@ -26,9 +26,10 @@
 			<tbody>
 				<c:forEach items="${questions.content}" var="each">
 				<tr <c:if test="${each.deleted}">style="background-color:orange"</c:if>>
-					<td><a href="/admin/questions/${each.questionId}?searchTerm=${searchTerm}">${each.title}</a></td>
+					<td width="400"><a href="/admin/questions/${each.questionId}?searchTerm=${searchTerm}">${each.title}</a></td>
 					<td><fmt:formatDate value="${each.createdDate}" pattern="yyyy-MM-dd HH:mm" /></td>
 					<td><a href="${each.writer.url}" class="author">${each.writer.userId}</a></td>
+					<td>${each.answerCount}</td>
 					<td>${each.showCount}</td>
 					<td>
 						<a href="/admin/questions/${each.questionId}/form?searchTerm=${searchTerm}">수정</a>
