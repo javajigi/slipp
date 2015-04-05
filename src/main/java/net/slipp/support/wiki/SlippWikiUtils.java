@@ -74,6 +74,7 @@ public class SlippWikiUtils {
 		contents = contents.replace("{code}", "```");
 		contents = contents.replace("{code:java}", "```");
 		contents = contents.replace("{code:bash}", "```");
+		contents = contents.replace("{code:xml}", "```");
 
 		return SlippStringUtils.convertMarkdownLinks(contents);
 	}

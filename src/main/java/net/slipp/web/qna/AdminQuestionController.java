@@ -1,7 +1,6 @@
 package net.slipp.web.qna;
 
-import static net.slipp.web.QnAPageableHelper.createPageableByQuestionUpdatedDate;
-import static net.slipp.web.QnAPageableHelper.revisedPage;
+import static net.slipp.web.QnAPageableHelper.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -14,7 +13,6 @@ import net.slipp.web.UserForm;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,10 +44,6 @@ public class AdminQuestionController {
 	@RequestMapping("/{id}")
 	public String show(@PathVariable Long id, String searchTerm, Model model, HttpSession session) {
 	    Question question = qnaService.showQuestion(id);
-	    if (question.isDeleted()) {
-	        throw new AccessDeniedException(id + " question is deleted.");
-	    }
-	    
 		model.addAttribute("question", question);
 		model.addAttribute("tags", tagService.findLatestTags());
 		model.addAttribute("user", new UserForm());

@@ -29,11 +29,11 @@
 			<nav class="site-nav">
 				<ul>
 					<li>
-						<a href="/admin/users" id="userManagement"><span class="text">회원관리</span></a>
-					</li>
-					<li>
 						<a href="/admin/questions" id="questionManagement"><span class="text">질문관리</span></a>
 					</li>					
+					<li>
+						<a href="/admin/users" id="userManagement"><span class="text">회원관리</span></a>
+					</li>
 					<li>
 						<a href="/admin/tags" id="tagManagement"><span class="text">태그관리</span></a>
 					</li>
