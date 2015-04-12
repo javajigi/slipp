@@ -5,6 +5,8 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.slipp.support.utils.SlippStringUtils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,5 +59,23 @@ public class SlippWikiUtils {
 	private static String createImageHtml(String attachmentId) {
 		String imageUrl = "/attachments/" + attachmentId;
 		return "<img src=\"" + imageUrl + "\"/>";
+	}
+	
+	public static String convertWiki(String contents) {
+		contents = contents.replace("h1.", "#");
+		contents = contents.replace("h2.", "##");
+		contents = contents.replace("h3.", "###");
+		contents = contents.replace("h4.", "####");
+		contents = contents.replace("h5.", "#####");
+		contents = contents.replace("h6.", "######");
+		contents = contents.replace("\n\r", "\r\n");
+		contents = contents.replace("**", "    *");
+		
+		contents = contents.replace("{code}", "```");
+		contents = contents.replace("{code:java}", "```");
+		contents = contents.replace("{code:bash}", "```");
+		contents = contents.replace("{code:xml}", "```");
+
+		return SlippStringUtils.convertMarkdownLinks(contents);
 	}
 }

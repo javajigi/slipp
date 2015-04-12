@@ -5,7 +5,7 @@
 </head>
 
 <section class="taglist-content">
-	<h1>회원 목록</h1>
+	<h1>회원 관리</h1>
 	<form class="form-search" action="/admin/users" method="get">
 		<input type="text" name="searchTerm" value="${searchTerm}" size="70"/>
 		<button type="submit">검색</button>

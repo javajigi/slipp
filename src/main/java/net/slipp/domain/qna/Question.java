@@ -33,6 +33,7 @@ import net.slipp.domain.user.SocialUser;
 import net.slipp.service.tag.TagHelper;
 import net.slipp.support.jpa.CreatedDateEntityListener;
 import net.slipp.support.jpa.HasCreatedDate;
+import net.slipp.support.wiki.SlippWikiUtils;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -308,6 +309,10 @@ public class Question implements HasCreatedDate {
         this.updatedDate = new Date();
         this.latestParticipant = getWriter();
     }
+    
+    public void updateContentsByAdmin(String contents) {
+        this.contentsHolder = Lists.newArrayList(contents);
+    }
 
     public Set<SocialUser> findNotificationUser(SocialUser loginUser) {
         Answers newAnswers = new Answers(this.answers);
@@ -366,6 +371,11 @@ public class Question implements HasCreatedDate {
     public Set<Tag> getConnectedGroupTag() {
         return new Tags(tags).getConnectedGroupTags();
     }
+    
+	public void convertWiki() {
+		String contents = SlippWikiUtils.convertWiki(getContents());
+		this.contentsHolder = Lists.newArrayList(contents);
+	}
     
     @Override
     public String toString() {
