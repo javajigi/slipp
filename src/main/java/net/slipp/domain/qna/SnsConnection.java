@@ -33,7 +33,7 @@ public class SnsConnection {
     
     public SnsConnection(ProviderType snsType, String postId, String groupId) {
         this.snsType = snsType;
-        this.postId = postId;
+        this.postId = removeId(postId);
         this.groupId = groupId;
     }
 
@@ -65,22 +65,22 @@ public class SnsConnection {
         this.snsAnswerCount = answerCount;
     }
     
-    public void removeId() {
-    	if (StringUtils.isBlank(getPostId())) {
-    		return;
+    static String removeId(String postId) {
+    	if (StringUtils.isBlank(postId)) {
+    		return postId;
     	}
     	
-    	if (!getPostId().contains("_")) {
-    		return;
+    	if (!postId.contains("_")) {
+    		return postId;
     	}
     	
     	String[] postIds = postId.split("_");
     	
     	if (postIds.length != 2) {
-    		return;
+    		return postId;
     	}
     	
-    	this.postId = postIds[1];
+    	return postIds[1];
 	}
 
     @Override

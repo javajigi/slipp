@@ -163,4 +163,37 @@ $(document).ready(function(){
 			}
 		});
 	}
+	
+	$("#taggedForm").validate({
+		rules: {
+			taggedName: {
+				required: true,
+				minlength: 2,
+				maxlength: 50
+			}
+		},
+		messages: {
+			taggedName: {
+				required: SL10N.Tag.requiredName(),
+				minlength: SL10N.Tag.minLenTag(2),
+				maxlength: SL10N.Tag.maxLenTag(50)
+			}
+		}
+	});
+	
+	$('.link-detagged').on('click', detaggedToQuestion);
+	
+	function detaggedToQuestion(e) {
+		if (guestUser) {
+			return false;
+		}
+		e.preventDefault();
+		$detaggedLink = $(this);
+		$.post($detaggedLink.attr('href'), {},
+			function(result) {
+				$detaggedLink.closest('li').remove();
+			}, 'json'
+		);
+		return false;
+	}
 });

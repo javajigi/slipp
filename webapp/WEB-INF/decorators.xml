@@ -13,6 +13,10 @@
 		<pattern>/google528d99e4fd7e1630.html</pattern>
 	</excludes>
 
+	<decorator name="admin" page="admin_default.jsp">
+		<pattern>/admin/*</pattern>
+	</decorator>
+	
 	<decorator name="default" page="default.jsp">
 		<pattern>/*</pattern>
 	</decorator>

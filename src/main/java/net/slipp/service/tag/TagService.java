@@ -12,6 +12,8 @@ import net.slipp.domain.fb.FacebookGroup;
 import net.slipp.domain.qna.Question;
 import net.slipp.domain.tag.Tag;
 import net.slipp.domain.tag.TaggedHistory;
+import net.slipp.domain.tag.TaggedType;
+import net.slipp.domain.user.SocialUser;
 import net.slipp.repository.tag.TagRepository;
 import net.slipp.repository.tag.TaggedHistoryRepository;
 import net.slipp.service.MailService;
@@ -51,13 +53,18 @@ public class TagService {
         for (String each : parsedTags) {
             Tag tag = tagRepository.findByName(each);
             if (tag == null) {
-                Tag newTag = Tag.newTag(each);
-                tags.add(tagRepository.save(newTag));
+                tags.add(newTag(each));
             } else {
                 tags.add(tag);
             }
         }
         return tags;
+    }
+    
+    public Tag newTag(String name) {
+    	Tag newTag = Tag.newTag(name);
+    	tagRepository.save(newTag);
+    	return newTag;
     }
     
     public Set<Tag> processGroupTags(Set<FacebookGroup> groupTags) {
@@ -151,7 +158,11 @@ public class TagService {
     
     public void saveTaggedHistories(Question question, Set<Tag> tags) {
     	for (Tag tag : tags) {
-    		taggedHistoryRepository.save(new TaggedHistory(tag.getTagId(), question.getQuestionId(), question.getWriter().getId()));
+    		saveTaggedHistory(question.getWriter(), question, tag, TaggedType.TAGGED);
 		}
+    }
+    
+    public void saveTaggedHistory(SocialUser loginUser, Question question, Tag tag, TaggedType taggedType) {
+    	taggedHistoryRepository.save(new TaggedHistory(tag.getTagId(), question.getQuestionId(), loginUser.getId(), taggedType));
     }
 }

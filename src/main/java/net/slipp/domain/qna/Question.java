@@ -33,6 +33,7 @@ import net.slipp.domain.user.SocialUser;
 import net.slipp.service.tag.TagHelper;
 import net.slipp.support.jpa.CreatedDateEntityListener;
 import net.slipp.support.jpa.HasCreatedDate;
+import net.slipp.support.wiki.SlippWikiUtils;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -68,8 +69,9 @@ public class Question implements HasCreatedDate {
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(
     	name = "question_content_holder", 
-    	joinColumns = @JoinColumn(name = "question_id", unique = true))
-    @org.hibernate.annotations.ForeignKey(name = "fk_question_content_holder_question_id")
+    	joinColumns = @JoinColumn(
+    					name = "question_id", unique = true,
+    					foreignKey = @ForeignKey(name="fk_question_content_holder_question_id")))
     @Lob
     @Column(name = "contents", nullable = false)
     private Collection<String> contentsHolder;
@@ -89,8 +91,11 @@ public class Question implements HasCreatedDate {
     private int showCount = 0;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "question_tag", joinColumns = @JoinColumn(name = "question_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    @org.hibernate.annotations.ForeignKey(name = "fk_question_tag_question_id", inverseName = "fk_question_tag_tag_id")
+    @JoinTable(name = "question_tag", 
+    	joinColumns = @JoinColumn(name = "question_id",
+				foreignKey = @ForeignKey(name="fk_question_tag_question_id")), 
+    	inverseJoinColumns = @JoinColumn(name = "tag_id", 
+    			foreignKey = @ForeignKey(name="fk_question_tag_tag_id")))
     private Set<Tag> tags = Sets.newHashSet();
 
     @Column(name = "denormalized_tags", length = 100)
@@ -107,8 +112,9 @@ public class Question implements HasCreatedDate {
     private boolean deleted = false;
     
     @ElementCollection(fetch = FetchType.LAZY)
-    @CollectionTable(name = "question_sns_connections", joinColumns = @JoinColumn(name = "question_id"))
-    @org.hibernate.annotations.ForeignKey(name = "fk_question_sns_connection_question_id")
+    @CollectionTable(name = "question_sns_connections", 
+    	joinColumns = @JoinColumn(name = "question_id", 
+    							foreignKey = @ForeignKey(name="fk_question_sns_connection_question_id")))
     private Collection<SnsConnection> snsConnetions = Sets.newHashSet();    
     
     public Question() {
@@ -256,7 +262,7 @@ public class Question implements HasCreatedDate {
         return tags.contains(tag);
     }
 
-    void newTags(Set<Tag> newTags) {
+    public void newTags(Set<Tag> newTags) {
         detaggedTags(tags);
         taggedTags(newTags);
         this.tags = newTags;
@@ -279,6 +285,18 @@ public class Question implements HasCreatedDate {
             tag.tagged();
         }
     }
+    
+	public void taggedTag(Tag newTag) {
+		newTag.tagged();
+		tags.add(newTag);
+		tagsToDenormalizedTags();
+	}
+	
+	public void detaggedTag(Tag tag) {
+		tag.deTagged();
+		tags.remove(tag);
+		tagsToDenormalizedTags();
+	}
 
     public void update(SocialUser loginUser, String title, String contents, Set<Tag> newTags) {
         if (!isWritedBy(loginUser)) {
@@ -290,6 +308,10 @@ public class Question implements HasCreatedDate {
         newTags(newTags);
         this.updatedDate = new Date();
         this.latestParticipant = getWriter();
+    }
+    
+    public void updateContentsByAdmin(String contents) {
+        this.contentsHolder = Lists.newArrayList(contents);
     }
 
     public Set<SocialUser> findNotificationUser(SocialUser loginUser) {
@@ -349,6 +371,11 @@ public class Question implements HasCreatedDate {
     public Set<Tag> getConnectedGroupTag() {
         return new Tags(tags).getConnectedGroupTags();
     }
+    
+	public void convertWiki() {
+		String contents = SlippWikiUtils.convertWiki(getContents());
+		this.contentsHolder = Lists.newArrayList(contents);
+	}
     
     @Override
     public String toString() {

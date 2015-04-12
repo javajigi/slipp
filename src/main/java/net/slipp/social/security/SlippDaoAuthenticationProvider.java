@@ -44,8 +44,7 @@ public class SlippDaoAuthenticationProvider extends AbstractUserDetailsAuthentic
         if (authentication.getCredentials() == null) {
             logger.debug("Authentication failed: no credentials provided");
 
-            throw new BadCredentialsException(messages.getMessage(
-                    "AbstractUserDetailsAuthenticationProvider.badCredentials", "Bad credentials"), userDetails);
+            throw new BadCredentialsException(messages.getMessage("AbstractUserDetailsAuthenticationProvider.badCredentials", "Bad credentials"));
         }
 
         String presentedPassword = authentication.getCredentials().toString();
@@ -53,8 +52,7 @@ public class SlippDaoAuthenticationProvider extends AbstractUserDetailsAuthentic
         if (!passwordEncoder.isPasswordValid(userDetails.getPassword(), presentedPassword, salt)) {
             logger.debug("Authentication failed: password does not match stored value");
 
-            throw new BadCredentialsException(messages.getMessage(
-                    "AbstractUserDetailsAuthenticationProvider.badCredentials", "Bad credentials"), userDetails);
+            throw new BadCredentialsException(messages.getMessage("AbstractUserDetailsAuthenticationProvider.badCredentials", "Bad credentials"));
         }
     }
     

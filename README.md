@@ -17,7 +17,7 @@
       </activation>
       <properties>
         <environment>development</environment>
-        <entry key="database.driverClassName">com.mysql.jdbc.Driver</entry>
+        <database.driverClassName>com.mysql.jdbc.Driver</database.driverClassName>
         <database.url>jdbc:mysql://127.0.0.1/slipp?uniCode=true&amp;characterEncoding=utf8</database.url>
         <database.username>userid</database.username>
         <database.password>password</database.password>
