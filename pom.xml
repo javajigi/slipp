@@ -544,12 +544,14 @@
 					<execution>
 						<id>process-test-classes</id>
 						<phase>process-test-classes</phase>
+						<!-- 
 						<configuration>
 							<target>
 								<chmod file="target/test-classes/chromedriver/chromedriver-mac"
 									perm="755" />
 							</target>
 						</configuration>
+						 -->
 						<goals>
 							<goal>run</goal>
 						</goals>
