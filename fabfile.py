@@ -11,7 +11,7 @@ projects = {
         "catalina_base": "%(base_dir)s/projects/slipp-web" % {"base_dir": env.base_dir},
         "releases_path": "%(base_dir)s/projects/slipp-web/releases" % {"base_dir": env.base_dir},
         "hosts": ["localhost"],
-        "java_opts": "-Djava.awt.headless=true -Dfile.encoding=UTF-8 -server -Xms512m -Xmx1024m -XX:NewSize=256m -XX:MaxNewSize=256m -XX:PermSize=256m -XX:MaxPermSize=256m -XX:+DisableExplicitGC"        
+        "java_opts": "-Djava.awt.headless=true -Dfile.encoding=UTF-8 -server -Xms512m -Xmx1024m -XX:NewSize=256m -XX:MaxNewSize=256m -XX:+DisableExplicitGC"        
     }    
 }
 
@@ -82,7 +82,10 @@ def copy():
 def symboliclink():
     if not env.has_key('current_release'):
         releases()
-    run("ln -nfs %(current_release)s %(catalina_base)s/webapps/ROOT" % { 'current_release':env.current_release, 'catalina_base':env.catalina_base })
+    run("ln -nfs %(current_release)s %(catalina_base)s/ROOT" % { 'current_release':env.current_release, 'catalina_base':env.catalina_base })
+
+def showlogs():
+    run("tail -500f %(catalina_base)s/logs/catalina.out" % { 'catalina_base':env.catalina_base })
 
 def deploy():
     execute(init)
@@ -91,3 +94,4 @@ def deploy():
     execute(stop)
     execute(symboliclink)
     execute(start)
+    execute(showlogs)
