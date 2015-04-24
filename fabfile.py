@@ -52,11 +52,10 @@ def start():
         run('set -m; %(catalina_home)s/bin/startup.sh' % {'catalina_home':env.catalina_home})  # tomcat instance start
 
 def stop():
-    run('%(catalina_home)s/bin/shutdown.sh' % {'catalina_home':env.catalina_home}) # tomcat instance stop
     print('Wait until die')
     trial = 0
     max_trial = 5
-    pid_commands = 'ps -ef | grep tomcat | grep -v \'grep\' | awk \'{print $2}\''
+    pid_commands = 'ps -ef | grep %(project_name)s | grep -v \'grep\' | awk \'{print $2}\'' % { 'project_name':env.project_name }
     while trial < max_trial:
         print('%(remain_seconds)s seconds remained' % {'remain_seconds':(max_trial - trial)})
         if not run(pid_commands):
