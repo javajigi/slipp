@@ -34,6 +34,7 @@ public class PersistenceJPAConfig {
 		dataSource.setUrl(env.getProperty("database.url"));
 		dataSource.setUsername(env.getProperty("database.username"));
 		dataSource.setPassword(env.getProperty("database.password"));
+		dataSource.setValidationQuery(env.getProperty("database.validquery"));
 		return dataSource;
 	}
 	
