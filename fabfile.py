@@ -1,5 +1,5 @@
 from time import sleep
-from fabric.api import run,env,execute
+from fabric.api import env,execute
 from fabric.operations import local
 from fabric.context_managers import shell_env,cd
 
@@ -63,7 +63,7 @@ def stop():
         sleep(1)
     if trial == max_trial:
         print('killing catalina')
-        local('kill -9 %(running_catalina_pid)s' % {'running_catalina_pid':run(pid_commands)})
+        local('kill -9 %(running_catalina_pid)s' % {'running_catalina_pid':local(pid_commands)})
 
 def restart():
     execute(stop)
