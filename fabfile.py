@@ -22,9 +22,6 @@ def init(name='slipp-web'):
     env.update(projects[name])
     env.project_name = name
 
-def pid_by_name():
-    local('ps -ef | grep %(project_name)s | grep -v \'grep\' | awk \'{print $2}\'' % { 'project_name':env.project_name })
-
 def releases():
     """List a releases made"""
     env.releases = sorted(local('ls -x %(releases_path)s' % { 'releases_path':env.releases_path }).split())
