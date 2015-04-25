@@ -23,11 +23,11 @@ def init(name='slipp-web'):
     env.project_name = name
 
 def pid_by_name():
-    run('ps -ef | grep %(project_name)s | grep -v \'grep\' | awk \'{print $2}\'' % { 'project_name':env.project_name })
+    local('ps -ef | grep %(project_name)s | grep -v \'grep\' | awk \'{print $2}\'' % { 'project_name':env.project_name })
 
 def releases():
     """List a releases made"""
-    env.releases = sorted(run('ls -x %(releases_path)s' % { 'releases_path':env.releases_path }).split())
+    env.releases = sorted(local('ls -x %(releases_path)s' % { 'releases_path':env.releases_path }).split())
     if len(env.releases) >= 1:
         env.current_revision = env.releases[-1]
         env.current_release = "%(releases_path)s/%(current_revision)s" % { 'releases_path':env.releases_path, 'current_revision':env.current_revision }
@@ -36,11 +36,11 @@ def releases():
         env.previous_release = "%(releases_path)s/%(previous_revision)s" % { 'releases_path':env.releases_path, 'previous_revision':env.previous_revision }
 
 def checkout():
-    run("git pull")
+    local("git pull")
 
 def build():
     execute(checkout)
-    run('mvn -U -Pproduction clean install')
+    local('mvn -U -Pproduction clean install')
 
 def start():
     with shell_env(
@@ -48,7 +48,7 @@ def start():
             CATALINA_BASE=env.catalina_base,
             JAVA_OPTS=env.java_opts
         ):
-        run('set -m; %(catalina_home)s/bin/startup.sh' % {'catalina_home':env.catalina_home})  # tomcat instance start
+        local('set -m; %(catalina_home)s/bin/startup.sh' % {'catalina_home':env.catalina_home})  # tomcat instance start
 
 def stop():
     print('Wait until die')
@@ -57,13 +57,13 @@ def stop():
     pid_commands = 'ps -ef | grep %(project_name)s | grep -v \'grep\' | awk \'{print $2}\'' % { 'project_name':env.project_name }
     while trial < max_trial:
         print('%(remain_seconds)s seconds remained' % {'remain_seconds':(max_trial - trial)})
-        if not run(pid_commands):
+        if not local(pid_commands):
             break
         trial += 1
         sleep(1)
     if trial == max_trial:
         print('killing catalina')
-        run('kill -9 %(running_catalina_pid)s' % {'running_catalina_pid':run(pid_commands)})
+        local('kill -9 %(running_catalina_pid)s' % {'running_catalina_pid':run(pid_commands)})
 
 def restart():
     execute(stop)
@@ -72,19 +72,19 @@ def restart():
 def mkreleasedir():
     from time import time
     env.current_release = "%(releases_path)s/%(time).0f" % { 'releases_path':env.releases_path, 'time':time() }
-    run("mkdir %(current_release)s" % {'current_release':env.current_release})
+    local("mkdir %(current_release)s" % {'current_release':env.current_release})
 
 def copy():
     execute(mkreleasedir)
-    run('cp -r ./target/slipp/. %(current_release)s/' % {'current_release':env.current_release}) # file copy
+    local('cp -r ./target/slipp/. %(current_release)s/' % {'current_release':env.current_release}) # file copy
 
 def symboliclink():
     if not env.has_key('current_release'):
         releases()
-    run("ln -nfs %(current_release)s %(catalina_base)s/ROOT" % { 'current_release':env.current_release, 'catalina_base':env.catalina_base })
+    local("ln -nfs %(current_release)s %(catalina_base)s/ROOT" % { 'current_release':env.current_release, 'catalina_base':env.catalina_base })
 
 def showlogs():
-    run("tail -500f %(catalina_base)s/logs/catalina.out" % { 'catalina_base':env.catalina_base })
+    local("tail -500f %(catalina_base)s/logs/catalina.out" % { 'catalina_base':env.catalina_base })
 
 def deploy():
     execute(init)
