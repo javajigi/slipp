@@ -57,13 +57,13 @@ def stop():
     pid_commands = 'ps -ef | grep %(project_name)s | grep -v \'grep\' | awk \'{print $2}\'' % { 'project_name':env.project_name }
     while trial < max_trial:
         print('%(remain_seconds)s seconds remained' % {'remain_seconds':(max_trial - trial)})
-        if not local(pid_commands):
+        if not run(pid_commands):
             break
         trial += 1
         sleep(1)
     if trial == max_trial:
         print('killing catalina')
-        local('kill -9 %(running_catalina_pid)s' % {'running_catalina_pid':local(pid_commands)})
+        local('kill -9 %(running_catalina_pid)s' % {'running_catalina_pid':run(pid_commands)})
 
 def restart():
     execute(stop)
