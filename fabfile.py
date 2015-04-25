@@ -36,12 +36,11 @@ def releases():
         env.previous_release = "%(releases_path)s/%(previous_revision)s" % { 'releases_path':env.releases_path, 'previous_revision':env.previous_revision }
 
 def checkout():
-    local("git pull")
-    # run("cd %(releases_path)s; git clone -q -o deploy --depth 1 %(git_clone)s %(current_release)s" % { 'releases_path':env.releases_path, 'git_clone':env.git_clone, 'current_release':env.current_release })
+    run("git pull")
 
 def build():
     execute(checkout)
-    local('mvn -U -Pproduction clean install')
+    run('mvn -U -Pproduction clean install')
 
 def start():
     with shell_env(
@@ -77,7 +76,7 @@ def mkreleasedir():
 
 def copy():
     execute(mkreleasedir)
-    local('cp -r ./target/slipp/. %(current_release)s/' % {'current_release':env.current_release}) # file copy
+    run('cp -r ./target/slipp/. %(current_release)s/' % {'current_release':env.current_release}) # file copy
 
 def symboliclink():
     if not env.has_key('current_release'):
