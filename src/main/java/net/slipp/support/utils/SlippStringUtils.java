@@ -66,7 +66,24 @@ public class SlippStringUtils extends StringUtils {
 		matcher.appendTail(sb);
 		return sb.toString();
 	}
+	
+	public static String convertMarkdownLinks(String str) {
+		if (isBlank(str)) {
+			return str;
+		}
 
+		Matcher matcher = LINK_PATTERN.matcher(str);
+
+		StringBuffer sb = new StringBuffer();
+		while (matcher.find()) {
+			String link = matcher.group();
+			link = link.replaceAll("\\\\", "\\\\\\\\").replaceAll("\\$", "\\\\\\$");
+			matcher.appendReplacement(sb, String.format("[%s](%s)", link, link));
+		}
+		matcher.appendTail(sb);
+		return sb.toString();
+	}
+	
 	public static String populateLinks(String str) {
 		return populateLinks(str, -1, null, null);
 	}

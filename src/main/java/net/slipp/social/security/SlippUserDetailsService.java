@@ -35,7 +35,12 @@ public class SlippUserDetailsService implements UserDetailsService {
         if (socialUser == null) {
             throw new UsernameNotFoundException(String.format("%s not found!", username));
         }
-
+        
+        if (socialUser.isBlocked()) {
+            return new SlippUser(username, socialUser.getPassword(), socialUser.getProviderIdBySnsType(),
+            		createEmptyGrantedAuthorities());
+        }
+        
         return new SlippUser(username, socialUser.getAccessToken(), socialUser.getProviderIdBySnsType(),
                 createGrantedAuthorities(username));
     }
@@ -45,9 +50,18 @@ public class SlippUserDetailsService implements UserDetailsService {
         if (socialUser == null) {
             throw new UsernameNotFoundException(String.format("%s not found!", email));
         }
+        
+        if (socialUser.isBlocked()) {
+            return new SlippUser(email, socialUser.getPassword(), socialUser.getProviderIdBySnsType(),
+            		createEmptyGrantedAuthorities());
+        }
 
         return new SlippUser(email, socialUser.getPassword(), socialUser.getProviderIdBySnsType(),
                 createGrantedAuthorities(email));
+    }
+    
+    private List<GrantedAuthority> createEmptyGrantedAuthorities() {
+    	return new ArrayList<GrantedAuthority>();
     }
 
     private List<GrantedAuthority> createGrantedAuthorities(String username) {

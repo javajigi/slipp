@@ -16,6 +16,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.Parameter;
+import com.restfb.Version;
 import com.restfb.types.Comment;
 import com.restfb.types.FacebookType;
 import com.restfb.types.Post;
@@ -34,7 +35,7 @@ public class QuestionSyncFBTest {
 
 	@Before
 	public void setup() {
-		dut = new DefaultFacebookClient(myAccessToken);
+		dut = new DefaultFacebookClient(myAccessToken, Version.VERSION_2_2);
 	}
 	
 	@Test

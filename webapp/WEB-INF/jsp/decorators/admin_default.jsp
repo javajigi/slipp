@@ -29,15 +29,13 @@
 			<nav class="site-nav">
 				<ul>
 					<li>
-						<a href="/questions"><i class="icon-list"></i> <span class="text">글목록</span></a>
-					</li>
-					<sec:authorize access="hasRole('ROLE_ADMINISTRATOR')">
-					<li>
-						<a href="/admin/questions" id="userManagement"><i class="icon-list"></i> <span class="text">관리도구</span></a>
+						<a href="/admin/questions" id="questionManagement"><span class="text">질문관리</span></a>
 					</li>					
-					</sec:authorize>
-					<li class="site-search">
-						<a href="#siteSearchArea" id="siteSearchButton" class="site-search-button"><i class="icon-search"></i></a>
+					<li>
+						<a href="/admin/users" id="userManagement"><span class="text">회원관리</span></a>
+					</li>
+					<li>
+						<a href="/admin/tags" id="tagManagement"><span class="text">태그관리</span></a>
 					</li>
 				</ul>
 			</nav>

@@ -25,6 +25,7 @@ import net.slipp.domain.ProviderType;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.support.jpa.CreatedAndUpdatedDateEntityListener;
 import net.slipp.support.jpa.HasCreatedAndUpdatedDate;
+import net.slipp.support.wiki.SlippWikiUtils;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -41,8 +42,10 @@ public class Answer implements HasCreatedAndUpdatedDate, Comparable<Answer> {
 	private SocialUser writer;
 	
 	@ElementCollection(fetch = FetchType.LAZY)
-	@CollectionTable(name = "answer_content_holder", joinColumns = @JoinColumn(name = "answer_id", unique = true))
-	@org.hibernate.annotations.ForeignKey(name = "fk_answer_content_holder_answer_id")
+	@CollectionTable(name = "answer_content_holder", 
+		joinColumns = @JoinColumn(
+							name = "answer_id", unique = true, 
+	    					foreignKey = @ForeignKey(name="fk_answer_content_holder_answer_id")))
 	@Lob
 	@Column(name = "contents", nullable = false)
 	private Collection<String> contentsHolder;
@@ -191,7 +194,12 @@ public class Answer implements HasCreatedAndUpdatedDate, Comparable<Answer> {
         this.snsConnection = new SnsConnection(ProviderType.valueOf(writer.getProviderId()), postId); 
         return this.snsConnection;
     }
-	
+    
+	public void convertWiki() {
+		String contents = SlippWikiUtils.convertWiki(getContents());
+		this.contentsHolder = Lists.newArrayList(contents);		
+	}
+    
 	@Override
 	public int compareTo(Answer o) {
 		return o.getSumLike().compareTo(getSumLike());

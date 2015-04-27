@@ -1,8 +1,11 @@
 package net.slipp.web.user;
 
+import java.net.URLEncoder;
+
 import javax.annotation.Resource;
 
 import net.slipp.domain.user.SocialUser;
+import net.slipp.service.qna.BlockService;
 import net.slipp.service.user.SocialUserService;
 
 import org.slf4j.Logger;
@@ -27,10 +30,14 @@ public class AdminUserController {
 	
     @Resource(name = "socialUserService")
     private SocialUserService userService;
+    
+    @Resource(name = "blockService")
+    private BlockService blockService;
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public String users(Integer page, ModelMap model) throws Exception {
-		model.addAttribute("users", userService.findsUser(createPageable(page)));
+	public String users(Integer page, String searchTerm, ModelMap model) throws Exception {
+		model.addAttribute("users", userService.findsUser(searchTerm, createPageable(page)));
+		model.addAttribute("searchTerm", searchTerm);
 		return "admin/users";
 	}
 
@@ -49,5 +56,12 @@ public class AdminUserController {
 		SocialUser socialUser = userService.findById(id);
 		userService.resetPassword(socialUser);
 		return String.format("redirect:/admin/users?page=%d", page + 1);
+	}
+	
+	@RequestMapping(value="/{id}/block", method = RequestMethod.POST)
+	public String block(@PathVariable Long id, Integer page, String searchTerm) throws Exception {
+		log.debug("Id : {}, Page Number : {}, Search Term : {}", id, page, searchTerm);
+		blockService.block(id);
+		return String.format("redirect:/admin/users?page=%d&searchTerm=%s", page + 1, URLEncoder.encode(searchTerm, "UTF-8"));
 	}
 }

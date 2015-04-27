@@ -5,6 +5,8 @@ import java.util.Set;
 
 import net.slipp.domain.user.SocialUser;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
@@ -45,4 +47,7 @@ public interface SocialUserRepository extends PagingAndSortingRepository<SocialU
             @Param("providerUserIds") Set<String> providerUserIds);
 
     SocialUser findByEmail(String email);
+
+    @Query("SELECT u FROM SocialUser u WHERE u.userId LIKE %:searchTerm%")
+	Page<SocialUser> findsBySearch(@Param("searchTerm") String searchTerm, Pageable pageable);
 }

@@ -26,20 +26,13 @@ public class SnsConnectionTest {
 	
 	@Test
 	public void removeId() throws Exception {
-		SnsConnection connection = new SnsConnection(ProviderType.facebook, "1324855987_390710267709840");
-		connection.removeId();
-		assertThat(connection.getPostId(), is("390710267709840"));
+		assertThat(SnsConnection.removeId("1324855987_390710267709840"), is("390710267709840"));
 	}
 	
 	@Test
 	public void removeId_noId() throws Exception {
-		SnsConnection connection = new SnsConnection(ProviderType.facebook, " ");
-		connection.removeId();
-		assertThat(connection.getPostId(), is(" "));
-		
-		connection = new SnsConnection(ProviderType.facebook, "390710267709840");
-		connection.removeId();
-		assertThat(connection.getPostId(), is("390710267709840"));
+		assertThat(SnsConnection.removeId(" "), is(" "));
+		assertThat(SnsConnection.removeId("390710267709840"), is("390710267709840"));
 	}
 
 }

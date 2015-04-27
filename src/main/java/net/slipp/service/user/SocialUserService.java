@@ -13,6 +13,7 @@ import net.slipp.repository.user.SocialUserRepository;
 import net.slipp.service.MailService;
 import net.slipp.support.utils.MD5Util;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
@@ -62,6 +63,13 @@ public class SocialUserService {
     
 	public Page<SocialUser> findsUser(Pageable pageable) {
 		return socialUserRepository.findAll(pageable);
+	}
+	
+	public Page<SocialUser> findsUser(String searchTerm, Pageable pageable) {
+		if (StringUtils.isBlank(searchTerm)) {
+			return socialUserRepository.findAll(pageable);
+		}
+		return socialUserRepository.findsBySearch(searchTerm, pageable);
 	}
 
     public SocialUser findById(Long id) {
