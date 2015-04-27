@@ -6,7 +6,9 @@
 	<packaging>war</packaging>
 	<version>1.0.0-SNAPSHOT</version>
 	<name>slipp-qna</name>
+	
 	<properties>
+		<maven.test.skip>true</maven.test.skip>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<org.slf4j.version>1.7.7</org.slf4j.version>
 		<jpa.version>2.0.0</jpa.version>
@@ -17,12 +19,8 @@
 		<jpametamodel.generated.dir>${basedir}/target/generated-sources/jpametamodel</jpametamodel.generated.dir>
 		<acceptance.test.dir>${basedir}/src/acceptance-test/java</acceptance.test.dir>
 		<maven.test.failure.ignore>true</maven.test.failure.ignore>
-		<jdk.compiler.version>1.6</jdk.compiler.version> 
-		<tomcat.version>7.0.34</tomcat.version> 
-		<!-- 
 		<jdk.compiler.version>1.8</jdk.compiler.version>
 		<tomcat.version>8.0.20</tomcat.version>
-		-->
 
 		<!-- SONAR -->
 		<sonar.language>java</sonar.language>
@@ -132,7 +130,7 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.34</version>
+			<version>5.1.35</version>
 		</dependency>
 		<dependency>
 			<groupId>net.sf.ehcache</groupId>
@@ -542,12 +540,14 @@
 					<execution>
 						<id>process-test-classes</id>
 						<phase>process-test-classes</phase>
+						<!-- 
 						<configuration>
 							<target>
 								<chmod file="target/test-classes/chromedriver/chromedriver-mac"
 									perm="755" />
 							</target>
 						</configuration>
+						 -->
 						<goals>
 							<goal>run</goal>
 						</goals>

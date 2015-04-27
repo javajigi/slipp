@@ -96,7 +96,8 @@
 				</c:forEach>
 			</ul>
 			<div class="rss">
-				<a href="http://feeds.feedburner.com/slipp"><img src="http://feeds.feedburner.com/~fc/slipp?bg=99CCFF&amp;fg=444444&amp;anim=0" height="26" width="88" style="border:0" alt="" /></a>
+				<a href="http://dev.naver.com/d2" target="_blank"><img src="${url:resource('/images/banner_d2.png')}" width="96" height="32" border="0"></a>
+				<a href="http://www.atlassian.com/" target="_blank"><img src="${url:resource('/images/banner_atlassian.jpg')}" width="96" height="32" border="0"></a>
 			</div>
 		</section>
 	</div>
