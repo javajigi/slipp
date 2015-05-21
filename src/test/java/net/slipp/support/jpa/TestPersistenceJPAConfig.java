@@ -36,8 +36,8 @@ public class TestPersistenceJPAConfig {
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 		LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
 	    em.setDataSource(dataSource());
-	    em.setPersistenceXmlLocation("classpath:META-INF/test-persistence.xml");
-
+	    em.setPersistenceXmlLocation("classpath:/META-INF/test-persistence.xml");
+	    
 	    JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
 	    em.setJpaVendorAdapter(vendorAdapter);
 	    return em;

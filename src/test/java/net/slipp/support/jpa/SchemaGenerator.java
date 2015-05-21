@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration(classes = { TestPersistenceJPAConfig.class })
 @TestPropertySource("classpath:application-properties.xml")
 public class SchemaGenerator {
+	
 	@Test
 	public void generateSchema() throws Exception {
 		Persistence.generateSchema("test.slipp.qna", null);
