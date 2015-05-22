@@ -11,11 +11,6 @@
 			<property name="hibernate.format_sql" value="true" />
 			<property name="hibernate.show_sql" value="false"/>
 			
-			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
-	        <property name="hibernate.connection.url" value="jdbc:mysql://127.0.0.1/slipp?useUnicode=yes&amp;characterEncoding=UTF-8" />
-	        <property name="hibernate.connection.username" value="slipp" />
-	        <property name="hibernate.connection.password" value="password" />			
-			
 			<property name="hibernate.cache.use_second_level_cache" value="true"/>
 			<property name="hibernate.cache.use_query_cache" value="true"/>
 			<property name="hibernate.cache.provider_class" value="org.hibernate.cache.SingletonEhCacheProvider"/>
