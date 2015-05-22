@@ -504,6 +504,16 @@
 				<version>2.9</version>
 				<configuration>
 					<downloadSources>true</downloadSources>
+					<sourceIncludes>
+						<sourceInclude>**/*.scala</sourceInclude>
+					</sourceIncludes>
+					<buildcommands>
+						<buildcommand>org.scala-ide.sdt.core.scalabuilder</buildcommand>
+					</buildcommands>
+					<projectnatures>
+						<nature>org.scala-ide.sdt.core.scalanature</nature>
+						<nature>org.eclipse.jdt.core.javanature</nature>
+					</projectnatures>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -517,25 +527,31 @@
 				<groupId>net.alchim31.maven</groupId>
 				<artifactId>scala-maven-plugin</artifactId>
 				<version>3.2.0</version>
+				<configuration>
+					<recompileMode>incremental</recompileMode>
+					<args>
+						<arg>-target:jvm-1.8</arg>
+					</args>
+					<javacArgs>
+						<javacArg>-source</javacArg>
+						<javacArg>${jdk.compiler.version}</javacArg>
+						<javacArg>-target</javacArg>
+						<javacArg>${jdk.compiler.version}</javacArg>
+					</javacArgs>
+				</configuration>
 				<executions>
 					<execution>
-						<id>compile</id>
-						<goals>
-							<goal>compile</goal>
-						</goals>
-						<phase>compile</phase>
-					</execution>
-					<execution>
-						<id>test-compile</id>
-						<goals>
-							<goal>testCompile</goal>
-						</goals>
-						<phase>test-compile</phase>
-					</execution>
-					<execution>
+						<id>scala-compile</id>
 						<phase>process-resources</phase>
 						<goals>
 							<goal>compile</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>scala-test-compile</id>
+						<phase>process-test-resources</phase>
+						<goals>
+							<goal>testCompile</goal>
 						</goals>
 					</execution>
 				</executions>
@@ -594,6 +610,8 @@
 						</goals>
 						<configuration>
 							<sources>
+								<source>src/main/scala</source>
+								<source>src/test/scala</source>
 								<source>${jpametamodel.generated.dir}</source>
 							</sources>
 						</configuration>
