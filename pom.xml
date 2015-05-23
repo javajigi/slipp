@@ -356,6 +356,11 @@
 			<artifactId>querydsl-scala</artifactId>
 			<version>${querydsl.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.mysema.querydsl</groupId>
+			<artifactId>querydsl-apt</artifactId>
+			<version>${querydsl.version}</version>
+		</dependency>
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
@@ -616,7 +621,39 @@
 					</dependency>
 				</dependencies>
 			</plugin>
-			<!-- 
+			<plugin>
+				<groupId>com.mysema.querydsl</groupId>
+				<artifactId>querydsl-maven-plugin</artifactId>
+				<version>3.6.3</version>
+				<configuration>
+					<scala>true</scala>
+					<targetFolder>${querydsl.generated.dir}</targetFolder>
+					<packages>
+						<package>net.slipp.domain.momo</package>
+					</packages>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>com.mysema.querydsl</groupId>
+						<artifactId>querydsl-scala</artifactId>
+						<version>${querydsl.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.scala-lang</groupId>
+						<artifactId>scala-library</artifactId>
+						<version>${scala.version}</version>
+					</dependency>
+				</dependencies>
+				<executions>
+					<execution>
+						<id>jpa-export</id>
+						<goals>
+							<goal>jpa-export</goal>
+						</goals>
+						<phase>generate-sources</phase>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>com.mysema.maven</groupId>
 				<artifactId>apt-maven-plugin</artifactId>
@@ -653,40 +690,6 @@
 						<version>${querydsl.version}</version>
 					</dependency>
 				</dependencies>
-			</plugin>
-			 -->
-			<plugin>
-				<groupId>com.mysema.querydsl</groupId>
-				<artifactId>querydsl-maven-plugin</artifactId>
-				<version>3.6.3</version>
-				<configuration>
-					<scala>true</scala>
-					<targetFolder>${querydsl.generated.dir}</targetFolder>
-					<packages>
-						<package>net.slipp.domain</package>
-					</packages>
-				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>com.mysema.querydsl</groupId>
-						<artifactId>querydsl-scala</artifactId>
-						<version>${querydsl.version}</version>
-					</dependency>
-					<dependency>
-						<groupId>org.scala-lang</groupId>
-						<artifactId>scala-library</artifactId>
-						<version>${scala.version}</version>
-					</dependency>
-				</dependencies>
-				<executions>
-					<execution>
-						<id>jpa-export</id>
-						<goals>
-							<goal>jpa-export</goal>
-						</goals>
-						<phase>generate-sources</phase>
-					</execution>
-				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
