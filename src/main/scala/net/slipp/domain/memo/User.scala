@@ -1,0 +1,17 @@
+package net.slipp.domain.memo
+
+import java.util.Date
+import javax.persistence._
+
+@Entity(name = "user")
+class User(i: String, p: String, n: String) extends DomainModel {
+  @Id
+  var id: String = i
+  val name = n
+  val password = p
+
+  val created = new Date()
+  val updated = new Date()
+
+  def this() = this("", "", "")
+}
