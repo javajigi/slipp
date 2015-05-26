@@ -1,6 +1,9 @@
-package net.slipp.domain.memo
+package net.slipp.ndomain.memo
 
 import javax.persistence._
+
+import net.slipp.support.jpa.DomainModel
+import net.slipp.support.jpa.DateModel
 
 // @Entity(name = "memo")
 class Memo(b: MemoBook, t: String) extends DomainModel with DateModel {

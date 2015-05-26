@@ -1,4 +1,4 @@
-package net.slipp.domain.memo
+package net.slipp.support.jpa
 
 import java.util.Date
 

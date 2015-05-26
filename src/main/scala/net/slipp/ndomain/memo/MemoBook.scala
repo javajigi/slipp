@@ -1,10 +1,13 @@
-package net.slipp.domain.memo
+package net.slipp.ndomain.memo
 
 import java.util
 import javax.persistence._
 import scala.collection.JavaConversions._
 
 import org.hibernate.annotations.BatchSize
+
+import net.slipp.support.jpa.DomainModel
+import net.slipp.support.jpa.DateModel
 
 // @Entity(name = "memoBook")
 class MemoBook(u: User) extends DomainModel with DateModel {

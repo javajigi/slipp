@@ -1,4 +1,4 @@
-package net.slipp.domain.memo
+package net.slipp.support.jpa
 
 import org.apache.commons.lang3.builder.{EqualsBuilder, HashCodeBuilder, ToStringStyle, ToStringBuilder}
 import org.hibernate.annotations.BatchSize

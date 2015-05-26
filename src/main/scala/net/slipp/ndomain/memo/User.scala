@@ -1,9 +1,13 @@
-package net.slipp.domain.memo
+package net.slipp.ndomain.memo
 
 import java.util.Date
-import javax.persistence._
+import javax.persistence.Entity
+import javax.persistence.Id
 
-// @Entity(name = "user")
+import org.hibernate.annotations.BatchSize
+import net.slipp.support.jpa.DomainModel
+
+@Entity(name = "user")
 class User(i: String, p: String, n: String) extends DomainModel {
   @Id
   var id: String = i
