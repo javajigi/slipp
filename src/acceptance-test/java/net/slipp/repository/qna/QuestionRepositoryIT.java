@@ -3,7 +3,6 @@ package net.slipp.repository.qna;
 import javax.transaction.Transactional;
 
 import net.slipp.domain.qna.Question;
-import net.slipp.domain.qna.Question_;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,7 +30,7 @@ public class QuestionRepositoryIT {
 	@Test
 	public void findsByTag() {
 		// Page Index는 0부터 시작한다.
-		PageRequest page = new PageRequest(0, 5, Direction.DESC, Question_.createdDate.getName());
+		PageRequest page = new PageRequest(0, 5, Direction.DESC, "createdDate");
 		String name = "eclipse";
 		dut.findsByTag(name, page);
 	}

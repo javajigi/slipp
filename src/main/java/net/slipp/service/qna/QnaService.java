@@ -7,7 +7,7 @@ import javax.annotation.Resource;
 
 import net.slipp.domain.qna.Answer;
 import net.slipp.domain.qna.DifferenceTags;
-import net.slipp.domain.qna.QnaSpecifications;
+import net.slipp.domain.qna.QQuestion;
 import net.slipp.domain.qna.Question;
 import net.slipp.domain.qna.QuestionDto;
 import net.slipp.domain.tag.Tag;
@@ -30,6 +30,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionSynchronizationAdapter;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.springframework.util.Assert;
+
+import com.mysema.query.types.expr.BooleanExpression;
 
 @Service("qnaService")
 @Transactional
@@ -125,7 +127,8 @@ public class QnaService {
 	}
 
 	public Page<Question> findsQuestion(Pageable pageable) {
-		return questionRepository.findAll(QnaSpecifications.equalsIsDeleteToQuestion(false), pageable);
+		QQuestion question = QQuestion.question;
+		return questionRepository.findAll(question.deleted.eq(false), pageable);
 	}
 	
 	public Page<Question> findsAllQuestion(String searchTerm, Pageable pageable) {
@@ -136,12 +139,15 @@ public class QnaService {
 	}
 
 	public Page<Question> findsQuestionByWriter(Long writerId, Pageable pageable) {
+		QQuestion question = QQuestion.question;
+		BooleanExpression isDeleted = question.deleted.eq(false);
 		if (writerId == null) {
-			return questionRepository.findAll(QnaSpecifications.equalsIsDeleteToQuestion(false), pageable);
+			return questionRepository.findAll(isDeleted, pageable);
 		}
 
 		SocialUser writer = socialUserService.findById(writerId);
-		return questionRepository.findAll(QnaSpecifications.findQuestions(writer, false), pageable);
+		BooleanExpression isWriter = question.writer.eq(writer);
+		return questionRepository.findAll(isWriter.and(isDeleted), pageable);
 	}
 
 	public Question findByQuestionId(Long id) {

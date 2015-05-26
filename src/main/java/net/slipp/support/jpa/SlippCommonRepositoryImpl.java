@@ -22,7 +22,7 @@ import org.springframework.data.domain.Sort.Order;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
-import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
+import org.springframework.data.jpa.repository.support.QueryDslJpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
 import com.google.common.base.Preconditions;
@@ -35,13 +35,13 @@ import com.google.common.collect.Iterables;
  *
  */
 @NoRepositoryBean
-public class SlippCommonRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRepository<T, ID> implements
+public class SlippCommonRepositoryImpl<T, ID extends Serializable> extends QueryDslJpaRepository<T, ID> implements
 		SlippCommonRepository<T, ID> {
 
 	private EntityManager em;
 	private JpaEntityInformation<T, ?> entityInformation;
 
-	public SlippCommonRepositoryImpl(JpaEntityInformation<T, ?> entityInformation, EntityManager entityManager) {
+	public SlippCommonRepositoryImpl(JpaEntityInformation<T, ID> entityInformation, EntityManager entityManager) {
 		super(entityInformation, entityManager);
 		this.em = entityManager;
 		this.entityInformation = entityInformation;

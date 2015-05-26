@@ -16,7 +16,6 @@
 		<org.springframework.version>4.1.6.RELEASE</org.springframework.version>
 		<org.springframework.social.version>1.1.0.RELEASE</org.springframework.social.version>
 		<org.springframework.security.version>3.2.5.RELEASE</org.springframework.security.version>
-		<jpametamodel.generated.dir>${basedir}/target/generated-sources/jpametamodel</jpametamodel.generated.dir>
 		<querydsl.generated.dir>${basedir}/target/generated-sources/querydsl</querydsl.generated.dir>
 		<acceptance.test.dir>${basedir}/src/acceptance-test/java</acceptance.test.dir>
 		<maven.test.failure.ignore>true</maven.test.failure.ignore>
@@ -112,7 +111,7 @@
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-jpa</artifactId>
-			<version>1.7.2.RELEASE</version>
+			<version>1.8.0.RELEASE</version>
 		</dependency>
 
 		<dependency>
@@ -121,13 +120,10 @@
 			<version>3.1</version>
 		</dependency>
 
-		<!-- java를 1.8로 업그레이드하는 시점에 반영 <dependency> <groupId>org.apache.commons</groupId> 
-			<artifactId>commons-dbcp2</artifactId> <version>2.0.1</version> </dependency> -->
-
 		<dependency>
-			<groupId>commons-dbcp</groupId>
-			<artifactId>commons-dbcp</artifactId>
-			<version>1.4</version>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-dbcp2</artifactId>
+			<version>2.1</version>
 		</dependency>
 
 		<dependency>
@@ -349,6 +345,11 @@
 		<dependency>
 			<groupId>com.mysema.querydsl</groupId>
 			<artifactId>querydsl-core</artifactId>
+			<version>${querydsl.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.mysema.querydsl</groupId>
+			<artifactId>querydsl-jpa</artifactId>
 			<version>${querydsl.version}</version>
 		</dependency>
 		<dependency>
@@ -590,38 +591,6 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.bsc.maven</groupId>
-				<artifactId>maven-processor-plugin</artifactId>
-				<version>2.2.4</version>
-				<executions>
-					<execution>
-						<id>process</id>
-						<goals>
-							<goal>process</goal>
-						</goals>
-						<phase>generate-sources</phase>
-						<configuration>
-							<includes>
-								<include>net/slipp/domain/**/*.java</include>
-								<include>net/slipp/domain/**/*.scala</include>
-							</includes>
-							<outputDirectory>${jpametamodel.generated.dir}</outputDirectory>
-							<compilerArguments>-encoding UTF-8</compilerArguments>
-							<processors>
-								<processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>
-							</processors>
-						</configuration>
-					</execution>
-				</executions>
-				<dependencies>
-					<dependency>
-						<groupId>org.hibernate</groupId>
-						<artifactId>hibernate-jpamodelgen</artifactId>
-						<version>4.3.10.Final</version>
-					</dependency>
-				</dependencies>
-			</plugin>
-			<plugin>
 				<groupId>com.mysema.querydsl</groupId>
 				<artifactId>querydsl-maven-plugin</artifactId>
 				<version>3.6.3</version>
@@ -722,7 +691,6 @@
 							<sources>
 								<source>src/main/scala</source>
 								<source>src/test/scala</source>
-								<source>${jpametamodel.generated.dir}</source>
 								<source>${querydsl.generated.dir}</source>
 							</sources>
 						</configuration>
