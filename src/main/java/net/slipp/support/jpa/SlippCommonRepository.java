@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.social.ResourceNotFoundException;
 
 /**
@@ -18,8 +18,7 @@ import org.springframework.social.ResourceNotFoundException;
  * @param <T>
  * @param <ID>
  */
-public interface SlippCommonRepository<T, ID extends Serializable> extends JpaRepository<T, ID>,
-		JpaSpecificationExecutor<T> {
+public interface SlippCommonRepository<T, ID extends Serializable> extends JpaRepository<T, ID>, QueryDslPredicateExecutor<T> {
 
 	/**
 	 * 엔티티를 ID기준으로 하나 검색한다. 단, 엔티티가 존재하지 않을 경우 {@link ResourceNotFoundException
