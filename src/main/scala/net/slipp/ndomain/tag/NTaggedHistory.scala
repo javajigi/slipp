@@ -3,7 +3,6 @@ package net.slipp.ndomain.tag
 import javax.persistence._
 import net.slipp.support.jpa.DomainModel
 import net.slipp.support.jpa.NHasCreatedDate
-
 import net.slipp.domain.tag.TaggedType
 
 @Entity(name="TaggedHistory")
@@ -26,5 +25,7 @@ class NTaggedHistory(t: Long, q: Long, u: Long, tType: TaggedType) extends Domai
 
   @Enumerated(EnumType.STRING)
   @Column(name = "tagged_type", nullable = false, updatable = false, columnDefinition = "enum('TAGGED','DETAGGED')")
-  val taggedType = tType 
+  val taggedType = tType
+  
+  def this() = this(0L, 0L, 0L, null)
 }

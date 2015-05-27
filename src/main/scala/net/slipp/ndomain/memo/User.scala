@@ -7,7 +7,7 @@ import javax.persistence.Id
 import org.hibernate.annotations.BatchSize
 import net.slipp.support.jpa.DomainModel
 
-@Entity(name = "user")
+// @Entity(name = "user")
 class User(i: String, p: String, n: String) extends DomainModel {
   @Id
   var id: String = i
