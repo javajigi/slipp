@@ -36,23 +36,21 @@ class HomeController(
   }
   
   private def productionMode(model: Model) {
-    if (isProductionMode()) {
-      model.addAttribute("pages", wikiService.findWikiPages());     
-    }else{
-      model.addAttribute("pages", wikiService.findDummyWikiPages());
-    }
+    if (isProductionMode()) model.addAttribute("pages", wikiService.findWikiPages()) 
+    else model.addAttribute("pages", wikiService.findDummyWikiPages())
   }
   
   private def isProductionMode() = {
     logger.debug("environment : {}", environment)
-    "PRODUCTION".equals(environment);
+    
+    "PRODUCTION".equals(environment)
   }
   
   @RequestMapping(Array("/rss"))
   def rss(model: Model) = {
-    model.addAttribute("pages", wikiService.findWikiPages());
-    model.addAttribute("now", new Date());
-    "rss";
+    model.addAttribute("pages", wikiService.findWikiPages())
+    model.addAttribute("now", new Date())
+    "rss"
   }
   
   @RequestMapping(Array("/code"))
