@@ -9,7 +9,7 @@ import net.slipp.domain.tag.TaggedType
 @Table(indexes = Array(
   new Index(name = "idx_tagged_history_tag", columnList="tag_id"),
   new Index(name = "idx_tagged_history_question", columnList="question_id")))
-class NTaggedHistory(t: Long, q: Long, u: Long, tType: TaggedType) extends DomainModel with NHasCreatedDate {
+class TaggedHistory(t: Long, q: Long, u: Long, tType: TaggedType) extends DomainModel with NHasCreatedDate {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   var historyId: Long = _
