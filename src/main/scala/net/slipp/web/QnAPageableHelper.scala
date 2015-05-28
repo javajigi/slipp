@@ -17,5 +17,7 @@ object QnAPageableHelper {
     new PageRequest(currentPage - 1, pageSize, sort)
   }
 
-  def revisedPage(page: Integer): Integer = if (page == null) DefaultPageNo else page
+  def revisedPage(page: Integer): Integer = revisedPage(page, DefaultPageNo)
+  
+  def revisedPage(page: Integer, defaultPageNo: Integer) = if (page == null) defaultPageNo else page
 }
