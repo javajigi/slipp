@@ -1,24 +1,24 @@
 package net.slipp.web.user
 
-import java.net.URLEncoder;
+import java.net.URLEncoder
 
-import javax.annotation.Resource;
+import javax.annotation.Resource
 
-import net.slipp.domain.user.PasswordDto;
-import net.slipp.domain.user.SocialUser;
-import net.slipp.service.qna.QnaService;
-import net.slipp.service.user.SocialUserService;
-import net.slipp.social.security.AutoLoginAuthenticator;
-import net.slipp.support.web.argumentresolver.LoginUser;
-import net.slipp.web.UserForm;
-import net.slipp.web.QnAPageableHelper._;
+import net.slipp.domain.user.PasswordDto
+import net.slipp.domain.user.SocialUser
+import net.slipp.service.qna.QnaService
+import net.slipp.service.user.SocialUserService
+import net.slipp.social.security.AutoLoginAuthenticator
+import net.slipp.support.web.argumentresolver.LoginUser
+import net.slipp.web.UserForm
+import net.slipp.web.QnAPageableHelper._
 
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.security.authentication.BadCredentialsException
+import org.springframework.stereotype.Controller
+import org.springframework.ui.Model
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestMethod
 
 @Controller
 @RequestMapping(Array("/users"))
@@ -87,12 +87,12 @@ class UsersController(
 
   @RequestMapping(value = Array("{id}"), method = Array(RequestMethod.PUT))
   def update(@LoginUser loginUser: SocialUser, @PathVariable id: Long, userForm: UserForm) = {
-    val socialUser = userService.findById(id);
+    val socialUser = userService.findById(id)
     if (!loginUser.isSameUser(socialUser)) {
-      throw new IllegalArgumentException("You cann't change another user!");
+      throw new IllegalArgumentException("You cann't change another user!")
     }
-    userService.updateSlippUser(loginUser, userForm.getEmail(), userForm.getUserId());
-    "redirect:/users/logout";
+    userService.updateSlippUser(loginUser, userForm.getEmail(), userForm.getUserId())
+    "redirect:/users/logout"
   }
 
   @RequestMapping(Array("{id}/changepassword"))
@@ -116,7 +116,7 @@ class UsersController(
 
     try {
       userService.changePassword(loginUser, password)
-      "redirect:/users/logout";
+      "redirect:/users/logout"
     } catch {
       case e: BadCredentialsException => {
           model.addAttribute("errorMessage", e.getMessage())
