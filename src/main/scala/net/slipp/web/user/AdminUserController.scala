@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import net.slipp.service.qna.BlockService
 import net.slipp.service.user.SocialUserService
-import net.slipp.web.QnAPageableHelper.revisedPage
+import net.slipp.web.QnAPageableHelper._
 import com.typesafe.scalalogging.LazyLogging
 
 @Controller
@@ -26,14 +26,9 @@ class AdminUserController(
 
   @RequestMapping(Array(""))
   def users(page: Integer, searchTerm: String, model: Model) = {
-    model.addAttribute("users", userService.findsUser(searchTerm, createPageable(page)))
+    model.addAttribute("users", userService.findsUser(searchTerm, createPageableById(page, DefaultPageSize)))
     model.addAttribute("searchTerm", searchTerm)
     "admin/users"
-  }
-
-  private def createPageable(page: Integer) = {
-    val sort = new Sort(Direction.DESC, "id")
-    new PageRequest(revisedPage(page, DefaultPageNo) - 1, DefaultPageSize, sort)
   }
 
   @RequestMapping(value = Array("/{id}/resetpassword"), method = Array(RequestMethod.POST))

@@ -8,13 +8,24 @@ object QnAPageableHelper {
   val DefaultPageNo = 1
 
   def createPageableByQuestionUpdatedDate(currentPage: Integer, pageSize: Integer) = {
-    val sort = new Sort(Direction.DESC, "updatedDate")
-    new PageRequest(currentPage - 1, pageSize, sort)
+    createPageable(currentPage, pageSize, "updatedDate")
   }
 
   def createPageableByAnswerCreatedDate(currentPage: Integer, pageSize: Integer) = {
-    val sort = new Sort(Direction.DESC, "createdDate")
-    new PageRequest(currentPage - 1, pageSize, sort)
+    createPageable(currentPage, pageSize, "createdDate")
+  }
+  
+  def createPageableById(currentPage: Integer, pageSize: Integer) = {
+    createPageable(currentPage, pageSize, "id")
+  }
+  
+  def createPageableTagId(currentPage: Integer, pageSize: Integer) = {
+    createPageable(currentPage, pageSize, "tagId")
+  }  
+  
+  def createPageable(currentPage: Integer, pageSize: Integer, sortField: String) = {
+    val sort = new Sort(Direction.DESC, sortField)
+    new PageRequest(revisedPage(currentPage, DefaultPageNo) - 1, pageSize, sort)
   }
 
   def revisedPage(page: Integer): Integer = revisedPage(page, DefaultPageNo)
