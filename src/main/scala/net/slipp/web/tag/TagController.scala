@@ -23,10 +23,7 @@ import com.typesafe.scalalogging.LazyLogging
 
 @Controller
 @RequestMapping(Array("/tags"))
-class TagController(
-  @Resource(name = "socialUserService") socialUserService: SocialUserService,
-  @Resource(name = "tagService") tagService: TagService,
-  @Resource(name = "facebookService") facebookService: FacebookService) extends LazyLogging {
+class TagController(@Resource(name = "tagService") tagService: TagService) extends LazyLogging {
   private val DefaultPageNo = 1
   private val DefaultPageSize = 20
 
@@ -37,5 +34,5 @@ class TagController(
     searchedTags.toList.map ( tag => new TagForm(tag.getName()) )
   }
   
-  def this() = this(null, null, null)
+  def this() = this(null)
 }
