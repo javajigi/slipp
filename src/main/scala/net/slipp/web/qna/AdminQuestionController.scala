@@ -62,4 +62,6 @@ class AdminQuestionController(
     qnaService.updateQuestionByAdmin(originalQuestion.getWriter(), updatedQuestion)
     "redirect:/admin/questions/%d?searchTerm=%s".format(id, searchTerm)
   }
+  
+  def this() = this(null, null)
 }

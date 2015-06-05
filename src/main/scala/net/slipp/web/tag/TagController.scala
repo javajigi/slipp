@@ -1,6 +1,5 @@
 package net.slipp.web.tag
 
-import java.util.ArrayList
 import java.util.List
 import javax.annotation.Resource
 import scala.collection.JavaConversions._
