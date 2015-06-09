@@ -13,11 +13,12 @@ import net.slipp.domain.qna.Question;
 import net.slipp.domain.tag.Tag;
 import net.slipp.domain.tag.TaggedType;
 import net.slipp.domain.user.SocialUser;
-import net.slipp.ndomain.tag.NTaggedHistory;
+import net.slipp.ndomain.tag.TaggedHistory;
 import net.slipp.repository.tag.TagRepository;
 import net.slipp.repository.tag.TaggedHistoryRepository;
 import net.slipp.service.MailService;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -139,11 +140,25 @@ public class TagService {
 		}
     	return latestTags;
     }
-
-    public Tag saveTag(Tag tag) {
-        return tagRepository.save(tag);
-    }
     
+    public Tag saveTag(String name, Long parentTag) {
+    	if (StringUtils.isBlank(name)) {
+    		throw new IllegalArgumentException("태그명을 입력해 주세요.");
+    	}
+    	
+    	Tag originalTag = tagRepository.findByName(name);
+    	if (originalTag != null) {
+    		throw new IllegalArgumentException(name + " 태그는 이미 존재합니다.");
+    	}
+    	
+    	Tag parent = null;
+    	if (parentTag != null) {
+    		parent = tagRepository.findOne(parentTag);
+   	    }
+    	
+        return tagRepository.save(Tag.pooledTag(name, parent));
+    }
+
     public Tag findTagByName(String name) {
         return tagRepository.findByName(name);
     }
@@ -163,6 +178,6 @@ public class TagService {
     }
     
     public void saveTaggedHistory(SocialUser loginUser, Question question, Tag tag, TaggedType taggedType) {
-    	taggedHistoryRepository.save(new NTaggedHistory(tag.getTagId(), question.getQuestionId(), loginUser.getId(), taggedType));
+    	taggedHistoryRepository.save(new TaggedHistory(tag.getTagId(), question.getQuestionId(), loginUser.getId(), taggedType));
     }
 }

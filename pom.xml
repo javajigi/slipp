@@ -183,6 +183,11 @@
 			<artifactId>logback-classic</artifactId>
 			<version>1.1.2</version>
 		</dependency>
+		<dependency>
+			<groupId>com.typesafe.scala-logging</groupId>
+			<artifactId>scala-logging_2.11</artifactId>
+			<version>3.1.0</version>
+		</dependency>
 
 		<!-- Servlet, JSP, JSTL -->
 		<dependency>
@@ -515,7 +520,7 @@
 					<recompileMode>incremental</recompileMode>
 					<javacArgs>
 						<javacArg>-Xlint:unchecked</javacArg>
-        				<javacArg>-Xlint:deprecation</javacArg>					
+						<javacArg>-Xlint:deprecation</javacArg>
 						<javacArg>-source</javacArg>
 						<javacArg>${jdk.compiler.version}</javacArg>
 						<javacArg>-target</javacArg>
@@ -624,40 +629,6 @@
 					</dependency>
 				</dependencies>
 			</plugin>
-			<!-- 
-			<plugin>
-				<groupId>com.mysema.querydsl</groupId>
-				<artifactId>querydsl-maven-plugin</artifactId>
-				<version>3.6.3</version>
-				<configuration>
-					<targetFolder>${querydsl.generated.dir}</targetFolder>
-					<packages>
-						<package>net.slipp.domain</package>
-					</packages>
-				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>com.mysema.querydsl</groupId>
-						<artifactId>querydsl-scala</artifactId>
-						<version>${querydsl.version}</version>
-					</dependency>
-					<dependency>
-						<groupId>org.scala-lang</groupId>
-						<artifactId>scala-library</artifactId>
-						<version>${scala.version}</version>
-					</dependency>
-				</dependencies>
-				<executions>
-					<execution>
-						<id>jpa-export</id>
-						<goals>
-							<goal>jpa-export</goal>
-						</goals>
-						<phase>generate-sources</phase>
-					</execution>
-				</executions>
-			</plugin>
-			-->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-antrun-plugin</artifactId>

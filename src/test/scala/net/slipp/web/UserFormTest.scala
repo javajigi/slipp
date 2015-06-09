@@ -12,19 +12,19 @@ class UserFormTest {
   }
 
   @Test def valid_userId() {
-    assertUserId("ni", true);
-    assertUserId("테스트", true);
-    assertUserId("박.재.성", true);
-    assertUserId("나만의 닉네임을 가지고", true);
-    assertUserId(null, false);
-    assertUserId("", false);
-    assertUserId("n", false);
-    assertUserId("나만의 닉네임을 가지고 테", false);
+    assertUserId("ni", true)
+    assertUserId("테스트", true)
+    assertUserId("박.재.성", true)
+    assertUserId("나만의 닉네임을 가지고", true)
+    assertUserId(null, false)
+    assertUserId("", false)
+    assertUserId("n", false)
+    assertUserId("나만의 닉네임을 가지고 테", false)
   }
 
   def assertUserId(userId: String, expected: Boolean) {
-    val email = "email@gmail.com";
-    val form = new UserForm(userId, email);
-    assertThat(form.isValid(), is(expected));
+    val email = "email@gmail.com"
+    val form = new UserForm(userId, email)
+    assertThat(form.isValid(), is(expected))
   }
 }

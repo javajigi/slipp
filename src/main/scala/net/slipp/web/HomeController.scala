@@ -54,7 +54,7 @@ class HomeController(
   }
   
   @RequestMapping(Array("/code"))
-  def code() = "code"
+  def code = "code"
   
   @RequestMapping(Array("/about"))
   def about = "about"

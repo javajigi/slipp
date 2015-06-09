@@ -123,7 +123,24 @@ public class QuestionTest {
 	}
 	
 	@Test
-	public void delete_answer() throws Exception {
+	public void delete_answer_when_one_answer() throws Exception {
+		SocialUser writer2 = new SocialUser(11);
+		Answer answer1 = anAnswer().with(writer2).build();
+		
+		SocialUser writer1 = new SocialUser(10);
+		Question dut = aQuestion()
+				.withWriter(writer1)
+				.withAnswer(answer1)
+				.build();
+		assertThat(dut.getAnswerCount(), is(1));
+		
+		dut.deAnswered(answer1);
+		assertThat(dut.getAnswerCount(), is(0));
+		assertThat(dut.getLatestParticipant(), is(writer1));
+	}
+	
+	@Test
+	public void delete_answer_when_two_answer() throws Exception {
 		SocialUser writer2 = new SocialUser(11);
 		Answer answer1 = anAnswer().with(writer2).build();
 		SocialUser writer3 = new SocialUser(12);
@@ -138,7 +155,8 @@ public class QuestionTest {
 		assertThat(dut.getAnswerCount(), is(2));
 		
 		dut.deAnswered(answer2);
-		// assertThat(dut.getLatestParticipant(), is(writer2));
+		assertThat(dut.getAnswerCount(), is(1));
+		assertThat(dut.getLatestParticipant(), is(writer2));
 	}
 	
 	@Test
