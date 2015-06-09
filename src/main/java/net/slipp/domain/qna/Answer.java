@@ -65,7 +65,10 @@ public class Answer implements HasCreatedAndUpdatedDate, Comparable<Answer> {
 	private Integer sumLike = 0;
 	
     @Column(name = "sum_dislike", nullable = true, columnDefinition="integer DEFAULT 0")
-    private Integer sumDislike = 0;	
+    private Integer sumDislike = 0;
+    
+    @Column(name = "deleted", nullable = false)
+    private boolean deleted = false;
 	
 	@ManyToOne
 	@JoinColumn(foreignKey=@ForeignKey(name = "fk_answer_parent_id"))
@@ -173,6 +176,14 @@ public class Answer implements HasCreatedAndUpdatedDate, Comparable<Answer> {
 	
 	public Integer getSumDislike() {
         return sumDislike;
+    }
+	
+    public boolean isDeleted() {
+        return deleted;
+    }
+    
+    public void deleted() {
+    	this.deleted = true;
     }
 
 	public void upRank() {

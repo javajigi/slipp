@@ -197,7 +197,6 @@ public class QnaService {
 		if (!answer.isWritedBy(loginUser)) {
 			throw new AccessDeniedException(loginUser + " is not owner!");
 		}
-		answerRepository.delete(answer);
 		Question question = questionRepository.findOne(questionId);
 		question.deAnswered(answer);
 	}
