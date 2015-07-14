@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.multipart.MultipartFile
 import org.springframework.web.multipart.MultipartRequest
 
+@Controller
+@RequestMapping(Array("/attachments"))
 class AttachmentController(
   @Resource(name = "attachmentService") attachmentService: AttachmentService,
   @Resource(name = "servletDownloadManager") servletDownloadManager: ServletDownloadManager) {
@@ -45,4 +47,5 @@ class AttachmentController(
     servletDownloadManager.download(request, response, attachmentFile, attachment.getOriginalFilename(), ExpireMillis)
   }
 
+  def this() = this(null, null)
 }
