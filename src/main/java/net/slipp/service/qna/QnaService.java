@@ -32,6 +32,7 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 import org.springframework.util.Assert;
 
 import com.mysema.query.types.expr.BooleanExpression;
+import com.restfb.types.Post;
 
 @Service("qnaService")
 @Transactional
@@ -268,5 +269,15 @@ public class QnaService {
 		for (Question question : questions) {
 			question.delete(user);
 		}
+	}
+	
+	public void connectFB(Long id, String postId) {
+		SocialUser adminUser = socialUserService.findAdminUser();
+		Post post = facebookService.findPost(adminUser, postId);
+		if (post == null) {
+			throw new IllegalArgumentException(postId + "는 유효하지 않은 포스트입니다.");
+		}
+		Question question = questionRepository.findOne(id);
+		question.connected(postId);
 	}
 }

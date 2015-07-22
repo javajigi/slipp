@@ -17,6 +17,7 @@ import net.slipp.domain.user.SocialUser;
 import net.slipp.repository.qna.AnswerRepository;
 import net.slipp.repository.qna.QuestionRepository;
 import net.slipp.repository.tag.TagRepository;
+import net.slipp.service.user.SocialUserService;
 import net.slipp.support.web.tags.SlippFunctions;
 
 import org.slf4j.Logger;
@@ -47,6 +48,9 @@ public class FacebookService {
 	private static final Logger log = LoggerFactory.getLogger(FacebookService.class);
 
 	private static final int DEFAULT_FACEBOOK_MESSAGE_LENGTH = 250;
+	
+	@Resource(name = "socialUserService")
+	private SocialUserService socialUserService;
 
 	@Resource(name = "questionRepository")
 	private QuestionRepository questionRepository;
@@ -97,7 +101,12 @@ public class FacebookService {
 	}
 
 	private FacebookClient createFacebookClient(SocialUser socialUser) {
-		return new DefaultFacebookClient(socialUser.getAccessToken(), Version.VERSION_2_2);
+		if (socialUser.isFacebookUser()) {
+			return new DefaultFacebookClient(socialUser.getAccessToken(), Version.VERSION_2_2);
+		}
+		
+		SocialUser adminUser = socialUserService.findAdminUser();
+		return new DefaultFacebookClient(adminUser.getAccessToken(), Version.VERSION_2_2);
 	}
 
 	@Async
@@ -185,6 +194,16 @@ public class FacebookService {
 
 	private Post findPost(FacebookClient facebookClient, String postId) {
 		try {
+			return facebookClient.fetchObject(postId, Post.class);
+		} catch (FacebookGraphException e) {
+			log.error("{} postId, errorMessage : {}", postId, e.getMessage());
+			return null;
+		}
+	}
+	
+	public Post findPost(SocialUser socialUser, String postId) {
+		try {
+			FacebookClient facebookClient = createFacebookClient(socialUser);
 			return facebookClient.fetchObject(postId, Post.class);
 		} catch (FacebookGraphException e) {
 			log.error("{} postId, errorMessage : {}", postId, e.getMessage());

@@ -227,9 +227,12 @@ public class QuestionTest {
         
         String postId = "123456";
         SnsConnection actual = dut.connected(postId);
-
+        assertThat(dut.getSnsConnection().size(), is(1));
         SnsConnection expected = new SnsConnection(ProviderType.facebook, postId);
         assertThat(actual, is(expected));
+        
+        dut.connected(postId);
+        assertThat(dut.getSnsConnection().size(), is(1));
     }
     
     @Test
