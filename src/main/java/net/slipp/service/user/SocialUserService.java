@@ -88,6 +88,10 @@ public class SocialUserService {
         return socialUsers.get(0);
     }
     
+    public SocialUser findAdminUser() {
+    	return findByUserId("자바지기");
+    }
+    
     public SocialUser findByEmail(String email) {
         Assert.notNull(email, "email can't be null!");
         return socialUserRepository.findByEmail(email);

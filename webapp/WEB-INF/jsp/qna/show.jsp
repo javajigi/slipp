@@ -126,6 +126,12 @@
 				<button class="signin-with-sns-submit-btn" type="submit">태그추가</button>
 			</form><br/>
 			</sec:authorize>
+			<sec:authorize access="hasRole('ROLE_ADMINISTRATOR')">
+			<form id="connectedFBForm" action="/questions/${question.questionId}/connect/facebook" method="post" cssClass="signin-with-sns">
+				<input type="text" name="fbPostId" class="inp_nickname focused"><br/>
+				<button class="signin-with-sns-submit-btn" type="submit">페북글 연결</button>
+			</form><br/>
+			</sec:authorize>			
 			<a class="link-back-to-list" href="/questions">&larr; 목록으로</a>
 		</div>
 	</div>

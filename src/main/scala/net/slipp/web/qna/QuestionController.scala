@@ -109,6 +109,12 @@ class QuestionController(
     model.addAttribute("tags", tagService.findLatestTags())
     "qna/list"
   }
+  
+  @RequestMapping(value = Array("/{id}/connect/facebook"), method = Array(RequestMethod.POST))
+  def connectFB(@PathVariable id: Long, fbPostId: String) = {
+    qnaService.connectFB(id, fbPostId)
+    "redirect:/questions/%d".format(id)
+  }
 
   def this() = this(null, null)
 }
