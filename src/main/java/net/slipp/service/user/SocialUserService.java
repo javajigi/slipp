@@ -14,6 +14,7 @@ import net.slipp.service.MailService;
 import net.slipp.support.utils.MD5Util;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
@@ -37,7 +38,7 @@ public class SocialUserService {
     @Resource(name = "passwordEncoder")
     PasswordEncoder passwordEncoder;
 
-    @Resource(name = "passwordGenerator")
+    @Autowired
     private PasswordGenerator passwordGenerator;
 
     @Resource(name = "mailService")
