@@ -12,7 +12,7 @@ public class SlippStringUtils extends StringUtils {
 
 	public static final String DEFAULT_CHAR_ENCODING = "utf-8";
 
-	private static final Pattern LINK_PATTERN = Pattern.compile("(https?|ftp)://[\\S]+");
+	private static final Pattern LINK_PATTERN = Pattern.compile("(https?|ftp)://[^\\s/$.?#].[^\\s]*");
 
 	public static String escapeHtml(String str) {
 		if (isEmpty(str)) {

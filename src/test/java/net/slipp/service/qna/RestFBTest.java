@@ -29,8 +29,8 @@ public class RestFBTest {
 
 	@Before
 	public void setup() {
-		String accessToken = "ACCESS_TOKEN";
-		dut = new DefaultFacebookClient(accessToken, Version.VERSION_2_2);
+		String accessToken = "CAAB1sJVcMxYBAMQfZAS2jUVpMC6vZACFEZAOFEomMZAYdHyl8dSbz3iwcUdOCia0CwGkEha8PFJWRgpWDbCnda3KB5NU1Q9q2VTKps1FyzGqx5iy9MMgQ0adfrltkal4mu9L1eGNjWaMRAQ57Nh0Y9i7sLuBtDe7T5MqKtj6Ch0xDvF4sBvsKL7Qo4f2VA9a19TIZAXOT74ruyNF1GTV8";
+		dut = new DefaultFacebookClient(accessToken, Version.VERSION_2_3);
 	}
 
 	@Test
@@ -53,13 +53,15 @@ public class RestFBTest {
 
 	@Test
 	public void fetchPost() throws Exception {
-		Post post = dut.fetchObject("390710267709840", Post.class);
+		Post post = dut.fetchObject("10207006906754177", Post.class);
 		logger.debug("Post: " + post.getId() + " : " + post.getMessage());
 		Comments comments = post.getComments();
 		List<Comment> commentData = comments.getData();
+		logger.debug("comment size : {}", commentData.size());
 		for (Comment comment : commentData) {
 			FacebookComment fbComment = FacebookComment.create(null, comment);
-			logger.debug("fbComment: " + fbComment);
+			logger.debug("fbComment: {}", fbComment);
+			logger.debug("CommentMessage : {} ", fbComment.getMessage());
 		}
 	}
 

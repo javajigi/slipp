@@ -1,5 +1,7 @@
 package net.slipp.domain.fb;
 
+import static net.slipp.support.web.tags.SlippFunctions.*;
+
 import java.util.Date;
 
 import net.slipp.domain.tag.Tag;
@@ -46,7 +48,7 @@ public class FacebookComment implements Comparable<FacebookComment> {
     }
 
     public String getMessage() {
-        return SlippFunctions.hbr(message);
+        return br(links(message));
     }
 
     public String getUserId() {

@@ -40,4 +40,13 @@ public class SlippFunctionsTest {
 		String actual = SlippFunctions.stripHttp(url);
 		assertThat(actual, is("//localhost:8080"));
 	}
+
+	@Test
+	public void links() throws Exception {
+		String message = "길기용 이가 이렇게 정리했었던 기억이... ^^\n" +
+			"http://www.slipp.net/wiki/display/SLS/mustache#mustache-잉여내용:Spring에서Handlebars를쓴다면?\n" +
+			"이항희 님의 http://blog.javarouka.me/2014/08/handlebars-for-java_31.html";
+		String actual = SlippFunctions.links(message);
+		logger.debug("links message : {}", actual);
+	}
 }
