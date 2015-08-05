@@ -29,7 +29,7 @@ public class RestFBTest {
 
 	@Before
 	public void setup() {
-		String accessToken = "CAAB1sJVcMxYBAMQfZAS2jUVpMC6vZACFEZAOFEomMZAYdHyl8dSbz3iwcUdOCia0CwGkEha8PFJWRgpWDbCnda3KB5NU1Q9q2VTKps1FyzGqx5iy9MMgQ0adfrltkal4mu9L1eGNjWaMRAQ57Nh0Y9i7sLuBtDe7T5MqKtj6Ch0xDvF4sBvsKL7Qo4f2VA9a19TIZAXOT74ruyNF1GTV8";
+		String accessToken = "ACCESS_TOKEN";
 		dut = new DefaultFacebookClient(accessToken, Version.VERSION_2_3);
 	}
 
