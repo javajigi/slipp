@@ -13,8 +13,6 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
 		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.1.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
-	<jpa:repositories base-package="net.slipp.repository" factory-class="net.slipp.support.jpa.SlippRepositoryFactoryBean" />
-	
 	<context:component-scan	base-package="net.slipp.support.security" />
 	
 	<bean id="facebookConnectionFactory" class="org.springframework.social.facebook.connect.FacebookConnectionFactory">

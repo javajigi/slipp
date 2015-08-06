@@ -3,6 +3,8 @@
 <properties>
     <comment>application-properties</comment>
 
+    <entry key="environment">DEVELOPMENT</entry>
+
     <!-- net.slipp.service.qna.FacebookService.java -->
     <entry key="facebook.application.url">test</entry>
 
