@@ -6,9 +6,8 @@ import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.PropertySource;
 
 @Configuration
-@Import(value={PersistenceJPAConfig.class, InfraConfig.class, SecurityConfig.class})
-@ImportResource(value={ "classpath:applicationContext-social.xml",
-						"classpath:applicationContext.xml"})
+@Import(value={PersistenceJPAConfig.class, InfraConfig.class, SecurityConfig.class, SpringSocialConfig.class})
+@ImportResource(value={ "classpath:applicationContext.xml"})
 @PropertySource("classpath:application-properties.xml")
 public class ApplicationConfig {
 

@@ -13,7 +13,7 @@
     <entry key="resources.cache.seconds">300</entry>
 
 
-    <!-- applicationContext-social.xml -->
+    <!-- SpringSocialConfig -->
     <entry key="facebook.clientId">test</entry>
     <entry key="facebook.clientSecret">test</entry>
     <entry key="twitter.consumerKey">test</entry>
