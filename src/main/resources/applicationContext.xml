@@ -32,42 +32,6 @@
 		<security:authentication-provider ref="rememberMeAuthenticationProvider" />
 		<security:authentication-provider ref="daoAuthenticationProvider" />
 	</security:authentication-manager>
-	
-	<bean id="slippRememberMeServices"
-		class="net.slipp.social.security.SlippTokenBasedRememberMeServices">
-		<property name="userDetailsService" ref="slippUserDetailsService" />
-		<property name="key" value="${slipp.remember.token.key}" />
-		<property name="tokenValiditySeconds" value="1209600" />
-	</bean>
-	
-	<bean id="springSocialSecurityRememberMeServices" parent="slippRememberMeServices">
-		<property name="alwaysRemember" value="true" />
-	</bean>	
-
-	<bean id="rememberMeAuthenticationProvider"
-		class="org.springframework.security.authentication.RememberMeAuthenticationProvider">
-		<constructor-arg value="${slipp.remember.token.key}" />
-	</bean>
-	
-	<bean id="daoAuthenticationProvider" class="net.slipp.social.security.SlippDaoAuthenticationProvider"
-		p:userDetailsService-ref="slippUserDetailsService"
-		p:passwordEncoder-ref="passwordEncoder"
-	/>	
-
-	<bean id="accessDecisionManager" class="org.springframework.security.access.vote.UnanimousBased"
-		xmlns="http://www.springframework.org/schema/beans">
-		<constructor-arg>
-			<list>
-				<bean class="org.springframework.security.access.vote.RoleVoter" />
-				<bean class="org.springframework.security.access.vote.AuthenticatedVoter" />
-			</list>
-		</constructor-arg>
-	</bean>
-	
-	<!-- Start Spring Social Security -->
-	<bean id="springSocialSecurityEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
-		<constructor-arg value="/users/login" />
-	</bean>	
 
 	<security:http use-expressions="true"
 		entry-point-ref="springSocialSecurityEntryPoint" xmlns="http://www.springframework.org/schema/security">
@@ -108,16 +72,4 @@
 
 		<remember-me services-ref="slippRememberMeServices" />
 	</security:http>
-	
-	<bean id="slippSecurityAuthenticationFilter" 
-		class="net.slipp.social.security.SlippSecurityAuthenticationFilter"
-		p:rememberMeServices-ref="springSocialSecurityRememberMeServices"
-		p:authenticationSuccessHandler-ref="authenticationSuccessHandler"
-	/>
-	
-	<bean id="authenticationSuccessHandler" 
-		class="org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler"
-		p:defaultTargetUrl="/"
-		p:targetUrlParameter="redirect"
-	/>
 </beans>

@@ -27,7 +27,7 @@ public class SlippSecurityAuthenticationFilter extends AbstractAuthenticationPro
     
 	public final static String DEFAULT_AUTHENTICATION_URL = "/authenticate";
 
-	protected SlippSecurityAuthenticationFilter() {
+	public SlippSecurityAuthenticationFilter() {
 		super(DEFAULT_AUTHENTICATION_URL);
 	}
 	
