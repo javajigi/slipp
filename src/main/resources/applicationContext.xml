@@ -28,11 +28,6 @@
 	</security:global-method-security>
 	-->
 
-	<security:authentication-manager alias="authenticationManager">
-		<security:authentication-provider ref="rememberMeAuthenticationProvider" />
-		<security:authentication-provider ref="daoAuthenticationProvider" />
-	</security:authentication-manager>
-
 	<security:http use-expressions="true"
 		entry-point-ref="springSocialSecurityEntryPoint" xmlns="http://www.springframework.org/schema/security">
 		<intercept-url pattern="/questions/form" method="GET" access="hasRole('ROLE_USER')" />

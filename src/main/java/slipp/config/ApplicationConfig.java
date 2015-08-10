@@ -15,7 +15,6 @@ import java.util.Properties;
 
 @Configuration
 @Import(value = {PersistenceJPAConfig.class, InfraConfig.class, SpringSecurityConfig.class, SpringSocialConfig.class})
-@ImportResource(value = {"classpath:applicationContext.xml"})
 @PropertySource("classpath:application-properties.xml")
 @ComponentScan(basePackages = "net.slipp.service", excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, value = Controller.class))
 public class ApplicationConfig {
