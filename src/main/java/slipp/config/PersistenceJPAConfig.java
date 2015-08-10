@@ -56,14 +56,4 @@ public class PersistenceJPAConfig {
 	public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
 		return new JpaTransactionManager(emf);
 	}
-	
-	@Bean(destroyMethod="close")
-	public DataSource wikiDataSource() {
-		BasicDataSource dataSource = new BasicDataSource();
-		dataSource.setDriverClassName(env.getProperty("wiki.database.driverClassName"));
-		dataSource.setUrl(env.getProperty("wiki.database.url"));
-		dataSource.setUsername(env.getProperty("wiki.database.username"));
-		dataSource.setPassword(env.getProperty("wiki.database.password"));
-		return dataSource;
-	}
 }
