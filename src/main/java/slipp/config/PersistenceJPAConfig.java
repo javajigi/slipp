@@ -3,12 +3,14 @@ package slipp.config;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
+import net.slipp.support.jpa.SlippRepositoryFactoryBean;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.env.Environment;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -18,6 +20,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
+@EnableJpaRepositories(basePackages="net.slipp.repository", repositoryFactoryBeanClass = SlippRepositoryFactoryBean.class)
 public class PersistenceJPAConfig {
 	@Autowired
 	private Environment env;
@@ -52,15 +55,5 @@ public class PersistenceJPAConfig {
 	@Bean
 	public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
 		return new JpaTransactionManager(emf);
-	}
-	
-	@Bean(destroyMethod="close")
-	public DataSource wikiDataSource() {
-		BasicDataSource dataSource = new BasicDataSource();
-		dataSource.setDriverClassName(env.getProperty("wiki.database.driverClassName"));
-		dataSource.setUrl(env.getProperty("wiki.database.url"));
-		dataSource.setUsername(env.getProperty("wiki.database.username"));
-		dataSource.setPassword(env.getProperty("wiki.database.password"));
-		return dataSource;
 	}
 }

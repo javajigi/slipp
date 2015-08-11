@@ -3,6 +3,8 @@
 <properties>
     <comment>application-properties</comment>
 
+    <entry key="environment">DEVELOPMENT</entry>
+
     <!-- net.slipp.service.qna.FacebookService.java -->
     <entry key="facebook.application.url">test</entry>
 
@@ -11,7 +13,7 @@
     <entry key="resources.cache.seconds">300</entry>
 
 
-    <!-- applicationContext-social.xml -->
+    <!-- SpringSocialConfig -->
     <entry key="facebook.clientId">test</entry>
     <entry key="facebook.clientSecret">test</entry>
     <entry key="twitter.consumerKey">test</entry>

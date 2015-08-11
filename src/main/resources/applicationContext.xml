@@ -20,67 +20,13 @@
 		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
         
-	<bean id="applicationProperties" class="net.slipp.support.utils.ConvenientProperties">
-		<constructor-arg index="0">
-			<util:properties location="classpath:application-properties.xml" />
-		</constructor-arg>
-	</bean>
-    
-	<context:component-scan	base-package="net.slipp.service">
-		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
-	</context:component-scan>
-	
-	<bean id="wikiDao" class="net.slipp.domain.wiki.WikiDao"
-		p:dataSource-ref="wikiDataSource" 
-	/>
-
 	<!-- proxy-target-class is needed for secured annotations to be honoured -->
+	<!--
 	<security:global-method-security
 		proxy-target-class="true" secured-annotations="enabled"
 		pre-post-annotations="enabled">
 	</security:global-method-security>
-
-
-	<security:authentication-manager alias="authenticationManager">
-		<security:authentication-provider ref="rememberMeAuthenticationProvider" />
-		<security:authentication-provider ref="daoAuthenticationProvider" />
-	</security:authentication-manager>
-	
-	<bean id="slippRememberMeServices"
-		class="net.slipp.social.security.SlippTokenBasedRememberMeServices">
-		<property name="userDetailsService" ref="slippUserDetailsService" />
-		<property name="key" value="${slipp.remember.token.key}" />
-		<property name="tokenValiditySeconds" value="1209600" />
-	</bean>
-	
-	<bean id="springSocialSecurityRememberMeServices" parent="slippRememberMeServices">
-		<property name="alwaysRemember" value="true" />
-	</bean>	
-
-	<bean id="rememberMeAuthenticationProvider"
-		class="org.springframework.security.authentication.RememberMeAuthenticationProvider">
-		<constructor-arg value="${slipp.remember.token.key}" />
-	</bean>
-	
-	<bean id="daoAuthenticationProvider" class="net.slipp.social.security.SlippDaoAuthenticationProvider"
-		p:userDetailsService-ref="slippUserDetailsService"
-		p:passwordEncoder-ref="passwordEncoder"
-	/>	
-
-	<bean id="accessDecisionManager" class="org.springframework.security.access.vote.UnanimousBased"
-		xmlns="http://www.springframework.org/schema/beans">
-		<constructor-arg>
-			<list>
-				<bean class="org.springframework.security.access.vote.RoleVoter" />
-				<bean class="org.springframework.security.access.vote.AuthenticatedVoter" />
-			</list>
-		</constructor-arg>
-	</bean>
-	
-	<!-- Start Spring Social Security -->
-	<bean id="springSocialSecurityEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
-		<constructor-arg value="/users/login" />
-	</bean>	
+	-->
 
 	<security:http use-expressions="true"
 		entry-point-ref="springSocialSecurityEntryPoint" xmlns="http://www.springframework.org/schema/security">
@@ -92,6 +38,7 @@
 		<intercept-url pattern="/questions/*/answers/*" method="PUT" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/questions/*/answers/*/like" method="POST" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/questions/*/answers/*/dislike" method="POST" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/questions/*/connect/facebook" method="POST" access="hasRole('ROLE_ADMINISTRATOR')" />
 		<intercept-url pattern="/questions" method="PUT" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/questions/*" method="DELETE" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/smalltalks/*" method="POST" access="hasRole('ROLE_USER')" />
@@ -120,26 +67,4 @@
 
 		<remember-me services-ref="slippRememberMeServices" />
 	</security:http>
-	
-	<bean id="slippSecurityAuthenticationFilter" 
-		class="net.slipp.social.security.SlippSecurityAuthenticationFilter"
-		p:rememberMeServices-ref="springSocialSecurityRememberMeServices"
-		p:authenticationSuccessHandler-ref="authenticationSuccessHandler"
-	/>
-	
-	<bean id="authenticationSuccessHandler" 
-		class="org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler"
-		p:defaultTargetUrl="/"
-		p:targetUrlParameter="redirect"
-	/>
-	
-	<bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder">
-	    <constructor-arg index="0" value="256"/>
-	</bean>
-	
-	<bean id="autoLoginAuthenticator" class="net.slipp.social.security.AutoLoginAuthenticator" />
-	
-	<task:annotation-driven executor="slippExecutor"/>
-	
-	<task:executor id="slippExecutor" pool-size="5"/>
 </beans>
