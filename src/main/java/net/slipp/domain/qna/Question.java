@@ -138,6 +138,10 @@ public class Question implements HasCreatedDate {
 		return answers;
 	}
 
+	public void setAnswers(List<Answer> answers) {
+		this.answers = answers;
+	}
+
 	public int getAnswerCount() {
 		return answerCount;
 	}
