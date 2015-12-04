@@ -10,7 +10,7 @@ import org.springframework.web.context.ContextLoaderListener
 import org.springframework.web.context.support.{XmlWebApplicationContext, AnnotationConfigWebApplicationContext}
 import org.springframework.web.filter.{CharacterEncodingFilter, DelegatingFilterProxy, HiddenHttpMethodFilter}
 import org.springframework.web.servlet.DispatcherServlet
-import slipp.config.ApplicationConfig
+import slipp.config.{WebMvcConfig, ApplicationConfig}
 
 class SlippWebInit extends WebApplicationInitializer {
   override def onStartup(container: ServletContext): Unit = {
@@ -36,8 +36,10 @@ class SlippWebInit extends WebApplicationInitializer {
     container.addFilter("sitemesh", classOf[SiteMeshFilter])
       .addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD), false, "/*")
 
-    val webApplicationContext = new XmlWebApplicationContext()
-    val dispatcher = container.addServlet("slipp", new DispatcherServlet(webApplicationContext))
+    val webContext = new AnnotationConfigWebApplicationContext()
+    webContext.setParent(appContext)
+    webContext.register(classOf[WebMvcConfig])
+    val dispatcher = container.addServlet("slipp", new DispatcherServlet(webContext))
     dispatcher.setLoadOnStartup(1)
     dispatcher.addMapping("/")
   }

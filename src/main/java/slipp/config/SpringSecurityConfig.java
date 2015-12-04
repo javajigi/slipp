@@ -5,6 +5,7 @@ import net.slipp.service.user.FixedPasswordGenerator;
 import net.slipp.service.user.PasswordGenerator;
 import net.slipp.service.user.RandomPasswordGenerator;
 import net.slipp.social.security.*;
+import net.slipp.support.security.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
