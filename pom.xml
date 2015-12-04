@@ -682,34 +682,31 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<groupId>com.carbonfive.db-support</groupId>
-				<artifactId>db-migration-maven-plugin</artifactId>
-				<version>0.9.9-m5</version>
-				<executions>
-					<execution>
-						<phase>test-compile</phase>
-						<goals>
-							<goal>migrate</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<driver>com.mysql.jdbc.Driver</driver>
-					<url>${database.url}</url>
-					<username>${database.username}</username>
-					<password>${database.password}</password>
-					<createSql>CREATE DATABASE slipp DEFAULT CHARACTER SET utf8 COLLATE
-						utf8_general_ci</createSql>
-				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>mysql</groupId>
-						<artifactId>mysql-connector-java</artifactId>
-						<version>5.1.35</version>
-					</dependency>
-				</dependencies>
-			</plugin>
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>3.2.1</version>
+                <executions>
+                    <execution>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>migrate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <url>${database.url}</url>
+                    <user>${database.username}</user>
+                    <password>${database.password}</password>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>5.1.35</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
