@@ -133,11 +133,6 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public ProviderSignInUtils providerSignInUtils() {
-        return new ProviderSignInUtils();
-    }
-
-    @Bean
     public MethodValidationPostProcessor methodValidationPostProcessor() {
         return new MethodValidationPostProcessor();
     }
