@@ -16,6 +16,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.web.ProviderSignInController;
+import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.social.connect.web.SignInAdapter;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
@@ -129,6 +130,11 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         ConfigurableWebBindingInitializer initializer = new ConfigurableWebBindingInitializer();
         initializer.setValidator(new LocalValidatorFactoryBean());
         return initializer;
+    }
+
+    @Bean
+    public ProviderSignInUtils providerSignInUtils() {
+        return new ProviderSignInUtils();
     }
 
     @Bean
