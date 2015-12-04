@@ -21,7 +21,7 @@
 		<maven.test.failure.ignore>true</maven.test.failure.ignore>
 		<jdk.compiler.version>1.8</jdk.compiler.version>
 		<tomcat.version>8.0.20</tomcat.version>
-		<scala.version>2.11.6</scala.version>
+		<scala.version>2.11.7</scala.version>
 		<querydsl.version>3.6.3</querydsl.version>
 
 		<!-- SONAR -->
