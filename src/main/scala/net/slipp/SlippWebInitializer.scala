@@ -1,4 +1,4 @@
-package net.slipp.support.web
+package net.slipp
 
 import java.util.EnumSet
 import javax.servlet.{DispatcherType, ServletContext}
@@ -7,12 +7,12 @@ import com.opensymphony.sitemesh.webapp.SiteMeshFilter
 import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter
 import org.springframework.web.WebApplicationInitializer
 import org.springframework.web.context.ContextLoaderListener
-import org.springframework.web.context.support.{XmlWebApplicationContext, AnnotationConfigWebApplicationContext}
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext
 import org.springframework.web.filter.{CharacterEncodingFilter, DelegatingFilterProxy, HiddenHttpMethodFilter}
 import org.springframework.web.servlet.DispatcherServlet
-import slipp.config.{WebMvcConfig, ApplicationConfig}
+import slipp.config.{ApplicationConfig, WebMvcConfig}
 
-class SlippWebInit extends WebApplicationInitializer {
+class SlippWebInitializer extends WebApplicationInitializer {
   override def onStartup(container: ServletContext): Unit = {
     val appContext = new AnnotationConfigWebApplicationContext()
     appContext.register(classOf[ApplicationConfig])
@@ -36,11 +36,11 @@ class SlippWebInit extends WebApplicationInitializer {
     container.addFilter("sitemesh", classOf[SiteMeshFilter])
       .addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD), false, "/*")
 
-    val webContext = new AnnotationConfigWebApplicationContext()
-    webContext.setParent(appContext)
-    webContext.register(classOf[WebMvcConfig])
-    val dispatcher = container.addServlet("slipp", new DispatcherServlet(webContext))
-    dispatcher.setLoadOnStartup(1)
-    dispatcher.addMapping("/")
+     val webContext = new AnnotationConfigWebApplicationContext()
+     webContext.setParent(appContext)
+     webContext.register(classOf[WebMvcConfig])
+     val dispatcher = container.addServlet("slipp", new DispatcherServlet(webContext))
+     dispatcher.setLoadOnStartup(1)
+     dispatcher.addMapping("/")
   }
 }
