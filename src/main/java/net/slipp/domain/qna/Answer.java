@@ -35,10 +35,11 @@ import com.google.common.collect.Lists;
 public class Answer implements HasCreatedAndUpdatedDate, Comparable<Answer> {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "answer_id")
 	private Long answerId;
 	
 	@ManyToOne
-	@JoinColumn(foreignKey=@ForeignKey(name = "fk_answer_writer"))
+	@JoinColumn(name = "writer", foreignKey=@ForeignKey(name = "fk_answer_writer"))
 	private SocialUser writer;
 	
 	@ElementCollection(fetch = FetchType.LAZY)
@@ -71,7 +72,7 @@ public class Answer implements HasCreatedAndUpdatedDate, Comparable<Answer> {
     private boolean deleted = false;
 	
 	@ManyToOne
-	@JoinColumn(foreignKey=@ForeignKey(name = "fk_answer_parent_id"))
+	@JoinColumn(name = "question", foreignKey=@ForeignKey(name = "fk_answer_parent_id"))
 	private Question question;
 	
     @Embedded

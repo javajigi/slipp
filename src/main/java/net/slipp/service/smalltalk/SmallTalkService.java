@@ -3,7 +3,6 @@ package net.slipp.service.smalltalk;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.transaction.Transactional;
 
 import net.slipp.domain.smalltalk.SmallTalk;
 import net.slipp.domain.smalltalk.SmallTalkComment;
@@ -21,6 +20,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.google.common.collect.Lists;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service("smallTalkService")
 @Transactional

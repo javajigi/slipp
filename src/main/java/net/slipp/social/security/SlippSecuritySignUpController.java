@@ -1,10 +1,7 @@
 package net.slipp.social.security;
 
-import javax.annotation.Resource;
-
 import net.slipp.domain.user.ExistedUserException;
 import net.slipp.service.user.SocialUserService;
-
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionData;
 import org.springframework.social.connect.web.ProviderSignInUtils;
@@ -17,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.ServletWebRequest;
 
+import javax.annotation.Resource;
+
 @Controller
 @RequestMapping("/signup")
 public class SlippSecuritySignUpController {
@@ -28,13 +27,12 @@ public class SlippSecuritySignUpController {
 	@Resource(name = "signInAdapter")
 	private SignInAdapter signInAdapter;
 
-	public void setAuthenticateUrl(String authenticateUrl) {
-		this.authenticateUrl = authenticateUrl;
-	}
+	@Resource(name = "providerSignInUtils")
+	private ProviderSignInUtils providerSignInUtils;
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String signUpForm(ServletWebRequest request, Model model) {
-		Connection<?> connection = ProviderSignInUtils.getConnection(request);
+		Connection<?> connection = providerSignInUtils.getConnectionFromSession(request);
 		ConnectionData connectionData = connection.createData();
 		SignUpForm signUpForm = new SignUpForm(connectionData.getDisplayName());
 		model.addAttribute("signUpForm", signUpForm);
@@ -43,7 +41,7 @@ public class SlippSecuritySignUpController {
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	public String signUpSubmit(ServletWebRequest request, SignUpForm signUpForm, BindingResult result) {
-		Connection<?> connection = ProviderSignInUtils.getConnection(request);
+		Connection<?> connection = providerSignInUtils.getConnectionFromSession(request);
 		try {
 			socialUserService.createNewSocialUser(signUpForm.getUserId(), connection);
 			signInAdapter.signIn(signUpForm.getUserId(), connection, request);

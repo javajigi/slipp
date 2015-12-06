@@ -29,10 +29,6 @@ public class SlippTokenBasedRememberMeServices extends AbstractRememberMeService
     
     private GrantedAuthoritiesMapper authoritiesMapper = new NullAuthoritiesMapper();
 
-    @SuppressWarnings("deprecation")
-    public SlippTokenBasedRememberMeServices() {
-    }
-    
     public SlippTokenBasedRememberMeServices(String key, UserDetailsService userDetailsService) {
         super(key, userDetailsService);
     }
