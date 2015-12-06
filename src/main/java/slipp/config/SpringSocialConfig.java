@@ -13,6 +13,7 @@ import org.springframework.security.crypto.encrypt.Encryptors;
 import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.social.connect.ConnectionFactory;
 import org.springframework.social.connect.support.ConnectionFactoryRegistry;
+import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
 import org.springframework.social.google.connect.GoogleConnectionFactory;
 import org.springframework.social.twitter.connect.TwitterConnectionFactory;
@@ -68,5 +69,10 @@ public class SpringSocialConfig {
     @Bean
     public SlippSecuritySignInAdapter signInAdapter() {
         return new SlippSecuritySignInAdapter();
+    }
+
+    @Bean
+    public ProviderSignInUtils providerSignInUtils() {
+        return new ProviderSignInUtils(connectionFactoryRegistry(), usersConnectionRepository());
     }
 }

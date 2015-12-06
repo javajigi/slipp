@@ -1,19 +1,13 @@
 package net.slipp.support.jpa;
 
-import java.io.Serializable;
-
-import javax.persistence.EntityManager;
-
-import net.slipp.support.jpa.SlippCommonRepository;
-import net.slipp.support.jpa.SlippCommonRepositoryImpl;
-
-import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.JpaRepositoryFactory;
 import org.springframework.data.jpa.repository.support.JpaRepositoryFactoryBean;
-import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.core.RepositoryMetadata;
 import org.springframework.data.repository.core.support.RepositoryFactorySupport;
+
+import javax.persistence.EntityManager;
+import java.io.Serializable;
 
 public class SlippRepositoryFactoryBean<T extends Repository<S, ID>, S, ID extends Serializable> extends
 		JpaRepositoryFactoryBean<T, S, ID> {
@@ -27,22 +21,6 @@ public class SlippRepositoryFactoryBean<T extends Repository<S, ID>, S, ID exten
 
 		public SlippCommonRepositoryFactory(EntityManager entityManager) {
 			super(entityManager);
-		}
-
-		@Override
-		@SuppressWarnings({ "unchecked", "rawtypes" })
-		protected <T, ID extends Serializable> SimpleJpaRepository<?, ?> getTargetRepository(RepositoryMetadata metadata,
-				EntityManager entityManager) {
-
-			Class<?> repositoryInterface = metadata.getRepositoryInterface();
-
-			if (!isSlippCommonRepository(repositoryInterface)) {
-				return super.getTargetRepository(metadata, entityManager);
-			}
-
-			JpaEntityInformation<?, Serializable> entityInformation = getEntityInformation(metadata.getDomainType());
-			SlippCommonRepositoryImpl<?, ?> repo = new SlippCommonRepositoryImpl(entityInformation, entityManager);
-			return repo;
 		}
 
 		@Override

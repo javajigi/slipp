@@ -1,9 +1,6 @@
 package net.slipp.repository.qna;
 
-import javax.transaction.Transactional;
-
 import net.slipp.domain.qna.Question;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pegdown.Extensions;
@@ -15,7 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
+import org.springframework.transaction.annotation.Transactional;
 import slipp.config.ApplicationConfig;
 
 @RunWith(SpringJUnit4ClassRunner.class)
