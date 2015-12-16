@@ -11,8 +11,8 @@ object QnAPageableHelper {
     createPageable(currentPage, pageSize, "updatedDate")
   }
 
-  def createPageableByAnswerCreatedDate(currentPage: Integer, pageSize: Integer) = {
-    createPageable(currentPage, pageSize, "createdDate")
+  def createPageableByAnswer(currentPage: Integer, pageSize: Integer) = {
+    new PageRequest(revisedPage(currentPage, DefaultPageNo) -1, pageSize);
   }
   
   def createPageableById(currentPage: Integer, pageSize: Integer) = {
