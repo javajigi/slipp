@@ -1,0 +1,1 @@
+alter table tag add column pooled bit default true not null after tagged_count;

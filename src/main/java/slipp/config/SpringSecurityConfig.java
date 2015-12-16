@@ -5,6 +5,7 @@ import net.slipp.service.user.FixedPasswordGenerator;
 import net.slipp.service.user.PasswordGenerator;
 import net.slipp.service.user.RandomPasswordGenerator;
 import net.slipp.social.security.*;
+import net.slipp.support.security.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
@@ -23,6 +24,7 @@ import org.springframework.security.authentication.RememberMeAuthenticationProvi
 import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -34,7 +36,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import java.util.List;
 
 @Configuration
-@EnableWebMvcSecurity
+@EnableWebSecurity
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private Environment env = null;
@@ -183,7 +185,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public AccessDecisionManager accessDecisionManager() {
-        List<AccessDecisionVoter> voters = Lists.newArrayList(new RoleVoter(), new AuthenticatedVoter());
+        List voters = Lists.newArrayList(new RoleVoter(), new AuthenticatedVoter());
         return new UnanimousBased(voters);
     }
 }

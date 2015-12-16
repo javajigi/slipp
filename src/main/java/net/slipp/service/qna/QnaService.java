@@ -159,9 +159,9 @@ public class QnaService {
 		return answerRepository.findOne(answerId);
 	}
 
-	public Page<Answer> findsAnswerByWriter(Long writerId, Pageable pageable) {
+	public Page<Question> findsAnswerByWriter(Long writerId, Pageable pageable) {
 		SocialUser writer = socialUserService.findById(writerId);
-		return answerRepository.findsAnswerByWriter(writer, pageable);
+		return questionRepository.findsAnswerByWriter(writer, pageable);
 	}
 
 	public void createAnswer(final SocialUser loginUser, Long questionId, final Answer answer) {

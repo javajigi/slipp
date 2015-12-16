@@ -11,7 +11,7 @@
 			<h1>답변한 글목록</h1>
 			<ul class="list">
 			<c:forEach items="${answers.content}" end="4" var="each">
-				<slipp:list each="${each.question}"/>
+				<slipp:list each="${each}"/>
 			</c:forEach>
 			</ul>
 			<nav class="link-more">

@@ -1,0 +1,1 @@
+alter table question add column sum_like integer not null default 0 after denormalized_tags;

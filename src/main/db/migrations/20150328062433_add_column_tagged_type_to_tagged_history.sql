@@ -1,1 +1,0 @@
-alter table tagged_history add column tagged_type enum ('TAGGED', 'DETAGGED')  not null default 'TAGGED';
