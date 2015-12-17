@@ -28,6 +28,6 @@ public interface QuestionRepository extends SlippCommonRepository<Question, Long
 	@Query("SELECT q from Question q JOIN q.contentsHolder c where c LIKE %:searchTerm%")
 	Page<Question> findsBySearch(@Param("searchTerm") String searchTerm, Pageable pageable);
 
-	@Query("select a.question from Answer a where a.writer = :writer group by a.question order by a.question.createdDate")
+	@Query("select a.question from Answer a where a.writer = :writer group by a.question order by a.question.createdDate desc")
 	Page<Question> findsAnswerByWriter(@Param("writer") SocialUser writer, Pageable pageable);
 }
