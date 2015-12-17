@@ -49,7 +49,7 @@ $(document).ready(function(){
 
 	function likeAnswerTo(e) {
 		if (guestUser) {
-			$(location).attr('href', '/users/login');
+		    alert("로그인 후에 다시 시도해 주세요.");
 			return false;
 		}
 		e.preventDefault();
@@ -75,7 +75,7 @@ $(document).ready(function(){
 	
 	function dislikeAnswerTo(e) {
 		if (guestUser) {
-			$(location).attr('href', '/users/login');
+		    alert("로그인 후에 다시 시도해 주세요.");
 			return false;
 		}
 		e.preventDefault();

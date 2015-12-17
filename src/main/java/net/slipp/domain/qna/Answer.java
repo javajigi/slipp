@@ -1,34 +1,16 @@
 package net.slipp.domain.qna;
 
-import java.util.Collection;
-import java.util.Date;
-
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.FetchType;
-import javax.persistence.ForeignKey;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Transient;
-
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 import net.slipp.domain.ProviderType;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.support.jpa.CreatedAndUpdatedDateEntityListener;
 import net.slipp.support.jpa.HasCreatedAndUpdatedDate;
 import net.slipp.support.wiki.SlippWikiUtils;
 
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
+import javax.persistence.*;
+import java.util.Collection;
+import java.util.Date;
 
 @Entity
 @EntityListeners({ CreatedAndUpdatedDateEntityListener.class })
