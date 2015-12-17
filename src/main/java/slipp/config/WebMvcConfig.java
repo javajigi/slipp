@@ -1,6 +1,5 @@
 package slipp.config;
 
-import net.slipp.social.security.FixedProviderSignInController;
 import net.slipp.social.security.SlippSecuritySignUpController;
 import net.slipp.support.utils.ConvenientProperties;
 import net.slipp.support.web.GlobalRequestAttributesInterceptor;
@@ -16,7 +15,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.web.ProviderSignInController;
-import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.social.connect.web.SignInAdapter;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
@@ -111,12 +109,13 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public ProviderSignInController signInController() {
-        FixedProviderSignInController signInController =
-                new FixedProviderSignInController(connectionFactoryLocator, usersConnectionRepository, signInAdapter);
+    public ProviderSignInController signInController() throws Exception {
+        ProviderSignInController signInController =
+                new ProviderSignInController(connectionFactoryLocator, usersConnectionRepository, signInAdapter);
         signInController.setSignInUrl("/signup");
         signInController.setPostSignInUrl("/authenticate");
         signInController.setApplicationUrl(env.getProperty("application.url"));
+        // signInController.afterPropertiesSet();
         return signInController;
     }
 
