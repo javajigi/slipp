@@ -1,17 +1,10 @@
 package net.slipp.service;
 
-import java.io.IOException;
-import java.util.Map;
-
-import javax.annotation.Resource;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-
+import com.google.common.collect.Maps;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
 import net.slipp.domain.tag.Tag;
 import net.slipp.domain.user.SocialUser;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -20,10 +13,13 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
-import com.google.common.collect.Maps;
-
-import freemarker.template.Configuration;
-import freemarker.template.Template;
+import javax.annotation.Resource;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import java.io.IOException;
+import java.util.Map;
 
 @Service
 public class MailService {

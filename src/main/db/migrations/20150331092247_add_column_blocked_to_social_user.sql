@@ -1,1 +1,0 @@
-alter table social_user add column blocked bit default false not null after user_id;

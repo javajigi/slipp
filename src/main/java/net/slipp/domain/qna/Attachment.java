@@ -40,7 +40,7 @@ public class Attachment implements HasCreatedDate {
 	private String id;
 
 	@ManyToOne
-	@JoinColumn(foreignKey=@ForeignKey(name = "fk_attachment_writer"))
+	@JoinColumn(name = "uploader", foreignKey=@ForeignKey(name = "fk_attachment_writer"))
 	private SocialUser uploader;
 	
 	@Column(name = "original_filename", length = 255, nullable = false, updatable = false)

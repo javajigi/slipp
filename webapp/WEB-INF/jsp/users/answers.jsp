@@ -14,7 +14,7 @@
 		<section class="qna-list">
 			<ul class="list">
 			<c:forEach items="${answers.content}" var="each">
-				<slipp:list each="${each.question}"/>
+				<slipp:list each="${each}"/>
 			</c:forEach>
 			</ul>
 			<nav class="pager">

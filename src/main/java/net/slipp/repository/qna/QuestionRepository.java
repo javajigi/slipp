@@ -1,16 +1,15 @@
 package net.slipp.repository.qna;
 
-import java.util.List;
-
 import net.slipp.domain.qna.Question;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.support.jpa.SlippCommonRepository;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+
+import java.util.List;
 
 public interface QuestionRepository extends SlippCommonRepository<Question, Long>{
 	List<Question> findByWriter(SocialUser writer);
@@ -28,4 +27,7 @@ public interface QuestionRepository extends SlippCommonRepository<Question, Long
 	
 	@Query("SELECT q from Question q JOIN q.contentsHolder c where c LIKE %:searchTerm%")
 	Page<Question> findsBySearch(@Param("searchTerm") String searchTerm, Pageable pageable);
+
+	@Query("select a.question from Answer a where a.writer = :writer group by a.question order by a.question.createdDate")
+	Page<Question> findsAnswerByWriter(@Param("writer") SocialUser writer, Pageable pageable);
 }
