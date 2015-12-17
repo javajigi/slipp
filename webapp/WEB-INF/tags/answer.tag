@@ -35,12 +35,18 @@ attribute name="isBest" required="true" rtexprvalue="true" type="java.lang.Boole
 	<div class="article-util">
 		<ul class="article-util-list">
 			<li>
-				<a class="btn-like-article" href="/api/questions/${question.questionId}/answers/${each.answerId}/like" title="좋아요">
+                <c:set var = "likeUrl" value = "#" />
+                <c:set var = "dislikeUrl" value = "#" />
+                <sec:authorize access="hasRole('ROLE_USER')">
+                <c:set var = "likeUrl" value = "/api/questions/${question.questionId}/answers/${each.answerId}/like" />
+                <c:set var = "dislikeUrl" value = "/api/questions/${question.questionId}/answers/${each.answerId}/dislike" />
+                </sec:authorize>
+				<a class="btn-like-article" href="${likeUrl}" title="좋아요">
 					<i class="foundicon-thumb-up"></i>
 					<span class="like-article-txt">좋아요</span>
 					<strong class="like-article-count">${each.sumLike}</strong>
 				</a>
-				<a class="btn-dislike-article" href="/api/questions/${question.questionId}/answers/${each.answerId}/dislike" title="싫어요">
+				<a class="btn-dislike-article" href="${dislikeUrl}" title="싫어요">
 					<i class="foundicon-thumb-down"></i>
 					<span class="dislike-article-txt">싫어요</span>
 					<strong class="dislike-article-count">${each.sumDislike}</strong>
