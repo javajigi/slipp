@@ -1,26 +1,25 @@
 package net.slipp.service.qna;
 
-import java.io.File;
-
-import javax.annotation.Resource;
-
 import net.slipp.domain.qna.Attachment;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.repository.attachment.AttachmentRepository;
 import net.slipp.support.utils.SlippFileUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.annotation.Resource;
+import java.io.File;
 
 @Service("attachmentService")
 public class AttachmentService {
 	private static final Logger logger = LoggerFactory.getLogger(AttachmentService.class);
 
-	@Value("#{applicationProperties['attachment.root.dir']}")
-	private String attachmentRootDir;
+	@Autowired
+    private Environment env;
 
 	@Resource(name = "attachmentRepository")
 	private AttachmentRepository attachmentRepository;
@@ -58,7 +57,7 @@ public class AttachmentService {
 	}
 
 	public File getDestinationFile(Attachment attachment) {
-		return new File(attachment.getFilePath(attachmentRootDir));
+		return new File(attachment.getFilePath(env.getProperty("attachment.root.dir")));
 	}
 
 	public Attachment getById(String attachmentId) {

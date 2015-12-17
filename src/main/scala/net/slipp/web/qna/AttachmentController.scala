@@ -40,8 +40,7 @@ class AttachmentController(
 
   @RequestMapping(Array("/{attachmentId}"))
   def downloadById(request: HttpServletRequest, response: HttpServletResponse,
-                   @PathVariable("attachmentId") attachmentId: String): Unit =
-                   {
+                   @PathVariable("attachmentId") attachmentId: String): Unit = {
     val attachment = attachmentService.getById(attachmentId)
     val attachmentFile = attachmentService.getDestinationFile(attachment)
     servletDownloadManager.download(request, response, attachmentFile, attachment.getOriginalFilename(), ExpireMillis)
