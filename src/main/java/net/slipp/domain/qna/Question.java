@@ -104,7 +104,7 @@ public class Question implements HasCreatedDate {
 	private Integer sumLike = 0;
 
 	@OneToMany(mappedBy = "question", fetch = FetchType.LAZY)
-	@Where(clause = "deleted='false'")
+	@Where(clause = "deleted = 0")
 	@OrderBy("answerId ASC")
 	private List<Answer> answers;
 
