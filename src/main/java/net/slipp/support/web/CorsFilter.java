@@ -13,7 +13,7 @@ public class CorsFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        response.setHeader("X-Frame-Options", "SAMEORIGIN");
+        response.setHeader("X-Frame-Options", "ALLOW-FROM https://apps.facebook.com");
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
