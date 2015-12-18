@@ -83,7 +83,7 @@
 			<p class="smalltalk-notice">* 최근 10개까지만 보여집니다.</p>
 		</section>
 		<section class="notice">
-			<h1><a href="/wiki/display/slipp/Home">SLiPP log</a></h1>
+			<h1><a href="/wiki/display/slipp/Home">SLiPP 스터디</a></h1>
 			<ul class="notice-list">
 				<c:forEach items="${pages}" var="page" varStatus="status" end="2">
 				<li class="notice-list-item">

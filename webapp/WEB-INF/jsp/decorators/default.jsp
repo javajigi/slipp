@@ -31,6 +31,9 @@
 					<li>
 						<a href="/questions"><i class="icon-list"></i> <span class="text">글목록</span></a>
 					</li>
+					<li>
+						<a href="/wiki/dashboard.action"><i class="icon-list"></i> <span class="text">위키</span></a>
+					</li>
 					<sec:authorize access="hasRole('ROLE_ADMINISTRATOR')">
 					<li>
 						<a href="/admin/questions" id="userManagement"><i class="icon-list"></i> <span class="text">관리도구</span></a>

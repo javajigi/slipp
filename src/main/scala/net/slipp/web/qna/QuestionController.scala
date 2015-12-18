@@ -95,6 +95,8 @@ class QuestionController(
 
   @RequestMapping(value = Array("/{id}/tagged"), method = Array(RequestMethod.POST))
   def tagged(@LoginUser loginUser: SocialUser, @PathVariable id: Long, taggedName: String) = {
+    logger.debug("tagged name : {}", taggedName)
+
     if (StringUtils.isBlank(taggedName)) {
       throw new NullPointerException("Tag name should not null.")
     }
@@ -102,8 +104,10 @@ class QuestionController(
     "redirect:/questions/%d".format(id)
   }
 
-  @RequestMapping(Array("/tagged/{name}"))
+  @RequestMapping(Array("/tagged/{name:.+}"))
   def listByTagged(@PathVariable name: String, page: Integer, model: Model) = {
+    logger.debug("tagged name : {}", name)
+
     model.addAttribute("currentTag", tagService.findTagByName(name))
     model.addAttribute("questions", qnaService.findsByTag(name, createPageableByQuestionUpdatedDate(page, DefaultPageSize)))
     model.addAttribute("tags", tagService.findLatestTags())
