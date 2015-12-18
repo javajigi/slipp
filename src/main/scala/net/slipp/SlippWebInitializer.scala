@@ -4,6 +4,7 @@ import java.util.EnumSet
 import javax.servlet.{DispatcherType, ServletContext}
 
 import com.opensymphony.sitemesh.webapp.SiteMeshFilter
+import net.slipp.support.web.CorsFilter
 import org.springframework.context.annotation.Configuration
 import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter
 import org.springframework.web.WebApplicationInitializer
@@ -22,11 +23,14 @@ class SlippWebInitializer extends WebApplicationInitializer {
     val cef = new CharacterEncodingFilter
     cef.setEncoding("UTF-8")
     cef.setForceEncoding(true)
+
+    container.addFilter("corsFilter", classOf[CorsFilter])
+      .addMappingForUrlPatterns(EnumSet.allOf(classOf[DispatcherType]), false, "/*")
+
     container.addFilter("characterEncodingFilter", cef)
       .addMappingForUrlPatterns(null, false, "/*")
 
     container.addFilter("httpMethodFilter", classOf[HiddenHttpMethodFilter])
-      .addMappingForUrlPatterns(EnumSet.allOf(classOf[DispatcherType]), false, "/*")
 
     container.addFilter("openEntityManagerInViewFilter", classOf[OpenEntityManagerInViewFilter])
       .addMappingForUrlPatterns(EnumSet.allOf(classOf[DispatcherType]), false, "/*")
