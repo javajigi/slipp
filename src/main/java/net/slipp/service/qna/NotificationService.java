@@ -1,35 +1,37 @@
 package net.slipp.service.qna;
 
-import java.util.List;
-import java.util.Set;
-
-import javax.annotation.Resource;
-
+import com.restfb.DefaultFacebookClient;
+import com.restfb.FacebookClient;
+import com.restfb.Parameter;
+import com.restfb.Version;
+import com.restfb.types.FacebookType;
 import net.slipp.domain.notification.Notification;
 import net.slipp.domain.qna.Answer;
 import net.slipp.domain.qna.Question;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.repository.notification.NotificationRepository;
 import net.slipp.repository.qna.AnswerRepository;
-
-import org.springframework.beans.factory.annotation.Value;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import com.restfb.DefaultFacebookClient;
-import com.restfb.FacebookClient;
-import com.restfb.Parameter;
-import com.restfb.Version;
-import com.restfb.types.FacebookType;
+import javax.annotation.Resource;
+import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
 public class NotificationService {
-    @Value("#{applicationProperties['facebook.accessToken']}")
-    private String accessToken;
+    private static Logger logger = LoggerFactory.getLogger(NotificationService.class);
+
+    @Autowired
+    private Environment env;
 
     @Resource(name = "answerRepository")
     private AnswerRepository answerRepository;
@@ -51,7 +53,7 @@ public class NotificationService {
             return;
         }
 
-        FacebookClient facebookClient = new DefaultFacebookClient(accessToken, Version.VERSION_2_2);
+        FacebookClient facebookClient = new DefaultFacebookClient(createAccessToken(), Version.VERSION_2_2);
         for (SocialUser notifiee : notifieeUsers) {
             String uri = String.format("/%s/notifications", notifiee.getProviderUserId());
             String template = String.format("%s님이 \"%s\" 글에 답변을 달았습니다.", loginUser.getUserId(), question.getTitle());
@@ -60,6 +62,14 @@ public class NotificationService {
             facebookClient.publish(uri, FacebookType.class, Parameter.with("template", template),
                     Parameter.with("href", href));
         }
+    }
+
+    private String createAccessToken() {
+        FacebookClient.AccessToken accessToken =
+                new DefaultFacebookClient(Version.VERSION_2_2)
+                        .obtainAppAccessToken(env.getProperty("facebook.clientId"), env.getProperty("facebook.clientSecret"));
+        logger.debug("AccessToken : {}", accessToken);
+        return accessToken.getAccessToken();
     }
 
     @Async
