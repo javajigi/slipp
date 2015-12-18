@@ -1,25 +1,22 @@
 package net.slipp.web
 
 import java.util.Date
-import java.util.List
 import javax.annotation.Resource
 
-import net.slipp.domain.wiki.WikiPage
 import net.slipp.service.qna.QnaService
-import net.slipp.service.smalltalk.SmallTalkService
 import net.slipp.service.tag.TagService
 import net.slipp.service.wiki.WikiService
 import net.slipp.web.QnAPageableHelper._
-
-import org.springframework.beans.factory.annotation.Value
+import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.core.env.Environment
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.RequestMapping
-import org.slf4j.LoggerFactory
 
 @Controller
 class HomeController(
-  @Value("#{applicationProperties['environment']}") environment: String,
+  @Autowired env: Environment,
   @Resource(name="wikiService") wikiService: WikiService,
   @Resource(name = "qnaService") qnaService: QnaService,
   @Resource(name = "tagService") tagService: TagService) {
@@ -41,9 +38,10 @@ class HomeController(
   }
   
   private def isProductionMode() = {
-    logger.debug("environment : {}", environment)
+    val profile = env.getProperty("environment");
+    logger.debug("environment : {}", profile)
     
-    "PRODUCTION".equals(environment)
+    "PRODUCTION".equals(profile)
   }
   
   @RequestMapping(Array("/rss"))
