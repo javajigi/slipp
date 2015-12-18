@@ -25,9 +25,6 @@ taglib prefix="slipp" tagdir="/WEB-INF/tags" %>
 		</div>
 		<c:if test="${not empty smallTalk.siteSummary.targetUrl}">
 			<div class="smalltalk-item-summary">
-				<c:if test="${not empty smallTalk.siteSummary.thumbnailImage}">
-					<img class="smalltalk-item-summary-thumb" src="${smallTalk.siteSummary.thumbnailImage}" width="50" height="50"/>
-				</c:if>
 				<div class="smalltalk-item-summary-text">
 					<strong class="smalltalk-item-summary-title">${smallTalk.siteSummary.title}</strong>
 					<div class="smalltalk-item-summary-cont">${sf:cut(smallTalk.siteSummary.contents, 30, "...")}</div>

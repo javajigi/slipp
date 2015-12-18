@@ -1,13 +1,13 @@
 package net.slipp.service.qna;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-
-import javax.annotation.Resource;
-
+import com.google.common.collect.Lists;
+import com.restfb.*;
+import com.restfb.exception.FacebookGraphException;
+import com.restfb.types.Comment;
+import com.restfb.types.FacebookType;
+import com.restfb.types.Group;
+import com.restfb.types.Post;
+import com.restfb.types.Post.Comments;
 import net.slipp.domain.fb.FacebookComment;
 import net.slipp.domain.qna.Answer;
 import net.slipp.domain.qna.Question;
@@ -19,28 +19,18 @@ import net.slipp.repository.qna.QuestionRepository;
 import net.slipp.repository.tag.TagRepository;
 import net.slipp.service.user.SocialUserService;
 import net.slipp.support.web.tags.SlippFunctions;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import com.google.common.collect.Lists;
-import com.restfb.Connection;
-import com.restfb.DefaultFacebookClient;
-import com.restfb.FacebookClient;
-import com.restfb.Parameter;
-import com.restfb.Version;
-import com.restfb.exception.FacebookGraphException;
-import com.restfb.types.Comment;
-import com.restfb.types.FacebookType;
-import com.restfb.types.Group;
-import com.restfb.types.Post;
-import com.restfb.types.Post.Comments;
+import javax.annotation.Resource;
+import java.util.*;
 
 @Service
 @Transactional
@@ -48,6 +38,9 @@ public class FacebookService {
 	private static final Logger log = LoggerFactory.getLogger(FacebookService.class);
 
 	private static final int DEFAULT_FACEBOOK_MESSAGE_LENGTH = 250;
+
+	@Autowired
+	private Environment env;
 	
 	@Resource(name = "socialUserService")
 	private SocialUserService socialUserService;
@@ -60,9 +53,6 @@ public class FacebookService {
 
 	@Resource(name = "tagRepository")
 	private TagRepository tagRepository;
-
-	@Value("${facebook.application.url}")
-	private String applicationUrl;
 
 	@Async
 	public void sendToQuestionMessage(SocialUser loginUser, Long questionId) {
@@ -240,7 +230,7 @@ public class FacebookService {
 	}
 
 	protected String createApplicationUrl() {
-		return applicationUrl;
+		return env.getProperty("facebook.application.url");
 	}
 
 	private String createFacebookMessage(String contents) {
