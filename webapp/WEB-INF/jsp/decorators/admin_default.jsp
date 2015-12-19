@@ -8,10 +8,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title><decorator:title default="SLiPP"/></title>
 <link rel="shortcut icon" type="image/x-icon" href="${url:resource('/images/favicon.ico')}">
-<link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
 <link href="${url:resource('/stylesheets/slipp.css')}" rel="stylesheet">
 <!--[if lt IE 9]>
-	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script src="${url:resource('/javascripts/slipp.js')}"></script>
