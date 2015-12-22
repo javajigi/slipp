@@ -123,20 +123,24 @@ public class QuestionTest {
 	}
 	
 	@Test
-	public void delete_answer_when_one_answer() throws Exception {
-		SocialUser writer2 = new SocialUser(11);
-		Answer answer1 = anAnswer().with(writer2).build();
-		
+	public void move_answers() throws Exception {
+		Answer answer1 = anAnswer(1L).build();
+		Answer answer2 = anAnswer(2L).build();
+		Answer answer3 = anAnswer(3L).build();
+
 		SocialUser writer1 = new SocialUser(10);
-		Question dut = aQuestion()
+		Question dut = aQuestion(1L)
 				.withWriter(writer1)
 				.withAnswer(answer1)
+                .withAnswer(answer2)
+                .withAnswer(answer3)
 				.build();
-		assertThat(dut.getAnswerCount(), is(1));
-		
-		dut.deAnswered(answer1);
-		assertThat(dut.getAnswerCount(), is(0));
-		assertThat(dut.getLatestParticipant(), is(writer1));
+		assertThat(dut.getAnswerCount(), is(3));
+
+		Question newQuestion = aQuestion(2L).build();
+		dut.moveAnswers(newQuestion, new Long[]{1L, 3L});
+        assertThat(answer1.getQuestion(), is(newQuestion));
+        assertThat(answer3.getQuestion(), is(newQuestion));
 	}
 	
 	@Test

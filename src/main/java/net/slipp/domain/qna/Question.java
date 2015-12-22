@@ -390,7 +390,8 @@ public class Question implements HasCreatedDate {
 
 	public void moveAnswers(Question question, Long[] moveAnswers) {
         List<Long> answerIds = Arrays.asList(moveAnswers);
-        List<Answer> filteredAnswers = answers.stream().filter(a -> answerIds.contains(a.getAnswerId())).collect(Collectors.toList());
+        log.debug("count of Answers : {}", getAnswers().size());
+        List<Answer> filteredAnswers = getAnswers().stream().filter(a -> answerIds.contains(a.getAnswerId())).collect(Collectors.toList());
         filteredAnswers.stream().forEach(a -> a.toQuestion(question));
     }
 
