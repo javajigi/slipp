@@ -1,10 +1,6 @@
 package net.slipp.domain.qna;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import javax.persistence.CollectionTable;
@@ -392,6 +388,12 @@ public class Question implements HasCreatedDate {
 		this.contentsHolder = Lists.newArrayList(contents);
 	}
 
+	public void moveAnswers(Question question, Long[] moveAnswers) {
+        List<Long> answerIds = Arrays.asList(moveAnswers);
+        List<Answer> filteredAnswers = answers.stream().filter(a -> answerIds.contains(a.getAnswerId())).collect(Collectors.toList());
+        filteredAnswers.stream().forEach(a -> a.toQuestion(question));
+    }
+
 	@Override
 	public String toString() {
 		return "Question [questionId=" + questionId + ", writer=" + writer
@@ -477,4 +479,5 @@ public class Question implements HasCreatedDate {
 			return false;
 		return true;
 	}
+
 }

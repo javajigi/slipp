@@ -24,6 +24,10 @@ public class QuestionDto {
     private boolean connected = false;
     
     private String[] plainFacebookGroups;
+
+    private Long originalAnswerId; // 답변에서 질문으로 변환하는 시점의 answerId
+
+    private Long[] moveAnswers; // 답변에서 새 질문으로 분리할 때 같이 분리할 답변 ID 목록
     
     public QuestionDto() {
     }
@@ -86,7 +90,23 @@ public class QuestionDto {
     public void setPlainFacebookGroups(String[] plainFacebookGroups) {
         this.plainFacebookGroups = plainFacebookGroups;
     }
-    
+
+    public Long getOriginalAnswerId() {
+        return originalAnswerId;
+    }
+
+    public void setOriginalAnswerId(Long originalAnswerId) {
+        this.originalAnswerId = originalAnswerId;
+    }
+
+    public Long[] getMoveAnswers() {
+        return moveAnswers;
+    }
+
+    public void setMoveAnswers(Long[] moveAnswers) {
+        this.moveAnswers = moveAnswers;
+    }
+
     public Set<FacebookGroup> getFacebookGroups() {
         return createFacebookGroups(this.plainFacebookGroups);
     }

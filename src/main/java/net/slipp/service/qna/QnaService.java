@@ -277,4 +277,13 @@ public class QnaService {
 		Question question = questionRepository.findOne(id);
 		question.connected(postId);
 	}
+
+	public Question toQuestion(Long id, QuestionDto newQuestion) {
+        Answer answer = answerRepository.findOne(newQuestion.getOriginalAnswerId());
+		Question question = createQuestion(answer.getWriter(), newQuestion);
+        answerRepository.delete(answer);
+        Question originalQuestion = questionRepository.findOne(id);
+        originalQuestion.moveAnswers(question, newQuestion.getMoveAnswers());
+        return question;
+	}
 }

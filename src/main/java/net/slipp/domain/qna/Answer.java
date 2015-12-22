@@ -183,7 +183,11 @@ public class Answer implements HasCreatedAndUpdatedDate, Comparable<Answer> {
 		}
 		return false;
 	}
-	
+
+	public void toQuestion(Question question) {
+		this.question = question;
+	}
+
     public SnsConnection connected(String postId) {
         this.snsConnection = new SnsConnection(ProviderType.valueOf(writer.getProviderId()), postId); 
         return this.snsConnection;
@@ -259,4 +263,5 @@ public class Answer implements HasCreatedAndUpdatedDate, Comparable<Answer> {
 			return false;
 		return true;
 	}
+
 }

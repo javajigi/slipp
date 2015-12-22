@@ -67,6 +67,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/api/questions/*/like").access("hasRole('ROLE_USER')")
                 .antMatchers(HttpMethod.POST, "/api/questions/*/answers/*/like").access("hasRole('ROLE_USER')")
                 .antMatchers(HttpMethod.POST, "/api/questions/*/answers/*/dislike").access("hasRole('ROLE_USER')")
+                .antMatchers("/questions/*/answers/*/to").access("hasRole('ROLE_ADMINISTRATOR')")
                 .antMatchers("/admin/**").access("hasRole('ROLE_ADMINISTRATOR')")
                 .antMatchers("/migrations/**").access("hasRole('ROLE_ADMINISTRATOR')")
                 .antMatchers("/mails/**").access("hasRole('ROLE_ADMINISTRATOR')")
