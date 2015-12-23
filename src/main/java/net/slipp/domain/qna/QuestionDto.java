@@ -43,6 +43,12 @@ public class QuestionDto {
         this.plainTags = plainTags;
     }
 
+    public QuestionDto(Long questionId, Long originalAnswerId, String contents) {
+        this.questionId = questionId;
+        this.originalAnswerId = originalAnswerId;
+        this.contents = contents;
+    }
+
     public Long getQuestionId() {
         return questionId;
     }
@@ -144,8 +150,15 @@ public class QuestionDto {
 
     @Override
     public String toString() {
-        return "QuestionDto [questionId=" + questionId + ", title=" + title + ", contents=" + contents + ", plainTags="
-                + plainTags + ", connected=" + connected + ", plainFacebookGroups="
-                + Arrays.toString(plainFacebookGroups) + "]";
+        return "QuestionDto{" +
+                "questionId=" + questionId +
+                ", title='" + title + '\'' +
+                ", contents='" + contents + '\'' +
+                ", plainTags='" + plainTags + '\'' +
+                ", connected=" + connected +
+                ", plainFacebookGroups=" + Arrays.toString(plainFacebookGroups) +
+                ", originalAnswerId=" + originalAnswerId +
+                ", moveAnswers=" + Arrays.toString(moveAnswers) +
+                '}';
     }
 }

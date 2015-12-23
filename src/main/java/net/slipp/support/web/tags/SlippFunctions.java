@@ -180,7 +180,7 @@ public class SlippFunctions {
 	    if (writer == null) {
 	        return false;
 	    }
-	    
+
 		return writer.isSameUser(loginUser);
 	}
 

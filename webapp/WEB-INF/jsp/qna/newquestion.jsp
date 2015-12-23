@@ -13,8 +13,9 @@
 		<c:if test="${not empty question.questionId}">
 			<c:set var="method" value="PUT" />
 		</c:if>
-		<form:form modelAttribute="question" cssClass="form-write" action="/questions" method="${method}">
-			<form:hidden path="questionId"/>
+		<form:form modelAttribute="question" cssClass="form-write"
+                   action="/questions/${question.questionId}/answers/${question.originalAnswerId}/to" method="${method}">
+			<form:hidden path="originalAnswerId"/>
 			<fieldset>
 				<div class="box-input-line">
 					<form:input path="title" cssClass="inp-title" placeholder="제목" />
@@ -25,9 +26,14 @@
 				<div class="box-input-line">
 					<form:input path="plainTags" cssClass="inp-tags" placeholder="태그 - 공백 또는 쉼표로 구분 ex) javajigi, slipp" />
 				</div>
-				<c:if test="${loginUser.facebookUser and empty question.questionId}">
-					<div class="qna-connect-facebook" style="display: none;"></div>
-				</c:if>
+                <div class="qna-comment-slipp">
+                    <div class="qna-comment-slipp-articles">
+                        <div id="qna-recently-slipp-comment"></div>
+                        <c:forEach items="${answers}" var="each">
+                            <slipp:move-answer each="${each}" />
+                        </c:forEach>
+                    </div>
+                </div>
 				<div class="submit-write">
 					<button type="submit" class="btn-submit"><i class="icon-submit"></i> 작성완료</button>
 				</div>

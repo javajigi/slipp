@@ -247,14 +247,18 @@ public class Question implements HasCreatedDate {
 
 	public void deAnswered(Answer answer) {
 		answer.deleted();
+		syncAnswer(answer);
+	}
+
+	private void syncAnswer(Answer answer) {
 		this.answerCount -= 1;
-		
+
 		if (this.answerCount == 0) {
 			this.latestParticipant = getWriter();
 			this.updatedDate = getCreatedDate();
 			return;
 		}
-		
+
 		List<Answer> activeAnswers = getAnswers().stream().filter(a -> !a.isDeleted()).collect(Collectors.toList());
 		Answer lastAnswer = Iterables.getLast(activeAnswers);
 		log.debug("Latest Answer : {}", lastAnswer);
@@ -392,7 +396,11 @@ public class Question implements HasCreatedDate {
         List<Long> answerIds = Arrays.asList(moveAnswers);
         log.debug("count of Answers : {}", getAnswers().size());
         List<Answer> filteredAnswers = getAnswers().stream().filter(a -> answerIds.contains(a.getAnswerId())).collect(Collectors.toList());
-        filteredAnswers.stream().forEach(a -> a.toQuestion(question));
+        filteredAnswers.stream().forEach(a -> {
+            a.toQuestion(question);
+            getAnswers().remove(a);
+            syncAnswer(a);
+        });
     }
 
 	@Override
