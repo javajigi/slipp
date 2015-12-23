@@ -42,7 +42,6 @@ public class SlippDaoAuthenticationProvider extends AbstractUserDetailsAuthentic
         UsernamePasswordAuthenticationToken result = new UsernamePasswordAuthenticationToken(principal,
                 authentication.getCredentials(), authoritiesMapper.mapAuthorities(user.getAuthorities()));
         result.setDetails(ProviderType.slipp);
-
         return result;
     }
     

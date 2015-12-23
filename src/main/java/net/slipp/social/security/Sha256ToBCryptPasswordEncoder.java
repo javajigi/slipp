@@ -19,7 +19,7 @@ public class Sha256ToBCryptPasswordEncoder implements PasswordEncoder {
         }
 
         if (encodedPassword.length() == 64) {
-            return sha256PasswordEncoder.isPasswordValid(encodedPassword, rawPassword.toString(), "");
+            return sha256PasswordEncoder.isPasswordValid(encodedPassword, rawPassword.toString(), null);
         }
 
         return false;
