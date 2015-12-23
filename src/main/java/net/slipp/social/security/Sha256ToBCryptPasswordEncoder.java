@@ -1,7 +1,6 @@
 package net.slipp.social.security;
 
 import org.springframework.security.authentication.encoding.MessageDigestPasswordEncoder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class Sha256ToBCryptPasswordEncoder implements PasswordEncoder {

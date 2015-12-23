@@ -1,21 +1,21 @@
 package net.slipp.domain.user;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import net.slipp.user.MockPasswordEncoder;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 public class SocialUserTest {
     private SocialUser dut;
-    private MockPasswordEncoder encoder;
+    private BCryptPasswordEncoder encoder;
 
     @Before
     public void setup() {
         dut = new SocialUser(10);
-        encoder = new MockPasswordEncoder();
+        encoder = new BCryptPasswordEncoder();
     }
 
     @Test
@@ -47,7 +47,7 @@ public class SocialUserTest {
 
         SocialUser socialUser = new SocialUserBuilder().withRawPassword(oldPassword).build();
         socialUser.changePassword(encoder, oldPassword, newPassword);
-        assertThat(socialUser.getPassword(), is(encoder.encodePassword(newPassword)));
+        assertThat(socialUser.getPassword(), is(encoder.encode(newPassword)));
     }
     
     @Test(expected=BadCredentialsException.class)
@@ -57,6 +57,6 @@ public class SocialUserTest {
 
         SocialUser socialUser = new SocialUserBuilder().withRawPassword(oldPassword).build();
         socialUser.changePassword(encoder, oldPassword + "2", newPassword);
-        assertThat(socialUser.getPassword(), is(encoder.encodePassword(newPassword)));
+        assertThat(socialUser.getPassword(), is(encoder.encode(newPassword)));
     }
 }
