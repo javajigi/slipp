@@ -31,6 +31,7 @@ class SlippWebInitializer extends WebApplicationInitializer {
       .addMappingForUrlPatterns(null, false, "/*")
 
     container.addFilter("httpMethodFilter", classOf[HiddenHttpMethodFilter])
+      .addMappingForUrlPatterns(EnumSet.allOf(classOf[DispatcherType]), false, "/*")
 
     container.addFilter("openEntityManagerInViewFilter", classOf[OpenEntityManagerInViewFilter])
       .addMappingForUrlPatterns(EnumSet.allOf(classOf[DispatcherType]), false, "/*")
