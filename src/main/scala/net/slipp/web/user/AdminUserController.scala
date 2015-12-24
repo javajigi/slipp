@@ -45,6 +45,13 @@ class AdminUserController(
     blockService.block(id);
     "redirect:/admin/users?page=%d&searchTerm=%s".format(page + 1, URLEncoder.encode(searchTerm, "UTF-8"));
   }
-  
+
+  @RequestMapping(value = Array("/{id}/admin"), method = Array(RequestMethod.POST))
+  def admined(@PathVariable id: Long, page: Integer, searchTerm: String) = {
+    logger.debug(s"Id : $id, Page Number : $page, Search Term : $searchTerm")
+    blockService.admin(id);
+    "redirect:/admin/users?page=%d&searchTerm=%s".format(page + 1, URLEncoder.encode(searchTerm, "UTF-8"));
+  }
+
   def this() = this(null, null)
 }

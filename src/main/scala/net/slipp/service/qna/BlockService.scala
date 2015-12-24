@@ -15,6 +15,11 @@ class BlockService @Autowired() (
   @Resource(name = "qnaService") qnaService: QnaService,
   @Resource(name = "smallTalkService") smallTalkService: SmallTalkService) {
 
+  def admin(id: Long): Unit = {
+    val user = socialUserService.findById(id);
+    user.admined();
+  }
+
   def block(id: Long) {
     val user = socialUserService.findById(id);
     user.blocked();

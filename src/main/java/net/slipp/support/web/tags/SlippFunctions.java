@@ -184,6 +184,10 @@ public class SlippFunctions {
 		return writer.isSameUser(loginUser);
 	}
 
+    public static boolean isWriterOrAdmin(SocialUser writer, SocialUser loginUser) {
+        return isWriter(writer, loginUser) || loginUser.isAdmined();
+    }
+
 	public static String wiki(String contents) {
 		String result = WikiContents.parse(contents);
 		return SlippWikiUtils.replaceImages(result);

@@ -42,7 +42,7 @@ public class SlippUserDetailsService implements UserDetailsService {
         }
         
         return new SlippUser(username, socialUser.getAccessToken(), socialUser.getProviderIdBySnsType(),
-                createGrantedAuthorities(username));
+                createGrantedAuthorities(username, socialUser.isAdmined()));
     }
 
     public UserDetails loadUserByEmail(String email) throws UsernameNotFoundException {
@@ -57,18 +57,18 @@ public class SlippUserDetailsService implements UserDetailsService {
         }
 
         return new SlippUser(email, socialUser.getPassword(), socialUser.getProviderIdBySnsType(),
-                createGrantedAuthorities(email));
+                createGrantedAuthorities(email, socialUser.isAdmined()));
     }
     
     private List<GrantedAuthority> createEmptyGrantedAuthorities() {
     	return new ArrayList<GrantedAuthority>();
     }
 
-    private List<GrantedAuthority> createGrantedAuthorities(String username) {
+    private List<GrantedAuthority> createGrantedAuthorities(String username, boolean isAdmin) {
         logger.debug("UserName : {}", username);
         List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
         grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-        if (isAdmin(username)) {
+        if (isAdmin || isAdmin(username)) {
             grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMINISTRATOR"));
         }
         return grantedAuthorities;

@@ -62,6 +62,8 @@ public class SocialUser {
     
     private boolean blocked = false;
 
+    private boolean admined = false;
+
     public SocialUser() {
     }
 
@@ -229,7 +231,15 @@ public class SocialUser {
     public void blocked() {
     	this.blocked = true;
     }
-    
+
+    public boolean isAdmined() {
+        return admined;
+    }
+
+    public void admined() {
+        this.admined = true;
+    }
+
     public void changePassword(PasswordEncoder encoder, String oldPassword, String newPassword) {
         if (!encoder.matches(oldPassword, password)) {
             throw new BadCredentialsException("현재 비밀번호가 다릅니다.");
