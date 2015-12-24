@@ -9,12 +9,8 @@
 <section class="write-content">
 	<div class="content-main">
 		<h1 class="write-title">새 글 작성</h1>
-		<c:set var="method" value="POST" />
-		<c:if test="${not empty question.questionId}">
-			<c:set var="method" value="PUT" />
-		</c:if>
 		<form:form modelAttribute="question" cssClass="form-write"
-                   action="/questions/${question.questionId}/answers/${question.originalAnswerId}/to" method="${method}">
+                   action="/questions/${question.questionId}/answers/${question.originalAnswerId}/to" method="POST">
 			<form:hidden path="originalAnswerId"/>
 			<fieldset>
 				<div class="box-input-line">
