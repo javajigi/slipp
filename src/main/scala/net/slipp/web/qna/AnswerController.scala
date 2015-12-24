@@ -2,8 +2,7 @@ package net.slipp.web.qna
 
 import javax.annotation.Resource
 import javax.servlet.http.HttpSession
-import net.slipp.domain.qna.Answer
-import net.slipp.domain.qna.TemporaryAnswer
+import net.slipp.domain.qna.{QuestionDto, Answer, TemporaryAnswer}
 import net.slipp.domain.user.SocialUser
 import net.slipp.service.qna.QnaService
 import net.slipp.service.tag.TagService
@@ -55,6 +54,27 @@ class AnswerController(
   def update(@LoginUser loginUser: SocialUser, @PathVariable questionId: Long, @PathVariable answerId: Long, answer: Answer) = {
     qnaService.updateAnswer(loginUser, answer)
     "redirect:/questions/%d#answer-%d".format(questionId, answerId)
+  }
+
+  @RequestMapping(value = Array("{answerId}/to"), method = Array(RequestMethod.GET))
+  def newQuestionForm(@PathVariable questionId: Long, @PathVariable answerId: Long, model: Model) = {
+    val question = qnaService.findByQuestionId(questionId)
+    val answer = qnaService.findAnswerById(answerId);
+
+    val questionDto = new QuestionDto(questionId, answerId, answer.getContents)
+    val answers = question.getAnswers
+    answers.remove(answer)
+
+    model.addAttribute("question", questionDto)
+    model.addAttribute("answers", answers)
+    "qna/newquestion"
+  }
+
+  @RequestMapping(value = Array("{answerId}/to"), method = Array(RequestMethod.POST))
+  def newQuestion(@LoginUser loginUser: SocialUser, @PathVariable questionId: Long, @PathVariable answerId: Long, newQuestion: QuestionDto) = {
+    logger.debug("New Question : {}", newQuestion)
+    val question = qnaService.toQuestion(loginUser, questionId, newQuestion)
+    "redirect:/questions/%d".format(question.getQuestionId)
   }
 
   def this() = this(null, null)

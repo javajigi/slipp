@@ -10,14 +10,25 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
 public class QuestionBuilder {
+	private Long questionId;
 	private SocialUser writer;
 	private String title;
 	private String contents;
 	private Set<Tag> tags = Sets.newHashSet();
 	private List<Answer> answers = Lists.newArrayList();
+
+	private QuestionBuilder() {}
+
+	private QuestionBuilder(Long questionId) {
+		this.questionId = questionId;
+	}
 	
 	public static QuestionBuilder aQuestion() {
 		return new QuestionBuilder();
+	}
+
+	public static QuestionBuilder aQuestion(Long questionId) {
+		return new QuestionBuilder(questionId);
 	}
 	
 	public QuestionBuilder withWriter(SocialUser writer) {
@@ -46,7 +57,7 @@ public class QuestionBuilder {
 	}
 	
 	public Question build() {
-		Question question = new Question(writer, title, contents, tags) {
+		Question question = new Question(questionId, writer, title, contents, tags) {
 			public List<Answer> getAnswers() {
 				return answers;
 			}

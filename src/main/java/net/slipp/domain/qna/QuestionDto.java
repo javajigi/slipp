@@ -24,6 +24,10 @@ public class QuestionDto {
     private boolean connected = false;
     
     private String[] plainFacebookGroups;
+
+    private Long originalAnswerId; // 답변에서 질문으로 변환하는 시점의 answerId
+
+    private Long[] moveAnswers; // 답변에서 새 질문으로 분리할 때 같이 분리할 답변 ID 목록
     
     public QuestionDto() {
     }
@@ -37,6 +41,12 @@ public class QuestionDto {
         this.title = title;
         this.contents = contents;
         this.plainTags = plainTags;
+    }
+
+    public QuestionDto(Long questionId, Long originalAnswerId, String contents) {
+        this.questionId = questionId;
+        this.originalAnswerId = originalAnswerId;
+        this.contents = contents;
     }
 
     public Long getQuestionId() {
@@ -86,7 +96,23 @@ public class QuestionDto {
     public void setPlainFacebookGroups(String[] plainFacebookGroups) {
         this.plainFacebookGroups = plainFacebookGroups;
     }
-    
+
+    public Long getOriginalAnswerId() {
+        return originalAnswerId;
+    }
+
+    public void setOriginalAnswerId(Long originalAnswerId) {
+        this.originalAnswerId = originalAnswerId;
+    }
+
+    public Long[] getMoveAnswers() {
+        return moveAnswers;
+    }
+
+    public void setMoveAnswers(Long[] moveAnswers) {
+        this.moveAnswers = moveAnswers;
+    }
+
     public Set<FacebookGroup> getFacebookGroups() {
         return createFacebookGroups(this.plainFacebookGroups);
     }
@@ -124,8 +150,15 @@ public class QuestionDto {
 
     @Override
     public String toString() {
-        return "QuestionDto [questionId=" + questionId + ", title=" + title + ", contents=" + contents + ", plainTags="
-                + plainTags + ", connected=" + connected + ", plainFacebookGroups="
-                + Arrays.toString(plainFacebookGroups) + "]";
+        return "QuestionDto{" +
+                "questionId=" + questionId +
+                ", title='" + title + '\'' +
+                ", contents='" + contents + '\'' +
+                ", plainTags='" + plainTags + '\'' +
+                ", connected=" + connected +
+                ", plainFacebookGroups=" + Arrays.toString(plainFacebookGroups) +
+                ", originalAnswerId=" + originalAnswerId +
+                ", moveAnswers=" + Arrays.toString(moveAnswers) +
+                '}';
     }
 }

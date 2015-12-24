@@ -8,12 +8,23 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
-@Service("blockService")
+@Service("adminUserService")
 @Transactional
-class BlockService @Autowired() (
+class AdminUserService @Autowired()(
   @Resource(name = "socialUserService") socialUserService: SocialUserService,
   @Resource(name = "qnaService") qnaService: QnaService,
   @Resource(name = "smallTalkService") smallTalkService: SmallTalkService) {
+
+  def unadmin(id: Long): Unit = {
+    val user = socialUserService.findById(id);
+    user.unadmined();
+  }
+
+
+  def admin(id: Long): Unit = {
+    val user = socialUserService.findById(id);
+    user.admined();
+  }
 
   def block(id: Long) {
     val user = socialUserService.findById(id);
