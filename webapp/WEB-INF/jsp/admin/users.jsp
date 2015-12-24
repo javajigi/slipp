@@ -25,7 +25,7 @@
 			</thead>
 			<tbody>
 				<c:forEach items="${users.content}" var="each">
-				<tr <c:if test="${each.blocked}">style="background-color:orange"</c:if>>
+				<tr <c:if test="${each.blocked}">style="background-color:orange"</c:if><c:if test="${each.admined}">style="background-color:greenyellow"</c:if> >
 					<td><a href="/users/${each.id}/${each.userId}">${each.userId}</a></td>
 					<td>${each.email}</td>
 					<td>${each.providerId}</td>
@@ -45,6 +45,22 @@
 							<button type="submit">비밀번호 재설정</button>
 						</form>
 						</c:if>
+                        <c:choose>
+                            <c:when test="${each.admined}">
+                                <form class="form-search" action="/admin/users/${each.id}/unadmin" method="post">
+                                    <input type="hidden" name="page" value="${users.number}" />
+                                    <input type="hidden" name="searchTerm" value="${searchTerm}" />
+                                    <button type="submit">관리자 지정 해제</button>
+                                </form>
+                            </c:when>
+                            <c:otherwise>
+                                <form class="form-search" action="/admin/users/${each.id}/admin" method="post">
+                                    <input type="hidden" name="page" value="${users.number}" />
+                                    <input type="hidden" name="searchTerm" value="${searchTerm}" />
+                                    <button type="submit">관리자로 지정</button>
+                                </form>
+                            </c:otherwise>
+                        </c:choose>
 					</td>
 				</tr>
 				</c:forEach>

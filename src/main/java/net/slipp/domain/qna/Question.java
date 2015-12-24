@@ -1,10 +1,6 @@
 package net.slipp.domain.qna;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import javax.persistence.CollectionTable;
@@ -249,16 +245,26 @@ public class Question implements HasCreatedDate {
 		this.updatedDate = new Date();
 	}
 
+    public void moveAnswered(Answer answer) {
+        this.answerCount += 1;
+        this.latestParticipant = answer.getWriter();
+        this.updatedDate = answer.getCreatedDate();
+    }
+
 	public void deAnswered(Answer answer) {
 		answer.deleted();
+		syncAnswer(answer);
+	}
+
+	private void syncAnswer(Answer answer) {
 		this.answerCount -= 1;
-		
+
 		if (this.answerCount == 0) {
 			this.latestParticipant = getWriter();
 			this.updatedDate = getCreatedDate();
 			return;
 		}
-		
+
 		List<Answer> activeAnswers = getAnswers().stream().filter(a -> !a.isDeleted()).collect(Collectors.toList());
 		Answer lastAnswer = Iterables.getLast(activeAnswers);
 		log.debug("Latest Answer : {}", lastAnswer);
@@ -313,8 +319,7 @@ public class Question implements HasCreatedDate {
 	public void update(SocialUser loginUser, String title, String contents,
 			Set<Tag> newTags) {
 		if (!isWritedBy(loginUser)) {
-			throw new AccessDeniedException(loginUser.getDisplayName()
-					+ " is not owner!");
+			throw new AccessDeniedException(loginUser.getDisplayName()	+ " is not owner!");
 		}
 
 		this.title = title;
@@ -391,6 +396,17 @@ public class Question implements HasCreatedDate {
 		String contents = SlippWikiUtils.convertWiki(getContents());
 		this.contentsHolder = Lists.newArrayList(contents);
 	}
+
+	public void moveAnswers(Question question, Long[] moveAnswers) {
+        List<Long> answerIds = Arrays.asList(moveAnswers);
+        log.debug("count of Answers : {}", getAnswers().size());
+        List<Answer> filteredAnswers = getAnswers().stream().filter(a -> answerIds.contains(a.getAnswerId())).collect(Collectors.toList());
+        filteredAnswers.stream().forEach(a -> {
+            a.toQuestion(question);
+            getAnswers().remove(a);
+            syncAnswer(a);
+        });
+    }
 
 	@Override
 	public String toString() {
@@ -477,4 +493,5 @@ public class Question implements HasCreatedDate {
 			return false;
 		return true;
 	}
+
 }

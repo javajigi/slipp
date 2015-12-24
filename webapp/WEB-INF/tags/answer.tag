@@ -63,6 +63,11 @@ attribute name="isBest" required="true" rtexprvalue="true" type="java.lang.Boole
 					</form>
 				</li>
 			</c:if>
+            <c:if test="${sf:isWriterOrAdmin(each.writer, loginUser)}">
+                <li>
+                    <a class="link-modify-article" href="/questions/${question.questionId}/answers/${each.answerId}/to">새질문</a>
+                </li>
+			</c:if>
 			<sec:authorize access="hasRole('ROLE_USER')">
 				<li>
 					<button type="button" class="link-answer-article" data-answer-id="${each.answerId}" data-answer-user-id="@${each.writer.userId}">언급&darr;</button>

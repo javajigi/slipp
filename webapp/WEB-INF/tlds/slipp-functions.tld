@@ -138,7 +138,15 @@
 		<function-signature>
 			java.lang.Boolean isWriter(net.slipp.domain.user.SocialUser, net.slipp.domain.user.SocialUser)
 		</function-signature>
-	</function>	
+	</function>
+	<function>
+		<description>로그인 사용자가 글쓴이이거나 관리자 인지 여부를 판단한다.</description>
+		<name>isWriterOrAdmin</name>
+		<function-class>net.slipp.support.web.tags.SlippFunctions</function-class>
+		<function-signature>
+			java.lang.Boolean isWriterOrAdmin(net.slipp.domain.user.SocialUser, net.slipp.domain.user.SocialUser)
+		</function-signature>
+	</function>
 	<function>
 		<description>위키 마크업이 적용된 글을 html로 변환한다.</description>
 		<name>wiki</name>

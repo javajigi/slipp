@@ -17,7 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.authentication.encoding.PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionKey;
 import org.springframework.social.connect.ConnectionRepository;
@@ -156,7 +156,7 @@ public class SocialUserService {
     }
 
     private String encodePassword(String rawPass) {
-        return passwordEncoder.encodePassword(rawPass, null);
+        return passwordEncoder.encode(rawPass);
     }
 
     public SocialUser changePassword(SocialUser loginUser, PasswordDto password) {

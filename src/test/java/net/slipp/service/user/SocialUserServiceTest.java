@@ -1,19 +1,11 @@
 package net.slipp.service.user;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.util.List;
-
+import com.google.common.collect.Lists;
 import net.slipp.domain.user.ExistedUserException;
 import net.slipp.domain.user.PasswordDto;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.domain.user.SocialUserBuilder;
 import net.slipp.repository.user.SocialUserRepository;
-import net.slipp.user.MockPasswordEncoder;
-
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -21,13 +13,19 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
-import com.google.common.collect.Lists;
+import java.util.List;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SocialUserServiceTest {
@@ -40,7 +38,7 @@ public class SocialUserServiceTest {
     @Mock
     private SocialUserRepository socialUserRepository;
 
-    private MockPasswordEncoder encoder;
+    private BCryptPasswordEncoder encoder;
 
     @Mock
     private Connection<?> connection;
@@ -50,7 +48,7 @@ public class SocialUserServiceTest {
 
     @Before
     public void setup() {
-        encoder = new MockPasswordEncoder();
+        encoder = new BCryptPasswordEncoder();
         dut.passwordEncoder = encoder;
     }
 
@@ -89,7 +87,7 @@ public class SocialUserServiceTest {
         when(socialUserRepository.findOne(socialUser.getId())).thenReturn(socialUser);
 
         SocialUser changedUser = dut.changePassword(socialUser, password);
-        assertThat(changedUser.getPassword(), is(encoder.encodePassword(newPassword, null)));
+        assertThat(changedUser.getPassword(), is(encoder.encode(newPassword)));
     }
 
     @Test

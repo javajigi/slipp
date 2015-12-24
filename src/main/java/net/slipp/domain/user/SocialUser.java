@@ -1,23 +1,14 @@
 package net.slipp.domain.user;
 
-import java.util.Date;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-import javax.persistence.UniqueConstraint;
-
 import net.slipp.domain.ProviderType;
 import net.slipp.support.utils.MD5Util;
-
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.encoding.PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "userId", "providerId", "providerUserId" }),
@@ -70,6 +61,8 @@ public class SocialUser {
     private Date createDate = new Date();
     
     private boolean blocked = false;
+
+    private boolean admined = false;
 
     public SocialUser() {
     }
@@ -238,19 +231,30 @@ public class SocialUser {
     public void blocked() {
     	this.blocked = true;
     }
-    
+
+    public boolean isAdmined() {
+        return admined;
+    }
+
+    public void admined() {
+        this.admined = true;
+    }
+
+    public void unadmined() {
+        this.admined = false;
+    }
+
     public void changePassword(PasswordEncoder encoder, String oldPassword, String newPassword) {
-        String oldEncodedPassword = encoder.encodePassword(oldPassword, null);
-        if (!password.equals(oldEncodedPassword)) {
+        if (!encoder.matches(oldPassword, password)) {
             throw new BadCredentialsException("현재 비밀번호가 다릅니다.");
         }
         
-        this.password = encoder.encodePassword(newPassword, null);
+        this.password = encoder.encode(newPassword);
     }
     
 	public void resetPassword(PasswordEncoder encoder, String newPassword) {
 		this.rawPassword = newPassword;
-		this.password = encoder.encodePassword(newPassword, null);
+		this.password = encoder.encode(newPassword);
 	}
     
 	public void update(String email, String userId) {

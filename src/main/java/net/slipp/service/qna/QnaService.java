@@ -277,4 +277,17 @@ public class QnaService {
 		Question question = questionRepository.findOne(id);
 		question.connected(postId);
 	}
+
+	public Question toQuestion(SocialUser loginUser, Long id, QuestionDto newQuestion) {
+        Answer answer = answerRepository.findOne(newQuestion.getOriginalAnswerId());
+		if (!(answer.isWritedBy(loginUser) || loginUser.isAdmined())) {
+			throw new AccessDeniedException(loginUser.getDisplayName()	+ " is not owner!");
+		}
+
+		Question question = createQuestion(answer.getWriter(), newQuestion);
+        answerRepository.delete(answer);
+        Question originalQuestion = questionRepository.findOne(id);
+        originalQuestion.moveAnswers(question, newQuestion.getMoveAnswers());
+        return question;
+	}
 }

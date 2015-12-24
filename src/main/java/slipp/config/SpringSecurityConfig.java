@@ -5,7 +5,6 @@ import net.slipp.service.user.FixedPasswordGenerator;
 import net.slipp.service.user.PasswordGenerator;
 import net.slipp.service.user.RandomPasswordGenerator;
 import net.slipp.social.security.*;
-import net.slipp.support.security.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
@@ -13,7 +12,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.access.AccessDecisionManager;
-import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.access.vote.AuthenticatedVoter;
 import org.springframework.security.access.vote.RoleVoter;
 import org.springframework.security.access.vote.UnanimousBased;
@@ -21,12 +19,12 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.RememberMeAuthenticationProvider;
-import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.RememberMeServices;
@@ -67,6 +65,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/api/questions/*/like").access("hasRole('ROLE_USER')")
                 .antMatchers(HttpMethod.POST, "/api/questions/*/answers/*/like").access("hasRole('ROLE_USER')")
                 .antMatchers(HttpMethod.POST, "/api/questions/*/answers/*/dislike").access("hasRole('ROLE_USER')")
+                .antMatchers("/questions/*/answers/*/to").access("hasRole('ROLE_USER')")
                 .antMatchers("/admin/**").access("hasRole('ROLE_ADMINISTRATOR')")
                 .antMatchers("/migrations/**").access("hasRole('ROLE_ADMINISTRATOR')")
                 .antMatchers("/mails/**").access("hasRole('ROLE_ADMINISTRATOR')")
@@ -121,13 +120,16 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new ShaPasswordEncoder(256);
+        Sha256ToBCryptPasswordEncoder passwordEncoder = new Sha256ToBCryptPasswordEncoder();
+        passwordEncoder.setBcryptPasswordEncoder(new BCryptPasswordEncoder());
+        passwordEncoder.setSha256PasswordEncoder(new ShaPasswordEncoder(256));
+        return passwordEncoder;
     }
 
     @Bean
     public SlippUserDetailsService slippUserDetailsService() {
         SlippUserDetailsService userDetailsService = new SlippUserDetailsService();
-        userDetailsService.setAdminUsers("자바지기:eclipse4j:진우");
+        userDetailsService.setAdminUsers("자바지기");
         return userDetailsService;
     }
 

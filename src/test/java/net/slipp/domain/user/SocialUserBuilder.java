@@ -1,7 +1,7 @@
 package net.slipp.domain.user;
 
 import net.slipp.domain.ProviderType;
-import net.slipp.user.MockPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class SocialUserBuilder {
     private long id;
@@ -43,9 +43,9 @@ public class SocialUserBuilder {
     }
     
     public SocialUserBuilder withRawPassword(String rawPassword) {
-        MockPasswordEncoder encoder = new MockPasswordEncoder();
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         this.rawPassword = rawPassword;
-        this.password = encoder.encodePassword(rawPassword);
+        this.password = encoder.encode(rawPassword);
         return this;
     }
     
