@@ -71,9 +71,9 @@ class AnswerController(
   }
 
   @RequestMapping(value = Array("{answerId}/to"), method = Array(RequestMethod.POST))
-  def newQuestion(@PathVariable questionId: Long, @PathVariable answerId: Long, newQuestion: QuestionDto) = {
+  def newQuestion(@LoginUser loginUser: SocialUser, @PathVariable questionId: Long, @PathVariable answerId: Long, newQuestion: QuestionDto) = {
     logger.debug("New Question : {}", newQuestion)
-    val question = qnaService.toQuestion(questionId, newQuestion)
+    val question = qnaService.toQuestion(loginUser, questionId, newQuestion)
     "redirect:/questions/%d".format(question.getQuestionId)
   }
 

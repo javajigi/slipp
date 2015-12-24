@@ -245,6 +245,12 @@ public class Question implements HasCreatedDate {
 		this.updatedDate = new Date();
 	}
 
+    public void moveAnswered(Answer answer) {
+        this.answerCount += 1;
+        this.latestParticipant = answer.getWriter();
+        this.updatedDate = answer.getCreatedDate();
+    }
+
 	public void deAnswered(Answer answer) {
 		answer.deleted();
 		syncAnswer(answer);
@@ -313,8 +319,7 @@ public class Question implements HasCreatedDate {
 	public void update(SocialUser loginUser, String title, String contents,
 			Set<Tag> newTags) {
 		if (!isWritedBy(loginUser)) {
-			throw new AccessDeniedException(loginUser.getDisplayName()
-					+ " is not owner!");
+			throw new AccessDeniedException(loginUser.getDisplayName()	+ " is not owner!");
 		}
 
 		this.title = title;

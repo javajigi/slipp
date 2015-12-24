@@ -129,7 +129,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public SlippUserDetailsService slippUserDetailsService() {
         SlippUserDetailsService userDetailsService = new SlippUserDetailsService();
-        userDetailsService.setAdminUsers("자바지기:eclipse4j:진우");
+        userDetailsService.setAdminUsers("자바지기");
         return userDetailsService;
     }
 

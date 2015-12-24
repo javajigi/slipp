@@ -11,7 +11,7 @@ import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
-import net.slipp.service.qna.BlockService
+import net.slipp.service.qna.AdminUserService
 import net.slipp.service.user.SocialUserService
 import net.slipp.web.QnAPageableHelper._
 import com.typesafe.scalalogging.LazyLogging
@@ -20,7 +20,7 @@ import com.typesafe.scalalogging.LazyLogging
 @RequestMapping(Array("/admin/users"))
 class AdminUserController(
   @Resource(name = "socialUserService") userService: SocialUserService,
-  @Resource(name = "blockService") blockService: BlockService) extends LazyLogging {
+  @Resource(name = "adminUserService") adminUserService: AdminUserService) extends LazyLogging {
   private val DefaultPageNo = 1
   private val DefaultPageSize = 50
 
@@ -42,14 +42,21 @@ class AdminUserController(
   @RequestMapping(value = Array("/{id}/block"), method = Array(RequestMethod.POST))
   def block(@PathVariable id: Long, page: Integer, searchTerm: String) = {
     logger.debug(s"Id : $id, Page Number : $page, Search Term : $searchTerm")
-    blockService.block(id);
+    adminUserService.block(id);
     "redirect:/admin/users?page=%d&searchTerm=%s".format(page + 1, URLEncoder.encode(searchTerm, "UTF-8"));
   }
 
   @RequestMapping(value = Array("/{id}/admin"), method = Array(RequestMethod.POST))
   def admined(@PathVariable id: Long, page: Integer, searchTerm: String) = {
     logger.debug(s"Id : $id, Page Number : $page, Search Term : $searchTerm")
-    blockService.admin(id);
+    adminUserService.admin(id);
+    "redirect:/admin/users?page=%d&searchTerm=%s".format(page + 1, URLEncoder.encode(searchTerm, "UTF-8"));
+  }
+
+  @RequestMapping(value = Array("/{id}/unadmin"), method = Array(RequestMethod.POST))
+  def unadmined(@PathVariable id: Long, page: Integer, searchTerm: String) = {
+    logger.debug(s"Id : $id, Page Number : $page, Search Term : $searchTerm")
+    adminUserService.unadmin(id);
     "redirect:/admin/users?page=%d&searchTerm=%s".format(page + 1, URLEncoder.encode(searchTerm, "UTF-8"));
   }
 

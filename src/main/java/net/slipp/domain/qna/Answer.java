@@ -186,6 +186,7 @@ public class Answer implements HasCreatedAndUpdatedDate, Comparable<Answer> {
 
 	public void toQuestion(Question question) {
 		this.question = question;
+		question.moveAnswered(this);
 	}
 
     public SnsConnection connected(String postId) {

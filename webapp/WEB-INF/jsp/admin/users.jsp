@@ -45,13 +45,22 @@
 							<button type="submit">비밀번호 재설정</button>
 						</form>
 						</c:if>
-                        <c:if test="${not each.admined}">
-						<form class="form-search" action="/admin/users/${each.id}/admin" method="post">
-							<input type="hidden" name="page" value="${users.number}" />
-							<input type="hidden" name="searchTerm" value="${searchTerm}" />
-							<button type="submit">관리자로 지정</button>
-						</form>
-                        </c:if>
+                        <c:choose>
+                            <c:when test="${each.admined}">
+                                <form class="form-search" action="/admin/users/${each.id}/unadmin" method="post">
+                                    <input type="hidden" name="page" value="${users.number}" />
+                                    <input type="hidden" name="searchTerm" value="${searchTerm}" />
+                                    <button type="submit">관리자 지정 해제</button>
+                                </form>
+                            </c:when>
+                            <c:otherwise>
+                                <form class="form-search" action="/admin/users/${each.id}/admin" method="post">
+                                    <input type="hidden" name="page" value="${users.number}" />
+                                    <input type="hidden" name="searchTerm" value="${searchTerm}" />
+                                    <button type="submit">관리자로 지정</button>
+                                </form>
+                            </c:otherwise>
+                        </c:choose>
 					</td>
 				</tr>
 				</c:forEach>

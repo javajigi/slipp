@@ -278,8 +278,12 @@ public class QnaService {
 		question.connected(postId);
 	}
 
-	public Question toQuestion(Long id, QuestionDto newQuestion) {
+	public Question toQuestion(SocialUser loginUser, Long id, QuestionDto newQuestion) {
         Answer answer = answerRepository.findOne(newQuestion.getOriginalAnswerId());
+		if (!(answer.isWritedBy(loginUser) || loginUser.isAdmined())) {
+			throw new AccessDeniedException(loginUser.getDisplayName()	+ " is not owner!");
+		}
+
 		Question question = createQuestion(answer.getWriter(), newQuestion);
         answerRepository.delete(answer);
         Question originalQuestion = questionRepository.findOne(id);

@@ -240,6 +240,10 @@ public class SocialUser {
         this.admined = true;
     }
 
+    public void unadmined() {
+        this.admined = false;
+    }
+
     public void changePassword(PasswordEncoder encoder, String oldPassword, String newPassword) {
         if (!encoder.matches(oldPassword, password)) {
             throw new BadCredentialsException("현재 비밀번호가 다릅니다.");
