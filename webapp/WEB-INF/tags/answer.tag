@@ -68,11 +68,9 @@ attribute name="isBest" required="true" rtexprvalue="true" type="java.lang.Boole
                     <a class="link-modify-article" href="/questions/${question.questionId}/answers/${each.answerId}/to">새질문</a>
                 </li>
 			</c:if>
-			<sec:authorize access="hasRole('ROLE_USER')">
-				<li>
-					<button type="button" class="link-answer-article" data-answer-id="${each.answerId}" data-answer-user-id="@${each.writer.userId}">언급&darr;</button>
-				</li>
-			</sec:authorize>
+            <li>
+                <button type="button" class="link-answer-article" data-answer-id="${each.answerId}" data-answer-user-id="@${each.writer.userId}">언급&darr;</button>
+            </li>
 		</ul>
 	</div>
 </article>
