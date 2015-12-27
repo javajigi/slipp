@@ -25,11 +25,11 @@ import com.google.common.collect.{Lists, Sets}
 
 @RunWith(classOf[MockitoJUnitRunner])
 class QnaServiceTest {
-  @Mock private var questionRepository: QuestionRepository = null
-  @Mock private var answerRepository: AnswerRepository = null
-  @Mock private var tagService: TagService = null
-  @Mock private var scoreLikeService: ScoreLikeService = null
-  @InjectMocks private var dut: QnaService = new QnaService
+  @Mock private var questionRepository: QuestionRepository = _
+  @Mock private var answerRepository: AnswerRepository = _
+  @Mock private var tagService: TagService = _
+  @Mock private var scoreLikeService: ScoreLikeService = _
+  @InjectMocks private val dut = new QnaService
 
   @Test def updateQuestion_sameUser {
     val loginUser: SocialUser = new SocialUser(10)
