@@ -1,13 +1,9 @@
 package net.slipp.ndomain.tag
 
-import org.hamcrest.CoreMatchers.is
-import org.junit.Assert.assertNotNull
-import org.junit.Assert.assertThat
-import org.junit.Test
-
-import javax.persistence.Entity
-import javax.persistence.Table
 import net.slipp.domain.tag.TaggedType
+import org.hamcrest.CoreMatchers.is
+import org.junit.Assert.{assertNotNull, assertThat}
+import org.junit.Test
 
 class TaggedHistoryTest {
   @Test def create() {
