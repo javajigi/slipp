@@ -1,6 +1,6 @@
 package net.slipp.support.test
 
-import net.slipp.domain.qna.{Answer, Question}
+import net.slipp.domain.qna.{ScoreLikeType, ScoreLike, Answer, Question}
 import net.slipp.domain.user.SocialUser
 
 trait Fixture {
@@ -21,5 +21,28 @@ trait Fixture {
     answer.setAnswerId(id)
     answer.setQuestion(q)
     answer
+  }
+
+  def aSomeQuestionScoreLike(socialUserId: Long = 1L, targetId: Long = 1L) = {
+    aSomeScore(ScoreLikeType.QUESTION, socialUserId, targetId, true)
+  }
+
+  def aSomeAnswerScoreLike(socialUserId: Long = 1L, targetId: Long = 1L) = {
+    aSomeScore(ScoreLikeType.ANSWER, socialUserId, targetId, true)
+  }
+
+  def aSomeAnswerScoreDisLike(socialUserId: Long = 1L, targetId: Long = 1L) = {
+    aSomeScore(ScoreLikeType.ANSWER, socialUserId, targetId, false)
+  }
+
+  private def aSomeScore(scoreLikeType: ScoreLikeType,
+                              socialUserId: Long,
+                              targetId: Long,
+                              liked: Boolean) = {
+    if (liked) {
+      ScoreLike.createLikedScoreLike(scoreLikeType, socialUserId, targetId)
+    } else {
+      ScoreLike.createDisLikedScoreLike(scoreLikeType, socialUserId, targetId)
+    }
   }
 }
