@@ -75,7 +75,11 @@ public class Answer implements HasCreatedAndUpdatedDate, Comparable<Answer> {
 		return this.question;
 	}
 
-	public Long getAnswerId() {
+    public void setQuestion(Question question) {
+        this.question = question;
+    }
+
+    public Long getAnswerId() {
 		return answerId;
 	}
 	

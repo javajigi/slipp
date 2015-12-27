@@ -60,14 +60,10 @@ import scala.collection.JavaConversions._
     Assert.notNull(answer, "Answer should be not null!")
     val question: Question = answer.getQuestion
 
-    val notifieeUsers: Set[SocialUser] = question.findNotificationUser(notifier)
-    if (notifieeUsers.isEmpty) {
-      return
-    }
-    for (notifiee <- notifieeUsers) {
+    question.findNotificationUser(notifier).foreach(notifiee => {
       val notification: Notification = new Notification(notifier, notifiee, question)
       notificationRepository.save(notification)
-    }
+    })
   }
 
   def countByNotifiee(notifiee: SocialUser) = {

@@ -13,6 +13,8 @@ import org.springframework.core.env.Environment
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
 
+import scala.util.{Failure, Success, Try}
+
 @Service("attachmentService") class AttachmentService {
   private val logger: Logger = LoggerFactory.getLogger(classOf[AttachmentService])
 
@@ -29,12 +31,11 @@ import org.springframework.web.multipart.MultipartFile
     return attachment
   }
 
-  private def persistAttachment(multipartFile: MultipartFile, uploader: SocialUser): Attachment = {
-    val attachment: Attachment = new Attachment
+  private def persistAttachment(multipartFile: MultipartFile, uploader: SocialUser) = {
+    val attachment = new Attachment
     attachment.setOriginalFilename(multipartFile.getOriginalFilename)
     attachment.setUploader(uploader)
     attachmentRepository.save(attachment)
-    return attachment
   }
 
   private def transferToAttachmentDir(multipartFile: MultipartFile, attachment: Attachment): File = {
