@@ -1,10 +1,11 @@
 package net.slipp.service.qna
 
 import java.util.{List, Set}
+
 import javax.annotation.Resource
 
-import com.restfb.{DefaultFacebookClient, FacebookClient, Parameter, Version}
 import com.restfb.types.FacebookType
+import com.restfb.{DefaultFacebookClient, FacebookClient, Parameter, Version}
 import net.slipp.domain.notification.Notification
 import net.slipp.domain.qna.{Answer, Question}
 import net.slipp.domain.user.SocialUser
@@ -18,6 +19,8 @@ import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.util.Assert
+
+import scala.collection.JavaConversions._
 
 @Service
 @Transactional class NotificationService {
@@ -37,7 +40,6 @@ import org.springframework.util.Assert
       return
     }
     val facebookClient: FacebookClient = new DefaultFacebookClient(createAccessToken, Version.VERSION_2_2)
-    import scala.collection.JavaConversions._
     for (notifiee <- notifieeUsers) {
       val uri: String = String.format("/%s/notifications", notifiee.getProviderUserId)
       val template: String = String.format("%s님이 \"%s\" 글에 답변을 달았습니다.", loginUser.getUserId, question.getTitle)
@@ -57,11 +59,11 @@ import org.springframework.util.Assert
     val answer: Answer = answerRepository.findOne(answerId)
     Assert.notNull(answer, "Answer should be not null!")
     val question: Question = answer.getQuestion
+
     val notifieeUsers: Set[SocialUser] = question.findNotificationUser(notifier)
     if (notifieeUsers.isEmpty) {
       return
     }
-    import scala.collection.JavaConversions._
     for (notifiee <- notifieeUsers) {
       val notification: Notification = new Notification(notifier, notifiee, question)
       notificationRepository.save(notification)
@@ -75,6 +77,6 @@ import org.springframework.util.Assert
   def findNotificationsAndReaded(notifiee: SocialUser, pageable: Pageable): List[Notification] = {
     val notifications: List[Notification] = notificationRepository.findNotifications(notifiee, pageable)
     notificationRepository.updateReaded(notifiee)
-    return notifications
+    notifications
   }
 }
