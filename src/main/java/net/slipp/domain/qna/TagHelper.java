@@ -1,4 +1,4 @@
-package net.slipp.service.tag;
+package net.slipp.domain.qna;
 
 import java.util.Set;
 

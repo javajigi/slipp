@@ -28,7 +28,6 @@ import net.slipp.domain.tag.Tag;
 import net.slipp.domain.tag.Tags;
 import net.slipp.domain.user.SocialUser;
 import net.slipp.service.qna.QnaService;
-import net.slipp.service.tag.TagHelper;
 import net.slipp.support.jpa.CreatedDateEntityListener;
 import net.slipp.support.jpa.HasCreatedDate;
 import net.slipp.support.wiki.SlippWikiUtils;
