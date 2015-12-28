@@ -37,7 +37,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver
   }
 
   @Bean def loginUserHandlerMethodArgumentResolver: HandlerMethodArgumentResolver = {
-    return new LoginUserHandlerMethodArgumentResolver
+    new LoginUserHandlerMethodArgumentResolver
   }
 
   override def addInterceptors(registry: InterceptorRegistry) {
@@ -45,7 +45,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver
   }
 
   @Bean def globalRequestAttributesInterceptor: HandlerInterceptor = {
-    return new GlobalRequestAttributesInterceptor
+    new GlobalRequestAttributesInterceptor
   }
 
   @Bean def viewResolver: ViewResolver = {
@@ -53,19 +53,19 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver
     resolver.setPrefix("/WEB-INF/jsp/")
     resolver.setSuffix(".jsp")
     resolver.setOrder(2)
-    return resolver
+    resolver
   }
 
   @Bean def multipartResolver: MultipartResolver = {
     val resolver: CommonsMultipartResolver = new CommonsMultipartResolver
     resolver.setMaxUploadSize(2000000)
-    return resolver
+    resolver
   }
 
   @Bean def aplicationContextAttributeSetter: GlobalServletApplicationContextAttributeSetter = {
     val attributeSetter: GlobalServletApplicationContextAttributeSetter = new GlobalServletApplicationContextAttributeSetter
     attributeSetter.setApplicationProperties(applicationProperties)
-    return attributeSetter
+    attributeSetter
   }
 
   override def addResourceHandlers(registry: ResourceHandlerRegistry) {
@@ -73,7 +73,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver
   }
 
   @Bean def servletDownloadManager: ServletDownloadManager = {
-    return new ServletDownloadManager
+    new ServletDownloadManager
   }
 
   @Bean
@@ -83,20 +83,20 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver
     signInController.setSignInUrl("/signup")
     signInController.setPostSignInUrl("/authenticate")
     signInController.setApplicationUrl(env.getProperty("application.url"))
-    return signInController
+    signInController
   }
 
   @Bean def signUpController: SlippSecuritySignUpController = {
-    return new SlippSecuritySignUpController
+    new SlippSecuritySignUpController
   }
 
   @Bean def webBindingInitializer: WebBindingInitializer = {
-    val initializer: ConfigurableWebBindingInitializer = new ConfigurableWebBindingInitializer
+    val initializer = new ConfigurableWebBindingInitializer
     initializer.setValidator(new LocalValidatorFactoryBean)
-    return initializer
+    initializer
   }
 
   @Bean def methodValidationPostProcessor: MethodValidationPostProcessor = {
-    return new MethodValidationPostProcessor
+    new MethodValidationPostProcessor
   }
 }

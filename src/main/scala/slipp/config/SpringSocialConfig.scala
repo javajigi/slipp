@@ -26,40 +26,40 @@ class SpringSocialConfig {
   @Autowired private var socialUserRepository: SocialUserRepository = null
 
   @Bean def facebookConnectionFactory: ConnectionFactory[_] = {
-    return new FacebookConnectionFactory(env.getProperty("facebook.clientId"), env.getProperty("facebook.clientSecret"))
+    new FacebookConnectionFactory(env.getProperty("facebook.clientId"), env.getProperty("facebook.clientSecret"))
   }
 
   @Bean def twitterConnectionFactory: ConnectionFactory[_] = {
-    return new TwitterConnectionFactory(env.getProperty("twitter.consumerKey"), env.getProperty("twitter.consumerSecret"))
+    new TwitterConnectionFactory(env.getProperty("twitter.consumerKey"), env.getProperty("twitter.consumerSecret"))
   }
 
   @Bean def googleConnectionFactory: ConnectionFactory[_] = {
-    return new GoogleConnectionFactory(env.getProperty("google.clientId"), env.getProperty("google.clientSecret"))
+    new GoogleConnectionFactory(env.getProperty("google.clientId"), env.getProperty("google.clientSecret"))
   }
 
   @Bean def connectionFactories: List[ConnectionFactory[_]] = {
-    return Lists.newArrayList(facebookConnectionFactory, twitterConnectionFactory, googleConnectionFactory)
+    Lists.newArrayList(facebookConnectionFactory, twitterConnectionFactory, googleConnectionFactory)
   }
 
   @Bean def connectionFactoryRegistry: ConnectionFactoryRegistry = {
     val registry: ConnectionFactoryRegistry = new ConnectionFactoryRegistry
     registry.setConnectionFactories(connectionFactories)
-    return registry
+    registry
   }
 
   @Bean def textEncryptor: TextEncryptor = {
-    return Encryptors.noOpText
+    Encryptors.noOpText
   }
 
   @Bean def usersConnectionRepository: SocialUsersConnectionRepository = {
-    return new SocialUsersConnectionRepository(socialUserRepository, connectionFactoryRegistry, textEncryptor)
+    new SocialUsersConnectionRepository(socialUserRepository, connectionFactoryRegistry, textEncryptor)
   }
 
   @Bean def signInAdapter: SlippSecuritySignInAdapter = {
-    return new SlippSecuritySignInAdapter
+    new SlippSecuritySignInAdapter()
   }
 
   @Bean def providerSignInUtils: ProviderSignInUtils = {
-    return new ProviderSignInUtils(connectionFactoryRegistry, usersConnectionRepository)
+    new ProviderSignInUtils(connectionFactoryRegistry, usersConnectionRepository)
   }
 }

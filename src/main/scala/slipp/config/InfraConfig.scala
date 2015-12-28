@@ -22,7 +22,7 @@ import org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean
 @Configuration
 @EnableCaching
 @EnableAsync class InfraConfig extends AsyncConfigurer {
-  @Autowired private var env: Environment = null
+  @Autowired private var env: Environment = _
 
   @Bean def mailSender: MailSender = {
     val mailSender: JavaMailSenderImpl = new JavaMailSenderImpl
@@ -31,34 +31,34 @@ import org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean
     mailSender.setUsername(env.getProperty("mail.server.username"))
     mailSender.setPassword(env.getProperty("mail.server.password"))
     mailSender.setJavaMailProperties(additionalMailProperties)
-    return mailSender
+    mailSender
   }
 
   private def additionalMailProperties: Properties = {
     val properties: Properties = new Properties
     properties.setProperty("mail.smtp.auth", "true")
     properties.setProperty("mail.smtp.starttls.enable", "true")
-    return properties
+    properties
   }
 
   @Bean def freemarkerConfiguration: FreeMarkerConfigurationFactoryBean = {
     val freemarkerConfiguration: FreeMarkerConfigurationFactoryBean = new FreeMarkerConfigurationFactoryBean
     freemarkerConfiguration.setTemplateLoaderPath("classpath:templates")
     freemarkerConfiguration.setDefaultEncoding("UTF-8")
-    return freemarkerConfiguration
+    freemarkerConfiguration
   }
 
   @Bean def ehcache: EhCacheManagerFactoryBean = {
     val ehcache: EhCacheManagerFactoryBean = new EhCacheManagerFactoryBean
     ehcache.setConfigLocation(new ClassPathResource("ehcache.xml"))
     ehcache.setShared(true)
-    return ehcache
+    ehcache
   }
 
   @Bean def cacheManager(cm: net.sf.ehcache.CacheManager): CacheManager = {
-    val ehcm: EhCacheCacheManager = new EhCacheCacheManager
-    ehcm.setCacheManager(cm)
-    ehcm
+    val cacheManager: EhCacheCacheManager = new EhCacheCacheManager
+    cacheManager.setCacheManager(cm)
+    cacheManager
   }
 
   def getAsyncExecutor: Executor = {
@@ -66,7 +66,7 @@ import org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean
     executor.setCorePoolSize(5)
     executor.setMaxPoolSize(10)
     executor.setThreadNamePrefix("SlippExecutor-")
-    executor.initialize
+    executor.initialize()
     executor
   }
 

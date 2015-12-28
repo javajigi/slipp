@@ -6,16 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.{Bean, Conditional, Configuration}
 import org.springframework.core.env.Environment
 import org.springframework.http.HttpMethod
+import org.springframework.security.access.AccessDecisionManager
 import org.springframework.security.access.vote.{AuthenticatedVoter, RoleVoter, UnanimousBased}
-import org.springframework.security.access.{AccessDecisionManager, AccessDecisionVoter}
-import org.springframework.security.authentication.{AuthenticationManager, AuthenticationProvider, ProviderManager, RememberMeAuthenticationProvider}
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder
+import org.springframework.security.authentication.{AuthenticationManager, ProviderManager, RememberMeAuthenticationProvider}
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.{EnableWebSecurity, WebSecurityConfigurerAdapter}
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
-import org.springframework.security.web.authentication.{AuthenticationSuccessHandler, LoginUrlAuthenticationEntryPoint, RememberMeServices, SimpleUrlAuthenticationSuccessHandler}
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter
+import org.springframework.security.web.authentication.{AuthenticationSuccessHandler, LoginUrlAuthenticationEntryPoint, RememberMeServices, SimpleUrlAuthenticationSuccessHandler}
+
 import scala.collection.JavaConversions._
 
 @Configuration
@@ -56,7 +57,7 @@ import scala.collection.JavaConversions._
         .loginProcessingUrl("/users/authenticate")
         .usernameParameter("authenticationId")
         .passwordParameter("authenticationPassword")
-        .successHandler(authenticationSuccessHandler())
+        .successHandler(authenticationSuccessHandler)
         .failureUrl("/users/login?login_error=1")
         .permitAll()
         .and()
@@ -65,10 +66,10 @@ import scala.collection.JavaConversions._
         .permitAll()
         .and()
       .rememberMe()
-        .rememberMeServices(slippRememberMeServices())
+        .rememberMeServices(slippRememberMeServices)
         .and()
         .exceptionHandling()
-        .authenticationEntryPoint(springSocialSecurityEntryPoint())
+        .authenticationEntryPoint(springSocialSecurityEntryPoint)
 
     http.anonymous
 
@@ -77,83 +78,83 @@ import scala.collection.JavaConversions._
 
   @Bean override def authenticationManager: AuthenticationManager = {
     val providers = List(rememberMeAuthenticationProvider, daoAuthenticationProvider)
-    return new ProviderManager(providers)
+    new ProviderManager(providers)
   }
 
   @Bean
   @Conditional(Array(classOf[ProductionPhase])) def randomPasswordGenerator: PasswordGenerator = {
-    return new RandomPasswordGenerator
+    new RandomPasswordGenerator
   }
 
   @Bean
   @Conditional(Array(classOf[DevelopmentPhase])) def fixedPasswordGenerator: PasswordGenerator = {
-    return new FixedPasswordGenerator
+    new FixedPasswordGenerator
   }
 
-  @Bean def autoLoginAuthenticator(): AutoLoginAuthenticator = {
-    return new AutoLoginAuthenticator
+  @Bean def autoLoginAuthenticator: AutoLoginAuthenticator = {
+    new AutoLoginAuthenticator
   }
 
-  @Bean def passwordEncoder(): PasswordEncoder = {
+  @Bean def passwordEncoder: PasswordEncoder = {
     val passwordEncoder: Sha256ToBCryptPasswordEncoder = new Sha256ToBCryptPasswordEncoder
     passwordEncoder.setBcryptPasswordEncoder(new BCryptPasswordEncoder)
     passwordEncoder.setSha256PasswordEncoder(new ShaPasswordEncoder(256))
-    return passwordEncoder
+    passwordEncoder
   }
 
-  @Bean def slippUserDetailsService(): SlippUserDetailsService = {
+  @Bean def slippUserDetailsService: SlippUserDetailsService = {
     val userDetailsService: SlippUserDetailsService = new SlippUserDetailsService
     userDetailsService.setAdminUsers("자바지기")
-    return userDetailsService
+    userDetailsService
   }
 
-  @Bean def authenticationSuccessHandler(): AuthenticationSuccessHandler = {
+  @Bean def authenticationSuccessHandler: AuthenticationSuccessHandler = {
     val authenticationSuccessHandler: SimpleUrlAuthenticationSuccessHandler = new SimpleUrlAuthenticationSuccessHandler
     authenticationSuccessHandler.setDefaultTargetUrl("/")
     authenticationSuccessHandler.setTargetUrlParameter("redirect")
-    return authenticationSuccessHandler
+    authenticationSuccessHandler
   }
 
-  private def defaultRememberMeServices(): SlippTokenBasedRememberMeServices = {
+  private def defaultRememberMeServices: SlippTokenBasedRememberMeServices = {
     val rememberMeServices: SlippTokenBasedRememberMeServices = new SlippTokenBasedRememberMeServices(env.getProperty("slipp.remember.token.key"), slippUserDetailsService)
     rememberMeServices.setTokenValiditySeconds(1209600)
-    return rememberMeServices
+    rememberMeServices
   }
 
-  @Bean def slippRememberMeServices(): RememberMeServices = {
-    return defaultRememberMeServices
+  @Bean def slippRememberMeServices: RememberMeServices = {
+    defaultRememberMeServices
   }
 
-  @Bean def springSocialSecurityRememberMeServices(): RememberMeServices = {
+  @Bean def springSocialSecurityRememberMeServices: RememberMeServices = {
     val rememberMeServices: SlippTokenBasedRememberMeServices = defaultRememberMeServices
     rememberMeServices.setAlwaysRemember(true)
-    return rememberMeServices
+    rememberMeServices
   }
 
-  @Bean def slippSecurityAuthenticationFilter(): SlippSecurityAuthenticationFilter = {
+  @Bean def slippSecurityAuthenticationFilter: SlippSecurityAuthenticationFilter = {
     val securityAuthenticationFilter: SlippSecurityAuthenticationFilter = new SlippSecurityAuthenticationFilter
     securityAuthenticationFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler)
     securityAuthenticationFilter.setRememberMeServices(springSocialSecurityRememberMeServices)
-    return securityAuthenticationFilter
+    securityAuthenticationFilter
   }
 
-  @Bean def rememberMeAuthenticationProvider(): RememberMeAuthenticationProvider = {
-    return new RememberMeAuthenticationProvider(env.getProperty("slipp.remember.token.key"))
+  @Bean def rememberMeAuthenticationProvider: RememberMeAuthenticationProvider = {
+    new RememberMeAuthenticationProvider(env.getProperty("slipp.remember.token.key"))
   }
 
-  @Bean def daoAuthenticationProvider(): SlippDaoAuthenticationProvider = {
+  @Bean def daoAuthenticationProvider: SlippDaoAuthenticationProvider = {
     val daoAuthenticationProvider: SlippDaoAuthenticationProvider = new SlippDaoAuthenticationProvider
     daoAuthenticationProvider.setPasswordEncoder(passwordEncoder)
     daoAuthenticationProvider.setUserDetailsService(slippUserDetailsService)
-    return daoAuthenticationProvider
+    daoAuthenticationProvider
   }
 
-  @Bean def springSocialSecurityEntryPoint(): LoginUrlAuthenticationEntryPoint = {
-    return new LoginUrlAuthenticationEntryPoint("/users/login")
+  @Bean def springSocialSecurityEntryPoint: LoginUrlAuthenticationEntryPoint = {
+    new LoginUrlAuthenticationEntryPoint("/users/login")
   }
 
   @Bean def accessDecisionManager: AccessDecisionManager = {
     val voters = List(new RoleVoter, new AuthenticatedVoter)
-    return new UnanimousBased(voters)
+    new UnanimousBased(voters)
   }
 }

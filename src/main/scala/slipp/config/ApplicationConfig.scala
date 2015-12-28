@@ -23,7 +23,7 @@ class ApplicationConfig {
   @Bean def wikiDao: WikiDao = {
     val wikiDao: WikiDao = new WikiDao
     wikiDao.setDataSource(wikiDataSource)
-    return wikiDao
+    wikiDao
   }
 
   @Bean(destroyMethod = "close") def wikiDataSource: DataSource = {
@@ -32,7 +32,7 @@ class ApplicationConfig {
     dataSource.setUrl(env.getProperty("wiki.database.url"))
     dataSource.setUsername(env.getProperty("wiki.database.username"))
     dataSource.setPassword(env.getProperty("wiki.database.password"))
-    return dataSource
+    dataSource
   }
 
   @Bean
@@ -40,6 +40,6 @@ class ApplicationConfig {
   def applicationProperties: ConvenientProperties = {
     val properties: Properties = new Properties
     properties.load(new ClassPathResource("application-properties.xml").getInputStream)
-    return new ConvenientProperties(properties)
+    new ConvenientProperties(properties)
   }
 }

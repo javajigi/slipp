@@ -11,6 +11,6 @@ class DevelopmentPhase extends Condition {
 
   def matches(context: ConditionContext, metadata: AnnotatedTypeMetadata): Boolean = {
     log.info("current environment : {}", context.getEnvironment.getProperty("environment"))
-    return context.getEnvironment.getProperty("environment") == "DEVELOPMENT"
+    context.getEnvironment.getProperty("environment") == "DEVELOPMENT"
   }
 }
