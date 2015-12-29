@@ -56,13 +56,13 @@ class QuestionPage(driver: WebDriver, title: String) {
   }
 
   def likeAnswer: QuestionPage = {
-    driver.findElement(By.cssSelector("button.btn-like-article > strong.like-count")).click()
+    driver.findElement(By.cssSelector("a.btn-like-article")).click()
     driver.manage.timeouts.implicitlyWait(3, TimeUnit.SECONDS)
     return new QuestionPage(driver)
   }
 
   def verifyLikeCount(likeCount: Int) {
-    val actual: String = driver.findElement(By.cssSelector("button.btn-like-article > strong.like-count")).getText
+    val actual: String = driver.findElement(By.cssSelector("a.btn-like-article > strong.like-article-count")).getText
     assertThat(actual, is(likeCount + ""))
   }
 

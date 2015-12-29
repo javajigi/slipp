@@ -8,7 +8,7 @@ class AbstractATTest {
   protected var environment: SlippEnvironment = null
   protected var indexPage: IndexPage = null
 
-  def setup {
+  def setup() {
     this.driver = new SharedDriver
     deleteAllCookies(driver)
     this.environment = new SlippEnvironment
