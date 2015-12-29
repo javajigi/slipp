@@ -14,7 +14,6 @@ class SlippDaoAuthenticationProvider extends AbstractUserDetailsAuthenticationPr
   private var userDetailsService: UserDetailsService = null
   private var authoritiesMapper: GrantedAuthoritiesMapper = new NullAuthoritiesMapper
 
-  @throws(classOf[AuthenticationException])
   protected def additionalAuthenticationChecks(userDetails: UserDetails, authentication: UsernamePasswordAuthenticationToken) {
     if (authentication.getCredentials == null) {
       logger.debug("Authentication failed: no credentials provided")
@@ -30,15 +29,13 @@ class SlippDaoAuthenticationProvider extends AbstractUserDetailsAuthenticationPr
   protected override def createSuccessAuthentication(principal: AnyRef, authentication: Authentication, user: UserDetails): Authentication = {
     val result: UsernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(principal, authentication.getCredentials, authoritiesMapper.mapAuthorities(user.getAuthorities))
     result.setDetails(ProviderType.slipp)
-    return result
+    result
   }
 
-  @throws(classOf[Exception])
   protected override def doAfterPropertiesSet {
     Assert.notNull(this.userDetailsService, "A UserDetailsService must be set")
   }
 
-  @throws(classOf[AuthenticationException])
   protected final def retrieveUser(email: String, authentication: UsernamePasswordAuthenticationToken): UserDetails = {
     var loadedUser: UserDetails = null
     try {

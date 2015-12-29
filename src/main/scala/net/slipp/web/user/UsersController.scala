@@ -53,7 +53,7 @@ class UsersController(
 
   @RequestMapping(Array("/{id}/{userId}"))
   def profile(@PathVariable id: Long, @PathVariable userId: String, model: Model) = {
-    model.addAttribute("questions", qnaService.findsQuestionByWriter(Some(id), createPageableByQuestionUpdatedDate(DefaultPageNo, DefaultSummaryPageSize)))
+    model.addAttribute("questions", qnaService.findsQuestionByWriter(Option(id), createPageableByQuestionUpdatedDate(DefaultPageNo, DefaultSummaryPageSize)))
     model.addAttribute("answers", qnaService.findsAnswerByWriter(id, createPageableByAnswer(DefaultPageNo, DefaultSummaryPageSize)))
     model.addAttribute("socialUser", userService.findById(id))
     "users/profile"
@@ -61,7 +61,7 @@ class UsersController(
 
   @RequestMapping(Array("/{id}/{userId}/questions"))
   def questions(@PathVariable id: Long, page: Integer, model: Model) = {
-    model.addAttribute("questions", qnaService.findsQuestionByWriter(Some(id), createPageableByQuestionUpdatedDate(revisedPage(page), DefaultPageSize)))
+    model.addAttribute("questions", qnaService.findsQuestionByWriter(Option(id), createPageableByQuestionUpdatedDate(revisedPage(page), DefaultPageSize)))
     model.addAttribute("socialUser", userService.findById(id))
     "users/questions"
   }

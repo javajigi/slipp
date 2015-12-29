@@ -1,5 +1,6 @@
 package net.slipp
 
+import net.slipp.domain.qna.ScoreLike
 import net.slipp.domain.user.SocialUser
 import net.slipp.support.test.Fixture
 import org.junit.Assert._
@@ -16,6 +17,27 @@ class PatternMatchTest extends Fixture {
   @Test def someOption() {
     assertTrue(isEmptyWriterId(None))
     assertFalse(isEmptyWriterId(Some(1L)))
+
+    assertTrue(isEmptyTitle(None))
+    assertTrue(isEmptyTitle(Some(null)))
+    assertFalse(isEmptyTitle(Some("")))
+  }
+
+  private def isEmptyTitle(title: Option[String]) = {
+    title match {
+      case Some(w) => {
+        println(w)
+        false
+      }
+      case _ => true
+    }
+  }
+
+  @Test def option(): Unit = {
+    println(Option(null))
+    println(Option("abc"))
+    println(Some(null))
+    println(Some("abc"))
   }
 
   @Test def setEmpty() {
