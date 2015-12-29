@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import net.slipp.domain.fb.EmptyFacebookGroup;
 import net.slipp.domain.fb.FacebookGroup;
 
 import org.apache.commons.lang3.StringUtils;
@@ -131,11 +132,11 @@ public class QuestionDto {
     
     static FacebookGroup createFacebookGroup(String fbGroup) {
         if (StringUtils.isBlank(fbGroup)) {
-            return new FacebookGroup.EmptyFacebookGroup();
+            return new EmptyFacebookGroup();
         }
         String[] parsedGroups = fbGroup.split(FACEBOOK_GROUP_DELIMETER);
         if (parsedGroups.length != 2) {
-            return new FacebookGroup.EmptyFacebookGroup();
+            return new EmptyFacebookGroup();
         }
         return new FacebookGroup(parsedGroups[0], replaceSpaceToDash(parsedGroups[1]));
     }
