@@ -1,8 +1,7 @@
 package net.slipp.service.tag
 
 import java.lang.Long
-
-import java.util.{ArrayList, List, Set, StringTokenizer}
+import java.util.{List, Set, StringTokenizer}
 import javax.annotation.Resource
 
 import com.google.common.collect.{Lists, Sets}
@@ -61,32 +60,17 @@ class TagService {
     return newTag
   }
 
-  private def getTagFromFacebookGroup(facebookGroup: FacebookGroup): Tag = {
-    var tag = tagRepository.findByGroupId(facebookGroup.getGroupId)
-    if (tag != null) {
-      return tag
-    }
-
-    tag = tagRepository.findByName(facebookGroup.getName)
-    if (tag != null) {
-      tag.moveGroupTag(facebookGroup.getGroupId)
-      return tag
-    }
-
-    val newTag: Tag = Tag.groupedTag(facebookGroup.getName, facebookGroup.getGroupId)
-    tagRepository.save(newTag)
+  private def getTagByFacebookGroup(facebookGroup: FacebookGroup) = {
+    Option(tagRepository.findByGroupId(facebookGroup.getGroupId))
+      .getOrElse(Option(tagRepository.findByName(facebookGroup.getName))
+        .getOrElse {
+          val newTag: Tag = Tag.groupedTag(facebookGroup.getName, facebookGroup.getGroupId)
+          tagRepository.save(newTag)
+        })
   }
 
   def processGroupTags(groupTags: Set[FacebookGroup]): Set[Tag] = {
-    val tags = Sets.newHashSet[Tag]
-
-    groupTags.foreach(each => {
-      if (!each.isEmpty) {
-        tags.add(getTagFromFacebookGroup(each))
-      }
-    })
-
-    tags
+    groupTags.map(getTagByFacebookGroup)
   }
 
   def moveToTag(newTagId: Long, parentTagId: Option[Long]) {

@@ -140,7 +140,6 @@ object FacebookService {
     val facebookClient: FacebookClient = createFacebookClient(loginUser)
     val myGroups: Connection[Group] = facebookClient.fetchConnection("/me/groups", classOf[Group], Parameter.`with`("limit", groupLimit))
     val allGroups: List[Group] = Lists.newArrayList()
-    import scala.collection.JavaConversions._
     for (groups <- myGroups) {
       allGroups.addAll(groups)
     }
