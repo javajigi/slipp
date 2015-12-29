@@ -46,7 +46,7 @@ class AnswerController(
 
     model.addAttribute("question", qnaService.findByQuestionId(questionId))
     model.addAttribute("answer", answer)
-    model.addAttribute("tags", tagService.findLatestTags())
+    model.addAttribute("tags", tagService.findLatestTags)
     "qna/answer"
   }
   
@@ -59,7 +59,7 @@ class AnswerController(
   @RequestMapping(value = Array("{answerId}/to"), method = Array(RequestMethod.GET))
   def newQuestionForm(@PathVariable questionId: Long, @PathVariable answerId: Long, model: Model) = {
     val question = qnaService.findByQuestionId(questionId)
-    val answer = qnaService.findAnswerById(answerId);
+    val answer = qnaService.findAnswerById(answerId)
 
     val questionDto = new QuestionDto(questionId, answerId, answer.getContents)
     val answers = question.getAnswers

@@ -35,7 +35,7 @@ class AdminQuestionController(
   @RequestMapping(Array("/{id}"))
   def show(@PathVariable id: Long, searchTerm: String, model: Model) = {
     model.addAttribute("question", qnaService.showQuestion(id))
-    model.addAttribute("tags", tagService.findLatestTags())
+    model.addAttribute("tags", tagService.findLatestTags)
     model.addAttribute("user", new UserForm())
     model.addAttribute("searchTerm", searchTerm)
     "admin/qna/show"

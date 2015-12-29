@@ -33,7 +33,7 @@ class QuestionController(
   def index(page: Integer, model: Model) = {
     logger.debug("currentPage : {}", page)
     model.addAttribute("questions", qnaService.findsQuestion(createPageableByQuestionUpdatedDate(page, DefaultPageSize)))
-    model.addAttribute("tags", tagService.findLatestTags())
+    model.addAttribute("tags", tagService.findLatestTags)
     "qna/list"
   }
 
@@ -77,7 +77,7 @@ class QuestionController(
 
     model.addAttribute("answer", getTemporaryAnswer(session).createAnswer())
     model.addAttribute("question", question)
-    model.addAttribute("tags", tagService.findLatestTags())
+    model.addAttribute("tags", tagService.findLatestTags)
     model.addAttribute("user", new UserForm())
     "qna/show"
   }
@@ -110,7 +110,7 @@ class QuestionController(
 
     model.addAttribute("currentTag", tagService.findTagByName(name))
     model.addAttribute("questions", qnaService.findsByTag(name, createPageableByQuestionUpdatedDate(page, DefaultPageSize)))
-    model.addAttribute("tags", tagService.findLatestTags())
+    model.addAttribute("tags", tagService.findLatestTags)
     "qna/list"
   }
   

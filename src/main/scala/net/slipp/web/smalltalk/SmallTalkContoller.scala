@@ -42,7 +42,7 @@ class SmallTalkContoller(@Resource(name = "smallTalkService") smallTalkService: 
 
   @RequestMapping(Array("/ajax/smalltalks"))
   def finds(model: Model) = {
-    model.addAttribute("smallTalks", smallTalkService.getLastTalks())
+    model.addAttribute("smallTalks", smallTalkService.getLastTalks)
     "async/smalltalk"
   }
 

@@ -12,32 +12,24 @@ import org.hamcrest.CoreMatchers.is
 import org.junit.Assert.assertThat
 import org.junit.{Before, Test}
 import org.junit.runner.RunWith
-import org.mockito.Mock
+import org.mockito.{InjectMocks, Mock}
 import org.mockito.Mockito.when
 import org.mockito.runners.MockitoJUnitRunner
 
-@RunWith(classOf[MockitoJUnitRunner]) class TagServiceTest {
-  private var dut: TagService = null
+@RunWith(classOf[MockitoJUnitRunner])
+class TagServiceTest {
   @Mock private var tagRepository: TagRepository = null
+  @InjectMocks private val dut = new TagService
 
-  @Before def setup {
-    dut = new TagService(tagRepository)
-  }
-
-  @Test
-  @throws(classOf[Exception])
-  def moveToTag_부모_태그_ID_is_null {
-    val parentTagId: Long = null
+  @Test def moveToTag_부모_태그_ID_is_null {
+    val parentTagId: Option[Long] = None
     val newTag: Tag = aTag.withId(1L).withName("newTag").build
-    when(tagRepository.findOne(parentTagId)).thenReturn(null)
     when(tagRepository.findOne(newTag.getTagId)).thenReturn(newTag)
     dut.moveToTag(newTag.getTagId, parentTagId)
     assertThat(newTag.isPooled, is(true))
   }
 
-  @Test
-  @throws(classOf[Exception])
-  def processTags_최초_생성 {
+  @Test def processTags_최초_생성 {
     val java: Tag = Tag.pooledTag("java")
     val newTag: Tag = Tag.newTag("newTag")
     val plainTags: String = String.format("%s %s", java.getName, newTag.getName)
