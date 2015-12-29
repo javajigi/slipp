@@ -337,9 +337,10 @@
 		</resources>
 		<testResources>
 			<testResource>
-				<directory>src/test/java</directory>
+				<directory>src/test/scala</directory>
 				<excludes>
-					<exclude>**/*.java</exclude>
+					<exclude>**/*.scala</exclude>
+                    <exclude>**/*.java</exclude>
 				</excludes>
 			</testResource>
 			<testResource>
@@ -504,7 +505,6 @@
 						</goals>
 						<configuration>
 							<sources>
-								<source>src/test/scala</source>
 								<source>${acceptance.test.dir}</source>
 							</sources>
 						</configuration>

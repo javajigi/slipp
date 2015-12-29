@@ -1,7 +1,7 @@
 package net.slipp.qna
 
 import net.slipp.LoginUser
-import net.slipp.tag.RequestTagPage
+import net.slipp.domain.tag.RequestTagPage
 import net.slipp.user.{FacebookPage, GooglePage, LoginPage, ProfilePage, TwitterPage}
 import org.openqa.selenium.{By, WebDriver}
 import org.openqa.selenium.support.ui.{ExpectedConditions, WebDriverWait}
