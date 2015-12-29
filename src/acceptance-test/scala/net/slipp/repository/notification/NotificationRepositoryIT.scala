@@ -1,25 +1,20 @@
 package net.slipp.repository.notification
 
-import org.hamcrest.CoreMatchers.is
-import org.hamcrest.CoreMatchers.nullValue
-import org.junit.Assert.assertThat
-import java.util.HashSet
-import java.util.List
+import java.util.{HashSet, List}
+
 import net.slipp.domain.notification.Notification
 import net.slipp.domain.qna.Question
 import net.slipp.domain.tag.Tag
-import net.slipp.domain.user.SocialUser
-import net.slipp.domain.user.SocialUserBuilder
+import net.slipp.domain.user.{SocialUser, SocialUserBuilder}
 import net.slipp.repository.qna.QuestionRepository
 import net.slipp.repository.user.SocialUserRepository
+import org.hamcrest.CoreMatchers.is
+import org.junit.Assert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
+import org.slf4j.{Logger, LoggerFactory}
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.data.domain.PageRequest
-import org.springframework.data.domain.Pageable
-import org.springframework.data.domain.Sort
+import org.springframework.data.domain.{PageRequest, Pageable, Sort}
 import org.springframework.data.domain.Sort.Direction
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
@@ -37,10 +32,7 @@ class NotificationRepositoryIT {
   @Autowired private var socialUserRepository: SocialUserRepository = null
   private var stopWatch: StopWatch = new StopWatch
 
-  @Test
-  @Transactional
-  @throws(classOf[Exception])
-  def notification_lifecycle {
+  @Test @Transactional def notification_lifecycle {
     var notifiee: SocialUser = SocialUserBuilder.aSocialUser.createTestUser("javajigi")
     notifiee = socialUserRepository.save(notifiee)
     var notifier: SocialUser = SocialUserBuilder.aSocialUser.createTestUser("sanjigi")
@@ -50,15 +42,16 @@ class NotificationRepositoryIT {
     val notification: Notification = new Notification(notifier, notifiee, question)
     notificationRepository.save(notification)
     val pageable: Pageable = new PageRequest(0, 5, new Sort(Direction.DESC, "notificationId"))
+
     stopWatch.start
-    var notifications: List[Notification] = notificationRepository.findNotifications(notifiee, pageable)
-    assertThat(notifications.size, is(1))
+    var questions: List[Question] = notificationRepository.findQuestionsFromNotification(notifiee)
+    assertThat(questions.size, is(1))
     stopWatch.stop
     log.debug("time to create: {}", stopWatch.getLastTaskTimeMillis + "ms")
-    val count: Long = notificationRepository.countByNotifiee(notifiee)
+    var count: Long = notificationRepository.countByNotifiee(notifiee)
     assertThat(count, is(1L))
     notificationRepository.updateReaded(notifiee)
-    notifications = notificationRepository.findNotifications(notifiee, pageable)
-    assertThat(notificationRepository.countByNotifiee(notifiee), is(nullValue))
+    count = notificationRepository.countByNotifiee(notifiee)
+    assertThat(count, is(0L))
   }
 }

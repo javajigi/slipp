@@ -1,7 +1,6 @@
 package net.slipp.service.qna
 
 import java.util.{List, Set}
-
 import javax.annotation.Resource
 
 import com.restfb.types.FacebookType
@@ -14,7 +13,6 @@ import net.slipp.repository.qna.AnswerRepository
 import org.slf4j.{Logger, LoggerFactory}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.env.Environment
-import org.springframework.data.domain.Pageable
 import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -70,9 +68,9 @@ import scala.collection.JavaConversions._
     notificationRepository.countByNotifiee(notifiee)
   }
 
-  def findNotificationsAndReaded(notifiee: SocialUser, pageable: Pageable): List[Notification] = {
-    val notifications: List[Notification] = notificationRepository.findNotifications(notifiee, pageable)
+  def findNotificationsAndReaded(notifiee: SocialUser): List[Question] = {
+    val questions: List[Question] = notificationRepository.findQuestionsFromNotification(notifiee)
     notificationRepository.updateReaded(notifiee)
-    notifications
+    questions
   }
 }

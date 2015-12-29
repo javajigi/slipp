@@ -19,12 +19,7 @@ class QnAAT extends AbstractATTest {
     driver.get("http://localhost:8080")
   }
 
-  @Test def create_question_success {
-    loginToFacebook(1)
-    createQuestion(questionFixture)
-  }
-
-  @Test def update_question_success {
+  @Test def create_update_question_success {
     loginToFacebook(1)
     var questionPage: QuestionPage = createQuestion(questionFixture)
     val qnaFormPage: QuestionFormPage = questionPage.goToUpdatePage
@@ -42,9 +37,7 @@ class QnAAT extends AbstractATTest {
     qnaFormPage.question(questionFixture)
   }
 
-  @Test
-  @throws(classOf[Exception])
-  def create_answer {
+  @Test def create_answer {
     loginToFacebook(1)
     createQuestion(questionFixture)
     loginToAnotherUser(2)

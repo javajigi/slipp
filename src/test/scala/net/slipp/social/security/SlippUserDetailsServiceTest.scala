@@ -9,7 +9,7 @@ class SlippUserDetailsServiceTest {
     val adminUsers: String = "javajigi:sanjigi"
     val dut: SlippUserDetailsService = new SlippUserDetailsService
     dut.setAdminUsers(adminUsers)
-    assertThat(dut.isAdmin("javajigi"), is(true))
-    assertThat(dut.isAdmin("userId"), is(false))
+    assertThat(dut.isRootAdmin("javajigi"), is(true))
+    assertThat(dut.isRootAdmin("userId"), is(false))
   }
 }
