@@ -18,17 +18,17 @@ class AbstractATTest {
     sharedDriver.deleteAllCookies
   }
 
-  protected def loginToFacebook(number: Int): LoginUser = {
+  protected def loginToFacebook(number: Int) = {
     indexPage = new IndexPage(driver)
-    val loginUser: LoginUser = getLoginUser(number)
+    val loginUser = getLoginUser(number)
     indexPage = indexPage.loginToFacebook(loginUser)
-    return loginUser
+    loginUser
   }
 
-  private def getLoginUser(number: Int): LoginUser = {
-    val email: String = environment.getProperty("facebook.email" + number)
-    val password: String = environment.getProperty("facebook.password" + number)
-    val nickName: String = environment.getProperty("facebook.nickName" + number)
-    return new LoginUser(email, password, nickName)
+  private def getLoginUser(number: Int) = {
+    val email = environment.getProperty("facebook.email" + number)
+    val password = environment.getProperty("facebook.password" + number)
+    val nickName = environment.getProperty("facebook.nickName" + number)
+    new LoginUser(email, password, nickName)
   }
 }

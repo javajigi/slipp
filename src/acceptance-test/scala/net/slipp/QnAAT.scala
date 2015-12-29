@@ -1,6 +1,6 @@
 package net.slipp
 
-import net.slipp.qna.{AnswerUpdateFormPage, QuestionFixture, QuestionFormPage, QuestionPage, QuestionsPage}
+import net.slipp.qna.{AnswerUpdateFormPage, QuestionFixture, QuestionPage}
 import net.slipp.support.AbstractATTest
 import org.hamcrest.CoreMatchers.is
 import org.junit.Assert.assertThat
@@ -19,8 +19,8 @@ class QnAAT extends AbstractATTest {
 
   @Test def create_update_question_success() {
     loginToFacebook(1)
-    var questionPage: QuestionPage = createQuestion(questionFixture)
-    val qnaFormPage: QuestionFormPage = questionPage.goToUpdatePage
+    var questionPage = createQuestion(questionFixture)
+    val qnaFormPage = questionPage.goToUpdatePage
     questionFixture.setTitle("update title")
     questionFixture.setContents("update contents")
     questionFixture.setPlainTags("java jsp servlet")
@@ -30,7 +30,7 @@ class QnAAT extends AbstractATTest {
 
   @Test def newTags() {
     loginToFacebook(1)
-    val qnaFormPage: QuestionFormPage = indexPage.goQuestionForm
+    val qnaFormPage = indexPage.goQuestionForm
     questionFixture.setPlainTags("java javascript newtag")
     qnaFormPage.question(questionFixture)
   }
@@ -54,22 +54,22 @@ class QnAAT extends AbstractATTest {
   }
 
   private def countNotifications = {
-    val value: String = driver.findElement(By.cssSelector("span.notification-count")).getText
+    val value = driver.findElement(By.cssSelector("span.notification-count")).getText
     value.toInt
   }
 
   @Test def question_list_when_create_answer() {
     loginToFacebook(1)
-    val firstTitle: String = "this is first question."
+    val firstTitle = "this is first question."
     questionFixture.setTitle(firstTitle)
     createQuestion(questionFixture)
     indexPage.goIndexPage
-    val secondTitle: String = "this is second question."
+    val secondTitle = "this is second question."
     questionFixture.setTitle(secondTitle)
     createQuestion(questionFixture)
-    val loginUser: LoginUser = loginToAnotherUser(2)
-    val questionPage: QuestionPage = answerToQuestion(1)
-    val questionsPage: QuestionsPage = questionPage.goToQuestionsPage
+    val loginUser = loginToAnotherUser(2)
+    val questionPage = answerToQuestion(1)
+    val questionsPage = questionPage.goToQuestionsPage
     questionsPage.verifyFirstTitle(firstTitle)
     questionsPage.verifyFirstNickName(loginUser.nickName)
     questionsPage.verifyFirstAnswerCount(1)

@@ -20,10 +20,10 @@ class FBLogoutPage(driver: WebDriver) {
     assertThat(loginUserNickName, is(nickName))
   }
 
-  def logout: IndexPage = {
+  def logout = {
     new WebDriverWait(driver, 1000).until(ExpectedConditions.visibilityOfElementLocated(By.id("fbLogoutBtn")))
     driver.findElement(By.id("fbLogoutBtn")).click
     driver.findElement(By.cssSelector("a.link-loginout")).click
-    return new IndexPage(driver)
+    new IndexPage(driver)
   }
 }
