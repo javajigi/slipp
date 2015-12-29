@@ -4,7 +4,7 @@ import org.hamcrest.CoreMatchers.is
 import org.junit.Assert.assertThat
 import net.slipp.qna.FBLogoutPage
 import net.slipp.qna.IndexPage
-import net.slipp.service.user.FixedPasswordGenerator
+import net.slipp.service.user.{PasswordGenerator, FixedPasswordGenerator}
 import net.slipp.support.AbstractATTest
 import net.slipp.user.ChangePasswordPage
 import net.slipp.user.LoginPage
@@ -64,7 +64,7 @@ class AuthenticationAT extends AbstractATTest {
     val userForm: UserForm = join_to_slipp
     index = index.logout
     val loginPage: LoginPage = index.goLoginPage
-    loginPage.loginToSlipp(userForm.getEmail, FixedPasswordGenerator.DEFAULT_FIXED_PASSWORD)
+    loginPage.loginToSlipp(userForm.getEmail, PasswordGenerator.DEFAULT_FIXED_PASSWORD)
     assertThat(index.isLoginStatus, is(true))
   }
 
@@ -75,7 +75,7 @@ class AuthenticationAT extends AbstractATTest {
     val profilePage: ProfilePage = index.goProfilePage
     profilePage.verifyPageTitle(userForm.getUserId)
     val changePasswordPage: ChangePasswordPage = profilePage.goChangePasswordPage
-    val oldPassword: String = FixedPasswordGenerator.DEFAULT_FIXED_PASSWORD
+    val oldPassword: String = PasswordGenerator.DEFAULT_FIXED_PASSWORD
     val newPassword: String = "newPassword"
     changePasswordPage.changePassword(oldPassword, newPassword)
     val alert: Alert = driver.switchTo.alert

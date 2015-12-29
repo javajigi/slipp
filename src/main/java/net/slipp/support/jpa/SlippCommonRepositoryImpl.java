@@ -36,190 +36,190 @@ import com.google.common.collect.Iterables;
  */
 @NoRepositoryBean
 public class SlippCommonRepositoryImpl<T, ID extends Serializable> extends QueryDslJpaRepository<T, ID> implements
-		SlippCommonRepository<T, ID> {
+        SlippCommonRepository<T, ID> {
 
-	private EntityManager em;
-	private JpaEntityInformation<T, ?> entityInformation;
+    private EntityManager em;
+    private JpaEntityInformation<T, ?> entityInformation;
 
-	public SlippCommonRepositoryImpl(JpaEntityInformation<T, ID> entityInformation, EntityManager entityManager) {
-		super(entityInformation, entityManager);
-		this.em = entityManager;
-		this.entityInformation = entityInformation;
-	}
+    public SlippCommonRepositoryImpl(JpaEntityInformation<T, ID> entityInformation, EntityManager entityManager) {
+        super(entityInformation, entityManager);
+        this.em = entityManager;
+        this.entityInformation = entityInformation;
+    }
 
-	@Override
-	public T getOne(ID id) {
-		T entity = findOne(id);
+    @Override
+    public T getOne(ID id) {
+        T entity = findOne(id);
 
-		if (entity == null) {
-			throw new EmptyResultDataAccessException(1);
-		}
+        if (entity == null) {
+            throw new EmptyResultDataAccessException(1);
+        }
 
-		return entity;
-	}
+        return entity;
+    }
 
-	@Override
-	public T getOne(Specification<T> specs) {
-		T entity = findOne(specs);
+    @Override
+    public T getOne(Specification<T> specs) {
+        T entity = findOne(specs);
 
-		if (entity == null) {
-			throw new EmptyResultDataAccessException(1);
-		}
-		return entity;
-	}
+        if (entity == null) {
+            throw new EmptyResultDataAccessException(1);
+        }
+        return entity;
+    }
 
-	@Override
-	public T getFirstSortingData(Specification<T> spec, Sort sort){
-		return Iterables.getFirst( getAmountSortingData(spec, sort, 1) , null);
-	}
+    @Override
+    public T getFirstSortingData(Specification<T> spec, Sort sort){
+        return Iterables.getFirst( getAmountSortingData(spec, sort, 1) , null);
+    }
 
-	@Override
-	public List<T> getAmountSortingData(Specification<T> spec, Sort sort, int amount){
-		Pageable pageable = new PageRequest(0, amount, sort);
-		return findMore(spec, pageable);
-	}
+    @Override
+    public List<T> getAmountSortingData(Specification<T> spec, Sort sort, int amount){
+        Pageable pageable = new PageRequest(0, amount, sort);
+        return findMore(spec, pageable);
+    }
 
-	@Override
-	public T persist(T entity) {
-		em.persist(entity);
-		return entity;
-	}
+    @Override
+    public T persist(T entity) {
+        em.persist(entity);
+        return entity;
+    }
 
-	@Override
-	public T merge(T entity) {
-		return em.merge(entity);
-	}
+    @Override
+    public T merge(T entity) {
+        return em.merge(entity);
+    }
 
-	@Override
-	public List<T> findMore(Pageable pageable) {
-		return findMore(null, pageable);
-	}
+    @Override
+    public List<T> findMore(Pageable pageable) {
+        return findMore(null, pageable);
+    }
 
-	@Override
-	public List<T> findMore(Specification<T> spec, Pageable pageable) {
-		TypedQuery<T> query = getQuery(spec, pageable);
-		return pageable == null ? query.getResultList() : readMorePage(query, pageable, spec);
-	}
+    @Override
+    public List<T> findMore(Specification<T> spec, Pageable pageable) {
+        TypedQuery<T> query = getQuery(spec, pageable);
+        return pageable == null ? query.getResultList() : readMorePage(query, pageable, spec);
+    }
 
-	private List<T> readMorePage(TypedQuery<T> query, Pageable pageable, Specification<T> spec) {
+    private List<T> readMorePage(TypedQuery<T> query, Pageable pageable, Specification<T> spec) {
 
-		query.setFirstResult(pageable.getOffset());
-		query.setMaxResults(pageable.getPageSize());
+        query.setFirstResult(pageable.getOffset());
+        query.setMaxResults(pageable.getPageSize());
 
-		List<T> content = query.getResultList();
+        List<T> content = query.getResultList();
 
-		return content;
-	}
+        return content;
+    }
 
-	@Override
-	public T findPrevByNumberId(final Number idValue, Specification<T> spec, final Sort sort) {
-		Preconditions.checkArgument(spec instanceof Specifications, "spec은 Specifications 객체여야 함.");
+    @Override
+    public T findPrevByNumberId(final Number idValue, Specification<T> spec, final Sort sort) {
+        Preconditions.checkArgument(spec instanceof Specifications, "spec은 Specifications 객체여야 함.");
 
-		Specifications<T> specifications = (Specifications<T>) spec;
+        Specifications<T> specifications = (Specifications<T>) spec;
 
-		final SingularAttribute<? super T, ?> idAttribute = getIdAttribute();
+        final SingularAttribute<? super T, ?> idAttribute = getIdAttribute();
 
-		String idName = idAttribute.getName();
+        String idName = idAttribute.getName();
 
-		final Order order = getIdOrder(sort, idName);
+        final Order order = getIdOrder(sort, idName);
 
-		Specification<T> idCondition = new Specification<T>() {
+        Specification<T> idCondition = new Specification<T>() {
 
-			@Override
-			public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-				Predicate predicate = null;
+            @Override
+            public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                Predicate predicate = null;
 
-				@SuppressWarnings("unchecked")
-				Path<? extends Number> path = (Path<? extends Number>) root.get(idAttribute);
+                @SuppressWarnings("unchecked")
+                Path<? extends Number> path = (Path<? extends Number>) root.get(idAttribute);
 
-				if (order.getDirection() == Direction.DESC) {
+                if (order.getDirection() == Direction.DESC) {
 
-					predicate = cb.gt(path, idValue);
-				} else {
-					predicate = cb.lt(path, idValue);
-				}
-				return predicate;
-			}
+                    predicate = cb.gt(path, idValue);
+                } else {
+                    predicate = cb.lt(path, idValue);
+                }
+                return predicate;
+            }
 
-		};
+        };
 
-		Specifications<T> finalSpec = getSpecificationsWithIdCondition(specifications, idCondition);
+        Specifications<T> finalSpec = getSpecificationsWithIdCondition(specifications, idCondition);
 
-		Direction direction = order.getDirection() == Direction.DESC ? Direction.ASC : Direction.DESC;
+        Direction direction = order.getDirection() == Direction.DESC ? Direction.ASC : Direction.DESC;
 
-		return findNextorPrevResultByNumberId(order, finalSpec, direction);
-	}
+        return findNextorPrevResultByNumberId(order, finalSpec, direction);
+    }
 
-	private SingularAttribute<? super T, ?> getIdAttribute() {
-		final SingularAttribute<? super T, ?> idAttribute = entityInformation.getIdAttribute();
+    private SingularAttribute<? super T, ?> getIdAttribute() {
+        final SingularAttribute<? super T, ?> idAttribute = entityInformation.getIdAttribute();
 
-		if (!Number.class.isAssignableFrom(entityInformation.getIdType())) {
-			throw new IllegalArgumentException("ID가 숫자형일 경우에만 사용할 수 있습니다.");
-		}
-		return idAttribute;
-	}
+        if (!Number.class.isAssignableFrom(entityInformation.getIdType())) {
+            throw new IllegalArgumentException("ID가 숫자형일 경우에만 사용할 수 있습니다.");
+        }
+        return idAttribute;
+    }
 
-	private Order getIdOrder(final Sort sort, String idName) {
-		final Order order = sort.getOrderFor(idName);
+    private Order getIdOrder(final Sort sort, String idName) {
+        final Order order = sort.getOrderFor(idName);
 
-		if (order == null) {
-			throw new IllegalArgumentException("ID 프라퍼티(" + idName + ")의 정렬기준이 sort에 존재해야 합니다.");
-		}
-		return order;
-	}
+        if (order == null) {
+            throw new IllegalArgumentException("ID 프라퍼티(" + idName + ")의 정렬기준이 sort에 존재해야 합니다.");
+        }
+        return order;
+    }
 
-	private Specifications<T> getSpecificationsWithIdCondition(Specifications<T> specifications,
-			Specification<T> idCondition) {
-		Specifications<T> finalSpec = null;
+    private Specifications<T> getSpecificationsWithIdCondition(Specifications<T> specifications,
+                                                               Specification<T> idCondition) {
+        Specifications<T> finalSpec = null;
 
-		if (specifications == null) {
-			finalSpec = Specifications.where(idCondition);
-		} else {
-			finalSpec = specifications.and(idCondition);
-		}
-		return finalSpec;
-	}
+        if (specifications == null) {
+            finalSpec = Specifications.where(idCondition);
+        } else {
+            finalSpec = specifications.and(idCondition);
+        }
+        return finalSpec;
+    }
 
-	private T findNextorPrevResultByNumberId(final Order keyOrder, Specifications<T> finalSpec, Direction direction) {
-		Pageable pageable = new PageRequest(0, 1, new Sort(keyOrder.with(direction)));
-		List<T> results = findMore(finalSpec, pageable);
-		return DataAccessUtils.singleResult(results);
-	}
+    private T findNextorPrevResultByNumberId(final Order keyOrder, Specifications<T> finalSpec, Direction direction) {
+        Pageable pageable = new PageRequest(0, 1, new Sort(keyOrder.with(direction)));
+        List<T> results = findMore(finalSpec, pageable);
+        return DataAccessUtils.singleResult(results);
+    }
 
-	@Override
-	public T findNextByNumberId(final Number idValue, Specification<T> spec, Sort sort) {
-		Preconditions.checkArgument(spec instanceof Specifications, "spec은 Specifications 객체여야 함.");
+    @Override
+    public T findNextByNumberId(final Number idValue, Specification<T> spec, Sort sort) {
+        Preconditions.checkArgument(spec instanceof Specifications, "spec은 Specifications 객체여야 함.");
 
-		Specifications<T> specifications = (Specifications<T>) spec;
+        Specifications<T> specifications = (Specifications<T>) spec;
 
-		final SingularAttribute<? super T, ?> idAttribute = getIdAttribute();
+        final SingularAttribute<? super T, ?> idAttribute = getIdAttribute();
 
-		String idName = idAttribute.getName();
+        String idName = idAttribute.getName();
 
-		final Order order = getIdOrder(sort, idName);
+        final Order order = getIdOrder(sort, idName);
 
-		Specification<T> idCondition = new Specification<T>() {
+        Specification<T> idCondition = new Specification<T>() {
 
-			@Override
-			public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-				Predicate predicate = null;
+            @Override
+            public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                Predicate predicate = null;
 
-				@SuppressWarnings("unchecked")
-				Path<? extends Number> path = (Path<? extends Number>) root.get(idAttribute);
+                @SuppressWarnings("unchecked")
+                Path<? extends Number> path = (Path<? extends Number>) root.get(idAttribute);
 
-				if (order.getDirection() == Direction.DESC) {
+                if (order.getDirection() == Direction.DESC) {
 
-					predicate = cb.lt(path, idValue);
-				} else {
-					predicate = cb.gt(path, idValue);
-				}
-				return predicate;
-			}
+                    predicate = cb.lt(path, idValue);
+                } else {
+                    predicate = cb.gt(path, idValue);
+                }
+                return predicate;
+            }
 
-		};
+        };
 
-		Specifications<T> finalSpec = getSpecificationsWithIdCondition(specifications, idCondition);
+        Specifications<T> finalSpec = getSpecificationsWithIdCondition(specifications, idCondition);
 
-		return findNextorPrevResultByNumberId(order, finalSpec, order.getDirection());
-	}
+        return findNextorPrevResultByNumberId(order, finalSpec, order.getDirection());
+    }
 }

@@ -1,7 +1,9 @@
 package net.slipp.service.qna
 
+import java.util.List
 import javax.annotation.Resource
 
+import net.slipp.domain.qna.Question
 import net.slipp.repository.qna.{AnswerRepository, QuestionRepository}
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -15,7 +17,8 @@ class MigrationService {
   @Resource(name = "answerRepository") private var answerRepository: AnswerRepository = _
 
   def convertConfluenceToMarkdown {
-    questionRepository.findAll.foreach(q => q.convertWiki())
+    val questions: List[Question] = questionRepository.findAll
+    questions.foreach(q => q.convertWiki())
     answerRepository.findAll.foreach(a => a.convertWiki())
   }
 }
