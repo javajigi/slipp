@@ -1,17 +1,15 @@
 package net.slipp.service.tag
 
-import java.lang.Long
-import java.util.{List, Set, StringTokenizer}
+import java.util.Set
 import javax.annotation.Resource
 
-import com.google.common.collect.{Lists, Sets}
+import com.google.common.collect.Lists
 import net.slipp.domain.fb.FacebookGroup
 import net.slipp.domain.qna.Question
 import net.slipp.domain.tag.{Tag, TaggedType}
 import net.slipp.domain.user.SocialUser
 import net.slipp.ndomain.tag.TaggedHistory
 import net.slipp.repository.tag.{TagRepository, TaggedHistoryRepository}
-import net.slipp.service.MailService
 import org.apache.commons.lang3.StringUtils
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.data.domain.{Page, PageRequest, Pageable}
@@ -22,42 +20,27 @@ import org.springframework.util.Assert
 import scala.collection.JavaConversions._
 
 object TagService {
-  private[tag] def parseTags(plainTags: String): Set[String] = {
-    val parsedTags = Sets.newHashSet[String]
-    val tokenizer: StringTokenizer = new StringTokenizer(plainTags, " |,")
-    while (tokenizer.hasMoreTokens) {
-      parsedTags.add(tokenizer.nextToken)
-    }
-    return parsedTags
+  def parseTags(plainTags: String) = {
+    plainTags.split(" |,").toSet
   }
 }
 
 @Service
 @Transactional
 class TagService {
-  @Resource(name = "mailService") private var mailService: MailService = null
   @Resource(name = "tagRepository") private var tagRepository: TagRepository = null
   @Resource(name = "taggedHistoryRepository") private var taggedHistoryRepository: TaggedHistoryRepository = null
 
   def processTags(plainTags: String): Set[Tag] = {
-    val parsedTags: Set[String] = TagService.parseTags(plainTags)
-    val tags = Sets.newHashSet[Tag]
-    for (each <- parsedTags) {
-      val tag: Tag = tagRepository.findByName(each)
-      if (tag == null) {
-        tags.add(newTag(each))
-      }
-      else {
-        tags.add(tag)
-      }
-    }
-    return tags
+    val parsedTags = TagService.parseTags(plainTags)
+    parsedTags.map(pTag => {
+      Option(tagRepository.findByName(pTag)).getOrElse(newTag(pTag))
+    })
   }
 
-  def newTag(name: String): Tag = {
+  def newTag(name: String) = {
     val newTag: Tag = Tag.newTag(name)
     tagRepository.save(newTag)
-    return newTag
   }
 
   private def getTagByFacebookGroup(facebookGroup: FacebookGroup) = {
@@ -87,16 +70,12 @@ class TagService {
     }
   }
 
-  def findAllTags(page: Pageable): Page[Tag] = {
-    return tagRepository.findAll(page)
-  }
+  def findAllTags(page: Pageable) = tagRepository.findAll(page)
 
-  def findPooledParentTags: Iterable[Tag] = {
-    return tagRepository.findPooledParents
-  }
+  def findPooledParentTags = tagRepository.findPooledParents
 
   @Cacheable(value = Array("latestTags"))
-  def findLatestTags: List[Tag] = {
+  def findLatestTags = {
     val pageable: PageRequest = new PageRequest(0, 30)
     val page: Page[Array[AnyRef]] = taggedHistoryRepository.findsLatest(pageable)
     val latestTags = Lists.newArrayList[Tag]
@@ -106,35 +85,29 @@ class TagService {
         latestTags.add(tag)
       }
     }
-    return latestTags
+    latestTags
   }
 
-  def saveTag(name: String, parentTag: Long): Tag = {
+  def saveTag(name: String, parentTag: Option[Long]) = {
     if (StringUtils.isBlank(name)) {
       throw new IllegalArgumentException("태그명을 입력해 주세요.")
     }
-    val originalTag: Tag = tagRepository.findByName(name)
+    val originalTag = tagRepository.findByName(name)
     if (originalTag != null) {
       throw new IllegalArgumentException(name + " 태그는 이미 존재합니다.")
     }
-    var parent: Tag = null
-    if (parentTag != null) {
-      parent = tagRepository.findOne(parentTag)
+
+    parentTag match {
+      case Some(parentId) => tagRepository.save(Tag.pooledTag(name, tagRepository.findOne(parentId)))
+      case None => tagRepository.save(Tag.pooledTag(name))
     }
-    return tagRepository.save(Tag.pooledTag(name, parent))
   }
 
-  def findTagByName(name: String): Tag = {
-    return tagRepository.findByName(name)
-  }
+  def findTagByName(name: String) = tagRepository.findByName(name)
 
-  def findTagById(id: Long): Tag = {
-    return tagRepository.findOne(id)
-  }
+  def findTagById(id: Long) = tagRepository.findOne(id)
 
-  def findsBySearch(keyword: String): List[Tag] = {
-    return tagRepository.findByNameLike(keyword + "%")
-  }
+  def findsBySearch(keyword: String) = tagRepository.findByNameLike(keyword + "%")
 
   def saveTaggedHistories(question: Question, tags: Set[Tag]) {
     for (tag <- tags) {

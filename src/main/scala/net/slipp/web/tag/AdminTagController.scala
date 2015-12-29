@@ -35,7 +35,7 @@ class AdminTagController(
     logger.debug(s"create tag : $name, $parentTag")
 
     try {
-      tagService.saveTag(name, parentTag)
+      tagService.saveTag(name, Option(parentTag))
       "redirect:/admin/tags"
     } catch {
       case e: IllegalArgumentException => {
