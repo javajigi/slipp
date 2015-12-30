@@ -16,7 +16,7 @@ class AnswersTest {
     answer2.writedBy(createSocialUser(2L, "google"))
     val persistedAnswers: List[Answer] = Lists.newArrayList(answer1, answer2)
     val answers: Answers = new Answers(persistedAnswers)
-    val answerers: Set[SocialUser] = answers.findFacebookAnswerers
+    val answerers = answers.findFacebookAnswerers
     assertThat(answerers.size, is(1))
   }
 

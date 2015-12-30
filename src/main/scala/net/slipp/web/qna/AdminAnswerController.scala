@@ -29,7 +29,7 @@ class AdminAnswerController(@Resource(name = "qnaService") qnaService: QnaServic
   @RequestMapping(value = Array("{answerId}"), method = Array(RequestMethod.PUT))
   def update(@LoginUser loginUser: SocialUser, @PathVariable questionId: Long, @PathVariable answerId: Long, answer: Answer) = {
     val originalAnswer = qnaService.findAnswerById(answerId)
-    qnaService.updateAnswer(originalAnswer.getWriter(), answer)
+    qnaService.updateAnswer(originalAnswer.getWriter, answer)
     "redirect:/admin/questions/%d#answer-%d".format(questionId, answerId)
   }
 

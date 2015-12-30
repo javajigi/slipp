@@ -55,7 +55,7 @@ class QuestionController(
   def updateForm(@LoginUser loginUser: SocialUser, @PathVariable id: Long, model: Model) = {
     val question = qnaService.findByQuestionId(id)
     if (!question.isWritedBy(loginUser)) {
-      throw new AccessDeniedException(loginUser.getUserId() + " is not owner!")
+      throw new AccessDeniedException(loginUser.getUserId + " is not owner!")
     }
     model.addAttribute("question", question)
     "qna/form"

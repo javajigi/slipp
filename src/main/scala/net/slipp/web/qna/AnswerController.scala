@@ -41,7 +41,7 @@ class AnswerController(
   def updateForm(@LoginUser loginUser: SocialUser, @PathVariable questionId: Long, @PathVariable answerId: Long, model: Model) = {
     val answer = qnaService.findAnswerById(answerId)
     if (!answer.isWritedBy(loginUser)) {
-      throw new AccessDeniedException(loginUser.getUserId() + " is not owner!")
+      throw new AccessDeniedException(loginUser.getUserId + " is not owner!")
     }
 
     model.addAttribute("question", qnaService.findByQuestionId(questionId))

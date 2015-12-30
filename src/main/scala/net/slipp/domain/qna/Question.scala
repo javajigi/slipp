@@ -9,7 +9,7 @@ import net.slipp.domain.ProviderType
 import net.slipp.domain.tag.{Tag, Tags}
 import net.slipp.domain.user.SocialUser
 import net.slipp.service.qna.QnaService
-import net.slipp.support.jpa.{CreatedDateEntityListener, HasCreatedDate}
+import net.slipp.support.jpa.{DomainModel, CreatedDateEntityListener, HasCreatedDate}
 import net.slipp.support.wiki.SlippWikiUtils
 import org.apache.commons.collections4.CollectionUtils
 import org.apache.commons.lang3.StringUtils
@@ -40,7 +40,7 @@ object Question {
 @Entity
 @EntityListeners(Array(classOf[CreatedDateEntityListener]))
 @Cache(region = "question", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-class Question(id: Long, loginUser: SocialUser, t: String, c: String, nTags: Set[Tag]) extends HasCreatedDate {
+class Question(id: Long, loginUser: SocialUser, t: String, c: String, nTags: Set[Tag]) extends DomainModel with HasCreatedDate {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private var questionId: Long = id
@@ -235,7 +235,7 @@ class Question(id: Long, loginUser: SocialUser, t: String, c: String, nTags: Set
   }
 
   def deAnswered(answer: Answer) {
-    answer.deleted
+    answer.delete()
     syncAnswer(answer)
   }
 
@@ -246,7 +246,7 @@ class Question(id: Long, loginUser: SocialUser, t: String, c: String, nTags: Set
       this.updatedDate = getCreatedDate
       return
     }
-    val activeAnswers: List[Answer] = getAnswers.filter(a => !a.isDeleted())
+    val activeAnswers = getAnswers.filter(a => !a.isDeleted)
     val lastAnswer: Answer = Iterables.getLast(activeAnswers)
     Question.log.debug("Latest Answer : {}", lastAnswer)
     this.latestParticipant = lastAnswer.getWriter
@@ -356,7 +356,7 @@ class Question(id: Long, loginUser: SocialUser, t: String, c: String, nTags: Set
     return new Tags(tags).getConnectedGroupTags
   }
 
-  def convertWiki {
+  def convertWiki() {
     val contents: String = SlippWikiUtils.convertWiki(getContents)
     this.contentsHolder = Lists.newArrayList(contents)
   }
