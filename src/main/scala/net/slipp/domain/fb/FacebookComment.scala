@@ -6,6 +6,8 @@ import com.restfb.types.{CategorizedFacebookType, Comment}
 import net.slipp.domain.tag.Tag
 import net.slipp.support.web.tags.SlippFunctions.{br, links}
 
+import scala.beans.BeanProperty
+
 object FacebookComment {
   def create(tag: Tag, comment: Comment): FacebookComment = {
     val user: CategorizedFacebookType = comment.getFrom
@@ -18,40 +20,28 @@ object FacebookComment {
 
 class FacebookComment(i: String, uid: String, n: String, cTime: Date, m: String, gId: String, gName: String)
   extends Comparable[FacebookComment] {
-  private val id = i
-  private val userId = uid
-  private val name = n
-  private val createdTime = cTime
-  private val message = m
-  private val groupId = gId
-  private val groupName = gName
+  @BeanProperty
+  val id = i
 
-  def getId = {
-    id
-  }
+  @BeanProperty
+  val userId = uid
 
-  def getCreatedTime = {
-    createdTime
-  }
+  @BeanProperty
+  val name = n
+
+  @BeanProperty
+  val createdTime = cTime
+
+  val message = m
+
+  @BeanProperty
+  val groupId = gId
+
+  @BeanProperty
+  val groupName = gName
 
   def getMessage = {
     br(links(message))
-  }
-
-  def getUserId = {
-    userId
-  }
-
-  def getName = {
-    name
-  }
-
-  def getGroupId = {
-    groupId
-  }
-
-  def getGroupName = {
-    groupName
   }
 
   def compareTo(target: FacebookComment) = {
