@@ -2,10 +2,10 @@ package net.slipp.repository.notification
 
 import java.util.{HashSet, List}
 
-import net.slipp.domain.notification.Notification
 import net.slipp.domain.qna.Question
 import net.slipp.domain.tag.Tag
 import net.slipp.domain.user.{SocialUser, SocialUserBuilder}
+import net.slipp.ndomain.notification.Notification
 import net.slipp.repository.qna.QuestionRepository
 import net.slipp.repository.user.SocialUserRepository
 import org.hamcrest.CoreMatchers.is
@@ -14,8 +14,8 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.slf4j.{Logger, LoggerFactory}
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.data.domain.{PageRequest, Pageable, Sort}
 import org.springframework.data.domain.Sort.Direction
+import org.springframework.data.domain.{PageRequest, Pageable, Sort}
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 import org.springframework.transaction.annotation.Transactional

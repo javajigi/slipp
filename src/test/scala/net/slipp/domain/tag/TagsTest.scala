@@ -6,9 +6,7 @@ import org.junit.Test
 import com.google.common.collect.Sets
 
 class TagsTest {
-  @Test
-  @throws(classOf[Exception])
-  def getConnectedGroupTag {
+  @Test def getConnectedGroupTag {
     val java1: Tag = Tag.pooledTag("java")
     val connectedTag: Tag = Tag.groupedTag("SLiPP", "1234567")
     val tagSet: Set[Tag] = Sets.newHashSet(java1, connectedTag)
@@ -17,9 +15,7 @@ class TagsTest {
     assertTrue(groupTags.contains(connectedTag))
   }
 
-  @Test
-  @throws(classOf[Exception])
-  def getConnectedGroupTagHasNotConntectedGroup {
+  @Test def getConnectedGroupTagHasNotConntectedGroup {
     val java1: Tag = Tag.pooledTag("java")
     val c: Tag = Tag.pooledTag("c")
     val tagSet: Set[Tag] = Sets.newHashSet(java1, c)
@@ -28,9 +24,7 @@ class TagsTest {
     assertTrue(groupTags.isEmpty)
   }
 
-  @Test
-  @throws(classOf[Exception])
-  def getConnectedGroupTagEmptyTag {
+  @Test def getConnectedGroupTagEmptyTag {
     val tagSet = Sets.newHashSet[Tag]
     val tags: Tags = new Tags(tagSet)
     val groupTags: Set[Tag] = tags.getConnectedGroupTags

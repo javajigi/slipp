@@ -75,7 +75,7 @@ class QuestionController(
       throw new AccessDeniedException(id + " question is deleted.")
     }
 
-    model.addAttribute("answer", getTemporaryAnswer(session).createAnswer())
+    model.addAttribute("answer", getTemporaryAnswer(session).createAnswer)
     model.addAttribute("question", question)
     model.addAttribute("tags", tagService.findLatestTags)
     model.addAttribute("user", new UserForm())

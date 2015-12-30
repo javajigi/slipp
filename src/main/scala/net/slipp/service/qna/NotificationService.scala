@@ -5,7 +5,7 @@ import javax.annotation.Resource
 
 import com.restfb.types.FacebookType
 import com.restfb.{DefaultFacebookClient, FacebookClient, Parameter, Version}
-import net.slipp.domain.notification.Notification
+import net.slipp.ndomain.notification.Notification
 import net.slipp.domain.qna.{Answer, Question}
 import net.slipp.domain.user.SocialUser
 import net.slipp.repository.notification.NotificationRepository

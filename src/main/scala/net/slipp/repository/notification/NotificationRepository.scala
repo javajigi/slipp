@@ -3,9 +3,9 @@ package net.slipp.repository.notification
 import java.lang.Long
 import java.util.List
 
-import net.slipp.domain.notification.Notification
 import net.slipp.domain.qna.Question
 import net.slipp.domain.user.SocialUser
+import net.slipp.ndomain.notification.Notification
 import org.springframework.data.jpa.repository.{JpaRepository, Modifying, Query}
 import org.springframework.data.repository.query.Param
 

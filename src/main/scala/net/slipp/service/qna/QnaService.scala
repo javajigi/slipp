@@ -47,7 +47,7 @@ import scala.collection.JavaConversions._
     tagService.saveTaggedHistories(savedQuestion, tags)
     TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
       override def afterCommit {
-        if (questionDto.isConnected) {
+        if (questionDto.getConnected) {
           facebookService.sendToQuestionMessage(loginUser, savedQuestion.getQuestionId)
         }
         if (!groupTags.isEmpty) {

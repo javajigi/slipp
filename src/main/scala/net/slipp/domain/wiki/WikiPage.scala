@@ -10,6 +10,7 @@ object WikiPage {
 }
 
 class WikiPage(pId: Long, t: String, cDate: Timestamp, c: String) extends Serializable {
+  @BeanProperty
   val pageId = pId
 
   @BeanProperty

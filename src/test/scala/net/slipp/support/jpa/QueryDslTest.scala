@@ -25,8 +25,8 @@ class QueryDslTest {
     exporter.setSupertypeAnnotation(classOf[MappedSuperclass])
     exporter.setSkipAnnotation(classOf[Transient])
     exporter.setCreateScalaSources(true)
-    exporter.setTargetFolder(new File("target/generated-sources/java"))
-    exporter.export("net.slipp.domain")
+    exporter.setTargetFolder(new File("target/generated-sources/scala"))
+    exporter.export("net.slipp.ndomain")
   }
 
   @Test def getFieldName {

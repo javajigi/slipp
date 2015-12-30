@@ -426,6 +426,39 @@
 					<warSourceExcludes>html/**</warSourceExcludes>
 				</configuration>
 			</plugin>
+            <plugin>
+                <groupId>com.mysema.querydsl</groupId>
+                <artifactId>querydsl-maven-plugin</artifactId>
+                <version>${querydsl.version}</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.mysema.querydsl</groupId>
+                        <artifactId>querydsl-scala</artifactId>
+                        <version>${querydsl.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.scala-lang</groupId>
+                        <artifactId>scala-library</artifactId>
+                        <version>${scala.version}</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <id>generate-querydsl-classes</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>jpa-export</goal>
+                        </goals>
+                        <configuration>
+                            <targetFolder>${basedir}/target/generated-sources/scala</targetFolder>
+                            <scala>true</scala>
+                            <packages>
+                                <package>net.slipp.ndomain</package>
+                            </packages>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 			<plugin>
 				<groupId>com.mysema.maven</groupId>
 				<artifactId>apt-maven-plugin</artifactId>
@@ -494,6 +527,7 @@
 							<sources>
 								<source>src/main/scala</source>
 								<source>${querydsl.generated.dir}</source>
+                                <source>${basedir}/target/generated-sources/scala</source>
 							</sources>
 						</configuration>
 					</execution>
