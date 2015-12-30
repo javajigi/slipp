@@ -1,8 +1,8 @@
 package net.slipp.service.smalltalk
 
+import net.slipp.domain.smalltalk.SmallTalkComment
 import org.mockito.Mockito._
-import net.slipp.ndomain.smalltalk.SmallTalk
-import net.slipp.ndomain.smalltalk.SmallTalkComment
+import net.slipp.domain.smalltalk.SmallTalk
 import net.slipp.repository.smalltalk.SmallTalkCommentRepository
 import net.slipp.repository.smalltalk.SmallTalkRepository
 import org.junit.Assert

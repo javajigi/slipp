@@ -4,8 +4,9 @@ import javax.annotation.Resource
 import javax.validation.Valid
 
 import com.typesafe.scalalogging.LazyLogging
+import net.slipp.domain.smalltalk.SmallTalkComment
 import net.slipp.domain.user.SocialUser
-import net.slipp.ndomain.smalltalk.{SmallTalkComment, SmallTalk}
+import net.slipp.domain.smalltalk.SmallTalk
 import net.slipp.service.smalltalk.SmallTalkService
 import net.slipp.support.web.argumentresolver.LoginUser
 import org.springframework.stereotype.Controller

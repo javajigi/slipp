@@ -2,9 +2,10 @@ package net.slipp.service.smalltalk
 
 import java.util.List
 import javax.annotation.Resource
+import net.slipp.domain.smalltalk.SmallTalkComment
 import net.slipp.domain.summary.SiteSummary
 import net.slipp.domain.user.SocialUser
-import net.slipp.ndomain.smalltalk.{SmallTalkComment, SmallTalk}
+import net.slipp.domain.smalltalk.SmallTalk
 import net.slipp.repository.smalltalk.SmallTalkCommentRepository
 import net.slipp.repository.smalltalk.SmallTalkRepository
 import net.slipp.service.summary.SummaryService

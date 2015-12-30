@@ -1,4 +1,4 @@
-package net.slipp.ndomain.smalltalk
+package net.slipp.domain.smalltalk
 
 import java.util.Date
 import javax.persistence._

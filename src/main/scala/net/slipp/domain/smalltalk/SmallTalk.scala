@@ -1,31 +1,16 @@
-package net.slipp.ndomain.smalltalk
+package net.slipp.domain.smalltalk
 
-import java.util.Date
-import java.util.List
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.EntityListeners
-import javax.persistence.FetchType
-import javax.persistence.ForeignKey
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
-import javax.persistence.JoinColumn
-import javax.persistence.ManyToOne
-import javax.persistence.OneToMany
-import javax.persistence.Temporal
-import javax.persistence.TemporalType
-import javax.persistence.Transient
+import java.util.{Date, List}
+import javax.persistence.{Column, Entity, EntityListeners, FetchType, ForeignKey, GeneratedValue, GenerationType, Id, JoinColumn, ManyToOne, OneToMany, Temporal, TemporalType, Transient}
 import javax.validation.constraints.NotNull
+
+import com.fasterxml.jackson.annotation.JsonIgnore
 import net.slipp.domain.summary.SiteSummary
 import net.slipp.domain.user.SocialUser
-import net.slipp.support.jpa.CreatedAndUpdatedDateEntityListener
-import net.slipp.support.jpa.HasCreatedAndUpdatedDate
-import net.slipp.support.utils.SlippStringUtils
-import net.slipp.support.utils.TimeUtils
+import net.slipp.support.jpa.{CreatedAndUpdatedDateEntityListener, HasCreatedAndUpdatedDate}
+import net.slipp.support.utils.{SlippStringUtils, TimeUtils}
 import org.apache.commons.lang3.StringUtils
 import org.hibernate.validator.constraints.Length
-import com.fasterxml.jackson.annotation.JsonIgnore
 
 @Entity
 @EntityListeners(Array(classOf[CreatedAndUpdatedDateEntityListener]))

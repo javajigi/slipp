@@ -1,4 +1,4 @@
-package net.slipp.ndomain.notification
+package net.slipp.domain.notification
 
 import javax.persistence.{Column, Entity, ForeignKey, GeneratedValue, GenerationType, Id, JoinColumn, OneToOne}
 

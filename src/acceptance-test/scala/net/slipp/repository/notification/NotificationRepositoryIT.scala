@@ -2,10 +2,10 @@ package net.slipp.repository.notification
 
 import java.util.{HashSet, List}
 
+import net.slipp.domain.notification.Notification
 import net.slipp.domain.qna.Question
 import net.slipp.domain.tag.Tag
 import net.slipp.domain.user.{SocialUser, SocialUserBuilder}
-import net.slipp.ndomain.notification.Notification
 import net.slipp.repository.qna.QuestionRepository
 import net.slipp.repository.user.SocialUserRepository
 import org.hamcrest.CoreMatchers.is
