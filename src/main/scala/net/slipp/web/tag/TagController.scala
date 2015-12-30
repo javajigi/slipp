@@ -30,7 +30,7 @@ class TagController(@Resource(name = "tagService") tagService: TagService) exten
   @ResponseBody def searchByTagName(name: String): List[TagForm] = {
     logger.debug("search tag by name : {}", name);
     val searchedTags = tagService.findsBySearch(name);
-    searchedTags.toList.map ( tag => new TagForm(tag.getName()) )
+    searchedTags.toList.map ( tag => new TagForm(tag.getName) )
   }
   
   def this() = this(null)

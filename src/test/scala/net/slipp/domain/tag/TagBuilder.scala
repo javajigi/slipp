@@ -1,7 +1,5 @@
 package net.slipp.domain.tag
 
-import java.lang.Long
-
 object TagBuilder {
   def aTag: TagBuilder = {
     return new TagBuilder
@@ -9,7 +7,7 @@ object TagBuilder {
 }
 
 class TagBuilder {
-  private var id: Long = null
+  private var id: Long = _
   private var name: String = null
   private var taggedCount: Int = 0
   private var parentTag: Tag = null

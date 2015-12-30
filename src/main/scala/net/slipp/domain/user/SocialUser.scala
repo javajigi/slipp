@@ -1,5 +1,6 @@
 package net.slipp.domain.user
 
+import java.lang.Long
 import net.slipp.domain.ProviderType
 import net.slipp.support.jpa.DomainModel
 import net.slipp.support.utils.MD5Util
