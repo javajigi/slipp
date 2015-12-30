@@ -4,8 +4,7 @@ import com.google.common.collect.Iterables
 import com.google.common.collect.Lists
 import net.slipp.domain.ProviderType
 import net.slipp.domain.user.SocialUser
-import net.slipp.support.jpa.CreatedAndUpdatedDateEntityListener
-import net.slipp.support.jpa.HasCreatedAndUpdatedDate
+import net.slipp.support.jpa.{DomainModel, CreatedAndUpdatedDateEntityListener, HasCreatedAndUpdatedDate}
 import net.slipp.support.wiki.SlippWikiUtils
 import javax.persistence._
 import java.util.Collection
@@ -13,7 +12,7 @@ import java.util.Date
 
 @Entity
 @EntityListeners(Array(classOf[CreatedAndUpdatedDateEntityListener]))
-class Answer(c: String) extends HasCreatedAndUpdatedDate with Comparable[Answer] {
+class Answer(c: String) extends DomainModel with HasCreatedAndUpdatedDate with Comparable[Answer] {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "answer_id")
