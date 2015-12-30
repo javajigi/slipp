@@ -6,15 +6,18 @@ import net.slipp.domain.tag.Tag
 import net.slipp.domain.tag.TagBuilder.aTag
 import net.slipp.repository.tag.TagRepository
 import org.hamcrest.CoreMatchers.is
-import org.junit.Assert.assertThat
+import org.junit.Assert._
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.when
 import org.mockito.runners.MockitoJUnitRunner
 import org.mockito.{InjectMocks, Mock}
+import org.slf4j.LoggerFactory
 
 @RunWith(classOf[MockitoJUnitRunner])
 class TagServiceTest {
+  private val log = LoggerFactory.getLogger(classOf[TagServiceTest])
+
   @Mock private var tagRepository: TagRepository = null
   @InjectMocks private val dut = new TagService
 
@@ -54,6 +57,7 @@ class TagServiceTest {
     when(tagRepository.save(tag3)).thenReturn(tag3)
 
     val tags = dut.processGroupTags(newTags)
+    log.debug(s"tags : ${tags}")
 
     assertThat(tags.contains(tag1), is(true))
     assertThat(tags.contains(tag2), is(true))

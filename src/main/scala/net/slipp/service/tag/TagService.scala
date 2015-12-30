@@ -45,11 +45,9 @@ class TagService {
 
   private def getTagByFacebookGroup(facebookGroup: FacebookGroup) = {
     Option(tagRepository.findByGroupId(facebookGroup.getGroupId))
-      .getOrElse(Option(tagRepository.findByName(facebookGroup.getName))
-        .getOrElse {
-          val newTag: Tag = Tag.groupedTag(facebookGroup.getName, facebookGroup.getGroupId)
-          tagRepository.save(newTag)
-        })
+      .orElse(Option(tagRepository.findByName(facebookGroup.getName))
+        .map(t => t.moveGroupTag(facebookGroup.getGroupId)))
+      .getOrElse(tagRepository.save(Tag.groupedTag(facebookGroup.getName, facebookGroup.getGroupId)))
   }
 
   def processGroupTags(groupTags: Set[FacebookGroup]): Set[Tag] = {

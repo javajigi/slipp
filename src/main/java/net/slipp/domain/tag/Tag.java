@@ -124,9 +124,10 @@ public class Tag {
 		}
 	}
 	
-    public void moveGroupTag(String groupId) {
+    public Tag moveGroupTag(String groupId) {
         this.pooled = true;
         this.tagInfo = new TagInfo(groupId, this.name);
+        return this;
     }
 
 	public boolean isConnectGroup() {
@@ -195,9 +196,15 @@ public class Tag {
 		return true;
 	}
 
-	@Override
-	public String toString() {
-		return "Tag [tagId=" + tagId + ", name=" + name + ", taggedCount=" + taggedCount + ", pooled=" + pooled
-				+ ", parent=" + parent + "]";
-	}
+    @Override
+    public String toString() {
+        return "Tag{" +
+                "tagId=" + tagId +
+                ", name='" + name + '\'' +
+                ", taggedCount=" + taggedCount +
+                ", pooled=" + pooled +
+                ", parent=" + parent +
+                ", tagInfo=" + tagInfo +
+                '}';
+    }
 }
