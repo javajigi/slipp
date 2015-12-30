@@ -1,9 +1,8 @@
-package net.slipp.ndomain.tag
+package net.slipp.domain.tag
 
 import javax.persistence._
-import net.slipp.support.jpa.DomainModel
-import net.slipp.support.jpa.NHasCreatedDate
-import net.slipp.domain.tag.TaggedType
+
+import net.slipp.support.jpa.{DomainModel, NHasCreatedDate}
 
 @Entity(name="TaggedHistory")
 @Table(indexes = Array(

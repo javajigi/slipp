@@ -3,9 +3,8 @@ package net.slipp.service.qna
 import java.util.Set
 import javax.annotation.Resource
 
-import com.mysema.query.types.expr.BooleanExpression
 import com.restfb.types.Post
-import net.slipp.domain.qna.{Answer, DifferenceTags, QQuestion, Question, _}
+import net.slipp.domain.qna.{Answer, DifferenceTags, Question, _}
 import net.slipp.domain.tag.{Tag, TaggedType}
 import net.slipp.domain.user.SocialUser
 import net.slipp.repository.qna.{AnswerRepository, QuestionRepository}
@@ -95,8 +94,7 @@ import scala.collection.JavaConversions._
   }
 
   def findsQuestion(pageable: Pageable): Page[Question] = {
-    val question: QQuestion = QQuestion.question
-    return questionRepository.findAll(question.deleted.eq(false), pageable)
+    questionRepository.findByDeleted(false, pageable)
   }
 
   def findsAllQuestion(searchTerm: String, pageable: Pageable): Page[Question] = {
@@ -107,16 +105,12 @@ import scala.collection.JavaConversions._
   }
 
   def findsQuestionByWriter(writerId: Option[Long], pageable: Pageable): Page[Question] = {
-    val question: QQuestion = QQuestion.question
-    val isDeleted = question.deleted.eq(false)
-
     writerId match {
       case Some(w) => {
         val writer: SocialUser = socialUserService.findById(w)
-        val isWriter: BooleanExpression = question.writer.eq(writer)
-        questionRepository.findAll(isWriter.and(isDeleted), pageable)
+        questionRepository.findByWriterAndDeleted(writer, false, pageable)
       }
-      case None => questionRepository.findAll(isDeleted, pageable)
+      case None => questionRepository.findByDeleted(false, pageable)
     }
   }
 

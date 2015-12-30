@@ -32,7 +32,7 @@ class ApiQuestionController(@Resource(name = "qnaService") qnaService: QnaServic
   @RequestMapping(value = Array("/like"), method = Array(RequestMethod.POST))
   def likeQuestions(@LoginUser loginUser: SocialUser, @PathVariable questionId: Long) = {
     val question = qnaService.likeQuestion(loginUser, questionId)
-    question.getSumLike()
+    question.getSumLike
   }
 
   @RequestMapping(value = Array("/detagged/{name}"), method = Array(RequestMethod.POST))

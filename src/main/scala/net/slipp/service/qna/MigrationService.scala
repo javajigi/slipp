@@ -18,7 +18,7 @@ class MigrationService {
 
   def convertConfluenceToMarkdown {
     val questions: List[Question] = questionRepository.findAll
-    questions.foreach(q => q.convertWiki())
+    questions.foreach(q => q.convertWiki)
     answerRepository.findAll.foreach(a => a.convertWiki())
   }
 }

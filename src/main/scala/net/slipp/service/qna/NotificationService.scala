@@ -39,9 +39,9 @@ import scala.collection.JavaConversions._
     }
     val facebookClient: FacebookClient = new DefaultFacebookClient(createAccessToken, Version.VERSION_2_2)
     for (notifiee <- notifieeUsers) {
-      val uri: String = String.format("/%s/notifications", notifiee.getProviderUserId)
-      val template: String = String.format("%s님이 \"%s\" 글에 답변을 달았습니다.", loginUser.getUserId, question.getTitle)
-      val href: String = String.format("/questions/%d#answer-%d", question.getQuestionId, answer.getAnswerId)
+      val uri = s"/${notifiee.getProviderUserId}/notifications"
+      val template = s"""${loginUser.getUserId}님이 \"${question.getTitle}\" 글에 답변을 달았습니다."""
+      val href = s"/questions/${question.getQuestionId}#answer-${answer.getAnswerId}"
       facebookClient.publish(uri, classOf[FacebookType], Parameter.`with`("template", template), Parameter.`with`("href", href))
     }
   }

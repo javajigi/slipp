@@ -21,7 +21,7 @@ class NotificationController(@Resource(name = "notificationService") notificatio
   def list(@LoginUser notifiee: SocialUser): List[NotificationForm] = {
     val questions = notificationService.findNotificationsAndReaded(notifiee)
     questions.map(q => {
-      new NotificationForm(q.getQuestionId(), q.getTitle(), true)
+      new NotificationForm(q.getQuestionId, q.getTitle, true)
     })
   }
   

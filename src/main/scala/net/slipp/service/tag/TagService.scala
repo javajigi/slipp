@@ -6,9 +6,8 @@ import javax.annotation.Resource
 import com.google.common.collect.Lists
 import net.slipp.domain.fb.FacebookGroup
 import net.slipp.domain.qna.Question
-import net.slipp.domain.tag.{Tag, TaggedType}
+import net.slipp.domain.tag.{TaggedHistory, Tag, TaggedType}
 import net.slipp.domain.user.SocialUser
-import net.slipp.ndomain.tag.TaggedHistory
 import net.slipp.repository.tag.{TagRepository, TaggedHistoryRepository}
 import org.apache.commons.lang3.StringUtils
 import org.springframework.cache.annotation.Cacheable

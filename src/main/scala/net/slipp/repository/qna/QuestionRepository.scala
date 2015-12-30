@@ -10,8 +10,12 @@ import org.springframework.data.jpa.repository.{JpaRepository, Modifying, Query}
 import org.springframework.data.querydsl.QueryDslPredicateExecutor
 import org.springframework.data.repository.query.Param
 
-trait QuestionRepository extends JpaRepository[Question, Long] with QueryDslPredicateExecutor[Question] {
+trait QuestionRepository extends JpaRepository[Question, Long] {
   def findByWriter(writer: SocialUser): List[Question]
+
+  def findByDeleted(deleted: Boolean, pageable: Pageable): Page[Question]
+
+  def findByWriterAndDeleted(writer: SocialUser, deleted: Boolean, pageable: Pageable): Page[Question]
 
   @Query("SELECT q from Question q JOIN q.tags t where t.name = :name")
   def findsByTag(@Param("name") name: String, pageable: Pageable): Page[Question]

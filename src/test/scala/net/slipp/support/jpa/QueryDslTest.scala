@@ -6,7 +6,6 @@ import javax.persistence.Embedded
 import javax.persistence.Entity
 import javax.persistence.MappedSuperclass
 import javax.persistence.Transient
-import net.slipp.domain.qna.QQuestion
 import org.junit.Test
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -27,10 +26,5 @@ class QueryDslTest {
     exporter.setCreateScalaSources(true)
     exporter.setTargetFolder(new File("target/generated-sources/scala"))
     exporter.export("net.slipp.ndomain")
-  }
-
-  @Test def getFieldName {
-    val question: QQuestion = QQuestion.question
-    log.debug("fieldName : {}", question.deleted)
   }
 }

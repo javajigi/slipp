@@ -48,7 +48,7 @@ class QuestionController(
   def create(@LoginUser loginUser: SocialUser, newQuestion: QuestionDto) = {
     logger.debug("Question : {}", newQuestion)
     val question = qnaService.createQuestion(loginUser, newQuestion)
-    "redirect:/questions/%d".format(question.getQuestionId())
+    "redirect:/questions/%d".format(question.getQuestionId)
   }
 
   @RequestMapping(Array("/{id}/form"))
@@ -65,13 +65,13 @@ class QuestionController(
   def update(@LoginUser loginUser: SocialUser, updatedQuestion: QuestionDto) = {
     logger.debug("Question : {}", updatedQuestion)
     val question = qnaService.updateQuestion(loginUser, updatedQuestion)
-    "redirect:/questions/%d".format(question.getQuestionId())
+    "redirect:/questions/%d".format(question.getQuestionId)
   }
 
   @RequestMapping(Array("/{id}"))
   def show(@PathVariable id: Long, model: Model, session: HttpSession) = {
     val question = qnaService.showQuestion(id)
-    if (question.isDeleted()) {
+    if (question.isDeleted) {
       throw new AccessDeniedException(id + " question is deleted.")
     }
 

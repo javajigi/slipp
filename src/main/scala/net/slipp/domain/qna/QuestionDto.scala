@@ -62,12 +62,10 @@ class QuestionDto(qId: Long, t: String, c: String, pTags: String) {
   var plainFacebookGroups: Array[String] = null
 
   @BeanProperty
-  var originalAnswerId: Long = null
+  var originalAnswerId: Long = _
 
   @BeanProperty
-  var moveAnswers: Array[Long] = null
-
-  def this() = this(null, null, null, null)
+  var moveAnswers: Array[Long] = _
 
   def this(title: String, contents: String, plainTags: String) = this(null, title, contents, plainTags)
 
@@ -75,6 +73,8 @@ class QuestionDto(qId: Long, t: String, c: String, pTags: String) {
     this(questionId, null, contents, null)
     this.originalAnswerId = originalAnswerId
   }
+
+  def this() = this(null, null, null, null)
 
   def getFacebookGroups: Set[FacebookGroup] = {
     return QuestionDto.createFacebookGroups(this.plainFacebookGroups)

@@ -1,7 +1,7 @@
 package net.slipp.repository.tag
 
 import java.lang.Long
-import net.slipp.ndomain.tag.TaggedHistory
+import net.slipp.domain.tag.TaggedHistory
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.Query
