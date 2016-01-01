@@ -100,9 +100,9 @@ class IndexPage {
     new ProfilePage(driver)
   }
 
-  def goAdminTagPage: AdminTagPage = {
-    driver.findElement(By.cssSelector("#tagManagement")).click()
-    new AdminTagPage(driver)
+  def goAdminPage: AdminQuestionPage = {
+    driver.findElement(By.cssSelector("#adminManagement")).click()
+    new AdminQuestionPage(driver)
   }
 
   def goRequestTagPage: RequestTagPage = {

@@ -8,8 +8,6 @@ import scala.collection.JavaConversions._
 
 class AdminTagPage(driver: WebDriver) {
   assertThat(driver.getTitle, is("태그관리 :: SLiPP"))
-  val tagTab: WebElement = driver.findElement(By.cssSelector("#tagManagement"))
-  assertThat(tagTab.getAttribute("class"), is("active"))
 
   def createTag(newTag: String): AdminTagPage = {
     driver.findElement(By.id("name")).clear

@@ -1,13 +1,11 @@
 package net.slipp.qna
 
 import java.util.List
-import java.util.Arrays
 import java.util.concurrent.TimeUnit
 
 import com.google.common.collect.Lists
 import org.hamcrest.CoreMatchers.is
 import org.junit.Assert._
-import org.openqa.selenium.support.ui.{ExpectedConditions, WebDriverWait}
 import org.openqa.selenium.{By, WebDriver, WebElement}
 import org.slf4j.{Logger, LoggerFactory}
 
