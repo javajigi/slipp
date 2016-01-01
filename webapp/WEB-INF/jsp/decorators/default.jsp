@@ -36,7 +36,7 @@
 					</li>
 					<sec:authorize access="hasRole('ROLE_ADMINISTRATOR')">
 					<li>
-						<a href="/admin/questions" id="userManagement"><i class="icon-list"></i> <span class="text">관리도구</span></a>
+						<a href="/admin/questions" id="adminManagement"><i class="icon-list"></i> <span class="text">관리도구</span></a>
 					</li>					
 					</sec:authorize>
 					<li class="site-search">

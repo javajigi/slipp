@@ -7,7 +7,7 @@
 
 	<entry key="facebook.email1">jwvnjnv_dingleson_1358644162@tfbnw.net</entry>
 	<entry key="facebook.password1">test1234</entry>
-	<entry key="facebook.nickName1">firstNickName</entry>
+	<entry key="facebook.nickName1">자바지기</entry>
 	
 	<entry key="facebook.email2">yxlbakn_alisonman_1358644169@tfbnw.net</entry>
 	<entry key="facebook.password2">test1234</entry>
@@ -24,8 +24,8 @@
 	<entry key="facebook.email5">xkyzssf_changsen_1358646231@tfbnw.net</entry>
 	<entry key="facebook.password5">test1234</entry>
 	<entry key="facebook.nickName5">fifthNickName</entry>
-	
+
+    <entry key="slipp.email1">slipp@slipp.net</entry>
 	<entry key="slipp.userId1">slipp</entry>
 	<entry key="slipp.nickName1">slipper</entry>
-	<entry key="slipp.email1">slipp@slipp.net</entry>	
 </properties>

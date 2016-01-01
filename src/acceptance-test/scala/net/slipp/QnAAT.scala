@@ -28,11 +28,12 @@ class QnAAT extends AbstractATTest {
     questionPage.verify(questionFixture.getTitle, questionFixture.getContents, questionFixture.getPlainTags)
   }
 
-  @Test def newTags() {
+  @Test def addTag() = {
     loginToFacebook(1)
-    val qnaFormPage = indexPage.goQuestionForm
-    questionFixture.setPlainTags("java javascript newtag")
-    qnaFormPage.question(questionFixture)
+    var questionPage = createQuestion(questionFixture)
+    val addedTag = "spring"
+    questionPage = questionPage.addTag(addedTag)
+    questionPage.verifyTags(addedTag)
   }
 
   @Test def create_answer() {

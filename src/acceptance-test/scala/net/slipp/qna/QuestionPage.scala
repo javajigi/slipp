@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit
 
 import com.google.common.collect.Lists
 import org.hamcrest.CoreMatchers.is
-import org.junit.Assert.assertThat
+import org.junit.Assert._
 import org.openqa.selenium.support.ui.{ExpectedConditions, WebDriverWait}
 import org.openqa.selenium.{By, WebDriver, WebElement}
 import org.slf4j.{Logger, LoggerFactory}
@@ -23,12 +23,19 @@ class QuestionPage(driver: WebDriver, title: String) {
   def verify(title: String, contents: String, plainTags: String) {
     val titleElement: WebElement = driver.findElement(By.cssSelector(".qna-title"))
     assertThat(titleElement.getText, is(title))
-    val tags = Arrays.asList(plainTags.split(" "))
-    val tagElements = driver.findElements(By.cssSelector("doc > div.tags > ul > li"))
-    for (each <- tagElements) {
-      val tag: String = each.findElement(By.cssSelector("a")).getText
-      assertThat(tags.contains(tag), is(true))
-    }
+    val contentsElement = driver.findElement(By.cssSelector(".article-doc > p"))
+    assertThat(contentsElement.getText, is(contents))
+    verifyTags(plainTags)
+  }
+
+  def verifyTags(plainTags: String) = {
+    val tags = plainTags.split(" ")
+    val tagElements = driver.findElements(By.cssSelector("section.qna-tags > ul > li"))
+    val addedTags = tagElements.map(e => e.findElement(By.cssSelector("a")).getText)
+    tags.foreach(tag => {
+      log.debug(s"tag : ${tag}")
+      assertTrue(addedTags.contains(tag))
+    })
   }
 
   def answer(answer: String) {
@@ -83,8 +90,16 @@ class QuestionPage(driver: WebDriver, title: String) {
     assertThat(answerBest, is("BEST 의견"))
   }
 
-  def goToQuestionsPage: QuestionsPage = {
+  def goToQuestionsPage = {
     driver.findElement(By.cssSelector("nav.site-nav > ul > li")).click()
-    return new QuestionsPage(driver)
+    new QuestionsPage(driver)
+  }
+
+  def addTag(tag: String) = {
+    val taggedForm = driver.findElement(By.id("taggedForm"))
+    taggedForm.findElement(By.cssSelector("input.inp_nickname")).clear
+    taggedForm.findElement(By.cssSelector("input.inp_nickname")).sendKeys(tag)
+    taggedForm.findElement(By.cssSelector(".signin-with-sns-submit-btn")).click
+    new QuestionPage(driver, driver.getTitle)
   }
 }

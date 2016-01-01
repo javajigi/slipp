@@ -29,6 +29,15 @@ class AuthenticationAT extends AbstractATTest {
     logoutPage.verifyCurrentLoginUser(secondNickName)
   }
 
+  @Test def login_admin() {
+    val indexPage = index.loginToFacebook(environment.getProperty("facebook.email1"), environment.getProperty("facebook.password1"), environment.getProperty("facebook.nickName1"))
+    indexPage.verifyAdminPage()
+    val logoutPage = new FBLogoutPage(driver)
+    logoutPage.logout
+    index.loginToFacebook(environment.getProperty("facebook.email2"), environment.getProperty("facebook.password2"), environment.getProperty("facebook.nickName2"))
+    indexPage.verifyNonAdminPage()
+  }
+
   @Test def join() {
     join_to_slipp
   }
@@ -58,12 +67,15 @@ class AuthenticationAT extends AbstractATTest {
     val userForm = join_to_slipp
     val profilePage = index.goProfilePage
     profilePage.verifyPageTitle(userForm.getUserId)
+
     val changePasswordPage = profilePage.goChangePasswordPage
     val oldPassword = PasswordGenerator.DEFAULT_FIXED_PASSWORD
     val newPassword = "newPassword"
     changePasswordPage.changePassword(oldPassword, newPassword)
+
     val alert = driver.switchTo.alert
     alert.accept()
+
     val loginPage = index.goLoginPage
     loginPage.loginToSlipp(userForm.getEmail, newPassword)
     assertThat(index.isLoginStatus, is(true))

@@ -3,8 +3,10 @@ package net.slipp.qna
 import net.slipp.LoginUser
 import net.slipp.domain.tag.RequestTagPage
 import net.slipp.user.{FacebookPage, GooglePage, LoginPage, ProfilePage, TwitterPage}
-import org.openqa.selenium.{By, WebDriver}
+import org.hamcrest.CoreMatchers.is
+import org.junit.Assert._
 import org.openqa.selenium.support.ui.{ExpectedConditions, WebDriverWait}
+import org.openqa.selenium.{By, WebDriver}
 import org.slf4j.{Logger, LoggerFactory}
 
 class IndexPage {
@@ -106,5 +108,15 @@ class IndexPage {
   def goRequestTagPage: RequestTagPage = {
     driver.findElement(By.cssSelector("#requestTag")).click()
     new RequestTagPage(driver)
+  }
+
+  def verifyAdminPage() = {
+    val adminMenu = driver.findElement(By.cssSelector("#adminManagement > span.text")).getText
+    assertThat(adminMenu, is("관리도구"))
+  }
+
+  def verifyNonAdminPage() = {
+    val adminElements = driver.findElements(By.cssSelector("#adminManagement"))
+    assertTrue(adminElements.isEmpty)
   }
 }
