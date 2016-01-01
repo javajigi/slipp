@@ -28,6 +28,8 @@ import scala.collection.JavaConversions._
     http.csrf.disable
     http.authorizeRequests.antMatchers("/favicon.ico").permitAll
 
+    http.headers().frameOptions().disable()
+
     http
       .authorizeRequests()
         .antMatchers(HttpMethod.GET, "/questions/form").access("hasRole('ROLE_USER')")
