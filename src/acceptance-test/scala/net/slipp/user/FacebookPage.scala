@@ -12,6 +12,7 @@ class FacebookPage(driver: WebDriver) {
     driver.findElement(By.id("pass")).sendKeys(loginUser.password)
     driver.findElement(By.id("persist_box")).click
     driver.findElement(By.cssSelector("#loginbutton > input")).click
+
     if (isFirstLogin) {
       val loginPage: LoginPage = new LoginPage(driver)
       loginPage.loginSlipp(loginUser.nickName)
@@ -23,7 +24,7 @@ class FacebookPage(driver: WebDriver) {
     }
   }
 
-  private def isFirstLogin: Boolean = {
-    return "로그인 :: SLiPP" == driver.getTitle
+  private def isFirstLogin = {
+    "로그인 :: SLiPP" == driver.getTitle
   }
 }

@@ -10,9 +10,9 @@ import org.openqa.selenium.support.ui.WebDriverWait
 class FBLogoutPage(driver: WebDriver) {
   driver.get("http://localhost:8080/users/fblogout")
 
-  def goToLogoutPage: FBLogoutPage = {
+  def goToLogoutPage = {
     driver.get("http://localhost:8080/users/fblogout")
-    return new FBLogoutPage(driver)
+    new FBLogoutPage(driver)
   }
 
   def verifyCurrentLoginUser(nickName: String) {

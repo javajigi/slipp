@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit
 import com.google.common.collect.Lists
 import org.hamcrest.CoreMatchers.is
 import org.junit.Assert.assertThat
+import org.openqa.selenium.support.ui.{ExpectedConditions, WebDriverWait}
 import org.openqa.selenium.{By, WebDriver, WebElement}
 import org.slf4j.{Logger, LoggerFactory}
 
@@ -62,6 +63,7 @@ class QuestionPage(driver: WebDriver, title: String) {
   }
 
   def verifyLikeCount(likeCount: Int) {
+    Thread.sleep(100)
     val actual: String = driver.findElement(By.cssSelector("a.btn-like-article > strong.like-article-count")).getText
     assertThat(actual, is(likeCount + ""))
   }
