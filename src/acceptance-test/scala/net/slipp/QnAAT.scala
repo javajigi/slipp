@@ -76,7 +76,7 @@ class QnAAT extends AbstractATTest {
     questionsPage.verifyFirstAnswerCount(1)
   }
 
-  @Test def update_answer() {
+  @Test def create_update_delete_answer() {
     loginToFacebook(1)
     createQuestion(questionFixture)
     loginToAnotherUser(2)
@@ -85,6 +85,8 @@ class QnAAT extends AbstractATTest {
     val answer: String = "이 답변은 수정 답변입니다."
     questionPage = answerFormPage.updateAnswer(answer)
     questionPage.verifyAnswer(answer)
+    questionPage.deleteAnswer()
+    questionPage.verifyAnswerCount("0")
   }
 
   private def logout() {

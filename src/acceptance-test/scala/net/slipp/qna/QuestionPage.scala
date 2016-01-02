@@ -43,11 +43,11 @@ class QuestionPage(driver: WebDriver, title: String) {
   }
 
   def verifyAnswer(answer: String) {
-    val commentTexts: List[String] = findCommentTexts
+    val commentTexts: List[String] = findAnswerTexts
     log.debug("comments size : {}", commentTexts.size)
   }
 
-  private def findCommentTexts = {
+  private def findAnswerTexts = {
     val comments = driver.findElements(By.cssSelector("div.comment-doc"))
     val commentTexts = Lists.newArrayList[String]()
     for (comment <- comments) {
@@ -56,9 +56,17 @@ class QuestionPage(driver: WebDriver, title: String) {
     commentTexts
   }
 
+  def deleteAnswer() {
+    driver.findElement(By.cssSelector("button.link-delete-article")).click()
+    
+    val alert = driver.switchTo.alert
+    alert.accept()
+  }
+
   def verifyAnswerCount(answerCount: String) {
     val actual: String = driver.findElement(By.cssSelector(".qna-comment-count > strong")).getText
     assertThat(actual, is(answerCount))
+    assertThat(findAnswerTexts.size(), is(answerCount.toInt))
   }
 
   def likeAnswer: QuestionPage = {
