@@ -14,7 +14,7 @@ import scala.collection.JavaConversions._
 class QuestionPage(driver: WebDriver, title: String) {
   private val log: Logger = LoggerFactory.getLogger(classOf[QuestionPage])
 
-  assertThat(driver.getTitle, is(title))
+  // assertThat(driver.getTitle, is(title))
 
   def this(driver: WebDriver) = this(driver, driver.getTitle)
 
