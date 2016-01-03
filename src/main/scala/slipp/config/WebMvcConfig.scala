@@ -7,6 +7,7 @@ import net.slipp.support.utils.ConvenientProperties
 import net.slipp.support.web.{GlobalRequestAttributesInterceptor, ServletDownloadManager}
 import net.slipp.support.web.argumentresolver.LoginUserHandlerMethodArgumentResolver
 import net.slipp.support.web.servletcontext.interceptor.GlobalServletApplicationContextAttributeSetter
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.{Bean, ComponentScan, Configuration, PropertySource}
 import org.springframework.core.env.Environment
@@ -26,6 +27,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver
 @ComponentScan(basePackages = Array("net.slipp.web"), includeFilters = Array(new ComponentScan.Filter(Array(classOf[Controller]))))
 @PropertySource(Array("classpath:application-properties.xml"))
 @EnableWebMvc class WebMvcConfig extends WebMvcConfigurerAdapter {
+  private val log = LoggerFactory.getLogger(classOf[WebMvcConfigurerAdapter])
   @Autowired private var env: Environment = null
   @Autowired private var applicationProperties: ConvenientProperties = null
   @Autowired private var connectionFactoryLocator: ConnectionFactoryLocator = null
@@ -62,14 +64,16 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver
     resolver
   }
 
-  @Bean def aplicationContextAttributeSetter: GlobalServletApplicationContextAttributeSetter = {
+  @Bean def aplicationContextAttributeSetter = {
     val attributeSetter: GlobalServletApplicationContextAttributeSetter = new GlobalServletApplicationContextAttributeSetter
     attributeSetter.setApplicationProperties(applicationProperties)
     attributeSetter
   }
 
   override def addResourceHandlers(registry: ResourceHandlerRegistry) {
-    registry.addResourceHandler("/resources/**").addResourceLocations("/WEB-INF/static_resources/")
+    val cacheSeconds = env.getProperty("resources.cache.seconds").toInt
+    log.info(s"resources cache seconds : ${cacheSeconds}")
+    registry.addResourceHandler("/resources/**").addResourceLocations("/WEB-INF/static_resources/").setCachePeriod(cacheSeconds)
   }
 
   @Bean def servletDownloadManager: ServletDownloadManager = {
