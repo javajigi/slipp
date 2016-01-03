@@ -53,16 +53,14 @@ import org.springframework.util.{LinkedMultiValueMap, MultiValueMap}
     dut.createNewSocialUser(userId, connection)
   }
 
-  @Test
-  @throws(classOf[Exception])
-  def changePassword {
+  @Test def changePassword {
     val oldPassword: String = "oldPassword"
     val newPassword: String = "newPassword"
     val socialUser: SocialUser = new SocialUserBuilder().withRawPassword(oldPassword).build
     val password: PasswordDto = new PasswordDto(socialUser.getId, oldPassword, newPassword, newPassword)
     when(socialUserRepository.findOne(socialUser.getId)).thenReturn(socialUser)
     val changedUser: SocialUser = dut.changePassword(socialUser, password)
-    assertThat(changedUser.getPassword, is(encoder.encode(newPassword)))
+    encoder.matches(newPassword, changedUser.getPassword)
   }
 
   @Test

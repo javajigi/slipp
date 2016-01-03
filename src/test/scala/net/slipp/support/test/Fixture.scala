@@ -1,14 +1,17 @@
 package net.slipp.support.test
 
 import net.slipp.domain.qna.{ScoreLikeType, ScoreLike, Answer, Question}
+import net.slipp.domain.tag.Tag
 import net.slipp.domain.user.SocialUser
 
 trait Fixture {
-  implicit def aSomeUser(id: Long = 1L, userId: String = "someUserId", email: String = "some@sample.com") = {
+  implicit def aSomeUser(id: Long = 1L, userId: String = "someUserId", email: String = "some@sample.com",
+                         password: String = "password") = {
     val user = new SocialUser()
     user.setId(id)
     user.setUserId(userId)
     user.setEmail(email)
+    user.setPassword(password)
     user
   }
 
@@ -16,11 +19,19 @@ trait Fixture {
     new Question(loginUser, title, contents, null)
   }
 
-  implicit def aSomeAnswer(id: Long = 1L, q: Question = aSomeQuestion()) = {
+  implicit def aSomeAnswer(id: Long = 1L, q: Question = aSomeQuestion(), sumLiked: Integer = 1) = {
     val answer = new Answer
     answer.setAnswerId(id)
     answer.setQuestion(q)
+    (1 to sumLiked).foreach(_ => answer.upRank())
     answer
+  }
+
+  implicit def aSomeTag(id: Long = 1L, name: String = "tag") = {
+    val tag = new Tag()
+    tag.setTagId(id)
+    tag.setName(name)
+    tag
   }
 
   def aSomeQuestionScoreLike(socialUserId: Long = 1L, targetId: Long = 1L) = {

@@ -1,11 +1,10 @@
 package net.slipp.domain.qna
 
-import java.lang.Long
 import net.slipp.domain.user.SocialUser
 
 object AnswerBuilder {
   def anAnswer: AnswerBuilder = {
-    return new AnswerBuilder(null)
+    return new AnswerBuilder(1L)
   }
 
   def anAnswer(answerId: Long): AnswerBuilder = {

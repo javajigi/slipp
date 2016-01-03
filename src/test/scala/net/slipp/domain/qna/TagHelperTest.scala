@@ -1,17 +1,17 @@
 package net.slipp.domain.qna
 
-import java.util.Set
-
 import com.google.common.collect.Sets
-import net.slipp.domain.tag.Tag
-import org.hamcrest.CoreMatchers._
+import net.slipp.support.test.UnitTest
 import org.junit.Assert._
 import org.junit.Test
 
-class TagHelperTest {
+class TagHelperTest extends UnitTest {
   @Test def denormalizedTags {
-    val tags: Set[Tag] = Sets.newHashSet(Tag.newTag("java"), Tag.newTag("javascript"))
-    val actual: String = TagHelper.denormalizedTags(tags)
-    assertThat(actual, is("java,javascript"))
+    val tag1 = aSomeTag(name = "spring")
+    val tag2 = aSomeTag(name = "javascript")
+    val tags = Sets.newHashSet(tag1, tag2)
+    val actual = TagHelper.denormalizedTags(tags)
+    assertTrue(actual.contains(tag1.getName))
+    assertTrue(actual.contains(tag2.getName))
   }
 }

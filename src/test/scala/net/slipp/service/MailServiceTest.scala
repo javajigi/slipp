@@ -2,7 +2,7 @@ package net.slipp.service
 
 import net.slipp.domain.user.SocialUser
 import net.slipp.domain.user.SocialUserBuilder
-import org.junit.Test
+import org.junit.{Ignore, Test}
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.mail.javamail.JavaMailSender
@@ -10,8 +10,10 @@ import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 import freemarker.template.Configuration
 
+@Ignore
 @RunWith(classOf[SpringJUnit4ClassRunner])
-@ContextConfiguration(Array("classpath:test-applicationContext-mail.xml")) class MailServiceTest {
+@ContextConfiguration(Array("classpath:test-applicationContext-mail.xml"))
+class MailServiceTest {
   @Autowired private var mailSender: JavaMailSender = null
   @Autowired private var configuration: Configuration = null
 

@@ -28,7 +28,7 @@ object Tag {
 
 @Entity
 @Cache(region = "tag", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-class Tag(n: String, p: Tag, info: TagInfo)  extends DomainModel {
+class Tag(n: String, p: Tag, info: TagInfo) {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private var tagId: Long = _
@@ -145,4 +145,21 @@ class Tag(n: String, p: Tag, info: TagInfo)  extends DomainModel {
     }
     return this.parent
   }
+
+  def canEqual(other: Any): Boolean = other.isInstanceOf[Tag]
+
+  override def equals(other: Any): Boolean = other match {
+    case that: Tag =>
+      (that canEqual this) &&
+        tagId == that.tagId &&
+        name == that.name
+    case _ => false
+  }
+
+  override def hashCode(): Int = {
+    val state = Seq(tagId, name)
+    state.map(_.hashCode()).foldLeft(0)((a, b) => 31 * a + b)
+  }
+
+  override def toString = s"Tag($tagId, $name, $taggedCount, $pooled, $parent, $tagInfo)"
 }

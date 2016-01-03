@@ -52,21 +52,7 @@ class SummaryServiceTest {
     logger.debug("\ntestFindOneThumnail_Okjsp-------------------------------------------------------------------------------------")
   }
 
-  @Test
-  @throws(classOf[Exception])
-  final def testFindOneThumnail_SLiPP {
-    val siteSummary: SiteSummary = summaryService.findOneThumbnail("http://www.slipp.net")
-    assertThat(siteSummary.getTitle, is("SLiPP"))
-    logger.debug("\ntestFindOneThumnail_SLiPP-------------------------------------------------------------------------------------")
-    logger.debug(siteSummary.getTitle)
-    logger.debug(siteSummary.getThumbnailImage)
-    logger.debug(siteSummary.getContents)
-    logger.debug("\ntestFindOneThumnail_SLiPP-------------------------------------------------------------------------------------")
-  }
-
-  @Test
-  @throws(classOf[Exception])
-  final def testFindOneThumnail_ArcheAge {
+  @Test def testFindOneThumnail_ArcheAge {
     val siteSummary: SiteSummary = summaryService.findOneThumbnail("http://board.archeage.com/community/openboards/290656")
     assertThat(siteSummary.getTitle, is("[기자단]페가수스를 타고 세계 일주를 | 열린게시판 | ArcheAge"))
     logger.debug("\ntestFindOneThumnail_ArcheAge-------------------------------------------------------------------------------------")

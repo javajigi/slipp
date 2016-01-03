@@ -106,7 +106,10 @@ class Question(id: Long, loginUser: SocialUser, t: String, c: String, nTags: Set
       foreignKey = new ForeignKey(name = "fk_question_sns_connection_question_id"))))
   private var snsConnetions: Set[SnsConnection] = Sets.newHashSet[SnsConnection]
 
-  newTags(nTags)
+  Option(nTags) match {
+    case Some(tags) => newTags(tags)
+    case None =>
+  }
 
   def this(loginUser: SocialUser, title: String, contents: String, pooledTags: Set[Tag]) =
     this(0L, loginUser, title, contents, pooledTags)

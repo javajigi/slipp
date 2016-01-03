@@ -1,18 +1,18 @@
 package net.slipp.domain.user
 
-import org.junit.Before
-import org.junit.Test
+import net.slipp.support.test.UnitTest
+import org.hamcrest.CoreMatchers.is
+import org.junit.Assert._
+import org.junit.{Before, Test}
 import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
-import org.hamcrest.CoreMatchers.is
-import org.junit.Assert.assertThat
 
-class SocialUserTest {
+class SocialUserTest extends UnitTest {
   private var dut: SocialUser = null
   private var encoder: BCryptPasswordEncoder = null
 
   @Before def setup {
-    dut = new SocialUser(10)
+    dut = new SocialUser(10L)
     encoder = new BCryptPasswordEncoder
   }
 
@@ -25,21 +25,21 @@ class SocialUserTest {
   }
 
   @Test def isSameUser_sameUser {
-    val newUser: SocialUser = new SocialUser(10)
+    val newUser: SocialUser = new SocialUser(10L)
     assertThat(dut.isSameUser(newUser), is(true))
   }
 
   @Test def isSameUser_differentUser {
-    val newUser: SocialUser = new SocialUser(11)
+    val newUser: SocialUser = new SocialUser(11L)
     assertThat(dut.isSameUser(newUser), is(false))
   }
 
   @Test def changePassword_이전_비밀번호가_같다 {
     val oldPassword: String = "oldPassword"
     val newPassword: String = "newPassword"
-    val socialUser: SocialUser = new SocialUserBuilder().withRawPassword(oldPassword).build
+    val socialUser = aSomeUser(password = encoder.encode(oldPassword))
     socialUser.changePassword(encoder, oldPassword, newPassword)
-    assertThat(socialUser.getPassword, is(encoder.encode(newPassword)))
+    assertTrue(encoder.matches(newPassword, socialUser.getPassword))
   }
 
   @Test(expected = classOf[BadCredentialsException])

@@ -4,6 +4,6 @@ import org.junit.runner.RunWith
 import org.mockito.runners.MockitoJUnitRunner
 
 @RunWith(classOf[MockitoJUnitRunner])
-class MockitoIntegrationTest extends Fixture {
+abstract class MockitoIntegrationTest extends Fixture
 
-}
+abstract class UnitTest extends Fixture

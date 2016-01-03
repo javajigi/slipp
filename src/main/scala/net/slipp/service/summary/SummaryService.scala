@@ -42,17 +42,14 @@ import org.springframework.stereotype.Service
     return null
   }
 
-  @throws(classOf[MalformedURLException])
-  @throws(classOf[IOException])
   private def isImageDirectURL(url: String): Boolean = {
     val u: URL = new URL(url)
     val urlConnection: URLConnection = u.openConnection
     urlConnection.setConnectTimeout(TIMEOUT)
-    val contentType: String = urlConnection.getContentType
-    if (isContentTypeImage(contentType)) {
-      return true
+    Option(urlConnection.getContentType) match {
+      case Some(contentType) => contentType.contains((CONTENT_TYPE_IMAGE))
+      case None => false
     }
-    return false
   }
 
   private def isContentTypeImage(contentType: String): Boolean = {

@@ -25,20 +25,16 @@ class QuestionTest {
     dut = new Question
   }
 
-  @Test
-  @throws(classOf[Exception])
-  def 질문한_사람이_같다 {
-    val writer: SocialUser = new SocialUser(10)
+  @Test def 질문한_사람이_같다 {
+    val writer: SocialUser = new SocialUser(10L)
     dut = aQuestion.withWriter(writer).build
     assertThat(dut.isWritedBy(writer), is(true))
   }
 
-  @Test
-  @throws(classOf[Exception])
-  def 질문한_사람이_다르다 {
-    val writer: SocialUser = new SocialUser(10)
+  @Test def 질문한_사람이_다르다 {
+    val writer: SocialUser = new SocialUser(10L)
     dut = aQuestion.withWriter(writer).build
-    val actual: Boolean = dut.isWritedBy(new SocialUser(11))
+    val actual: Boolean = dut.isWritedBy(new SocialUser(11L))
     assertThat(actual, is(false))
   }
 
@@ -93,10 +89,10 @@ class QuestionTest {
   @Test
   @throws(classOf[Exception])
   def 질문에_답변을_한다 {
-    val writer1: SocialUser = new SocialUser(10)
+    val writer1: SocialUser = new SocialUser(10L)
     val dut: Question = aQuestion.withWriter(writer1).build
     assertThat(dut.getLatestParticipant, is(writer1))
-    val writer2: SocialUser = new SocialUser(11)
+    val writer2: SocialUser = new SocialUser(11L)
     val answer: Answer = anAnswer.`with`(writer2).build
     dut.newAnswered(answer)
     assertThat(dut.getLatestParticipant, is(writer2))
@@ -108,7 +104,7 @@ class QuestionTest {
     val answer1: Answer = anAnswer(1L).build
     val answer2: Answer = anAnswer(2L).build
     val answer3: Answer = anAnswer(3L).build
-    val writer1: SocialUser = new SocialUser(10)
+    val writer1: SocialUser = new SocialUser(10L)
     val dut: Question = aQuestion(1L).withWriter(writer1).withAnswer(answer1).withAnswer(answer2).withAnswer(answer3).build
     assertThat(dut.getAnswerCount, is(3))
     val newQuestion: Question = aQuestion(2L).build
@@ -120,11 +116,11 @@ class QuestionTest {
   @Test
   @throws(classOf[Exception])
   def delete_answer_when_two_answer {
-    val writer2: SocialUser = new SocialUser(11)
+    val writer2: SocialUser = new SocialUser(11L)
     val answer1: Answer = anAnswer.`with`(writer2).build
-    val writer3: SocialUser = new SocialUser(12)
+    val writer3: SocialUser = new SocialUser(12L)
     val answer2: Answer = anAnswer.`with`(writer3).build
-    val writer1: SocialUser = new SocialUser(10)
+    val writer1: SocialUser = new SocialUser(10L)
     val dut: Question = aQuestion.withWriter(writer1).withAnswer(answer1).withAnswer(answer2).build
     assertThat(dut.getAnswerCount, is(2))
     dut.deAnswered(answer2)
@@ -132,9 +128,7 @@ class QuestionTest {
     assertThat(dut.getLatestParticipant, is(writer2))
   }
 
-  @Test
-  @throws(classOf[Exception])
-  def 질문을_삭제한다 {
+  @Test def 질문을_삭제한다 {
     val java: Tag = aTag.withName("java").build
     val writer: SocialUser = new SocialUser
     val dut: Question = aQuestion.withWriter(writer).withTag(java).build
@@ -194,7 +188,7 @@ class QuestionTest {
   @Test
   @throws(classOf[Exception])
   def connected {
-    val writer: SocialUser = new SocialUser(10)
+    val writer: SocialUser = new SocialUser(10L)
     writer.setProviderId("facebook")
     dut = aQuestion.withWriter(writer).build
     val postId: String = "123456"

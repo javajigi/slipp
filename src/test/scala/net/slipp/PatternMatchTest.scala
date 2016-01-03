@@ -19,8 +19,8 @@ class PatternMatchTest extends Fixture {
     assertFalse(isEmptyWriterId(Some(1L)))
 
     assertTrue(isEmptyTitle(None))
-    assertTrue(isEmptyTitle(Some(null)))
-    assertFalse(isEmptyTitle(Some("")))
+    assertTrue(isEmptyTitle(Option(null)))
+    assertFalse(isEmptyTitle(Option("")))
   }
 
   private def isEmptyTitle(title: Option[String]) = {

@@ -17,7 +17,7 @@ class TagTest {
   @Test def equalsAndContainsTag {
     val java1: Tag = aTag.withName("java").build
     val java2: Tag = aTag.withName("java").build
-    assertThat(java1 == java2, is(true))
+    assertThat(java1, is(java2))
   }
 
   @Test
@@ -56,9 +56,7 @@ class TagTest {
     assertThat(dut.getTaggedCount, is(1))
   }
 
-  @Test
-  @throws(classOf[Exception])
-  def createNewTagFromQuestion {
+  @Test def createNewTagFromQuestion {
     val name: String = "newTag"
     val dut: Tag = Tag.newTag(name)
     assertThat(dut.isPooled, is(true))
@@ -66,9 +64,7 @@ class TagTest {
     assertThat(dut.getParent, is(nullValue))
   }
 
-  @Test
-  @throws(classOf[Exception])
-  def movePooled {
+  @Test def movePooled {
     var parent: Tag = null
     var newTag: Tag = Tag.newTag("newTag")
     newTag.movePooled(parent)
@@ -80,16 +76,15 @@ class TagTest {
     assertThat(newTag.getParent, is(parent))
   }
 
-  @Test
-  @throws(classOf[Exception])
-  def moveGroupTag {
-    val name: String = "newTag"
-    val groupId: String = "1234"
+  @Test def moveGroupTag {
+    val name = "newtag"
+    val groupId = "1234"
     val newTag: Tag = Tag.newTag(name)
     newTag.moveGroupTag(groupId)
-    assertThat(newTag, is(Tag.groupedTag(name, groupId)))
+    assertThat(newTag.getGroupId, is(groupId))
+
     val pooledTag: Tag = Tag.pooledTag(name)
     pooledTag.moveGroupTag(groupId)
-    assertThat(pooledTag, is(Tag.groupedTag(name, groupId)))
+    assertThat(pooledTag.getGroupId, is(groupId))
   }
 }
