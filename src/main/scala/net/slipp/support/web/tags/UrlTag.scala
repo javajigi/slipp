@@ -115,7 +115,7 @@ object UrlTag {
     }
     var finalUrl: String = STATIC_SERVER_URLS(sId)
     if (withVersion) {
-      finalUrl = finalUrl + RESOURCE_PREFIX + UrlTag.VERSION
+      finalUrl = finalUrl + RESOURCE_PREFIX + "/" + UrlTag.VERSION
     }
     finalUrl += url
     return SlippStringUtils.escapeHtml(finalUrl)
