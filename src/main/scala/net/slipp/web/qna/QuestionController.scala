@@ -33,7 +33,7 @@ class QuestionController(
   def index(page: Integer, model: Model) = {
     logger.debug("currentPage : {}", page)
     model.addAttribute("questions", qnaService.findsQuestion(createPageableByQuestionUpdatedDate(page, DefaultPageSize)))
-    model.addAttribute("tags", tagService.findLatestTags())
+    model.addAttribute("tags", tagService.findLatestTags)
     "qna/list"
   }
 
@@ -48,14 +48,14 @@ class QuestionController(
   def create(@LoginUser loginUser: SocialUser, newQuestion: QuestionDto) = {
     logger.debug("Question : {}", newQuestion)
     val question = qnaService.createQuestion(loginUser, newQuestion)
-    "redirect:/questions/%d".format(question.getQuestionId())
+    "redirect:/questions/%d".format(question.getQuestionId)
   }
 
   @RequestMapping(Array("/{id}/form"))
   def updateForm(@LoginUser loginUser: SocialUser, @PathVariable id: Long, model: Model) = {
     val question = qnaService.findByQuestionId(id)
     if (!question.isWritedBy(loginUser)) {
-      throw new AccessDeniedException(loginUser.getUserId() + " is not owner!")
+      throw new AccessDeniedException(loginUser.getUserId + " is not owner!")
     }
     model.addAttribute("question", question)
     "qna/form"
@@ -65,19 +65,19 @@ class QuestionController(
   def update(@LoginUser loginUser: SocialUser, updatedQuestion: QuestionDto) = {
     logger.debug("Question : {}", updatedQuestion)
     val question = qnaService.updateQuestion(loginUser, updatedQuestion)
-    "redirect:/questions/%d".format(question.getQuestionId())
+    "redirect:/questions/%d".format(question.getQuestionId)
   }
 
   @RequestMapping(Array("/{id}"))
   def show(@PathVariable id: Long, model: Model, session: HttpSession) = {
     val question = qnaService.showQuestion(id)
-    if (question.isDeleted()) {
+    if (question.isDeleted) {
       throw new AccessDeniedException(id + " question is deleted.")
     }
 
-    model.addAttribute("answer", getTemporaryAnswer(session).createAnswer())
+    model.addAttribute("answer", getTemporaryAnswer(session).createAnswer)
     model.addAttribute("question", question)
-    model.addAttribute("tags", tagService.findLatestTags())
+    model.addAttribute("tags", tagService.findLatestTags)
     model.addAttribute("user", new UserForm())
     "qna/show"
   }
@@ -110,7 +110,7 @@ class QuestionController(
 
     model.addAttribute("currentTag", tagService.findTagByName(name))
     model.addAttribute("questions", qnaService.findsByTag(name, createPageableByQuestionUpdatedDate(page, DefaultPageSize)))
-    model.addAttribute("tags", tagService.findLatestTags())
+    model.addAttribute("tags", tagService.findLatestTags)
     "qna/list"
   }
   

@@ -26,19 +26,19 @@ class HomeController(
   
   @RequestMapping(Array("/"))
   def home(model: Model) = {
-    productionMode(model);
-    model.addAttribute("questions", qnaService.findsQuestion(createPageableByQuestionUpdatedDate(DefaultPageNo, DefaultPageSize)));
-    model.addAttribute("tags", tagService.findLatestTags());    
-    "index";
+    productionMode(model)
+    model.addAttribute("questions", qnaService.findsQuestion(createPageableByQuestionUpdatedDate(DefaultPageNo, DefaultPageSize)))
+    model.addAttribute("tags", tagService.findLatestTags)
+    "index"
   }
   
   private def productionMode(model: Model) {
-    if (isProductionMode()) model.addAttribute("pages", wikiService.findWikiPages()) 
-    else model.addAttribute("pages", wikiService.findDummyWikiPages())
+    if (isProductionMode()) model.addAttribute("pages", wikiService.findWikiPages)
+    else model.addAttribute("pages", wikiService.findDummyWikiPages)
   }
   
   private def isProductionMode() = {
-    val profile = env.getProperty("environment");
+    val profile = env.getProperty("environment")
     logger.debug("environment : {}", profile)
     
     "PRODUCTION".equals(profile)
@@ -46,7 +46,7 @@ class HomeController(
   
   @RequestMapping(Array("/rss"))
   def rss(model: Model) = {
-    model.addAttribute("pages", wikiService.findWikiPages())
+    model.addAttribute("pages", wikiService.findWikiPages)
     model.addAttribute("now", new Date())
     "rss"
   }

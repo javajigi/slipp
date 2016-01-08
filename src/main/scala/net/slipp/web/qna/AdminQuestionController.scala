@@ -35,7 +35,7 @@ class AdminQuestionController(
   @RequestMapping(Array("/{id}"))
   def show(@PathVariable id: Long, searchTerm: String, model: Model) = {
     model.addAttribute("question", qnaService.showQuestion(id))
-    model.addAttribute("tags", tagService.findLatestTags())
+    model.addAttribute("tags", tagService.findLatestTags)
     model.addAttribute("user", new UserForm())
     model.addAttribute("searchTerm", searchTerm)
     "admin/qna/show"
@@ -44,7 +44,7 @@ class AdminQuestionController(
   @RequestMapping(value = Array("/{id}"), method = Array(RequestMethod.DELETE))
   def delete(@PathVariable id: Long, searchTerm: String) = {
     val question = qnaService.findByQuestionId(id)
-    qnaService.deleteQuestion(question.getWriter(), id)
+    qnaService.deleteQuestion(question.getWriter, id)
     "redirect:/admin/questions?searchTerm=%s".format(searchTerm)
   }
 
@@ -59,7 +59,7 @@ class AdminQuestionController(
   def update(@PathVariable id: Long, searchTerm: String, updatedQuestion: QuestionDto) = {
     logger.debug("Question : {}", updatedQuestion)
     val originalQuestion = qnaService.findByQuestionId(id)
-    qnaService.updateQuestionByAdmin(originalQuestion.getWriter(), updatedQuestion)
+    qnaService.updateQuestionByAdmin(originalQuestion.getWriter, updatedQuestion)
     "redirect:/admin/questions/%d?searchTerm=%s".format(id, searchTerm)
   }
   

@@ -32,7 +32,7 @@ class ApiQuestionController(@Resource(name = "qnaService") qnaService: QnaServic
   @RequestMapping(value = Array("/like"), method = Array(RequestMethod.POST))
   def likeQuestions(@LoginUser loginUser: SocialUser, @PathVariable questionId: Long) = {
     val question = qnaService.likeQuestion(loginUser, questionId)
-    question.getSumLike()
+    question.getSumLike
   }
 
   @RequestMapping(value = Array("/detagged/{name}"), method = Array(RequestMethod.POST))
@@ -48,13 +48,13 @@ class ApiQuestionController(@Resource(name = "qnaService") qnaService: QnaServic
   @RequestMapping(value = Array("/answers/{answerId}/like"), method = Array(RequestMethod.POST))
   def likeAnswer(@LoginUser loginUser: SocialUser, @PathVariable questionId: Long, @PathVariable answerId: Long) = {
     val answer = qnaService.likeAnswer(loginUser, answerId)
-    answer.getSumLike()
+    answer.getSumLike
   }
 
   @RequestMapping(value = Array("/answers/{answerId}/dislike"), method = Array(RequestMethod.POST))
   def dislikeAnswer(@LoginUser loginUser: SocialUser, @PathVariable questionId: Long, @PathVariable answerId: Long) = {
     val answer = qnaService.dislikeAnswer(loginUser, answerId)
-    answer.getSumDislike()
+    answer.getSumDislike
   }
 
   def this() = this(null)

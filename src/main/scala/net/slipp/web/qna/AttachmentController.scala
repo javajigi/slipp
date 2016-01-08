@@ -35,7 +35,7 @@ class AttachmentController(
   @ResponseBody def upload(@LoginUser loginUser: SocialUser, request: MultipartRequest) = {
     val multipartFile = request.getFile(AttachmentFileInputName)
     val attachment = attachmentService.add(multipartFile, loginUser)
-    attachment.toMap()
+    attachment.toMap
   }
 
   @RequestMapping(Array("/{attachmentId}"))
@@ -43,7 +43,7 @@ class AttachmentController(
                    @PathVariable("attachmentId") attachmentId: String): Unit = {
     val attachment = attachmentService.getById(attachmentId)
     val attachmentFile = attachmentService.getDestinationFile(attachment)
-    servletDownloadManager.download(request, response, attachmentFile, attachment.getOriginalFilename(), ExpireMillis)
+    servletDownloadManager.download(request, response, attachmentFile, attachment.getOriginalFilename, ExpireMillis)
   }
 
   def this() = this(null, null)

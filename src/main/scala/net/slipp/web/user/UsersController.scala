@@ -38,7 +38,7 @@ class UsersController(
   @RequestMapping(value = Array(""), method = Array(RequestMethod.POST))
   def create(user: UserForm, redirect: String) = {
     val socialUser = userService.createSlippUser(user.getUserId(), user.getEmail())
-    autoLoginAuthenticator.login(socialUser.getEmail(), socialUser.getRawPassword())
+    autoLoginAuthenticator.login(socialUser.getEmail, socialUser.getRawPassword)
     "redirect:%s".format(redirect)
   }
 
@@ -48,12 +48,12 @@ class UsersController(
   @RequestMapping(Array("/{id}"))
   def profileById(@PathVariable id: Long) = {
     val socialUser = userService.findById(id)
-    "redirect:/users/%d/%s".format(id, URLEncoder.encode(socialUser.getUserId(), "UTF-8"))
+    "redirect:/users/%d/%s".format(id, URLEncoder.encode(socialUser.getUserId, "UTF-8"))
   }
 
   @RequestMapping(Array("/{id}/{userId}"))
   def profile(@PathVariable id: Long, @PathVariable userId: String, model: Model) = {
-    model.addAttribute("questions", qnaService.findsQuestionByWriter(id, createPageableByQuestionUpdatedDate(DefaultPageNo, DefaultSummaryPageSize)))
+    model.addAttribute("questions", qnaService.findsQuestionByWriter(Option(id), createPageableByQuestionUpdatedDate(DefaultPageNo, DefaultSummaryPageSize)))
     model.addAttribute("answers", qnaService.findsAnswerByWriter(id, createPageableByAnswer(DefaultPageNo, DefaultSummaryPageSize)))
     model.addAttribute("socialUser", userService.findById(id))
     "users/profile"
@@ -61,7 +61,7 @@ class UsersController(
 
   @RequestMapping(Array("/{id}/{userId}/questions"))
   def questions(@PathVariable id: Long, page: Integer, model: Model) = {
-    model.addAttribute("questions", qnaService.findsQuestionByWriter(id, createPageableByQuestionUpdatedDate(revisedPage(page), DefaultPageSize)))
+    model.addAttribute("questions", qnaService.findsQuestionByWriter(Option(id), createPageableByQuestionUpdatedDate(revisedPage(page), DefaultPageSize)))
     model.addAttribute("socialUser", userService.findById(id))
     "users/questions"
   }
@@ -80,7 +80,7 @@ class UsersController(
       throw new IllegalArgumentException("You cann't change another user!")
     }
 
-    model.addAttribute("user", new UserForm(socialUser.getUserId(), socialUser.getEmail()))
+    model.addAttribute("user", new UserForm(socialUser.getUserId, socialUser.getEmail))
     model.addAttribute("socialUser", socialUser)
     "users/form"
   }

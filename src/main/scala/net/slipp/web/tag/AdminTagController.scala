@@ -1,5 +1,7 @@
 package net.slipp.web.tag
 
+import java.lang.Long
+
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.RequestMapping
@@ -25,7 +27,7 @@ class AdminTagController(
 
   private def tagsToModel(page: Integer, model: Model) {
     model.addAttribute("tags", tagService.findAllTags(createPageableTagId(page, DefaultPageSize)))
-    model.addAttribute("parentTags", tagService.findPooledParentTags())
+    model.addAttribute("parentTags", tagService.findPooledParentTags)
   }
 
   @RequestMapping(value = Array("/tags"), method = Array(RequestMethod.POST))
@@ -33,7 +35,7 @@ class AdminTagController(
     logger.debug(s"create tag : $name, $parentTag")
 
     try {
-      tagService.saveTag(name, parentTag)
+      tagService.saveTag(name, Option(parentTag))
       "redirect:/admin/tags"
     } catch {
       case e: IllegalArgumentException => {
@@ -45,9 +47,9 @@ class AdminTagController(
   }
 
   @RequestMapping(value = Array("/moveNewTag"), method = Array(RequestMethod.POST))
-  def moveNewTag(@RequestParam tagId: Long, @RequestParam parentTag: java.lang.Long) = {
+  def moveNewTag(@RequestParam tagId: Long, @RequestParam parentTag: Long) = {
     logger.debug(s"move new tag : $tagId, $parentTag")
-    tagService.moveToTag(tagId, parentTag)
+    tagService.moveToTag(tagId, Option(parentTag))
     "redirect:/admin/tags"
   }
 

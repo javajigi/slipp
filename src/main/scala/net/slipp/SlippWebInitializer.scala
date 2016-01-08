@@ -24,9 +24,6 @@ class SlippWebInitializer extends WebApplicationInitializer {
     cef.setEncoding("UTF-8")
     cef.setForceEncoding(true)
 
-    container.addFilter("corsFilter", classOf[CorsFilter])
-      .addMappingForUrlPatterns(EnumSet.allOf(classOf[DispatcherType]), false, "/*")
-
     container.addFilter("characterEncodingFilter", cef)
       .addMappingForUrlPatterns(null, false, "/*")
 

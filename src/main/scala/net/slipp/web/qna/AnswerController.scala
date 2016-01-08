@@ -41,12 +41,12 @@ class AnswerController(
   def updateForm(@LoginUser loginUser: SocialUser, @PathVariable questionId: Long, @PathVariable answerId: Long, model: Model) = {
     val answer = qnaService.findAnswerById(answerId)
     if (!answer.isWritedBy(loginUser)) {
-      throw new AccessDeniedException(loginUser.getUserId() + " is not owner!")
+      throw new AccessDeniedException(loginUser.getUserId + " is not owner!")
     }
 
     model.addAttribute("question", qnaService.findByQuestionId(questionId))
     model.addAttribute("answer", answer)
-    model.addAttribute("tags", tagService.findLatestTags())
+    model.addAttribute("tags", tagService.findLatestTags)
     "qna/answer"
   }
   
@@ -59,7 +59,7 @@ class AnswerController(
   @RequestMapping(value = Array("{answerId}/to"), method = Array(RequestMethod.GET))
   def newQuestionForm(@PathVariable questionId: Long, @PathVariable answerId: Long, model: Model) = {
     val question = qnaService.findByQuestionId(questionId)
-    val answer = qnaService.findAnswerById(answerId);
+    val answer = qnaService.findAnswerById(answerId)
 
     val questionDto = new QuestionDto(questionId, answerId, answer.getContents)
     val answers = question.getAnswers
@@ -73,7 +73,7 @@ class AnswerController(
   @RequestMapping(value = Array("{answerId}/to"), method = Array(RequestMethod.POST))
   def newQuestion(@LoginUser loginUser: SocialUser, @PathVariable questionId: Long, @PathVariable answerId: Long, newQuestion: QuestionDto) = {
     logger.debug("New Question : {}", newQuestion)
-    val question = qnaService.toQuestion(loginUser, questionId, newQuestion)
+    val question = qnaService.moveQuestion(loginUser, questionId, newQuestion)
     "redirect:/questions/%d".format(question.getQuestionId)
   }
 

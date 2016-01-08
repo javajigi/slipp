@@ -1,35 +1,29 @@
 package net.slipp.service.qna
 
-import net.slipp.domain.tag.TagTest.JAVA
-import net.slipp.domain.tag.TagTest.NEWTAG
-import org.mockito.Mockito.verify
-import org.mockito.Mockito.when
-import java.util.HashSet
-import java.util.Set
-import net.slipp.domain.qna.Answer
-import net.slipp.domain.qna.Question
-import net.slipp.domain.qna.QuestionDto
+import java.util.{HashSet, Set}
+
+import com.google.common.collect.{Lists, Sets}
+import net.slipp.domain.qna.{Answer, Question, QuestionDto}
 import net.slipp.domain.tag.Tag
+import net.slipp.domain.tag.TagTest.{JAVA, NEWTAG}
 import net.slipp.domain.user.SocialUser
-import net.slipp.repository.qna.AnswerRepository
-import net.slipp.repository.qna.QuestionRepository
+import net.slipp.repository.qna.{AnswerRepository, QuestionRepository}
 import net.slipp.service.rank.ScoreLikeService
 import net.slipp.service.tag.TagService
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.InjectMocks
-import org.mockito.Mock
+import org.mockito.{InjectMocks, Mock}
+import org.mockito.Mockito.when
 import org.mockito.runners.MockitoJUnitRunner
 import org.springframework.security.access.AccessDeniedException
-import com.google.common.collect.{Lists, Sets}
 
 @RunWith(classOf[MockitoJUnitRunner])
 class QnaServiceTest {
-  @Mock private var questionRepository: QuestionRepository = null
-  @Mock private var answerRepository: AnswerRepository = null
-  @Mock private var tagService: TagService = null
-  @Mock private var scoreLikeService: ScoreLikeService = null
-  @InjectMocks private var dut: QnaService = new QnaService
+  @Mock private var questionRepository: QuestionRepository = _
+  @Mock private var answerRepository: AnswerRepository = _
+  @Mock private var tagService: TagService = _
+  @Mock private var scoreLikeService: ScoreLikeService = _
+  @InjectMocks private val dut = new QnaService
 
   @Test def updateQuestion_sameUser {
     val loginUser: SocialUser = new SocialUser(10)

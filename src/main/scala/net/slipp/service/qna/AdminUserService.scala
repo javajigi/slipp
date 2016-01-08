@@ -17,18 +17,18 @@ class AdminUserService @Autowired()(
 
   def unadmin(id: Long): Unit = {
     val user = socialUserService.findById(id);
-    user.unadmined();
+    user.unadmined()
   }
 
 
   def admin(id: Long): Unit = {
-    val user = socialUserService.findById(id);
-    user.admined();
+    val user = socialUserService.findById(id)
+    user.admin()
   }
 
   def block(id: Long) {
-    val user = socialUserService.findById(id);
-    user.blocked();
+    val user = socialUserService.findById(id)
+    user.block()
     qnaService.deleteToBlock(user);
     smallTalkService.deleteToBlock(user);
   }

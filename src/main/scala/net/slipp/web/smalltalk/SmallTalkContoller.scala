@@ -3,22 +3,16 @@ package net.slipp.web.smalltalk
 import javax.annotation.Resource
 import javax.validation.Valid
 
-import net.slipp.domain.smalltalk.SmallTalk
+import com.typesafe.scalalogging.LazyLogging
 import net.slipp.domain.smalltalk.SmallTalkComment
 import net.slipp.domain.user.SocialUser
-import net.slipp.service.MailService
+import net.slipp.domain.smalltalk.SmallTalk
 import net.slipp.service.smalltalk.SmallTalkService
 import net.slipp.support.web.argumentresolver.LoginUser
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.validation.BindingResult
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.ResponseBody
-import com.typesafe.scalalogging.LazyLogging
+import org.springframework.web.bind.annotation.{PathVariable, RequestMapping, RequestMethod, ResponseBody}
 
 @Controller
 class SmallTalkContoller(@Resource(name = "smallTalkService") smallTalkService: SmallTalkService) extends LazyLogging {
@@ -42,7 +36,7 @@ class SmallTalkContoller(@Resource(name = "smallTalkService") smallTalkService: 
 
   @RequestMapping(Array("/ajax/smalltalks"))
   def finds(model: Model) = {
-    model.addAttribute("smallTalks", smallTalkService.getLastTalks())
+    model.addAttribute("smallTalks", smallTalkService.getLastTalks)
     "async/smalltalk"
   }
 
