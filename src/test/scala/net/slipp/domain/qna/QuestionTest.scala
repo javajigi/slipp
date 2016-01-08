@@ -9,6 +9,7 @@ import net.slipp.domain.tag.TagBuilder._
 import net.slipp.domain.tag.TagTest._
 import net.slipp.domain.user.{SocialUser, SocialUserBuilder}
 import net.slipp.repository.tag.TagRepository
+import net.slipp.support.test.UnitTest
 import org.hamcrest.CoreMatchers._
 import org.junit.Assert._
 import org.junit.{Before, Test}
@@ -17,7 +18,7 @@ import org.mockito.Mock
 import org.mockito.runners.MockitoJUnitRunner
 
 @RunWith(classOf[MockitoJUnitRunner])
-class QuestionTest {
+class QuestionTest extends UnitTest {
   private var dut: Question = null
   @Mock private var tagRepository: TagRepository = null
 
@@ -129,56 +130,46 @@ class QuestionTest {
   }
 
   @Test def 질문을_삭제한다 {
-    val java: Tag = aTag.withName("java").build
-    val writer: SocialUser = new SocialUser
-    val dut: Question = aQuestion.withWriter(writer).withTag(java).build
+    val java = aSomeTag(name = "java")
+    val writer = aSomeUser()
+    val dut = aSomeQuestion(tags = Set(java))
     dut.delete(writer)
     assertThat(dut.isDeleted, is(true))
     assertThat(java.getTaggedCount, is(0))
   }
 
-  @Test
-  @throws(classOf[Exception])
-  def detaggedTags {
-    val java: Tag = aTag.withName("java").withTaggedCount(3).build
-    val javascript: Tag = aTag.withName("javascript").withTaggedCount(2).build
+  @Test def detaggedTags {
+    val java = aSomeTag(name = "java", taggedCount = 3)
+    val javascript = aSomeTag(name = "javascript", taggedCount = 2)
     val originalTags = Sets.newHashSet(java, javascript)
     Question.detaggedTags(originalTags)
     assertThat(java.getTaggedCount, is(2))
     assertThat(javascript.getTaggedCount, is(1))
   }
 
-  @Test
-  @throws(classOf[Exception])
-  def taggedTags {
-    val java: Tag = aTag.withName("java").withTaggedCount(3).build
-    val javascript: Tag = aTag.withName("javascript").withTaggedCount(2).build
+  @Test def taggedTags {
+    val java = aSomeTag(name = "java", taggedCount = 3)
+    val javascript = aSomeTag(name = "javascript", taggedCount = 2)
     val originalTags = Sets.newHashSet(java, javascript)
     Question.taggedTags(originalTags)
     assertThat(java.getTaggedCount, is(4))
     assertThat(javascript.getTaggedCount, is(3))
   }
 
-  @Test
-  @throws(classOf[Exception])
-  def taggedTag {
-    val java: Tag = aTag.withName("java").withTaggedCount(3).build
-    val javascript: Tag = aTag.withName("javascript").withTaggedCount(2).build
-    val writer: SocialUser = new SocialUser
-    val dut: Question = aQuestion.withWriter(writer).withTag(java).build
-    dut.taggedTag(javascript)
+  @Test def taggedTag {
+    val java = aSomeTag(name = "java", taggedCount = 3)
+    val javascript = aSomeTag(name = "javascript", taggedCount = 2)
+    val dut: Question = aSomeQuestion(tags = Set(java, javascript))
+
     assertThat(dut.getTags.size, is(2))
     assertThat(javascript.getTaggedCount, is(3))
     assertTrue(dut.getDenormalizedTags.contains("javascript"))
   }
 
-  @Test
-  @throws(classOf[Exception])
-  def deTaggedTag {
-    val java: Tag = aTag.withName("java").build
-    val javascript: Tag = aTag.withName("javascript").build
-    val writer: SocialUser = new SocialUser
-    val dut: Question = aQuestion.withWriter(writer).withTag(java).withTag(javascript).build
+  @Test def deTaggedTag {
+    val java: Tag = aSomeTag(name = "java")
+    val javascript: Tag = aSomeTag(name = "javascript")
+    val dut: Question = aSomeQuestion(tags = Set(java, javascript))
     dut.detaggedTag(javascript)
     assertThat(dut.getTags.size, is(1))
     assertThat(javascript.getTaggedCount, is(0))

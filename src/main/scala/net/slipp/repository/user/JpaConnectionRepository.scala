@@ -18,6 +18,7 @@ import org.springframework.social.connect.NoSuchConnectionException
 import org.springframework.social.connect.NotConnectedException
 import org.springframework.util.LinkedMultiValueMap
 import org.springframework.util.MultiValueMap
+import scala.collection.JavaConversions._
 
 class JpaConnectionRepository(
                              userId: String,
@@ -27,7 +28,6 @@ class JpaConnectionRepository(
   def findAllConnections: MultiValueMap[String, Connection[_]] = {
     val resultList: List[Connection[_]] = connectionMapper.mapEntities(socialUserRepository.findsByUserId(userId))
     val connections: MultiValueMap[String, Connection[_]] = new LinkedMultiValueMap[String, Connection[_]]
-    import scala.collection.JavaConversions._
     for (connection <- resultList) {
       val providerId: String = connection.getKey.getProviderId
       connections.add(providerId, connection)
@@ -178,7 +178,6 @@ class JpaConnectionRepository(
   class ServiceProviderConnectionMapper {
     def mapEntities(socialUsers: List[SocialUser]): List[Connection[_]] = {
       val result: List[Connection[_]] = new ArrayList[Connection[_]]
-      import scala.collection.JavaConversions._
       for (su <- socialUsers) {
         result.add(mapEntity(su))
       }

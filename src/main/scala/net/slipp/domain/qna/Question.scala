@@ -25,15 +25,11 @@ object Question {
   private val DEFAULT_BEST_ANSWER: Integer = 2
 
   private[qna] def detaggedTags(originalTags: Set[Tag]) {
-    for (tag <- originalTags) {
-      tag.deTagged
-    }
+    originalTags.foreach(t => t.deTagged())
   }
 
   private[qna] def taggedTags(newTags: Set[Tag]) {
-    for (tag <- newTags) {
-      tag.tagged
-    }
+    newTags.foreach(t => t.tagged())
   }
 }
 
@@ -194,7 +190,6 @@ class Question(id: Long, loginUser: SocialUser, t: String, c: String, nTags: Set
 
   def getPlainTags: String = {
     var displayTags: String = ""
-    import scala.collection.JavaConversions._
     for (tag <- getTags) {
       displayTags += tag.getName + " "
     }

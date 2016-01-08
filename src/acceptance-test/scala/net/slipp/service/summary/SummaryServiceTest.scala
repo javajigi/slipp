@@ -1,15 +1,13 @@
 package net.slipp.service.summary
 
+import net.slipp.domain.summary.SiteSummary
 import org.hamcrest.CoreMatchers.is
 import org.junit.Assert.assertThat
-import net.slipp.domain.summary.SiteSummary
-import org.junit.Before
-import org.junit.Test
+import org.junit.{Before, Test}
 import org.junit.runner.RunWith
 import org.mockito.InjectMocks
 import org.mockito.runners.MockitoJUnitRunner
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
+import org.slf4j.{Logger, LoggerFactory}
 
 @RunWith(classOf[MockitoJUnitRunner])
 class SummaryServiceTest {

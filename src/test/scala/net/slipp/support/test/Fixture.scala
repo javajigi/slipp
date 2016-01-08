@@ -1,5 +1,6 @@
 package net.slipp.support.test
 
+import com.google.common.collect.Sets
 import net.slipp.domain.qna.{ScoreLikeType, ScoreLike, Answer, Question}
 import net.slipp.domain.tag.Tag
 import net.slipp.domain.user.SocialUser
@@ -15,8 +16,11 @@ trait Fixture {
     user
   }
 
-  implicit def aSomeQuestion(loginUser: SocialUser = aSomeUser(), title: String = "title", contents: String = "contents") = {
-    new Question(loginUser, title, contents, null)
+  implicit def aSomeQuestion(loginUser: SocialUser = aSomeUser(), title: String = "title",
+                             contents: String = "contents", tags: Set[Tag] = Set.empty) = {
+    val q = new Question(loginUser, title, contents, null)
+    tags.foreach(t => q.taggedTag(t))
+    q
   }
 
   implicit def aSomeAnswer(id: Long = 1L, q: Question = aSomeQuestion(), sumLiked: Integer = 1) = {
@@ -27,10 +31,10 @@ trait Fixture {
     answer
   }
 
-  implicit def aSomeTag(id: Long = 1L, name: String = "tag") = {
-    val tag = new Tag()
+  implicit def aSomeTag(id: Long = 0L, name: String = "tag", taggedCount: Int = 0) = {
+    val tag = Tag.pooledTag(name)
     tag.setTagId(id)
-    tag.setName(name)
+    tag.setTaggedCount(taggedCount)
     tag
   }
 
