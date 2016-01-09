@@ -6,7 +6,7 @@ import javax.annotation.Resource
 import com.google.common.collect.Lists
 import com.restfb._
 import com.restfb.exception.FacebookGraphException
-import com.restfb.types.{Comment, FacebookType, Group, Post}
+import com.restfb.types._
 import net.slipp.domain.fb.FacebookComment
 import net.slipp.domain.qna.{Answer, Question, SnsConnection}
 import net.slipp.domain.tag.Tag
@@ -188,6 +188,15 @@ object FacebookService {
       fbComments.add(FacebookComment.create(tag, comment))
     }
     return fbComments
+  }
+
+
+  private def create(tag: Tag, comment: Comment): FacebookComment = {
+    val user: CategorizedFacebookType = comment.getFrom
+    if (tag == null) {
+      return new FacebookComment(comment.getId, user.getId, user.getName, comment.getCreatedTime, comment.getMessage, null, null)
+    }
+    return new FacebookComment(comment.getId, user.getId, user.getName, comment.getCreatedTime, comment.getMessage, tag.getGroupId, tag.getName)
   }
 
   private[qna] def createLink(questionId: Long): String = {

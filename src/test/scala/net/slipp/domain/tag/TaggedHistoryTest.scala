@@ -1,6 +1,5 @@
-package net.slipp.ndomain.tag
+package net.slipp.domain.tag
 
-import net.slipp.domain.tag.{TaggedHistory, TaggedType}
 import org.hamcrest.CoreMatchers.is
 import org.junit.Assert.{assertNotNull, assertThat}
 import org.junit.Test

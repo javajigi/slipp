@@ -18,34 +18,14 @@ object FacebookComment {
   }
 }
 
-class FacebookComment(i: String, uid: String, n: String, cTime: Date, m: String, gId: String, gName: String)
+case class FacebookComment(id: String, userId: String, name: String, createdTime: Date, message: String, groupId: String, groupName: String)
   extends Comparable[FacebookComment] {
-  @BeanProperty
-  val id = i
-
-  @BeanProperty
-  val userId = uid
-
-  @BeanProperty
-  val name = n
-
-  @BeanProperty
-  val createdTime = cTime
-
-  val message = m
-
-  @BeanProperty
-  val groupId = gId
-
-  @BeanProperty
-  val groupName = gName
-
   def getMessage = {
     br(links(message))
   }
 
   def compareTo(target: FacebookComment) = {
-    (createdTime.getTime - target.getCreatedTime.getTime).toInt
+    (createdTime.getTime - target.createdTime.getTime).toInt
   }
 
   override def toString: String = {
