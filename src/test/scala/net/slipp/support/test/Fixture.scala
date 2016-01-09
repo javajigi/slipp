@@ -7,12 +7,13 @@ import net.slipp.domain.user.SocialUser
 
 trait Fixture {
   implicit def aSomeUser(id: Long = 1L, userId: String = "someUserId", email: String = "some@sample.com",
-                         password: String = "password") = {
+                         password: String = "password", rawPassword: String = "rawPassword") = {
     val user = new SocialUser()
     user.setId(id)
     user.setUserId(userId)
     user.setEmail(email)
     user.setPassword(password)
+    user.setRawPassword(rawPassword)
     user
   }
 

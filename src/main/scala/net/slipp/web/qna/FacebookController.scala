@@ -34,6 +34,7 @@ class FacebookController(
     logger.debug("question id : {}", id.toString)
 
     val fbComments = facebookService.findFacebookComments(id)
+    logger.debug("facebook comment : {}", fbComments)
     val result = createTemplate("fbcomments.ftl", Map("comments" -> fbComments))
     logger.debug("result : {}", result)
     result
