@@ -34,9 +34,7 @@ import scala.collection.JavaConversions._
     Assert.notNull(answer, "Answer should be not null!")
     val question: Question = answer.getQuestion
     val notifieeUsers: Set[SocialUser] = question.findNotificationUser(loginUser)
-    if (notifieeUsers.isEmpty) {
-      return
-    }
+    logger.debug(s"Notification Users Size : ${notifieeUsers.size()}")
     val facebookClient: FacebookClient = new DefaultFacebookClient(createAccessToken, Version.VERSION_2_2)
     for (notifiee <- notifieeUsers) {
       val uri = s"/${notifiee.getProviderUserId}/notifications"

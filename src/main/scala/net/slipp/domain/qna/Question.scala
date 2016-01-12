@@ -299,8 +299,8 @@ class Question(id: Long, loginUser: SocialUser, t: String, c: String, nTags: Set
   }
 
   def findNotificationUser(loginUser: SocialUser) = {
-    val fbUsers = answers.map(a => a.getWriter).filter(u => u.isFacebookUser) :+ this.writer
-    fbUsers.toSet.filter(u => !u.isSameUser(loginUser))
+    val participants = answers.map(a => a.getWriter) :+ this.writer
+    participants.toSet.filter(u => u.isFacebookUser && !u.isSameUser(loginUser))
   }
 
   def connected(postId: String): SnsConnection = {
