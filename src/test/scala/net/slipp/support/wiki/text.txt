@@ -5,7 +5,11 @@
 
 매번 이러는 건 너무 불편해. [SourceTree](http://www.sourcetreeapp.com) 다른 건 없을까
 
+<<<<<<< HEAD
 <https://slipp.net>
+=======
+https://slipp.net
+>>>>>>> db3051951403cb04e646d0a043a88d8862a40117
 
 SourceTree와 연동을 해두니, 소스의 브랜치(Branch)를 따서 개발하다가 합치고(Merge)를
 자유롭게 할 수 있게 되더군요. 확실히 SVN을 사용하던 때에 비해서 브랜치를 따는 것과
