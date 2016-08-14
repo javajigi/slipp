@@ -1,12 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%><%@ taglib prefix="decorator" uri="http://www.opensymphony.com/sitemesh/decorator"
-%><%@include file="/WEB-INF/jsp/include/tags.jspf"%><!DOCTYPE html>
+	pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/tags.jspf"%><!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title><decorator:title default="SLiPP"/></title>
+<title><sitemesh:write property='title'/></title>
 <link rel="shortcut icon" type="image/x-icon" href="${url:resource('/images/favicon.ico')}">
 <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
 <link href="${url:resource('/stylesheets/slipp.css')}" rel="stylesheet">
@@ -16,7 +15,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script src="${url:resource('/javascripts/slipp.js')}"></script>
 <script src="${url:resource('/javascripts/localization/message.kr.js')}"></script>
-<decorator:head />
+<sitemesh:write property="head" />
 </head>
 
 <body>
@@ -84,7 +83,7 @@
 				<gcse:search></gcse:search>
 				<gcse:searchresults></gcse:searchresults>
 			</div>
-			<decorator:body/>
+			<sitemesh:write property="body"/>
 		</div>
 	</div>
 	<footer class="footer">
