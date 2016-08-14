@@ -9,7 +9,8 @@ import org.springframework.stereotype.Component
 @Component class TagPopulator {
   @Resource(name = "tagRepository") private var tagRepository: TagRepository = null
 
-  @PostConstruct def populate {
+  // @PostConstruct
+  def populate {
     if (tagRepository.findByName("java") == null) {
       val 스터디: Tag = tagRepository.save(Tag.pooledTag("스터디"))
       tagRepository.save(Tag.pooledTag("study", 스터디))

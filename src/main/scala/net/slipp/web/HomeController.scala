@@ -17,7 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping
 @Controller
 class HomeController(
   @Autowired env: Environment,
-  @Resource(name="wikiService") wikiService: WikiService,
+  // @Resource(name="wikiService")
+  wikiService: WikiService,
   @Resource(name = "qnaService") qnaService: QnaService,
   @Resource(name = "tagService") tagService: TagService) {
   private val logger = LoggerFactory.getLogger(classOf[HomeController])
@@ -33,8 +34,8 @@ class HomeController(
   }
   
   private def productionMode(model: Model) {
-    if (isProductionMode()) model.addAttribute("pages", wikiService.findWikiPages)
-    else model.addAttribute("pages", wikiService.findDummyWikiPages)
+    // if (isProductionMode()) model.addAttribute("pages", wikiService.findWikiPages)
+    // else model.addAttribute("pages", wikiService.findDummyWikiPages)
   }
   
   private def isProductionMode() = {
@@ -46,7 +47,7 @@ class HomeController(
   
   @RequestMapping(Array("/rss"))
   def rss(model: Model) = {
-    model.addAttribute("pages", wikiService.findWikiPages)
+    // model.addAttribute("pages", wikiService.findWikiPages)
     model.addAttribute("now", new Date())
     "rss"
   }

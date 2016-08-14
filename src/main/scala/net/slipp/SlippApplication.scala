@@ -1,8 +1,9 @@
-package slipp.config
+package net.slipp
 
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.context.annotation.Import
+import slipp.config.ApplicationConfig
 
 object SlippApplication {
   @throws(classOf[Exception])

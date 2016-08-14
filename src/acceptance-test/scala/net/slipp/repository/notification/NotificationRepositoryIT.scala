@@ -20,10 +20,9 @@ import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.util.StopWatch
-import slipp.config.PersistenceJPAConfig
 
 @RunWith(classOf[SpringJUnit4ClassRunner])
-@ContextConfiguration(classes = Array(classOf[PersistenceJPAConfig]))
+// @ContextConfiguration(classes = Array(classOf[PersistenceJPAConfig]))
 class NotificationRepositoryIT {
   private val log: Logger = LoggerFactory.getLogger(classOf[NotificationRepositoryIT])
 

@@ -7,10 +7,9 @@ import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
-import slipp.config.PersistenceJPAConfig
 
 @RunWith(classOf[SpringJUnit4ClassRunner])
-@ContextConfiguration(classes = Array(classOf[PersistenceJPAConfig]))
+// @ContextConfiguration(classes = Array(classOf[PersistenceJPAConfig]))
 class SocialUserRepositoryIT {
   @Autowired private var socialUserRepository: SocialUserRepository = null
 

@@ -14,7 +14,7 @@ import org.springframework.core.io.ClassPathResource
 import org.springframework.stereotype.Controller
 
 @Configuration
-@Import(value = Array(classOf[PersistenceJPAConfig], classOf[InfraConfig], classOf[SpringSecurityConfig], classOf[SpringSocialConfig]))
+@Import(value = Array(classOf[InfraConfig], classOf[SpringSecurityConfig], classOf[SpringSocialConfig]))
 @PropertySource(Array("classpath:application-properties.xml"))
 @ComponentScan(basePackages = Array("net.slipp.service"), excludeFilters = Array(new ComponentScan.Filter(`type` = FilterType.ANNOTATION, value = Array(classOf[Controller]))))
 class ApplicationConfig {
@@ -22,18 +22,18 @@ class ApplicationConfig {
 
   @Bean def wikiDao: WikiDao = {
     val wikiDao: WikiDao = new WikiDao
-    wikiDao.setDataSource(wikiDataSource)
+    //wikiDao.setDataSource(wikiDataSource)
     wikiDao
   }
 
-  @Bean(destroyMethod = "close") def wikiDataSource: DataSource = {
-    val dataSource: BasicDataSource = new BasicDataSource
-    dataSource.setDriverClassName(env.getProperty("wiki.database.driverClassName"))
-    dataSource.setUrl(env.getProperty("wiki.database.url"))
-    dataSource.setUsername(env.getProperty("wiki.database.username"))
-    dataSource.setPassword(env.getProperty("wiki.database.password"))
-    dataSource
-  }
+//  @Bean(destroyMethod = "close") def wikiDataSource: DataSource = {
+//    val dataSource: BasicDataSource = new BasicDataSource
+//    dataSource.setDriverClassName(env.getProperty("wiki.database.driverClassName"))
+//    dataSource.setUrl(env.getProperty("wiki.database.url"))
+//    dataSource.setUsername(env.getProperty("wiki.database.username"))
+//    dataSource.setPassword(env.getProperty("wiki.database.password"))
+//    dataSource
+//  }
 
   @Bean
   @throws(classOf[IOException])

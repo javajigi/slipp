@@ -9,7 +9,7 @@ import net.slipp.domain.wiki.{WikiDao, WikiPage}
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 
-@Service
+// @Service
 class WikiService {
   @Resource(name = "wikiDao") private var wikiDao: WikiDao = null
 
