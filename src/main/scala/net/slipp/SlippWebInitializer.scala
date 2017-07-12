@@ -3,8 +3,7 @@ package net.slipp
 import java.util.EnumSet
 import javax.servlet.{DispatcherType, ServletContext}
 
-import com.opensymphony.sitemesh.webapp.SiteMeshFilter
-import net.slipp.support.web.CorsFilter
+import net.slipp.support.web.{SlippSiteMeshFilter, CorsFilter}
 import org.springframework.context.annotation.Configuration
 import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter
 import org.springframework.web.WebApplicationInitializer
@@ -36,7 +35,7 @@ class SlippWebInitializer extends WebApplicationInitializer {
     container.addFilter("springSecurityFilterChain", classOf[DelegatingFilterProxy])
       .addMappingForUrlPatterns(EnumSet.allOf(classOf[DispatcherType]), false, "/*")
 
-    container.addFilter("sitemesh", classOf[SiteMeshFilter])
+    container.addFilter("sitemesh", classOf[SlippSiteMeshFilter])
       .addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD), false, "/*")
 
      val webContext = new AnnotationConfigWebApplicationContext()

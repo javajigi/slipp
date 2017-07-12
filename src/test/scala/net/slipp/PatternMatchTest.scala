@@ -1,6 +1,5 @@
 package net.slipp
 
-import net.slipp.domain.qna.ScoreLike
 import net.slipp.domain.user.SocialUser
 import net.slipp.support.test.Fixture
 import org.junit.Assert._

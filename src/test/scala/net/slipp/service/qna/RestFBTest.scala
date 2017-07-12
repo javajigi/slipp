@@ -1,7 +1,6 @@
 package net.slipp.service.qna
 
-import java.util.List
-
+import com.restfb.FacebookClient.AccessToken
 import com.restfb.types.{Comment, FacebookType, Group, Post}
 import com.restfb.{Connection, DefaultFacebookClient, FacebookClient, Parameter, Version}
 import net.slipp.domain.fb.FacebookComment
@@ -16,7 +15,15 @@ class RestFBTest {
 
   @Before def setup {
     val accessToken: String = "ACCESS_TOKEN"
-    dut = new DefaultFacebookClient(accessToken, Version.VERSION_2_3)
+    dut = new DefaultFacebookClient(accessToken, Version.VERSION_2_9)
+  }
+
+  @Test
+  @throws(classOf[Exception])
+  def getAccessToken: Unit = {
+    val accessToken: AccessToken =
+      new DefaultFacebookClient(Version.VERSION_2_9).obtainAppAccessToken("APP_ID", "APP_SECRET");
+    logger.debug("access token : {}", accessToken);
   }
 
   @Test
@@ -39,19 +46,32 @@ class RestFBTest {
 
   @Test
   @throws(classOf[Exception])
-  def fetchPost {
-    val post: Post = dut.fetchObject("10207006906754177", classOf[Post])
-    logger.debug("Post: " + post.getId + " : " + post.getMessage)
-    val comments: Post.Comments = post.getComments
-    val commentData: List[Comment] = comments.getData
-    logger.debug("comment size : {}", commentData.size)
+  def fetchComments {
+    val commentConnection = dut.fetchConnection("1324855987_10212587692590335/comments", classOf[Comment], Parameter.`with`("limit", 10))
+
     import scala.collection.JavaConversions._
-    for (comment <- commentData) {
-      val fbComment: FacebookComment = FacebookComment.create(null, comment)
-      logger.debug("fbComment: {}", fbComment)
-      logger.debug("CommentMessage : {} ", fbComment.getMessage)
+    for (commentPage <- commentConnection) {
+      for (comment <- commentPage) {
+        val fbComment: FacebookComment = FacebookComment.create(null, comment)
+        logger.debug("fbComment: {}", fbComment)
+        logger.debug("CommentMessage : {} ", fbComment.getMessage)
+
+        val replyComments = comment.getComments
+        logger.debug("reply comments : {}", replyComments);
+        for (replyComment <- replyComments.getData) {
+          logger.debug("reply comment : {}", replyComment);
+        }
+      }
     }
   }
+
+  @Test
+  @throws(classOf[Exception])
+  def fetchPost: Unit = {
+    val post: Post = dut.fetchObject("557610874350546", classOf[Post])
+    logger.debug("Post: " + post.getId + " : " + post.getMessage)
+  }
+
 
   @Test
   @throws(classOf[Exception])

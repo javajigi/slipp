@@ -25,6 +25,7 @@
 			</c:if>
 		</div>
 	</header>
+
 	<div class="content-main">
 		<slipp:show question="${question}"/>
 		<div class="qna-comment">

@@ -71,10 +71,11 @@ object FacebookService {
 
   private def createFacebookClient(socialUser: SocialUser): FacebookClient = {
     if (socialUser.isFacebookUser) {
-      return new DefaultFacebookClient(socialUser.getAccessToken, Version.VERSION_2_2)
+      log.debug("access token : {}", socialUser.getAccessToken);
+      return new DefaultFacebookClient(socialUser.getAccessToken, Version.VERSION_2_9)
     }
     val adminUser: SocialUser = socialUserService.findAdminUser
-    return new DefaultFacebookClient(adminUser.getAccessToken, Version.VERSION_2_2)
+    return new DefaultFacebookClient(adminUser.getAccessToken, Version.VERSION_2_9)
   }
 
   @Async def sendToGroupQuestionMessage(loginUser: SocialUser, questionId: Long) {
@@ -118,14 +119,15 @@ object FacebookService {
     val fbComments: List[FacebookComment] = Lists.newArrayList()
     for (snsConnection <- snsConnections) {
       log.debug("postId : {}", snsConnection.getPostId)
-      val post: Post = findPost(facebookClient, snsConnection.getPostId)
+
+      val comments: List[Comment] = findCommentsByPost(facebookClient, snsConnection.getPostId)
       var fbCommentsPerConnection: List[FacebookComment] = null
       if (snsConnection.isGroupConnected) {
         val tag: Tag = tagRepository.findByGroupId(snsConnection.getGroupId)
-        fbCommentsPerConnection = findComments(post, tag)
+        fbCommentsPerConnection = comments.map(comment => FacebookComment.create(tag, comment));
       }
       else {
-        fbCommentsPerConnection = findComments(post, null)
+        fbCommentsPerConnection = comments.map(comment => FacebookComment.create(null, comment));
       }
       fbComments.addAll(fbCommentsPerConnection)
       log.debug("count comments : {}, from post : {}", fbCommentsPerConnection.size, snsConnection.getPostId)
@@ -149,9 +151,17 @@ object FacebookService {
     return allGroups.subList(0, groupLimit)
   }
 
-  private def findPost(facebookClient: FacebookClient, postId: String): Post = {
+  private def findCommentsByPost(facebookClient: FacebookClient, postId: String): List[Comment] = {
     try {
-      return facebookClient.fetchObject(postId, classOf[Post])
+      val fbComments: List[Comment] = Lists.newArrayList()
+      val commentConnection = facebookClient.fetchConnection(postId + "/comments", classOf[Comment]);
+      import scala.collection.JavaConversions._
+      for (commentPage <- commentConnection) {
+        for (comment <- commentPage) {
+          fbComments.add(comment);
+        }
+      }
+      return fbComments;
     }
     catch {
       case e: FacebookGraphException => {
@@ -172,22 +182,6 @@ object FacebookService {
         return null
       }
     }
-  }
-
-  private def findComments(post: Post, tag: Tag): List[FacebookComment] = {
-    val fbComments: List[FacebookComment] = Lists.newArrayList()
-    if (post == null) {
-      return fbComments
-    }
-    val comments: Post.Comments = post.getComments
-    if (comments == null) {
-      return fbComments
-    }
-    val commentData: List[Comment] = comments.getData
-    for (comment <- commentData) {
-      fbComments.add(FacebookComment.create(tag, comment))
-    }
-    return fbComments
   }
 
 

@@ -4,7 +4,9 @@ import javax.persistence.Column
 import javax.persistence.Embeddable
 import javax.persistence.EnumType
 import javax.persistence.Enumerated
+
 import net.slipp.domain.ProviderType
+import net.slipp.domain.user.SocialUser
 import net.slipp.support.jpa.DomainModel
 import org.apache.commons.lang3.StringUtils
 
@@ -69,5 +71,17 @@ class SnsConnection(sType: ProviderType, pId: String, gId: String) extends Domai
 
   def updateAnswerCount(answerCount: Int) {
     this.snsAnswerCount = answerCount
+  }
+
+  def migrationPostId(providerUserId: String) {
+    if (isGroupConnected) {
+      return;
+    }
+
+    if (postId.contains(providerUserId)) {
+      return
+    }
+
+    this.postId = providerUserId + "_" + postId
   }
 }
