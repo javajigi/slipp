@@ -25,6 +25,16 @@
 			</c:if>
 		</div>
 	</header>
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<!-- slipp question detail -->
+	<ins class="adsbygoogle"
+		 style="display:inline-block;width:728px;height:90px"
+		 data-ad-client="ca-pub-0116131400397176"
+		 data-ad-test="on"
+		 data-ad-slot="3364168137"></ins>
+	<script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+	</script>
 	<div class="content-main">
 		<slipp:show question="${question}"/>
 		<div class="qna-comment">
