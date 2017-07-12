@@ -13,5 +13,5 @@
 /.cache
 /.idea/
 /.tmpBin/
-/slipp-qna.iml
+/slipp-qna*
 /build
