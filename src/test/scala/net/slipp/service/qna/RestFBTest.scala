@@ -1,5 +1,6 @@
 package net.slipp.service.qna
 
+import com.restfb.FacebookClient.AccessToken
 import com.restfb.types.{Comment, FacebookType, Group, Post}
 import com.restfb.{Connection, DefaultFacebookClient, FacebookClient, Parameter, Version}
 import net.slipp.domain.fb.FacebookComment
@@ -15,6 +16,14 @@ class RestFBTest {
   @Before def setup {
     val accessToken: String = "ACCESS_TOKEN"
     dut = new DefaultFacebookClient(accessToken, Version.VERSION_2_9)
+  }
+
+  @Test
+  @throws(classOf[Exception])
+  def getAccessToken: Unit = {
+    val accessToken: AccessToken =
+      new DefaultFacebookClient(Version.VERSION_2_9).obtainAppAccessToken("APP_ID", "APP_SECRET");
+    logger.debug("access token : {}", accessToken);
   }
 
   @Test
@@ -59,7 +68,7 @@ class RestFBTest {
   @Test
   @throws(classOf[Exception])
   def fetchPost: Unit = {
-    val post: Post = dut.fetchObject("100002022267366_590530504357686", classOf[Post])
+    val post: Post = dut.fetchObject("557610874350546", classOf[Post])
     logger.debug("Post: " + post.getId + " : " + post.getMessage)
   }
 
