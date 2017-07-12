@@ -11,7 +11,7 @@ import org.springframework.data.domain.Sort.Direction
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 import org.springframework.transaction.annotation.Transactional
-import slipp.config.{ApplicationConfig, PersistenceJPAConfig}
+import slipp.config.PersistenceJPAConfig
 
 @RunWith(classOf[SpringJUnit4ClassRunner])
 @ContextConfiguration(classes = Array(classOf[PersistenceJPAConfig]))

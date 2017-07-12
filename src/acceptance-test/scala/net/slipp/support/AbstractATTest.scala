@@ -1,5 +1,6 @@
 package net.slipp.support
 
+import com.codeborne.selenide.WebDriverRunner
 import net.slipp.LoginUser
 import net.slipp.qna.IndexPage
 
@@ -11,6 +12,7 @@ class AbstractATTest {
   def setup() {
     this.driver = new SharedDriver
     deleteAllCookies(driver)
+    WebDriverRunner.setWebDriver(new SharedDriver)
     this.environment = new SlippEnvironment
   }
 

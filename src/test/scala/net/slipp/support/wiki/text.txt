@@ -3,14 +3,20 @@
 때문에, SourceTree 라고 하는 애플리케이션을 이용해서 github과 연동하여 활용하고 
 있습니다.
 
-- SourceTree : http://www.sourcetreeapp.com/
+매번 이러는 건 너무 불편해. [SourceTree](http://www.sourcetreeapp.com) 다른 건 없을까
 
-  SourceTree와 연동을 해두니, 소스의 브랜치(Branch)를 따서 개발하다가 합치고(Merge)를
+<<<<<<< HEAD
+<https://slipp.net>
+=======
+https://slipp.net
+>>>>>>> db3051951403cb04e646d0a043a88d8862a40117
+
+SourceTree와 연동을 해두니, 소스의 브랜치(Branch)를 따서 개발하다가 합치고(Merge)를
 자유롭게 할 수 있게 되더군요. 확실히 SVN을 사용하던 때에 비해서 브랜치를 따는 것과
 소스합치기에 대한 두려움이 많이 사라졌습니다. 지금도 4개 정도의 큰 브랜치로 개발을 진행
 하고 있습니다.
-  생각해보면, 개발자들의 사용환경이 통일되면 그것도 좋다는 생각이 듭니다. 맥으로 대동단결?
-  git에 대한 console 상에서 사용법에 대해서는 낯선편이네요.
+생각해보면, 개발자들의 사용환경이 통일되면 그것도 좋다는 생각이 듭니다. 맥으로 대동단결?
+git에 대한 console 상에서 사용법에 대해서는 낯선편이네요.
 
-  pro git(http://dogfeet.github.com/articles/2012/progit.html) 이란 책이 오픈소스로
+pro git(http://dogfeet.github.com/articles/2012/progit.html) 이란 책이 오픈소스로
 번역이 되어 배포되고 있습니다. 다운로드 받아서 편하게 사용하세요. 
