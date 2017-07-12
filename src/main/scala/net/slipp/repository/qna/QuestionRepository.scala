@@ -13,6 +13,8 @@ import org.springframework.data.repository.query.Param
 trait QuestionRepository extends JpaRepository[Question, Long] {
   def findByWriter(writer: SocialUser): List[Question]
 
+  def findByDeleted(deleted: Boolean): List[Question]
+
   def findByDeleted(deleted: Boolean, pageable: Pageable): Page[Question]
 
   def findByWriterAndDeleted(writer: SocialUser, deleted: Boolean, pageable: Pageable): Page[Question]

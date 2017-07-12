@@ -321,6 +321,24 @@ class Question(id: Long, loginUser: SocialUser, t: String, c: String, nTags: Set
     return !snsConnetions.isEmpty
   }
 
+  def migrateFacebookPostId: Boolean = {
+    if (!writer.isFacebookUser) {
+      return false
+    }
+
+    if (!isSnsConnected) {
+      return false
+    }
+
+    val providerUserId = writer.getProviderUserId
+    var connetions = getSnsConnection
+    connetions.foreach(connection => {
+      connection.migrationPostId(providerUserId)
+    })
+
+    return true;
+  }
+
   /**
     * 베스트 댓글 하나를 반환한다.
     *

@@ -21,4 +21,11 @@ class MigrationService {
     questions.foreach(q => q.convertWiki())
     answerRepository.findAll.foreach(a => a.convertWiki())
   }
+
+  def migrateFacebookPostId {
+    val questions = questionRepository.findByDeleted(false);
+    questions.foreach(question => {
+      question.migrateFacebookPostId
+    });
+  }
 }
