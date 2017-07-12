@@ -32,6 +32,6 @@
 * src/main/resources-development 디렉토리의 temp-application-properties.xml 파일을 application-properties.xml으로 이름을 바꾼다. 인증을 하려면 페이스북, 트위트, 구글에 앱을 등록한 후 application-properties.xml 설정 파일에 관련 내용을 변경해야 한다.
 
 ### 서버 실행
+* 서버를 실행하는 가장 간단한 방법은 src/main/resources-development 디렉토리의 temp-application-properties.xml 파일의 DB 설정을 한 후 ./startup.sh 파일을 실행해 서버를 시작한다.
 * slipp 서비스는 embedded tomcat을 사용한다. embedded tomcat 설정 방법은 http://www.slipp.net/wiki/pages/viewpage.action?pageId=16711743 문서를 참고한다.
-* embedded tomcat은 src/test/java 디렉토리의 net.slipp.support.web.WebServerLauncher 클래스의 main method를 활용해 시작한다. 만약 maven을 사용하는 것이 익숙하다면 "mvn run jetty:run-war" 명령을 실행한 후 접속 가능하다.
-
+* embedded tomcat은 src/test/java 디렉토리의 net.slipp.support.web.WebServerLauncher 클래스의 main method를 활용해 시작한다.
