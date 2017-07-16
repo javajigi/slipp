@@ -56,7 +56,7 @@
 				</div>
 			</div>
 			<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-			<ins class="adsbygoogle" style="display:block;width:728px;height:90px;margin-top:20px;margin-bottom:20px;" data-ad-client="ca-pub-0116131400397176" data-ad-test="on" data-ad-slot="3364168137"></ins>
+			<ins class="adsbygoogle" style="display:block;width:728px;height:90px;margin-top:20px;margin-bottom:20px;" data-ad-client="ca-pub-0116131400397176" data-ad-slot="3364168137"></ins>
 			<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 			<form:form modelAttribute="answer" action="/questions/${question.questionId}/answers" method="POST" cssClass="form-write">
 				<fieldset id="qna-comment-form">
