@@ -25,10 +25,6 @@
 			</c:if>
 		</div>
 	</header>
-<<<<<<< HEAD
-
-=======
->>>>>>> 67c617a... feat(adsense): move adsense to above of comment form
 	<div class="content-main">
 		<slipp:show question="${question}"/>
 		<div class="qna-comment">
