@@ -25,7 +25,6 @@
 			</c:if>
 		</div>
 	</header>
-
 	<div class="content-main">
 		<slipp:show question="${question}"/>
 		<div class="qna-comment">
@@ -52,6 +51,9 @@
 					</c:forEach>
 				</div>
 			</div>
+			<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+			<ins class="adsbygoogle" style="display:block;width:728px;height:90px;margin-top:20px;margin-bottom:20px;" data-ad-client="ca-pub-0116131400397176" data-ad-slot="3364168137"></ins>
+			<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 			<form:form modelAttribute="answer" action="/questions/${question.questionId}/answers" method="POST" cssClass="form-write">
 				<fieldset id="qna-comment-form">
 					<legend class="title-write">의견 추가하기</legend>
@@ -81,14 +83,14 @@
 	</div>
 	<div class="content-sub">
 		<div class="floating">
-			<%--  
+			<%--
 			<section class="like-question">
 				<h1>관심두기</h1>
 				<a class="btn-like-question" href="/api/questions/${question.questionId}/like" title="관심글 등록">
 					<i class="icon-like-question"></i>
 					<strong class="like-question-count">${question.sumLike}</strong>
 					<span class="like-question-txt">관심글</span>
-				</a>	
+				</a>
 			</section>
 			--%>
 			<section class="share">
@@ -132,7 +134,7 @@
 				<input type="text" name="fbPostId" class="inp_nickname focused"><br/>
 				<button class="signin-with-sns-submit-btn" type="submit">페북글 연결</button>
 			</form><br/>
-			</sec:authorize>			
+			</sec:authorize>
 			<a class="link-back-to-list" href="/questions">&larr; 목록으로</a>
 		</div>
 	</div>
