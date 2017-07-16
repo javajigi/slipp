@@ -155,6 +155,10 @@ object FacebookService {
     try {
       val fbComments: List[Comment] = Lists.newArrayList()
       val commentConnection = facebookClient.fetchConnection(postId + "/comments", classOf[Comment]);
+      if (commentConnection.isEmpty) {
+        return fbComments
+      }
+
       import scala.collection.JavaConversions._
       for (commentPage <- commentConnection) {
         for (comment <- commentPage) {
