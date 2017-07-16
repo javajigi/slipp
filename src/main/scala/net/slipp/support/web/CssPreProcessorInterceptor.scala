@@ -11,10 +11,6 @@ import org.springframework.core.env.Environment
 import org.springframework.util.Assert
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter
 
-object CssPreProcessorInterceptor {
-  private val DEFAULT_WINDOWS_NAME: String = "Windows"
-}
-
 class CssPreProcessorInterceptor extends HandlerInterceptorAdapter {
   private val log: Logger = LoggerFactory.getLogger(classOf[GlobalRequestAttributesInterceptor])
 
@@ -23,7 +19,7 @@ class CssPreProcessorInterceptor extends HandlerInterceptorAdapter {
   @PostConstruct def afterPropertiesSet {
     val environment: String = env.getProperty("environment")
     log.info("current environment : {}", environment)
-    Assert.notNull(environment, "Environment cann't be null!")
+    Assert.notNull(environment, "Environment can not be null!")
   }
 
   @throws(classOf[Exception])
@@ -40,10 +36,7 @@ class CssPreProcessorInterceptor extends HandlerInterceptorAdapter {
 
   private def runStylus {
     try {
-      val file: File = new File("./webapp/WEB-INF/")
-      val pb: ProcessBuilder = new ProcessBuilder(file.getAbsolutePath + "/" + shellFileName)
-      log.debug("stylus file path : {}", file.getAbsolutePath)
-      pb.directory(new File(file.getAbsolutePath))
+      val pb: ProcessBuilder = new ProcessBuilder("npm run styl")
       val process: Process = pb.start
       val writer: StringWriter = new StringWriter
       IOUtils.copy(process.getInputStream, writer, "UTF-8")
@@ -51,20 +44,8 @@ class CssPreProcessorInterceptor extends HandlerInterceptorAdapter {
     }
     catch {
       case e: Exception => {
-        log.warn("cannot find styl.sh file!")
+        log.warn("Fail to running npm task! please check NodeJS and run `npm install`, `npm run styl` manually.")
       }
     }
-  }
-
-  private def shellFileName: String = {
-    if (isWindows) {
-      return "styl.bat"
-    }
-    return "styl.sh"
-  }
-
-  private def isWindows: Boolean = {
-    val osName: String = System.getProperty("os.name")
-    return osName.contains(CssPreProcessorInterceptor.DEFAULT_WINDOWS_NAME)
   }
 }

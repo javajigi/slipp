@@ -1,0 +1,24 @@
+{
+  "name": "slipp-qna",
+  "version": "1.0.0",
+  "description": "SLiPP - Sustainable Life, Programming, Programmer",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "styl": "stylus ./webapp/WEB-INF/styles/slipp.styl -c --include ./node_modules/nib/lib -o ./webapp/WEB-INF/static_resources/stylesheets",
+    "styl:watch": "stylus ./webapp/WEB-INF/styles/slipp.styl -c -w --include ./node_modules/nib/lib -o ./webapp/WEB-INF/static_resources/stylesheets"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/javajigi/slipp.git"
+  },
+  "author": "Javajigi <javajigi@gmail.com>",
+  "private": true,
+  "bugs": {
+    "url": "https://github.com/javajigi/slipp/issues"
+  },
+  "homepage": "https://slipp.net",
+  "devDependencies": {
+    "nib": "^1.1.2",
+    "stylus": "^0.54.5"
+  }
+}
