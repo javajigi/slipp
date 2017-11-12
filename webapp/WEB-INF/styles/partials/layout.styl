@@ -1,5 +1,13 @@
 body
 	overflow-y: scroll;
+	margin: 0;
+	padding: 0;
+
+h1
+	font-size: 1.8em;
+
+code
+	font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
 
 .container
 	width: 960px;
@@ -24,30 +32,20 @@ body
 		z-index: 1;
 		float: left;
 		margin: 0;
-		// font-family: Constantia,"Lucida Bright",Lucidabright,"Lucida Serif",Lucida,"DejaVu Serif","Bitstream Vera Serif","Liberation Serif",Georgia,serif;
-		font-family: 'Oswald', sans-serif;
 		a
 			display: block;
-			width: 100px;
-			height: 50px;
-			// border-radius: 0 0 10px 10px;
-			text-align: center;
-			font-size: 26px;
-			line-height: 50px;
-			color: #fff;
-			background-color: #000;
-			&:hover,
-			&:focus
-				text-decoration: none;
-				background-color: #005580;
-				outline: none;
-	nav
+		img
+			position: relative;
+			top: -2px;
+	.site-nav,
+	.user-menu
 		height: 40px;
 		font-size: 14px;
 		line-height: 40px;
-		> ul
+		ul
 			margin: 0;
 			padding: 0;
+			list-style: none;
 			>	li
 				float: left;
 				> a
@@ -56,7 +54,7 @@ body
 					padding-left: 1em;
 					padding-right: 1em;
 					font-weight: bold;
-					color: #333;
+					color: #444;
 					&:hover,
 					&:focus
 						text-decoration: none;
@@ -71,11 +69,6 @@ body
 		@media phone
 			margin-left: 0;
 		margin-left: 2em;
-		border-left: 1px solid #ddd;
-		box-shadow: inset 1px 0 0 #fff;
-		li
-			border-right: 1px solid #ddd;
-			box-shadow: 1px 0 0 #fff;
 		.icon-list
 			display: none;
 			@media phone
@@ -83,6 +76,14 @@ body
 	.site-search
 		float: left;
 		line-height: 42px;
+		.spacer
+			display: inline-block;
+			width: 1px;
+			height: 18px;
+			margin-left: 10px;
+			margin-right: 10px;
+			vertical-align: middle;
+			background: #ccc;
 		// @media phone
 		// 	float: none;
 		// 	position: absolute;
@@ -100,11 +101,15 @@ body
 		// 		border-color: #AAD2F7;
 	.user-menu
 		float: right;
-		@media phone
-			float: none;
+		margin: 0;
+		padding: 0;
 		> ul > li
 			border-right: 1px solid #ddd;
 			box-shadow: 1px 0 0 #fff;
+			@media phone
+				float: none;
+				border-right: none;
+				box-shadow: none;
 	.link-write
 		background-color: rgba(0, 85, 128, 0.1);
 		transition: background-color .4s;

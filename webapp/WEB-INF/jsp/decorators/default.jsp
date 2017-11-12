@@ -7,7 +7,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title><sitemesh:write property='title' /> :: SLiPP</title>
 <link rel="shortcut icon" type="image/x-icon" href="${url:resource('/images/favicon.ico')}">
-<link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
 <link href="${url:resource('/stylesheets/slipp.css')}" rel="stylesheet">
 <!--[if lt IE 9]>
 	<script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -23,7 +22,9 @@
 	<header class="header" role="banner">
 		<div class="container">
 			<h1 class="logo">
-				<a href="/">SLiPP</a>
+				<a href="/">
+					<img src="${url:resource('/images/slipp.png')}" height="34" alt="SLiPP" />
+				</a>
 			</h1>
 			<nav class="site-nav">
 				<ul>
@@ -39,11 +40,12 @@
 					</li>					
 					</sec:authorize>
 					<li class="site-search">
-						<a href="#siteSearchArea" id="siteSearchButton" class="site-search-button"><i class="icon-search"></i></a>
+						<span class="spacer"></span><a href="#siteSearchArea" id="siteSearchButton" class="site-search-button"><i class="icon-search"></i>
+						<span class="text">검색</span></a>
 					</li>
 				</ul>
 			</nav>
-			<nav class="user-menu">
+			<menu class="user-menu">
 				<ul role="menu">
 					<sec:authorize access="!hasRole('ROLE_USER')">
 					<li class="msg-for-login">SLiPP 계정으로 의견을 나누세요! &rarr;</li>
@@ -74,7 +76,7 @@
 					</li>
 					</sec:authorize>
 				</ul>
-			</nav>
+			</menu>
 		</div>
 	</header>
 	<div class="content" role="main">

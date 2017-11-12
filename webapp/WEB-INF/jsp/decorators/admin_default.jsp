@@ -7,7 +7,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title><sitemesh:write property="title"/></title>
 <link rel="shortcut icon" type="image/x-icon" href="${url:resource('/images/favicon.ico')}">
-<link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
 <link href="${url:resource('/stylesheets/slipp.css')}" rel="stylesheet">
 <!--[if lt IE 9]>
 	<script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
