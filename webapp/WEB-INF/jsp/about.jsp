@@ -22,26 +22,40 @@
 	<h1 id="develops">SLiPP 개발을 함께하는 사람들</h1>
 	<div class="person">
 		<img src="//graph.facebook.com/1324855987/picture" width="50" height="50" class="thumb" alt="" />
-		<strong class="person-name">박재성 - 자바지기 (Javajigi</strong>
+		<strong class="person-name">박재성 - 자바지기</strong>
 		<ul>
-			<li>2013/01 현 NHN NEXT 교수</li>
-			<li>Java, Maven</li>
+			<li>2017/11 現 NHN NEXT 교수</li>
+			<li>Social:
+				<a href="https://github.com/javajigi">GitHub</a>
+				<a href="https://www.linkedin.com/in/jaesung-park-8627b120/">LinkedIn</a>
+				<a href="https://www.facebook.com/javajigi">Facebook</a>
+			</li>
 		</ul>
 	</div>
 	<div class="person">
 		<img src="//graph.facebook.com/100002682952388/picture" width="50" height="50" class="thumb" alt="" />
 		<strong class="person-name">김현기 - Eclipse4j</strong>
 		<ul>
-			<li>2013/03 현 COUPANG 웹프로그래머</li>
-			<li>Java</li>
+			<li>2017/11 現 DAILY 개발자</li>
+
+			<li>Social:
+				<a href="https://github.com/eclipse4j">GitHub</a>
+				<a href="https://www.linkedin.com/in/hyeongi-kim-334b8a107/">LinkedIn</a>
+				<a href="https://www.facebook.com/eclipse4j">Facebook</a>
+			</li>
 		</ul>
 	</div>
 	<div class="person">
-		<img src="//graph.facebook.com/1701115026/picture" class="thumb" alt="" />
-		<strong class="person-name">오진우</strong>
+		<img src="//graph.facebook.com/1701115026/picture" width="50" height="50" class="thumb" alt="" />
+		<strong class="person-name">오진우 - Arkist</strong>
 		<ul>
-			<li>2013/03 현 XLGAMES 웹서비스팀 프로그래머</li>
-			<li>HTML, CSS, Javascript</li>
+			<li>2017/11 現 NAVER 개발자</li>
+			<li>arkist@gmail.com</li>
+			<li>Social:
+				<a href="https://github.com/arkist">GitHub</a>
+				<a href="https://www.linkedin.com/in/jinwoo-oh-38582321/">LinkedIn</a>
+				<a href="https://www.facebook.com/windtale">Facebook</a>
+			</li>
 		</ul>
 	</div>
 </section>
@@ -70,3 +84,4 @@
 	<li>기술 기반은 google app engine + spring framework + objectify</li>
 	<li>1차는 서비스적으로 접근하기보다는 google app engine에서 서비스가 가능한지를 검증하는 단계</li>
 </section>
+</article>
