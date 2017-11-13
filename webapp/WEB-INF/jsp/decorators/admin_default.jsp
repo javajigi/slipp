@@ -22,7 +22,9 @@
 	<header class="header" role="banner">
 		<div class="container">
 			<h1 class="logo">
-				<a href="/">SLiPP</a>
+				<a href="/">
+					<img src="${url:resource('/images/logo_slipp.svg')}" height="34" alt="SLiPP" />
+				</a>
 			</h1>
 			<nav class="site-nav">
 				<ul>
