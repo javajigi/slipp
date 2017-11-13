@@ -23,7 +23,8 @@
 		<div class="container">
 			<h1 class="logo">
 				<a href="/">
-					<img src="${url:resource('/images/logo_slipp.svg')}" height="34" alt="SLiPP" />
+					<img src="${url:resource('/images/logo_slipp.svg')}" width="98" height="28" alt="SLiPP" />
+					<span class="bottom-strike"></span>
 				</a>
 			</h1>
 			<nav class="site-nav">
@@ -32,11 +33,11 @@
 						<a href="/questions"><i class="icon-list"></i> <span class="text">글목록</span></a>
 					</li>
 					<li>
-						<a href="/wiki/dashboard.action"><i class="icon-list"></i> <span class="text">위키</span></a>
+						<a href="/wiki/dashboard.action"><i class="icon-wiki"></i> <span class="text">위키</span></a>
 					</li>
 					<sec:authorize access="hasRole('ROLE_ADMINISTRATOR')">
 					<li>
-						<a href="/admin/questions" id="adminManagement"><i class="icon-list"></i> <span class="text">관리도구</span></a>
+						<a href="/admin/questions" id="adminManagement"><i class="icon-admin"></i> <span class="text">관리도구</span></a>
 					</li>					
 					</sec:authorize>
 					<li class="site-search">
@@ -71,7 +72,7 @@
 							<ul></ul>
 						</div>
 					</li>
-					<li class="loginout">
+					<li class="loginout loginout--logout">
 						<a href="/users/logout" class="link-loginout" title="로그아웃"><i class="icon-loginout"></i></a>
 					</li>
 					</sec:authorize>

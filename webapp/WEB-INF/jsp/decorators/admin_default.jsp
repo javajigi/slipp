@@ -23,7 +23,8 @@
 		<div class="container">
 			<h1 class="logo">
 				<a href="/">
-					<img src="${url:resource('/images/logo_slipp.svg')}" height="34" alt="SLiPP" />
+					<img src="${url:resource('/images/logo_slipp.svg')}" width="98" height="28" alt="SLiPP" />
+					<span class="bottom-strike"></span>
 				</a>
 			</h1>
 			<nav class="site-nav">
