@@ -7,7 +7,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title><sitemesh:write property='title'/> :: SLiPP</title>
 <link rel="shortcut icon" type="image/x-icon" href="${url:resource('/images/favicon.ico')}">
-<link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
 <link href="${url:resource('/stylesheets/slipp.css')}" rel="stylesheet">
 <!--[if lt IE 9]>
 	<script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -23,7 +22,10 @@
 	<header class="header" role="banner">
 		<div class="container">
 			<h1 class="logo">
-				<a href="/">SLiPP</a>
+				<a href="/">
+					<img src="${url:resource('/images/logo_slipp.svg')}" width="98" height="28" alt="SLiPP" />
+					<span class="bottom-strike"></span>
+				</a>
 			</h1>
 			<nav class="site-nav">
 				<ul>
@@ -31,19 +33,20 @@
 						<a href="/questions"><i class="icon-list"></i> <span class="text">글목록</span></a>
 					</li>
 					<li>
-						<a href="/wiki/dashboard.action"><i class="icon-list"></i> <span class="text">위키</span></a>
+						<a href="/wiki/dashboard.action"><i class="icon-wiki"></i> <span class="text">위키</span></a>
 					</li>
 					<sec:authorize access="hasRole('ROLE_ADMINISTRATOR')">
 					<li>
-						<a href="/admin/questions" id="adminManagement"><i class="icon-list"></i> <span class="text">관리도구</span></a>
+						<a href="/admin/questions" id="adminManagement"><i class="icon-admin"></i> <span class="text">관리도구</span></a>
 					</li>					
 					</sec:authorize>
 					<li class="site-search">
-						<a href="#siteSearchArea" id="siteSearchButton" class="site-search-button"><i class="icon-search"></i></a>
+						<span class="spacer"></span><a href="#siteSearchArea" id="siteSearchButton" class="site-search-button"><i class="icon-search"></i>
+						<span class="text">검색</span></a>
 					</li>
 				</ul>
 			</nav>
-			<nav class="user-menu">
+			<menu class="user-menu">
 				<ul role="menu">
 					<sec:authorize access="!hasRole('ROLE_USER')">
 					<li class="msg-for-login">SLiPP 계정으로 의견을 나누세요! &rarr;</li>
@@ -69,12 +72,12 @@
 							<ul></ul>
 						</div>
 					</li>
-					<li class="loginout">
+					<li class="loginout loginout--logout">
 						<a href="/users/logout" class="link-loginout" title="로그아웃"><i class="icon-loginout"></i></a>
 					</li>
 					</sec:authorize>
 				</ul>
-			</nav>
+			</menu>
 		</div>
 	</header>
 	<div class="content" role="main">

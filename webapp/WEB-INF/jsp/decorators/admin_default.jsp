@@ -7,7 +7,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title><sitemesh:write property="title"/></title>
 <link rel="shortcut icon" type="image/x-icon" href="${url:resource('/images/favicon.ico')}">
-<link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
 <link href="${url:resource('/stylesheets/slipp.css')}" rel="stylesheet">
 <!--[if lt IE 9]>
 	<script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -23,7 +22,10 @@
 	<header class="header" role="banner">
 		<div class="container">
 			<h1 class="logo">
-				<a href="/">SLiPP</a>
+				<a href="/">
+					<img src="${url:resource('/images/logo_slipp.svg')}" width="98" height="28" alt="SLiPP" />
+					<span class="bottom-strike"></span>
+				</a>
 			</h1>
 			<nav class="site-nav">
 				<ul>
